@@ -6,10 +6,17 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Repository\ProductRepository;
+use App\repositoryInterface\ProductRepositoryInterface;
 use App\Models\Category;
 
 class ProductController extends Controller
 {
+    private  $ProductRepository;
+
+    public function __construct(ProductRepositoryInterface  $ProductRepository){
+        $this->ProductRepository=$ProductRepository;
+    }
     /**
      * Display a listing of the Products.
      */
@@ -19,17 +26,16 @@ class ProductController extends Controller
 
 
     public function getProdByCat(Request $request)
-    {
+    {    
         $categoryIds = $request->input('categories', []);
-         
             // Fetch products based on categories
             if(!empty($categoryIds))
-            $products = Product::whereIn('category_id', $categoryIds)->get() ;
+            $products=$this->ProductRepository->byCategory($categoryIds);
             // Get all products if no categories are specified
             else if(empty($categoryIds))
-            $products = Product::all(); 
+            $products = $this->ProductRepository->allProducts(); 
 
-        return view('products.index', $products);
+        return inertia('Home',['products'=> $products]);
     }
 
     /**

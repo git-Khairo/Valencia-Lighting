@@ -17,6 +17,10 @@ Route::get('/dashboard', [LayoutController::class ,'dashboard'])->name('dashboar
 
 Route::resource('products',ProductController::class);
 
+//get all products or by category
+Route::get('/products', [ProductController::class, 'getProdByCat']);
+
+
 Route::resource('Categories',CategoryController::class);
 
 Route::resource('projects',ProjectController::class);
