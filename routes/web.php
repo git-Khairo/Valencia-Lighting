@@ -10,6 +10,8 @@ use Inertia\Inertia;
 
 
 Route::get("/",  [LayoutController::class ,'index'])->name('Home');
+
+//dashboard route to chech if the user is authunticated
 Route::get('/dashboard', [LayoutController::class ,'dashboard'])->name('dashboard')->middleware('auth');
 
 

@@ -4,16 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Category;
 
 class ProductController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the Products.
      */
-    public function index()
+    public function getProdByCat(Request $request)
     {
-        //
+        $categoryIds = $request->input('categories', []);
+         
+            // Fetch products based on categories
+            if(!empty($categoryIds))
+            $products = Product::whereIn('category_id', $categoryIds)->get() ;
+            // Get all products if no categories are specified
+            else if(empty($categoryIds))
+            $products = Product::all(); 
+
+        return view('products.index', $products);
     }
 
     /**
