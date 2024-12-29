@@ -13,6 +13,11 @@ class ProductController extends Controller
     /**
      * Display a listing of the Products.
      */
+    public function index(){
+        
+    }
+
+
     public function getProdByCat(Request $request)
     {
         $categoryIds = $request->input('categories', []);
