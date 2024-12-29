@@ -22,6 +22,7 @@ class Product extends Model
         'brand',
         'image',
         'dateOfRelease',
+        'code',
     ];
     
     public function categories(){
