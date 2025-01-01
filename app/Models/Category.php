@@ -19,7 +19,14 @@ class Category extends Model
         'type',
     ];
 
-    public function products(){
-        return $this->hasMany(Product::class);
-    }
+    public function products()
+{
+    return $this->belongsToMany(
+        Product::class,             
+        'Products_Categories',     
+        'category_id',              
+        'product_id'
+    );
+}
+
 }

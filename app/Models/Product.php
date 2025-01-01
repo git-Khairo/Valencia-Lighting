@@ -26,9 +26,19 @@ class Product extends Model
     ];
     
     public function categories(){
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(
+            Category::class,
+            'Products_Categories',
+            'product_id',
+            'category_id');
     }
-    public function projects(){
-        return $this->belongsToMany(Project::class);
+    public function projects()
+    {
+        return $this->belongsToMany(
+            Project::class,
+            'Products_Projects',
+            'product_id',
+            'Project_id'
+        );
     }
 }

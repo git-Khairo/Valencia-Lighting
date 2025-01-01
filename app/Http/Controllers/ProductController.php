@@ -7,7 +7,8 @@ use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Repository\ProductRepository;
-use App\repositoryInterface\ProductRepositoryInterface;
+use Inertia\Inertia;
+use App\RepositoryInterface\ProductRepositoryInterface;
 use App\Models\Category;
 
 class ProductController extends Controller
@@ -25,7 +26,7 @@ class ProductController extends Controller
     }
 
 
-    public function getProdByCat(Request $request)
+    public function showProdByCat(Request $request)
     {    
         $categoryIds = $request->input('categories', []);
             // Fetch products based on categories
@@ -34,8 +35,16 @@ class ProductController extends Controller
             // Get all products if no categories are specified
             else if(empty($categoryIds))
             $products = $this->ProductRepository->allProducts(); 
+        
+        return Inertia::render('Products',['products'=> $products]);
+    }
 
-        return inertia('Home',['products'=> $products]);
+    public function showProjectProducts($projectId){
+        $project=$this->ProductRepository->byProject($projectId);
+        return Inertia::render('ProjectProducts', [
+            'project' => $project,
+            'products' => $project->products,
+        ]);
     }
 
     /**

@@ -20,7 +20,13 @@ class Project extends Model
         'date',
     ];
 
-    public function products(){
-        return $this->hasMany(Product::class);
+    public function products()
+    {
+        return $this->belongsToMany(
+            Product::class,
+            'Products_Projects',
+            'project_id',
+            'product_id'
+        );
     }
 }
