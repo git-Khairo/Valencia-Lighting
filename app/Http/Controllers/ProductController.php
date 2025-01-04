@@ -26,18 +26,38 @@ class ProductController extends Controller
     }
 
 
-    public function showProdByCat(Request $request)
+    public function filter(Request $request)
     {    
-        $categoryIds = $request->input('categories', []);
-            // Fetch products based on categories
-            if(!empty($categoryIds))
-            $products=$this->ProductRepository->byCategory($categoryIds);
-            // Get all products if no categories are specified
-            else if(empty($categoryIds))
-            $products = $this->ProductRepository->allProducts(); 
+        $categoryIds = $request->input('categories', []);  // Array of selected category IDs
+        $brand = $request->input('brand', null);            // Selected brand
+    
+        // Fetch products based on categories
+        if (!empty($categoryIds)) {
+            $products = $this->ProductRepository->byCategory($categoryIds);
+        }
+        // Get all products if no categories are specified
+        else {
+            $products = $this->ProductRepository->allProducts();
+        }
+    
+        // Apply brand filter if a brand is specified
+        if ($brand !== null) {
+            $products = $this->ProductRepository->byBrand($products, $brand);
+        }
+    
+        // Eager load the categories to send them along with the products
+        $products->load('categories');
+    
+        // If no products are found, return an empty array
+        if ($products->isEmpty()) {
+            $products = []; 
+        }
         
-        return Inertia::render('Products',['products'=> $products]);
+        // Return products to Inertia
+        return Inertia::render('Products', ['products' => $products]);
     }
+    
+
 
     public function showProjectProducts($projectId){
         $project=$this->ProductRepository->byProject($projectId);
