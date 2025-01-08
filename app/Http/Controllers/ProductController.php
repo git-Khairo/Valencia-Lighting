@@ -45,9 +45,6 @@ class ProductController extends Controller
             $products = $this->ProductRepository->byBrand($products, $brand);
         }
     
-        // Eager load the categories to send them along with the products
-        $products->load('categories');
-    
         // If no products are found, return an empty array
         if ($products->isEmpty()) {
             $products = []; 
