@@ -30,6 +30,7 @@ class ProductRepository implements ProductRepositoryInterface
     }
 
     public function byCode($code) {}
+    
     // Fetch all the products that are in the selected project
     public function byProject($projectId)
     {

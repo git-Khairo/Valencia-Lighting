@@ -26,7 +26,7 @@ class ProductRepository implements ProductRepositoryInterface
     {
         $products = $this->productRepository->byCategory($categoryIds);
 
-        return response(['message' => 'All Products', 'products' => $products], 200);
+        return response(['message' => 'Products By Category', 'products' => $products], 200);
     }
 
 
@@ -34,15 +34,16 @@ class ProductRepository implements ProductRepositoryInterface
     {
         $products = $this->productRepository->byBrand($products, $brand);
 
-        return response(['message' => 'All Products', 'products' => $products], 200);
+        return response(['message' => 'Products By Brand', 'products' => $products], 200);
     }
 
     public function byCode($code) {}
+
     // Fetch all the products that are in the selected project
     public function byProject($projectId)
     {
         $project = $this->productRepository->byProject($projectId);
 
-        return response(['message' => 'All Products', 'project' => $project], 200);
+        return response(['message' => 'Products By Project', 'project' => $project], 200);
     }
 }
