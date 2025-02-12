@@ -1,33 +1,22 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+namespace Database\Factories;
 
-return new class extends Migration
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
+ */
+class ProductFactory extends Factory
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function definition(): array
     {
-        Schema::create('products', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('title');
-            $table->string('image');
-            $table->string('brand');
-            $table->text('description');
-            $table->timestamps();
-            $table->string('code')->unique();
-        });
+        return [
+            'name' => $this->faker->word(),
+            'image' => $this->faker->imageUrl(200, 200, 'products'),
+            'brand' => $this->faker->company(),
+            'description' => $this->faker->paragraph(),
+            'code' => $this->faker->unique()->ean13(), // Generates a unique 13-digit product code
+        ];
     }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('products');
-    }
-};
+}

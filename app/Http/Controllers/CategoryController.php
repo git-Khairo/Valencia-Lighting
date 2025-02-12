@@ -22,6 +22,6 @@ class CategoryController extends Controller
     public function allCategories(){
         $categories= $this->CategoryRepository->allCategories();
 
-        return response()->json(['message' => 'Sections', 'Sections' => $categories], 200);
+        return response()->json(['message' => 'Categories', 'Categories' => $categories], 200);
     }
 }

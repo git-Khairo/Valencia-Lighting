@@ -8,6 +8,8 @@ use App\Repository\ProductRepository;
 use App\RepositoryInterface\ProductRepositoryInterface;
 use App\Repository\CategoryRepository;
 use App\RepositoryInterface\CategoryRepositoryInterface;
+use Illuminate\Support\Facades\Schema;
+
 
 
 class AppServiceProvider extends ServiceProvider
@@ -25,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Schema::defaultStringLength(191);
+
     }
 }
