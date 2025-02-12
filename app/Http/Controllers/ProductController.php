@@ -1,49 +1,67 @@
 <?php
 
-namespace App\Repository;
+namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductequest;
 use App\Models\Product;
-use App\Models\Project;
-use App\RepositoryInterface\ProductRepositoryInterface;
+use App\Repository\ProductRepository;
+use Illuminate\Http\Request;
+use App\Http\Resources\ProductResource;
 
-class ProductRepository implements ProductRepositoryInterface
+class ProductController extends Product
 {
-    private $productRepository;
+    protected $ProductRepository;
 
-    public function __construct(ProductRepositoryInterface $productRepository)
+    // Inject the repository interface
+    public function __construct(ProductRepository $ProductRepository)
     {
-        $this->productRepository = $productRepository;
+        $this->ProductRepository = $ProductRepository;
     }
 
-    public function allProducts()
-    {
-        $products = $this->productRepository->allProducts();
-        return response(['message' => 'All Products', 'products' => $products], 200);
+    public function filter(Request $request){
+        $categoriesId = $request->input('categories',[]);
+        $brand= $request->input('brand',null);
+
+        if(!empty($categoriesId)){
+            $products=$this->ProductRepository->byCategory($categoriesId);
+        }
+        else $products = $this->ProductRepository->allProducts();
+
+        if($brand!==null){
+            $products = $this->ProductRepository->byBrand($products, $brand);
+        }
+        
+        return response()->json([
+            'message' => 'Filtered Products',
+            'products' => ProductResource::collection($products)], 200);
     }
 
-    // Fetch products that have all the selected categories
-    public function byCategory($categoryIds)
-    {
-        $products = $this->productRepository->byCategory($categoryIds);
 
-        return response(['message' => 'Products By Category', 'products' => $products], 200);
+
+    public function getSections(Request $request)
+    {
+        $categoryIds = $request->input('categories', []);
+
+        if (empty($categoryIds)) {
+            return response()->json(['message' => 'No categories provided'], 400);
+        }
+
+        $data = [];
+
+        foreach ($categoryIds as $categoryId) {
+            // Get 7 random products for each category
+            $products = $this->ProductRepository->byCategory([$categoryId])->random(7);
+
+            if ($products->isNotEmpty()) {
+                $data[] = [
+                    'category_name' => $products->first()->categories->first()->name, // Assuming a product has categories
+                    'products' => ProductResource::collection($products),
+                ];
+            }
+        }
+        return response()->json(['message' => 'Sections', 'Sections' => $products], 200);
     }
 
 
-    public function byBrand($products, $brand)
-    {
-        $products = $this->productRepository->byBrand($products, $brand);
-
-        return response(['message' => 'Products By Brand', 'products' => $products], 200);
-    }
-
-    public function byCode($code) {}
-
-    // Fetch all the products that are in the selected project
-    public function byProject($projectId)
-    {
-        $project = $this->productRepository->byProject($projectId);
-
-        return response(['message' => 'Products By Project', 'project' => $project], 200);
-    }
 }
