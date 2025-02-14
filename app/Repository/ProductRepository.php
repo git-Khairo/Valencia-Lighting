@@ -13,8 +13,26 @@ class ProductRepository implements ProductRepositoryInterface
         return Product::all();
     }
 
+    public function byCode($code) {
+        $product = Product::with('categories')->where('code', $code)->first();
+        return $product;
+    }
+
+    public function getLatestProducts() {
+        $products = Product::latest()->take(10)->get();
+        return $products;
+    }
+
+    public function byCategory($categoryId)
+    {
+    return Product::whereHas('categories', function ($query) use ($categoryId) {
+        $query->whereIn('categories.id', $categoryId);
+    });
+    }
+
+   
     // Fetch products that have all the selected categories
-    public function byCategory($categoryIds)
+    public function byCategories($categoryIds)
     {
         return Product::whereHas('categories', function ($query) use ($categoryIds) {
             $query->whereIn('categories.id', $categoryIds);
@@ -39,7 +57,7 @@ class ProductRepository implements ProductRepositoryInterface
         return $products->where('brand', $brand);
     }
 
-    public function byCode($code) {}
+    
     
     // Fetch all the products that are in the selected project
     public function byProject($projectId)

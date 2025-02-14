@@ -21,15 +21,44 @@ class ProductController extends Controller
     }
 
 
-    public function show($id)
+    public function byCode($code)
     {
-        $product=Product::with('categories')->find($id);
+        $product = $this->ProductRepository->byCode($code);
 
         if(!$product){
             return response()->json(['message' => 'Product Not Found'], 404);
         }
         return 
-        response()->json(['message' => 'Product Detailes', 'product' => new ProductResource($product)], 200);
+        response()->json(['message' => 'Product Details', 'product' => new ProductResource($product)], 200);
+    }
+
+    public function getLatestProducts()
+    {
+        $products = $this->ProductRepository->getLatestProducts();
+
+        return response()->json([
+            'message' => 'Latest Products',
+            'products' => ProductCardResource::collection($products),
+        ], 200);
+    }
+
+    public function getSections()
+    {
+        $categoryIds = Category::all()->pluck('id')->toArray();
+        $data = [];
+
+        foreach ($categoryIds as $categoryId) {
+            $products = $this->ProductRepository->byCategory([$categoryId])->inRandomOrder()->take(7)->get();
+            $categoryName = Category::where('id', $categoryId)->value('type');
+
+            if ($products->isNotEmpty()) {
+                $data[] = [
+                    'category_name' => $categoryName,
+                    'products' => ProductCardResource::collection($products),
+                ];
+            }
+        }
+        return response()->json(['message' => 'Sections', 'Sections' => $data], 200);
     }
 
     public function filter(Request $request){
@@ -37,7 +66,7 @@ class ProductController extends Controller
         $brand= $request->input('brand',null);
 
         if(!empty($categoriesId)){
-            $products=$this->ProductRepository->byCategory($categoriesId);
+            $products=$this->ProductRepository->byCategories($categoriesId);
         }
         else $products = $this->ProductRepository->allProducts();
 
@@ -52,36 +81,8 @@ class ProductController extends Controller
 
 
 
-        public function getSections()
-        {
-            $categoryIds = Category::all()->pluck('id')->toArray();
-            $data = [];
-
-            foreach ($categoryIds as $categoryId) {
-                $products = $this->ProductRepository->byCategory([$categoryId])->take(7);
-                $categoryName = Category::where('id', $categoryId)->value('type');
-
-                if ($products->isNotEmpty()) {
-                    $data[] = [
-                        'category_name' => $categoryName,
-                        'products' => ProductCardResource::collection($products),
-                    ];
-                }
-            }
-            return response()->json(['message' => 'Sections', 'Sections' => $data], 200);
-        }
-
-
     
-    public function getLatestProducts()
-    {
-        $products = Product::latest()->take(10)->get();
-
-        return response()->json([
-            'message' => 'Latest Products',
-            'products' => ProductCardResource::collection($products),
-        ], 200);
-    }
+   
 
 
 }
