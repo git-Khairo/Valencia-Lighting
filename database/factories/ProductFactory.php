@@ -14,6 +14,7 @@ class ProductFactory extends Factory
         return [
             'name' => $this->faker->word(),
             'image' => $this->faker->imageUrl(200, 200, 'products'),
+            'title' =>$this->faker->company(),
             'brand' => $this->faker->company(),
             'description' => $this->faker->paragraph(),
             'code' => $this->faker->unique()->ean13(), // Generates a unique 13-digit product code
