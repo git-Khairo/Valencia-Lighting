@@ -2,6 +2,7 @@ import defaultTheme from 'tailwindcss/defaultTheme';
 
 /** @type {import('tailwindcss').Config} */
 export default {
+    darkMode: "class",
     content: [
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',
@@ -9,11 +10,25 @@ export default {
         './resources/**/*.jsx',
     ],
     theme: {
-        extend: {
-            fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
-            },
+      extend: {
+        colors: {
+          light: {
+            text: "#1a1400",
+            background: "#f7f7f7",
+            primary: "#1c4769",
+            secondary: "#a3a3a3",
+            accent: "#96c2e3",
+          },
+          dark: {
+            text: "#fff9e5",
+            background: "#080808",
+            primary: "#96c2e3",
+            secondary: "#5c5c5c",
+            accent: "#1c4769",
+          },
         },
+      },
     },
+  
     plugins: [],
 };
