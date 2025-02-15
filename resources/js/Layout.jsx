@@ -1,12 +1,21 @@
 import { useState, useEffect } from "react";
-import { FaSearch, FaTimes, FaMoon, FaSun } from "react-icons/fa";
+import { FaSearch, FaTimes, FaMoon, FaSun, FaBars } from "react-icons/fa";
 
 const Layout = ({ children }) => {
   const [showSearch, setShowSearch] = useState(false);
-  const [darkMode, setDarkMode] = useState(() => {
-    return localStorage.getItem("theme") === "dark";
+  const [showSidebar, setShowSidebar] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => localStorage.getItem("theme") === "dark");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState({
+    products: [],
+    categories: [],
+    projects: [],
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
+  // Handle dark mode toggle
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add("dark");
@@ -17,29 +26,92 @@ const Layout = ({ children }) => {
     }
   }, [darkMode]);
 
+  // Handle window resizing
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 768);
+    };
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (searchQuery.length > 0) {
+      setLoading(true);
+      setError("");
+
+      fetch(`/api/search?query=${searchQuery}`)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.message === "Search") {
+            setSearchResults({
+              products: data.products || [],
+              categories: data.categories || [],
+              projects: data.projects || [],
+            });
+          } else {
+            setError("No results found");
+          }
+          setLoading(false);
+        })
+        .catch(() => {
+          setError("Failed to fetch search results");
+          setLoading(false);
+        });
+    } else {
+      fetch("/api/defaultSearch")
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.message === "Default Search") {
+            setSearchResults({
+              products: data.products || [],
+              categories: data.categories || [],
+              projects: data.projects || [],
+            });
+          }
+        })
+        .catch(() => setSearchResults({ products: [], categories: [], projects: [] }));
+    }
+  }, [searchQuery]);
+
+  const limitedProducts = searchResults.products.slice(0, isSmallScreen ? 6 : 6);
+  const limitedCategories = searchResults.categories.slice(0, isSmallScreen ? 6 : 6);
+  const limitedProjects = searchResults.projects.slice(0, isSmallScreen ? 2 : 3);
+
   return (
-    <div>
+    <div className="overflow-x-hidden">
       {/* Navbar */}
       <nav className="bg-light-background dark:bg-dark-background shadow-md relative transition-colors duration-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
-            {/* Left Section */}
+            {/* Left Section - Logo & Mobile Menu Button */}
             <div className="flex items-center">
-              <div className="text-2xl font-bold text-light-text dark:text-dark-text">Logo</div>
-              <div className="hidden md:flex space-x-8 ml-10 items-center">
-                {["Products", "Projects", "Categories", "About Us"].map((item) => (
-                  <a
-                    key={item}
-                    href="#"
-                    className="text-light-secondary dark:text-dark-secondary hover:text-light-primary dark:hover:text-dark-accent font-medium transition-colors duration-700"
-                  >
-                    {item}
-                  </a>
-                ))}
+              <button
+                className="md:hidden text-light-secondary dark:text-dark-secondary mr-4"
+                onClick={() => setShowSidebar(true)}
+              >
+                <FaBars size={22} />
+              </button>
+              <div className="text-2xl font-bold text-light-text dark:text-dark-text">
+                <a href="/">Logo</a>
               </div>
             </div>
 
-            {/* Right Section */}
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex space-x-8 ml-10 items-center">
+              {["Products", "Projects", "Categories", "About Us"].map((item) => (
+                <a
+                  key={item}
+                  href={`/${item}`}
+                  className="text-light-secondary dark:text-dark-secondary hover:text-light-primary dark:hover:text-dark-accent font-medium transition-colors duration-700"
+                >
+                  {item}
+                </a>
+              ))}
+            </div>
+
+            {/* Right Section - Search & Dark Mode */}
             <div className="flex items-center space-x-4">
               <button
                 onClick={() => setShowSearch(!showSearch)}
@@ -52,20 +124,58 @@ const Layout = ({ children }) => {
                 onClick={() => setDarkMode(!darkMode)}
                 className="text-light-secondary dark:text-dark-secondary hover:text-light-primary dark:hover:text-dark-accent transition-colors duration-700"
               >
-                {darkMode ? <FaSun size={20} /> : <FaMoon size={20} />}
+                {darkMode ? <FaMoon size={20} /> : <FaSun size={20} />}
               </button>
             </div>
           </div>
         </div>
       </nav>
 
-      {/* Mega Dropdown Search */}
+      {/* Sidebar */}
       <div
-        className={`h-svh absolute left-0 w-full bg-light-background dark:bg-dark-background shadow-lg transition-all duration-700 ease-in-out overflow-hidden ${
-          showSearch ? "max-h-[543px] opacity-100" : "max-h-0 opacity-0"
+        className={`fixed inset-0 bg-black bg-opacity-50 z-50 transition-opacity duration-500 ${
+          showSidebar ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
+        onClick={() => setShowSidebar(false)}
       >
-        <div className="max-w-7xl mx-auto px-4 py-2 transition-opacity duration-700">
+        <div
+          className={`fixed left-0 top-0 w-64 h-full bg-light-background dark:bg-dark-background shadow-lg transform transition-transform duration-500 ${
+            showSidebar ? "translate-x-0" : "-translate-x-full"
+          }`}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="flex justify-between items-center p-4">
+            <h2 className="text-xl font-bold text-light-text dark:text-dark-text">Menu</h2>
+            <button
+              onClick={() => setShowSidebar(false)}
+              className="text-light-secondary dark:text-dark-secondary hover:text-light-primary dark:hover:text-dark-accent transition-colors duration-700"
+            >
+              <FaTimes size={22} />
+            </button>
+          </div>
+
+          <ul className="mt-4 space-y-4 px-4">
+            {["Products", "Projects", "Categories", "About Us"].map((item) => (
+              <li key={item}>
+                <a
+                  href={`/${item}`}
+                  className="block py-2 px-4 text-light-text dark:text-dark-text hover:bg-light-secondary dark:hover:bg-dark-secondary rounded-md transition-colors"
+                  onClick={() => setShowSidebar(false)}
+                >
+                  {item}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+
+      {/* Mega Search Menu */}
+      <div
+        className={`absolute pb-10 left-0 w-full bg-light-background dark:bg-dark-background shadow-lg transition-all duration-700 ease-in-out ${showSearch ? "max-h-[700px] opacity-100 overflow-y-auto" : "max-h-0 opacity-0"}`}
+      >
+        <div className="max-w-7xl mx-auto px-4 py-4">
           {/* Search Input */}
           <div className="flex items-center border-b pb-3 border-light-secondary dark:border-dark-secondary">
             <FaSearch className="text-light-secondary dark:text-dark-secondary mr-2" />
@@ -73,95 +183,155 @@ const Layout = ({ children }) => {
               type="text"
               className="w-full p-2 outline-none bg-transparent text-light-text dark:text-dark-text"
               placeholder="Search product or code..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
             <button className="ml-3 px-4 py-2 bg-light-primary dark:bg-dark-primary text-white rounded-md transition-all duration-700 hover:bg-light-accent dark:hover:bg-dark-accent">
               Search
             </button>
           </div>
 
-          {/* Quick Access Sections */}
-          <div className="flex flex-wrap gap-12 mt-4">
-            {/* Products */}
-            <div className="w-3/12">
-              <h3 className="text-light-text dark:text-dark-text font-medium mb-4">Products</h3>
-              <div className="flex flex-wrap gap-3">
-                {[...Array(6)].map((_, index) => (
-                  <div
-                    key={index}
-                    className="rounded-lg overflow-hidden shadow-md transition-transform duration-700 hover:scale-105"
-                    style={{
-                      backgroundImage: `url('/build/assets/kk.jpg')`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                      height: "60px",
-                      width: "150px",
-                    }}
-                  ></div>
-                ))}
-              </div>
+          {/* Suggested Search Section */}
+          <div className="hidden md:grid mt-4">
+            <h4 className="text-light-text dark:text-dark-text font-medium mb-2">Suggested</h4>
+            <div className="flex flex-wrap gap-2">
+              {["Smart Bulbs", "Indoor Lighting", "Outdoor Lights", "Energy Efficient", "Decorative Lamps"].map((suggestion, index) => (
+                <span
+                  key={index}
+                  className="px-3 py-1 text-sm bg-light-secondary dark:bg-dark-secondary text-white rounded-full cursor-pointer hover:bg-light-accent dark:hover:bg-dark-accent transition-colors"
+                >
+                  {suggestion}
+                </span>
+              ))}
             </div>
+          </div>
 
-            {/* Categories */}
-            <div className="w-4/12">
-              <h3 className="text-light-text dark:text-dark-text font-medium mb-4">Categories</h3>
-              <div className="flex flex-wrap justify-between">
-                {[
-                  { title: "Indoor Lighting", img: "/build/assets/kk.jpg" },
-                  { title: "Outdoor Lighting", img: "/build/assets/kk.jpg" },
-                  { title: "Flexlight", img: "/build/assets/kk.jpg" },
-                  { title: "Decorative Lamps", img: "/build/assets/kk.jpg" },
-                  { title: "Wall Lighting", img: "/build/assets/kk.jpg" },
-                  { title: "Smart Bulbs", img: "/build/assets/kk.jpg" },
-                ].map((item, index) => (
-                  <div key={index} className="w-1/3 p-2 bg-transparent">
+          {/* Desktop View - Full Layout */}
+          <div className="hidden md:grid md:grid-cols-3 gap-8 mt-4">
+            {/* Products */}
+            {limitedProducts.length > 0 && (
+              <div>
+                <h3 className="text-light-text dark:text-dark-text font-medium mb-4">Products</h3>
+                <div className="grid grid-cols-3 gap-3">
+                  {limitedProducts.map((product, index) => (
                     <div
-                      className="rounded-lg overflow-hidden shadow-md transition-transform duration-700 hover:scale-105"
+                      key={index}
+                      className="relative rounded-lg overflow-hidden shadow-md hover:scale-105 transition-transform duration-300"
                       style={{
-                        backgroundImage: `url(${item.img})`,
+                        backgroundImage: `url('${product.imageUrl}')`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
-                        height: "120px",
+                        height: "80px",
                       }}
-                    >
-                      <div className="p-3">
-                        <h4 className="text-light-text dark:text-dark-text font-semibold">{item.title}</h4>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                    ></div>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
+
+            {/* Categories */}
+            {limitedCategories.length > 0 && (
+              <div>
+                <h3 className="text-light-text dark:text-dark-text font-medium mb-4">Categories</h3>
+                <div className="grid grid-cols-3 gap-3">
+                  {limitedCategories.map((category, index) => (
+                    <div key={index} className="text-center">
+                      <div
+                        className="h-24 bg-cover bg-center rounded-lg shadow-md hover:scale-105 transition-transform duration-300"
+                        style={{ backgroundImage: `url('${category.imageUrl}')` }}
+                      ></div>
+                      <h4 className="text-light-text dark:text-dark-text font-semibold mt-2">{category.name}</h4>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Projects */}
-            <div className="w-4/12">
-              <h3 className="text-light-text dark:text-dark-text font-medium mb-4">Projects</h3>
-              <div className="flex flex-col gap-4">
-                {[...Array(2)].map((_, index) => (
-                  <div
-                    key={index}
-                    className="rounded-lg overflow-hidden shadow-md transition-transform duration-700 hover:scale-105"
-                    style={{
-                      backgroundImage: `url('build/assets/kk.jpg')`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                      height: "200px",
-                    }}
-                  >
-                    <div className="p-3">
-                      <h4 className="text-light-text dark:text-dark-text font-semibold">Project {index + 1}</h4>
-                    </div>
-                  </div>
-                ))}
+            {limitedProjects.length > 0 && (
+              <div>
+                <h3 className="text-light-text dark:text-dark-text font-medium mb-4">Projects</h3>
+                <div className="grid grid-cols-1 gap-3">
+                  {limitedProjects.map((project, index) => (
+                    <div
+                      key={index}
+                      className="relative rounded-lg overflow-hidden shadow-md hover:scale-105 transition-transform duration-300"
+                      style={{
+                        backgroundImage: `url('${project.imageUrl}')`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        height: "100px",
+                      }}
+                    ></div>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
+          </div>
+
+          {/* Mobile View - Small Layout */}
+          <div className="md:hidden mt-4 space-y-6">
+            {/* Products */}
+            {limitedProducts.length > 0 && (
+              <div>
+                <h3 className="text-light-text dark:text-dark-text font-medium mb-4">Products</h3>
+                <div className="grid grid-cols-3 gap-3">
+                  {limitedProducts.map((product, index) => (
+                    <div
+                      key={index}
+                      className="relative rounded-lg overflow-hidden shadow-md hover:scale-105 transition-transform duration-300"
+                      style={{
+                        backgroundImage: `url('${product.imageUrl}')`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        height: "80px",
+                      }}
+                    ></div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Categories */}
+            {limitedCategories.length > 0 && (
+              <div>
+                <h3 className="text-light-text dark:text-dark-text font-medium mb-4">Categories</h3>
+                <div className="grid grid-cols-3 gap-3">
+                  {limitedCategories.map((category, index) => (
+                    <div key={index} className="text-center">
+                      <div
+                        className="h-24 bg-cover bg-center rounded-lg shadow-md hover:scale-105 transition-transform duration-300"
+                        style={{ backgroundImage: `url('${category.imageUrl}')` }}
+                      ></div>
+                      <h4 className="text-light-text dark:text-dark-text font-semibold mt-2">{category.name}</h4>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Projects */}
+            {limitedProjects.length > 0 && (
+              <div>
+                <h3 className="text-light-text dark:text-dark-text font-medium">Projects</h3>
+                <div className="grid grid-cols-1 gap-3">
+                  {limitedProjects.map((project, index) => (
+                    <div key={index} className="relative rounded-lg shadow-md hover:scale-101 transition-transform duration-300">
+                      <div
+                        className="h-32 bg-cover bg-center rounded-lg shadow-md"
+                        style={{ backgroundImage: `url('${project.imageUrl}')` }}
+                      ></div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 py-8">
-        {children} {/* Render the content passed as children */}
-      </main>
+      <main className="max-w-7xl mx-auto px-4 py-8">{children}</main>
     </div>
   );
 };

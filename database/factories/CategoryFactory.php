@@ -12,6 +12,8 @@ class CategoryFactory extends Factory
     {
         return [
             'type' => $this->faker->word(),
+            'image' => $this->faker->word(),
+
         ];
     }
 }
