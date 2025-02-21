@@ -1,10 +1,14 @@
 import { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLanguage } from "@fortawesome/free-solid-svg-icons";
+import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 import { FaSearch, FaTimes, FaMoon, FaSun, FaBars } from "react-icons/fa";
 
 const Layout = ({ children }) => {
   const [showSearch, setShowSearch] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem("theme") === "dark");
+  const [language, setLanguage] = useState(localStorage.getItem("language") || "en");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState({
     products: [],
@@ -14,6 +18,16 @@ const Layout = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+
+  //Handle Language Toggle
+  useEffect(() => {
+    if (language === "ar") {
+      localStorage.setItem("language", "ar");
+    } else {
+      localStorage.setItem("language", "en");
+    }
+  }, [language]);  
 
   // Handle dark mode toggle
   useEffect(() => {
@@ -81,6 +95,7 @@ const Layout = ({ children }) => {
 
   return (
     <div className="overflow-x-hidden w-full  ">
+      <div className="fixed w-full z-10">
       {/* Navbar */}
       <nav className="bg-light-background dark:bg-dark-background shadow-md relative transition-colors duration-700 w-full">
         <div className="w-full px-4 sm:px-6 lg:px-8">
@@ -113,6 +128,8 @@ const Layout = ({ children }) => {
 
             {/* Right Section - Search & Dark Mode */}
             <div className="flex items-center space-x-4">
+
+
               <button
                 onClick={() => setShowSearch(!showSearch)}
                 className="text-light-secondary dark:text-dark-secondary hover:text-light-primary dark:hover:text-dark-accent transition-colors duration-700"
@@ -126,6 +143,17 @@ const Layout = ({ children }) => {
               >
                 {darkMode ? <FaMoon size={20} /> : <FaSun size={20} />}
               </button>
+
+              <button
+              onClick={() => setLanguage(language === "en" ? "ar" : "en")}
+              className="flex items-center gap-2 text-light-secondary dark:text-dark-secondary
+                        hover:text-light-primary dark:hover:text-dark-accent 
+                        transition-all duration-300 ease-in-out font-semibold hover:font-bold">
+              
+              {language === "en" ? 'AR' : 'EN'}
+
+            </button>
+            
             </div>
           </div>
         </div>
@@ -173,9 +201,9 @@ const Layout = ({ children }) => {
 
       {/* Mega Search Menu */}
       <div
-        className={`absolute pb-10 left-0 w-full bg-light-background dark:bg-dark-background shadow-lg transition-all duration-700 ease-in-out ${showSearch ? "max-h-[700px] opacity-100 overflow-y-auto" : "max-h-0 opacity-0"}`}
+        className={`absolute pb-10 left-0 w-full bg-light-background dark:bg-dark-background shadow-lg transition-all duration-500 ease-in-out ${showSearch ? "opacity-100 overflow-y-auto max-h-[500px] visible" : "opacity-0 overflow-hidden max-h-0 invisible"}`}
       >
-        <div className="max-w-7xl  px-4 py-4">
+        <div className="  px-4 py-4">
           {/* Search Input */}
           <div className="flex items-center border-b pb-3 border-light-secondary dark:border-dark-secondary">
             <FaSearch className="text-light-secondary dark:text-dark-secondary mr-2" />
@@ -216,12 +244,11 @@ const Layout = ({ children }) => {
                   {limitedProducts.map((product, index) => (
                     <div
                       key={index}
-                      className="relative rounded-lg overflow-hidden shadow-md hover:scale-105 transition-transform duration-300"
+                      className="2xl:h-32 lg:h-24 md:h-16 !sm:h-24 relative rounded-lg overflow-hidden shadow-md hover:scale-105 transition-transform duration-300"
                       style={{
                         backgroundImage: `url('${product.imageUrl}')`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
-                        height: "80px",
                       }}
                     ></div>
                   ))}
@@ -237,7 +264,7 @@ const Layout = ({ children }) => {
                   {limitedCategories.map((category, index) => (
                     <div key={index} className="text-center">
                       <div
-                        className="h-24 bg-cover bg-center rounded-lg shadow-md hover:scale-105 transition-transform duration-300"
+                        className="2xl:h-36 lg:h-24 md:h-20 !sm:h-28 bg-cover bg-center rounded-lg shadow-md hover:scale-105 transition-transform duration-300"
                         style={{ backgroundImage: `url('${category.imageUrl}')` }}
                       ></div>
                       <h4 className="text-light-text dark:text-dark-text font-semibold mt-2">{category.name}</h4>
@@ -329,9 +356,10 @@ const Layout = ({ children }) => {
           </div>
         </div>
       </div>
+      </div>
 
       {/* Main Content */}
-      <main className="  px-4 py-8">{children}</main>
+      <main className="  px-4 py-20">{children}</main>
     </div>
   );
 };

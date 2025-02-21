@@ -16,11 +16,11 @@ const Sections = () => {
   }, []);
 
   return (
-    <div className=" w-full m-0 md:w-full md:h-full">
+    <div className=" w-full m-0 md:w-full md:h-full ">
       {sections.length > 0 ? (
         sections.map((section) => (
             
-          <Section key={section.category_name} section={section} />
+          <Section key={section.category.id} category={section.category} products={section.products} />
         ))
       ) : (
         <div>Loading sections...</div>

@@ -5,12 +5,12 @@ const ProductCard = ({ product }) => {
   return (
     <Link
       to={`/products/${product.id}`}
-      className="relative block p-4 hover:scale-[1.05] transition-transform duration-500 w-full h-full md:w-full"
+      className=" relative block p-4 hover:scale-[1.02] transition-transform duration-300  w-full h-full md:w-full"
     >
       <div className=" flex flex-col md:flex-row md:w-full items-center justify-center m-0">
         
         {/* Image */}
-        <div className="md:absolute md:transform md:-translate-x-[95%] rounded-lg md:w-2/5 flex justify-center">
+        <div className="md:absolute md:transform md:-translate-x-[95%] rounded-lg md:w-2/5 flex justify-center border-2 -z-10">
           <img
             className="bg-transparent shadow-xl rounded-full md:rounded-xl w-full object-cover "
             src="./build/assets/new.png"
@@ -19,7 +19,7 @@ const ProductCard = ({ product }) => {
         </div>
 
         {/* Product Info */}
-        <div className="flex justify-center flex-col bg-light-background dark:bg-dark-background text-light-text dark:text-dark-text w-full h-auto md:h-64 border-4 p-6 mt-12 md:mt-0">
+        <div className="flex justify-center flex-col bg-light-background dark:bg-dark-background text-light-text dark:text-dark-text w-full h-auto md:h-64 border-4 p-6 mt-12 md:mt-0 -z-20">
           <div className="flex flex-col items-center justify-center h-full">
             
             {/* Title & Name */}

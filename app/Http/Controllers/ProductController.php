@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Repository\ProductRepository;
 use Illuminate\Http\Request;
 use App\Http\Resources\ProductCardResource;
+use App\Http\Resources\CategoryCardResource;
 use App\Http\Resources\ProductResource;
 
 
@@ -49,16 +50,16 @@ class ProductController extends Controller
 
         foreach ($categoryIds as $categoryId) {
             $products = $this->ProductRepository->byCategory([$categoryId])->inRandomOrder()->take(7)->get();
-            $categoryName = Category::where('id', $categoryId)->value('type');
+            $category = Category::where('id', $categoryId)->first();
 
             if ($products->isNotEmpty()) {
-                $data[] = [
-                    'category_name' => $categoryName,
+                $section[] = [
+                    'category' => new CategoryCardResource($category),
                     'products' => ProductCardResource::collection($products),
                 ];
             }
         }
-        return response()->json(['message' => 'Sections', 'Sections' => $data], 200);
+        return response()->json(['message' => 'Sections', 'Sections' => $section], 200);
     }
 
     public function filter(Request $request){

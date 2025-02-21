@@ -15,7 +15,11 @@
         "vite": "^6.0"
     },
     "dependencies": {
+        "@fortawesome/free-solid-svg-icons": "^6.7.2",
+        "@fortawesome/react-fontawesome": "^0.2.2",
+        "@heroicons/react": "^2.2.0",
         "@vitejs/plugin-react": "^4.3.4",
+        "lucide-react": "^0.475.0",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
         "react-icons": "^5.4.0",
