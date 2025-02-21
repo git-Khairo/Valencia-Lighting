@@ -80,10 +80,10 @@ const Layout = ({ children }) => {
   const limitedProjects = searchResults.projects.slice(0, isSmallScreen ? 2 : 3);
 
   return (
-    <div className="overflow-x-hidden">
+    <div className="overflow-x-hidden w-full  ">
       {/* Navbar */}
-      <nav className="bg-light-background dark:bg-dark-background shadow-md relative transition-colors duration-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav className="bg-light-background dark:bg-dark-background shadow-md relative transition-colors duration-700 w-full">
+        <div className="w-full px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
             {/* Left Section - Logo & Mobile Menu Button */}
             <div className="flex items-center">
@@ -175,7 +175,7 @@ const Layout = ({ children }) => {
       <div
         className={`absolute pb-10 left-0 w-full bg-light-background dark:bg-dark-background shadow-lg transition-all duration-700 ease-in-out ${showSearch ? "max-h-[700px] opacity-100 overflow-y-auto" : "max-h-0 opacity-0"}`}
       >
-        <div className="max-w-7xl mx-auto px-4 py-4">
+        <div className="max-w-7xl  px-4 py-4">
           {/* Search Input */}
           <div className="flex items-center border-b pb-3 border-light-secondary dark:border-dark-secondary">
             <FaSearch className="text-light-secondary dark:text-dark-secondary mr-2" />
@@ -331,7 +331,7 @@ const Layout = ({ children }) => {
       </div>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 py-8">{children}</main>
+      <main className="  px-4 py-8">{children}</main>
     </div>
   );
 };
