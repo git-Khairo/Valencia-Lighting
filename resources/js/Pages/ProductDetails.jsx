@@ -35,7 +35,7 @@ const ProductDetails = () => {
 
   // Show product details when data is available
   return (
-    <div className="max-w-4xl mx-auto p-6 md:w-full">
+    <div className="max-w-4xl mx-auto p-6 md:w-full ">
       <div className="flex flex-col items-center md:flex-row">
         {/* Product Image */}
         <img
