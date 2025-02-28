@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Project from "./Components/Project";
 import Home from "./Pages/Home";
+import About from "./Pages/About";
 import Layout from "./Layout";
 import Sections from "./Pages/Sections";
 import ProductDetails from "./Pages/ProductDetails";
@@ -17,7 +18,8 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
             <Route path="/project/:id" element={<Project />} />
-            <Route path="/products/:id" element={<ProductDetails />} />
+            <Route path="/about us" element={<About />} />
+            <Route path="/products/:code" element={<ProductDetails />} />
             <Route path="/Categories" element={<Sections/>}/>
             </Routes>
             </Layout>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
+use App\Http\Resources\ProjectCardResource;
+
 
 class ProjectController extends Controller
 {
@@ -15,7 +17,7 @@ class ProjectController extends Controller
     {
         $projects = Project::all();
 
-        return response()->json(['message' => 'All Projects', 'projects' => $projects], 200);
+        return response()->json(['message' => 'All Projects', 'projects' => ProjectCardResource::collection($projects)], 200);
     }
 
     /**

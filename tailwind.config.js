@@ -27,6 +27,9 @@ export default {
             accent: "#1c4769",
           },
         },
+        screens: {
+          'xs': '440px',
+        },
       },
     },
   

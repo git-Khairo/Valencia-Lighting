@@ -1,10 +1,17 @@
-import React from 'react';
-import Layout from '../Layout';
+import HomeSlider from '../Components/HomeSlider';
+import AboutPreview from '../Components/HomeAbout';
 
-const Home = () => {
+const images = [
+  { src: '/build/assets/banner1.jpg', title: 'Explore Our New Collection' },
+  { src: '/build/assets/banner2.jpg', title: 'Latest Arrivals for You' },
+  { src: '/build/assets/banner3.jpg', title: 'Trending Now!' },
+];
+
+export default function HomePage() {
   return (
-      <h2 className="text-3xl font-bold mb-4">Welcome to MyApp!</h2>
+    <div className="w-full">
+      <HomeSlider images={images} />
+      <AboutPreview />
+    </div>
   );
-};
-
-export default Home;
+}

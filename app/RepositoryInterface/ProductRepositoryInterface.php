@@ -14,4 +14,5 @@ interface ProductRepositoryInterface
     public function byCategories($categories);
     public function byBrand($products , $brand);
     public function byProject($projects);
+    public function getRelatedByCategories(string $code, int $limit = 4);
 }

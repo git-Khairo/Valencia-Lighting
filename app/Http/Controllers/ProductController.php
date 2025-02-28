@@ -33,6 +33,14 @@ class ProductController extends Controller
         response()->json(['message' => 'Product Details', 'product' => new ProductResource($product)], 200);
     }
 
+    public function related($code)
+    {
+        $relatedProducts = $this->ProductRepository->getRelatedByCategories($code);
+        return 
+        response()->json(['message' => 'Related Products', 'products' => ProductResource::collection($relatedProducts),], 200);
+
+    }
+
     public function getLatestProducts()
     {
         $products = $this->ProductRepository->getLatestProducts();
@@ -79,7 +87,6 @@ class ProductController extends Controller
             'message' => 'Filtered Products',
             'products' => ProductCardResource::collection($products)], 200);
     }
-
 
 
     

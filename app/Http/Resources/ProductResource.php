@@ -21,9 +21,8 @@ class ProductResource extends JsonResource
         'description' => $this->description,
         'code' => $this->code,
         'categories' => $this->categories->isEmpty() ? null : $this->categories->pluck('type'),
-        'created_at' => $this->created_at,
-        'updated_at' => $this->updated_at,
-    ];
+        'date' => $this->created_at,
+        ];
 }
 
 }

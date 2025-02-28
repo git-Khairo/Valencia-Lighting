@@ -57,7 +57,22 @@ class ProductRepository implements ProductRepositoryInterface
         return $products->where('brand', $brand);
     }
 
-    
+
+    public function getRelatedByCategories(string $code, int $limit = 4)
+    {
+        $product = Product::where('code', $code)->with('categories')->firstOrFail();
+        $categoryId = $product->categories->pluck('id')->toArray();
+
+        return Product::where('code', '!=', $code)
+            ->whereHas('categories', function ($query) use ($categoryId) {
+                $query->whereIn('id', $categoryId);
+            })
+            ->with('categories')
+            ->inRandomOrder()
+            ->limit($limit)
+            ->get();
+    }
+
     
     // Fetch all the products that are in the selected project
     public function byProject($projectId)
