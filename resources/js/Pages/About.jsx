@@ -182,7 +182,7 @@ function Timeline() {
                                 <div className="w-12 h-12 flex border-4 items-center rounded-full justify-center shadow-md" style={{ borderColor: event.color }}>
                                     <span className="font-bold" style={{ color: event.color }}>{event.year}</span>
                                 </div>
-                                <div className={`w-1 h-8 mx-auto} style={{ backgroundColor: event.color }`}></div>
+                                <div className="w-1 h-10 mx-auto" style={{ backgroundColor: event.color }}></div>
 
                             </div>
 
