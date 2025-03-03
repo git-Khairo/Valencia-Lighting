@@ -66,7 +66,7 @@ function ContentSection16() {
                     {/* Image Container */}
                     <div className="w-full h-64 md:h-auto md:w-1/2 shadow-lg rounded-lg overflow-hidden">
                         <img
-                            src="/build/assets/hhh.webp" // Replace with actual image URL
+                            src="https://picsum.photos/200" // Replace with actual image URL
                             alt="About Us"
                             className="w-full h-full object-cover rounded-lg"
                         />
@@ -97,7 +97,7 @@ function TestimonialSection16() {
                     {/* Image Container */}
                     <div className="w-full  md:w-5/2 lg:w-4/5 shadow-lg rounded-lg overflow-hidden">
                         <img
-                            src="/build/assets/hhh.webp"
+                            src="https://picsum.photos/200"
                             alt="Lighting Innovation"
                             className="w-full h-full rounded-lg"
                         />

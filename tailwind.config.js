@@ -30,6 +30,12 @@ export default {
         screens: {
           'xs': '440px',
         },
+        fontFamily: {
+          libreFranklin: ["Libre Franklin", "serif"],
+          limeLight: ["Limelight", "serif"],
+          genos: ["Genos", "serif"],
+          gemunuLibre: ["Gemunu Libre", "serif"],
+        },
       },
     },
   

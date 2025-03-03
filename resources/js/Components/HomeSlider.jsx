@@ -18,12 +18,12 @@ const HomeSlider = ({ images }) => {
         {images.map((image, index) => (
           <SwiperSlide key={index} className="relative">
             <img
-              src="/build/assets/hhh.webp"
-              className="w-full h-[500px] object-cover"
+              src={image.src}
+              className="w-full h-[400px] md:h-svh object-cover"
               alt={image.title}
             />
             <div className="absolute top-[20%] left-[10%] flex items-start justify-start p-4">
-              <h2 className="text-white text-lg font-semibold">mskldjflksjdlfkjsDLKFjkjsdlkfjlkjsfpoj jhdsfihd</h2>
+              <h2 className="text-white font-limeLight text-3xl">{image.title}</h2>
             </div>
           </SwiperSlide>
         ))}

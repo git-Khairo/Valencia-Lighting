@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 function AboutPreview() {
   return (
-    <section className="relative w-full h-[400px] md:h-[500px] overflow-hidden">
+    <section className="relative w-full h-[400px] md:h-svh overflow-hidden">
       {/* Background Image */}
       <motion.div
         initial={{ opacity: 0, scale: 1.2 }}
@@ -13,7 +13,7 @@ function AboutPreview() {
         className="absolute inset-0 w-full h-full"
       >
         <img
-          src="https://source.unsplash.com/1600x900/?architecture,light"
+          src="https://picsum.photos/200"
           alt="About Us"
           className="w-full h-full object-cover"
         />
