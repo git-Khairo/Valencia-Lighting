@@ -2,10 +2,12 @@ import Slider from "react-slick";
 import { motion } from "framer-motion";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import ProductCard from "./ProductCard";
 
 const HomeProduct = ({ products }) => {
     const ProductSliderSettings = {
         dots: true,
+        arrows: false,
         infinite: true,
         speed: 500,
         slidesToShow: 3,
@@ -39,14 +41,7 @@ const HomeProduct = ({ products }) => {
       <div className="md:w-2/3 w-full">
         <Slider {...ProductSliderSettings}>
           {products.map((product) => (
-            <div key={product.id} className="p-2">
-              <img
-                src={product.image}
-                alt={product.name}
-                className="w-full h-auto rounded-xl"
-              />
-              <p className="absolute top-0 sm:top-5 text-white text-center font-bold text-sm sm:text-2xl md:text-lg md:ml-5 lg:text-2xl 2xl:text-4xl">{product.name}</p>
-            </div>
+            <ProductCard variant="no-hover" />
           ))}
         </Slider>
       </div>

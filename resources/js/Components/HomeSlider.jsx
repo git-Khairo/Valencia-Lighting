@@ -19,7 +19,7 @@ const HomeSlider = ({ images }) => {
           <SwiperSlide key={index} className="relative">
             <img
               src={image.src}
-              className="w-full h-[400px] md:h-svh object-cover"
+              className="w-full h-[400px] md:h-[600px] object-cover"
               alt={image.title}
             />
             <div className="absolute top-[20%] left-[10%] flex items-start justify-start p-4">

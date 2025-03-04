@@ -16,7 +16,7 @@ const Sections = () => {
   }, []);
 
   return (
-    <div className=" w-full m-0 md:w-full md:h-full ">
+    <div className=" w-full m-0 md:w-full md:h-full mt-24">
       {sections.length > 0 ? (
         sections.map((section) => (
             

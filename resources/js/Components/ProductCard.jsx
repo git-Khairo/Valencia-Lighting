@@ -1,50 +1,108 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ variant = "hover" }) => { //hover, no-hover, static
+  const [responsiveVariant, setResponsiveVariant] = useState(variant);
+
+  useEffect(() => {
+    // Function to check screen width and update the variant
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setResponsiveVariant("static");
+      } else {
+        setResponsiveVariant(variant);
+      }
+    };
+
+    // Initial check & event listener
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup event listener
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [variant]); // Re-run effect if variant changes
+
   return (
-    <Link
-      to={`/products/${product.id}`}
-      className=" relative block p-4 hover:scale-[1.02] transition-transform duration-300  w-full h-full md:w-full"
+    <div
+      className="xxs:h-[200px] small:h-[240p] xs:h-[280px] sm:h-[340px] md:h-[300px] lg:h-[310px] xl:h-[356px] 2x:h-[400px] 
+      group relative rounded-lg overflow-hidden mx-1 shadow-md border border-gray-200 bg-white transition-all duration-300 ease-linear"
     >
-      <div className=" flex flex-col md:flex-row md:w-full items-center justify-center m-0">
-        
-        {/* Image */}
-        <div className="md:absolute md:transform md:-translate-x-[95%] rounded-lg md:w-2/5 flex justify-center border-2 -z-10">
-          <img
-            className="bg-transparent shadow-xl rounded-full md:rounded-xl w-full object-cover "
-            src="./build/assets/new.png"
-            alt={product.name}
-          />
+      {/* Picture */}
+      <div
+        className={`w-full sm:h-[90%] xxs:h-[80%] p-3 transition-all duration-300 ease-linear ${
+          responsiveVariant === "hover" ? "group-hover:pb-6" : "pb-6"
+        }`}
+      >
+        <img
+          src="https://picsum.photos/200"
+          alt="not found"
+          className={`w-full xxs:h-[80%] md:h-[95%] object-cover rounded-lg transition-all duration-150 ease-linear ${
+            responsiveVariant === "hover"
+              ? "group-hover:h-[90%]"
+              : responsiveVariant === "static"
+              ? "h-[90%]"
+              : ""
+          }`}
+        />
+      </div>
+
+      {/* Visible Part + Extra Details */}
+      <div
+        className={`w-full bg-white px-6 pb-6 flex flex-col shadow-md transition-all duration-300 ease-linear relative ${
+          responsiveVariant === "hover"
+            ? "group-hover:-translate-y-[40px]"
+            : responsiveVariant === "static"
+            ? "-translate-y-[40px]"
+            : ""
+        }`}
+      >
+        {/* Name & Code */}
+        <div className="flex justify-between w-full items-center">
+          <h3 className="sm:text-lg xxs:text-sm font-semibold">Name</h3>
+          <p className=" sm:text-base xxs:text-xs text-gray-500">Code</p>
         </div>
 
-        {/* Product Info */}
-        <div className="flex justify-center flex-col bg-light-background dark:bg-dark-background text-light-text dark:text-dark-text w-full h-auto md:h-64 border-4 p-6 mt-12 md:mt-0 -z-20">
-          <div className="flex flex-col items-center justify-center h-full">
-            
-            {/* Title & Name */}
-            <h1 className="text-light-primary dark:text-dark-primary text-base md:text-xl font-bold mb-2 md:mb-4 pl-9 md:pl-20">
-              {product.name}
-            </h1>
-            <h2 className="text-light-primary dark:text-dark-primary text-sm md:text-base font-normal pl-9 md:pl-20">
-              {product.title}
-            </h2>
-
-            {/* Buttons */}
-            <div className="mt-4 md:mt-8 pl-9 flex items-center gap-3  md:pl-20 md:gap-4">
-              <button className="flex items-center justify-center rounded-full transition-all w-8 h-8 md:w-[50px] md:h-[50px]">
-                <i className="z-10 text-lg md:text-2xl border-4 bg-[#879eb6] rounded-full w-full h-full grid place-items-center hover:bg-[#5f89b7]" />
-              </button>
-              <button className="flex items-center justify-center bg-transparent w-8 h-8 md:w-[50px] md:h-[50px]">
-                <i className="z-10 text-lg md:text-2xl border-4 bg-[#879eb6] rounded-full w-full h-full grid place-items-center hover:bg-[#5f89b7]" />
-              </button>
-            </div>
-
+        {/* Extra Details */}
+        <div
+          className={`transition-all duration-300 ease-linear flex flex-col ${
+            responsiveVariant === "hover"
+              ? "h-[10%] overflow-hidden opacity-0 group-hover:opacity-100"
+              : responsiveVariant === "static"
+              ? "h-[40%] opacity-100"
+              : "hidden"
+          }`}
+        >
+          <div className="flex xxs:flex-col sm:flex-row justify-between items-center">
+            <h3 className="xxs:text-xs xs:text-sm font-semibold">Category</h3>
+            <a
+              href="#"
+              className="inline-flex items-center font-normal xxs:text-[10px] xs:text-sm text-blue-600 hover:text-blue-800"
+            >
+              Add to cart
+              <svg
+                className="w-2.5 h-2.5 ms-2 rtl:rotate-180"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 6 10"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="m1 9 4-4-4-4"
+                />
+              </svg>
+            </a>
+          </div>
+          <div className="flex justify-between items-center">
+            <p className="text-sm text-gray-500 xxs:opacity-0 sm:opacity-100">Lorem ipsum sit amet.</p>
           </div>
         </div>
-
       </div>
-    </Link>
+    </div>
   );
 };
 
