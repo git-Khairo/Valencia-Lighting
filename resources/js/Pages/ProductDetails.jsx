@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom'; // To get the product ID from URL
 import axios from 'axios'; // To make API requests
 
 const ProductDetails = () => {
-  const { id } = useParams(); // Extract the product ID from the URL
+  const { code } = useParams(); // Extract the product ID from the URL
   const [product, setProduct] = useState(null); // State to store product data
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null); // Error state
@@ -12,7 +12,7 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`/api/products/${id}`); // Fetch product details from API
+        const response = await fetch(`/api/products/${code}`); // Fetch product details from API
         setProduct(response.data.product); // Update state with product data
         setLoading(false); // Set loading to false
       } catch (err) {
@@ -22,12 +22,14 @@ const ProductDetails = () => {
     };
 
     fetchProduct();
-  }, [id]); // Re-fetch if product ID changes
+  }, [code]); // Re-fetch if product ID changes
 
   // Show loading or error message if applicable
   if (loading) {
     return <div>Loading...</div>;
   }
+  console.log(product);
+  console.log(error);
 
   if (error) {
     return <div>{error}</div>;

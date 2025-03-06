@@ -18,15 +18,21 @@ const HomeProject = () => {
         viewport={{ once: true }}
        className="py-12 sm:py-16 bg-gray-100">
       <div className="w-11/12 mx-auto px-3 sm:px-4 lg:px-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 sm:gap-6">
+      <div class="mb-4 flex items-center justify-between gap-8 sm:mb-8 md:mb-12">
+            <div class="flex items-center gap-12">
+                <h2 class="text-center text-2xl font-genos text-gray-800 lg:text-7xl dark:text-white">Projects</h2>
+            </div>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
           {projects.map((project, index) => (
             <div
               key={project.id}
               className={`group rounded-xl shadow-lg overflow-hidden cursor-pointer ${
-                index === 1 // Changed to index 2 for consistency with previous examples
+                index === 1 // Changed to index 1 for consistency with previous examples
                   ? 'md:col-span-2 md:row-span-2 my-0 md:my-8' // Middle card (big)
-                  : 'md:col-span-1' // Side cards (smaller)
-              }`}
+                  : 'md:col-span-1'} // Side cards (smaller)
+                  ${index === 0 ? 'col-span-2' : 'col-span-1'}
+              `}
             >
               {/* Image */}
               <div

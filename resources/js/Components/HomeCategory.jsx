@@ -13,7 +13,6 @@ const HomeCategory = () => {
         <div class="mb-4 flex items-center justify-between gap-8 sm:mb-8 md:mb-12">
             <div class="flex items-center gap-12">
                 <h2 class="text-center text-2xl font-genos text-gray-800 lg:text-7xl dark:text-white">Categories</h2>
-
             </div>
         </div>
 
@@ -31,7 +30,7 @@ const HomeCategory = () => {
 
             <a href="#"
                 class="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:col-span-2 md:h-80">
-                <img src="https://picsum.photos/200" loading="lazy" alt="Photo by Magicle" class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
+                <img src="https://picsum.photos/200" loading="lazy" alt="Photo by Magicle" class="absolute inset-0 h-full w-full object-cover object-center transition duration-700 ease-in-out group-hover:scale-110" />
 
                 <div
                     class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50">
@@ -42,7 +41,7 @@ const HomeCategory = () => {
 
             <a href="#"
                 class="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:col-span-2 md:h-80">
-                <img src="https://picsum.photos/200" loading="lazy" alt="Photo by Martin Sanchez" class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
+                <img src="https://picsum.photos/200" loading="lazy" alt="Photo by Martin Sanchez" class="absolute inset-0 h-full w-full object-cover object-center duration-700 ease-in-out group-hover:scale-110" />
 
                 <div
                     class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50">
@@ -53,7 +52,7 @@ const HomeCategory = () => {
 
             <a href="#"
                 class="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-80">
-                <img src="https://picsum.photos/200" loading="lazy" alt="Photo by Lorenzo Herrera" class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
+                <img src="https://picsum.photos/200" loading="lazy" alt="Photo by Lorenzo Herrera" class="absolute inset-0 h-full w-full object-cover object-center transition duration-700 ease-in-out group-hover:scale-110" />
 
                 <div
                     class="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-800 via-transparent to-transparent opacity-50">
