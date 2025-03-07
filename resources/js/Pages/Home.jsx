@@ -21,8 +21,9 @@ export default function HomePage() {
   return (
     <div className="w-full">
       <HomeSlider images={images} />
-      <HomeCategory />
       <HomeProduct products={products} />
+      <HomeCategory />
+
       <HomeProject />
       <AboutPreview />
     </div>
