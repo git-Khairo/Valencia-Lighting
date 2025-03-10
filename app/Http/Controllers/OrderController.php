@@ -13,7 +13,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        return Order::all();
     }
 
     /**
@@ -29,8 +29,29 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-        //
+        // Validate the incoming request data
+        $validated = $request->validated();
+        dd($validated);
+        // Create a new order
+        $order = Order::create([
+            'firstName' => $validated['firstName'],
+            'lastName' => $validated['lastName'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'],
+        ]);
+
+        // Attach products to the order
+        foreach ($validated['products'] as $product) {
+            $order->products()->attach($product['product_id'], ['quantity' => $product['quantity']]);
+        }
+
+        // Return a response, maybe the created order or a success message
+        return response()->json([
+            'success' => true,
+            'order' => $order,
+        ]);
     }
+
 
     /**
      * Display the specified resource.
