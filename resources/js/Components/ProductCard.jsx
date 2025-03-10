@@ -4,9 +4,6 @@ import { Link } from "react-router-dom"; // For React Router (use 'next/link' fo
 const ProductCard = ({ variant = "hover", product }) => {
   const [responsiveVariant, setResponsiveVariant] = useState(variant);
 
-  // Destructure the product object with default values to avoid undefined errors
-  const { name = "Name", code = "Code", image = "https://picsum.photos/200", title = "Category", id } = product || {};
-
   useEffect(() => {
     // Function to check screen width and update the variant
     const handleResize = () => {
@@ -28,7 +25,7 @@ const ProductCard = ({ variant = "hover", product }) => {
   }, [variant]); // Re-run effect if variant changes
 
   return (
-    <Link to={`/product/${id}`} className="block">
+    <Link to={`/product/${product.id}`} className="block">
       <div
         className="xxs:h-[200px] small:h-[240px] xs:h-[280px] sm:h-[340px] md:h-[300px] lg:h-[310px] xl:h-[356px] 2xl:h-[400px] 
         group relative rounded-lg overflow-hidden mx-1 shadow-md border border-gray-200 bg-white transition-all duration-300 ease-linear"
@@ -40,8 +37,8 @@ const ProductCard = ({ variant = "hover", product }) => {
           }`}
         >
           <img
-            src={image} // Use image from product
-            alt={title} // Use title as alt text
+            src="https://picsum.photos/200" // Use image from product
+            alt={product.title} // Use title as alt text
             className={`w-full xxs:h-[80%] md:h-[95%] object-cover rounded-lg transition-all duration-150 ease-linear ${
               responsiveVariant === "hover"
                 ? "group-hover:h-[90%]"
@@ -64,8 +61,8 @@ const ProductCard = ({ variant = "hover", product }) => {
         >
           {/* Name & Code */}
           <div className="flex justify-between w-full items-center">
-            <h3 className="sm:text-lg xxs:text-sm font-semibold">{name}</h3>
-            <p className="sm:text-base xxs:text-xs text-gray-500">{code}</p>
+            <h3 className="sm:text-lg xxs:text-sm font-semibold">{product.name}</h3>
+            <p className="sm:text-base xxs:text-xs text-gray-500">#{product.id}</p>
           </div>
 
           {/* Extra Details */}
@@ -79,9 +76,8 @@ const ProductCard = ({ variant = "hover", product }) => {
             }`}
           >
             <div className="flex xxs:flex-col sm:flex-row justify-between items-center">
-              <h3 className="xxs:text-xs xs:text-sm font-semibold">{title}</h3>
-              <a
-                href="#"
+              <h3 className="xxs:text-xs xs:text-sm font-semibold">{product.title}</h3>
+              <button
                 className="inline-flex items-center font-normal xxs:text-[10px] xs:text-sm text-blue-600 hover:text-blue-800"
                 onClick={(e) => e.preventDefault()} // Prevent default link behavior inside Link
               >
@@ -101,7 +97,7 @@ const ProductCard = ({ variant = "hover", product }) => {
                     d="m1 9 4-4-4-4"
                   />
                 </svg>
-              </a>
+              </button>
             </div>
             <div className="flex justify-between items-center">
               <p className="text-sm text-gray-500 xxs:opacity-0 sm:opacity-100">Lorem ipsum sit amet.</p>

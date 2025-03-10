@@ -309,9 +309,6 @@ const About = () => {
             <TestimonialSection16 />
             <Timeline />
             <Services />
-
-
-
         </div>
     );
 };

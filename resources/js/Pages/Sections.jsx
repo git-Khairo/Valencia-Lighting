@@ -1,25 +1,13 @@
-import React, { useState, useEffect } from 'react';
 import Section from '../Components/Section';
+import useFetch from '../useFetch';
 
 const Sections = () => {
-  const [sections, setSections] = useState([]);
-
-  useEffect(() => {
-    fetch('/api/sections')
-      .then((response) => response.json())
-      .then((data) => {
-        setSections(data.Sections); // Set the sections data from API
-      })
-      .catch((error) => {
-        console.error('Error fetching sections:', error);
-      });
-  }, []);
+  const { data, error, loading } = useFetch('/api/sections');
 
   return (
-    <div className=" w-full m-0 md:w-full md:h-full mt-24">
-      {sections.length > 0 ? (
-        sections.map((section) => (
-            
+    <div className=" w-full m-0 md:w-full md:h-full pt-24">
+      {!loading ? (
+        data.Sections.map((section) => (
           <Section key={section.category.id} category={section.category} products={section.products} />
         ))
       ) : (
