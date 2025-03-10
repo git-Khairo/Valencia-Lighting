@@ -6,6 +6,9 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\LayoutController;
+use App\Http\Controllers\OrderController;
+
+Route::post('/orders', [OrderController::class, 'store']);
 
 
 Route::get('/products/{code}', [ProductController::class, 'byCode']);

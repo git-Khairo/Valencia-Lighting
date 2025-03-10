@@ -6,23 +6,35 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreOrderRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
+    public function authorize()
     {
-        return false;
+        return true; // Adjust as needed
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
-    public function rules(): array
+    public function rules()
+{
+    return [
+        'firstName' => 'required|string|max:255',
+        'lastName' => 'required|string|max:255',
+        'email' => 'required|email|max:255|unique:orders,email',
+        'phone' => 'required|string|max:20',
+        'products' => 'required|array',
+        'products.*.product_id' => 'required|exists:products,id',
+        'products.*.quantity' => 'required|integer|min:1',
+    ];
+}
+
+
+    public function messages()
     {
         return [
-            //
+            'firstName' => 'required|string|max:255',
+            'lastName' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:orders,email',
+            'phone' => 'required|string|regex:/^(\+?[0-9]{1,3})?([0-9]{10})$/',
+            'products' => 'required|array',  // Ensure products is an array
+            'products.*.product_id' => 'required|exists:products,id',  // Validate product_id exists
+            'products.*.quantity' => 'required|integer|min:1',  // Ensure quantity is an integer and > 0
         ];
     }
 }

@@ -11,12 +11,12 @@ class Product extends Model
     /** @use HasFactory<\Database\Factories\ProductFactory> */
     use HasFactory;
 
-        /**
+    /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
-    
+
     protected $fillable = [
         'name',
         'title',
@@ -26,13 +26,15 @@ class Product extends Model
         'dateOfRelease',
         'code',
     ];
-    
-    public function categories(){
+
+    public function categories()
+    {
         return $this->belongsToMany(
             Category::class,
             'Products_Categories',
             'product_id',
-            'category_id');
+            'category_id'
+        );
     }
     public function projects()
     {
@@ -45,11 +47,7 @@ class Product extends Model
     }
     public function orders()
     {
-        return $this->belongsToMany(
-            Order::class,
-            'Products_Orders',
-            'product_id',
-            'order_id'
-        );
+        return $this->belongsToMany(Order::class, 'products_orders', 'product_id', 'order_id')
+            ->withPivot('quantity');  // Include the quantity in the pivot table
     }
 }
