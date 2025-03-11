@@ -16,13 +16,6 @@ const Project = () => {
   if(data.project){
    images = [data.project.image, data.project.image];
   }
-
-  const products = [
-    { id: 1, image: "https://picsum.photos/200", name: "Product 1" },
-    { id: 2, image: "https://picsum.photos/200", name: "Product 2" },
-    { id: 3, image: "https://picsum.photos/200", name: "Product 3" },
-    { id: 4, image: "https://picsum.photos/200", name: "Product 4" },
-  ];
     
 
   const ProductSliderSettings = {

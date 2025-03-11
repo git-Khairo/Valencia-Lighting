@@ -58,7 +58,7 @@ class ProductRepository implements ProductRepositoryInterface
     }
 
 
-    public function getRelatedByCategories(string $code, int $limit = 4)
+    public function getRelatedByCategories(string $code, int $limit = 6)
     {
         $product = Product::where('code', $code)->with('categories')->firstOrFail();
         $categoryId = $product->categories->pluck('id')->toArray();

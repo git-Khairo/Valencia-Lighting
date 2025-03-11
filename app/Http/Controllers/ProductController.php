@@ -26,19 +26,23 @@ class ProductController extends Controller
     {
         $product = $this->ProductRepository->byCode($code);
 
+        $relatedProducts = ProductController::related($code);
+
         if(!$product){
             return response()->json(['message' => 'Product Not Found'], 404);
         }
-        return 
-        response()->json(['message' => 'Product Details', 'product' => new ProductResource($product)], 200);
+        $product = [
+            'product' => new ProductResource($product),
+            'relatedProducts' => $relatedProducts
+        ];
+        return response()->json(['message' => 'Product Details', 'product' => $product], 200);
     }
 
     public function related($code)
     {
         $relatedProducts = $this->ProductRepository->getRelatedByCategories($code);
-        return 
-        response()->json(['message' => 'Related Products', 'products' => ProductResource::collection($relatedProducts),], 200);
 
+        return ProductCardResource::collection($relatedProducts);
     }
 
     public function getLatestProducts()
