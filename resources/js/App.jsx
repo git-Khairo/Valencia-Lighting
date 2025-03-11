@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Project from "./Pages/ProjectDetails";
+import ProjectDetails from "./Pages/ProjectDetails";
 import Home from "./Pages/Home";
 import About from "./Pages/About";
 import Layout from "./Layout";
@@ -22,7 +22,7 @@ const App = () => {
             <Route path="/home" element={<Home />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/products" element={<Products />} />
-            <Route path="/project/:id" element={<Project />} />
+            <Route path="/project/:id" element={<ProjectDetails />} />
             <Route path="/product/:code" element={<ProductDatails />} />
             <Route path="/about us" element={<About />} />
             <Route path="/Categories" element={<Sections/>}/>

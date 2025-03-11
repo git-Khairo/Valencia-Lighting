@@ -31,7 +31,6 @@ class OrderController extends Controller
     {
         // Validate the incoming request data
         $validated = $request->validated();
-        dd($validated);
         // Create a new order
         $order = Order::create([
             'firstName' => $validated['firstName'],

@@ -13,7 +13,7 @@ class ProductFactory extends Factory
     {
         return [
             'name' => $this->faker->word(),
-            'image' => $this->faker->imageUrl(200, 200, 'products'),
+            'image' => "https://picsum.photos/200",
             'title' =>$this->faker->company(),
             'brand' => $this->faker->company(),
             'description' => $this->faker->paragraph(),

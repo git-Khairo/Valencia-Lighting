@@ -41,7 +41,7 @@ const HomeProduct = ({ products }) => {
       <div className="md:w-2/3 w-full">
         <Slider {...ProductSliderSettings}>
           {products.map((product) => (
-            <ProductCard variant="no-hover" key={product.id}/>
+            <ProductCard variant="no-hover" product={product} key={product.id}/>
           ))}
         </Slider>
       </div>
