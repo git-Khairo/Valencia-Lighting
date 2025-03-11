@@ -215,7 +215,9 @@ const Projects = () => {
                 {dynamicProjectState(data.projects.slice(8))}
                 </>
               ) : (
-                <div>Not enough projects to display</div>
+                <>
+                {dynamicProjectState(data.projects)}
+                </>
               )}
             </div>
           </div>

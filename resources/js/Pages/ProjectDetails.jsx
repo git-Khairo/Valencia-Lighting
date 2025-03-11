@@ -5,43 +5,52 @@ import { motion } from "framer-motion";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ProductCard from "../Components/ProductCard";
+import { useParams } from "react-router-dom";
+import useFetch from '../useFetch';
 
 const Project = () => {
-    const products = [
-        { id: 1, image: "https://picsum.photos/200", name: "Product 1" },
-        { id: 2, image: "https://picsum.photos/200", name: "Product 2" },
-        { id: 3, image: "https://picsum.photos/200", name: "Product 3" },
-        { id: 4, image: "https://picsum.photos/200", name: "Product 4" },
-      ];
+  const { id } = useParams();
+  const { data, error, loading } = useFetch(`/api/project/${id}`);
+  let images = [];
 
-      const images = ["https://picsum.photos/200", "https://picsum.photos/200"];
+  if(data.project){
+   images = [data.project.image, data.project.image];
+  }
 
-      const ProductSliderSettings = {
-        dots: true,
-        arrows: false,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 3000,
-        pauseOnHover: false,
-        responsive: [
-          { breakpoint: 768, settings: { slidesToShow: 2 } },
-          { breakpoint: 425, settings: { slidesToShow: 1 } }
-        ],
-      };
+  const products = [
+    { id: 1, image: "https://picsum.photos/200", name: "Product 1" },
+    { id: 2, image: "https://picsum.photos/200", name: "Product 2" },
+    { id: 3, image: "https://picsum.photos/200", name: "Product 3" },
+    { id: 4, image: "https://picsum.photos/200", name: "Product 4" },
+  ];
+    
 
-      const ImageSliderSettings = {
-        infinite: true,
-        speed: 1000,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 5000,
-        arrows: false,
-        pauseOnHover: false,
-      };
+  const ProductSliderSettings = {
+    dots: true,
+    arrows: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    pauseOnHover: false,
+    responsive: [
+      { breakpoint: 768, settings: { slidesToShow: 2 } },
+      { breakpoint: 425, settings: { slidesToShow: 1 } }
+    ],
+  };
+
+  const ImageSliderSettings = {
+    infinite: true,
+    speed: 1000,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 5000,
+    arrows: false,
+    pauseOnHover: false,
+  };
 
   const [isExpanded, setIsExpanded] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 986);
@@ -56,6 +65,19 @@ const Project = () => {
 
   return (
    <>
+   {loading ? (
+      <div className="text-center text-gray-500">Loading sections...</div>
+    ) : error ? (
+      <div className="text-center text-red-500 py-5">
+        <p>Error loading Project: {error.message || 'Something went wrong'}</p>
+        <button
+          className="mt-4 px-5 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          onClick={() => window.location.reload()}
+        >
+          Retry
+        </button>
+      </div>
+    ) : data && data.project ? (
    <div className='scroll-smooth pt-20'>
    <motion.section 
         initial={{ opacity: 0, y: 50 }} 
@@ -64,9 +86,9 @@ const Project = () => {
         viewport={{ once: true }} 
     >
     <div className='mx-2 my-5 sm:mx-10'>
-      <h1 className="text-3xl font-bold font-serif md:text-5xl">Project Title</h1>
+      <h1 className="text-3xl font-bold font-serif md:text-5xl">{data.project.title}</h1>
       <div className="flex justify-between items-center py-5">
-        <div className="text-gray-600 text-sm sm:text-lg">Your Slogan Here</div>
+        <div className="text-gray-600 text-sm sm:text-lg">{data.project.description}</div>
         <div className="text-gray-600 text-sm sm:text-lg">Project Address</div>
       </div>
     </div>
@@ -131,7 +153,7 @@ const Project = () => {
                     <tbody>
                         <tr className="border-b">
                             <td className="px-2 py-5 font-medium text-blue-950">Date:</td>
-                            <td className="px-2 py-5">January 2025</td>
+                            <td className="px-2 py-5">{data.project.date}</td>
                         </tr>
                         <tr className="border-b">
                             <td className="px-2 py-5 font-medium text-blue-950">Location:</td>
@@ -173,7 +195,7 @@ className="flex flex-col md:flex-row items-center justify-between mx-auto bg-sla
       {/* Right Image */}
       <div className="w-full md:w-1/2 mt-6 md:mt-0">
         <img
-          src="https://picsum.photos/200"
+          src={data.project.image}
           alt="Descriptive Alt Text"
           className="w-full h-auto"
         />
@@ -205,7 +227,7 @@ className="flex flex-col md:flex-row items-center justify-between mx-auto bg-sla
       {/* Right Image */}
       <div className="w-full p-4 sm:p-14 md:w-1/2 md:p-2 mt-6 md:mt-0">
         <img
-          src="https://picsum.photos/200"
+          src={data.project.image}
           alt="Descriptive Alt Text"
           className="w-full h-auto rounded-xl"
         />
@@ -238,13 +260,16 @@ className="flex flex-col md:flex-row items-center justify-between mx-auto bg-sla
       {/* Right Side Slider */}
       <div className="md:w-2/3 w-full">
         <Slider {...ProductSliderSettings}>
-          {products.map((product) => (
+          {data.project.products.map((product) => (
             <ProductCard key={product.id} variant="no-hover" product={product} />
           ))}
         </Slider>
       </div>
     </motion.section>
 </div>
+) : (
+  <div className="text-center text-gray-500">Project Not Found</div>
+)}
    </>
      );
 }
