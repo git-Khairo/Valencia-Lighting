@@ -18,6 +18,7 @@ Route::get('/project/{id}', [ProjectController::class, 'index']);
 Route::get('/latestProducts', [ProductController::class, 'getLatestProducts']);
 Route::get('/search', [LayoutController::class, 'search']);
 Route::get('/defaultSearch', [LayoutController::class, 'defaultSearch']);
+Route::get('/home', [LayoutController::class, 'getHomePageData']);
 
 
 Route::post('/orders', [OrderController::class, 'store']);

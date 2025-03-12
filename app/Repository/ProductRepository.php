@@ -18,11 +18,6 @@ class ProductRepository implements ProductRepositoryInterface
         return $product;
     }
 
-    public function getLatestProducts() {
-        $products = Product::latest()->take(10)->get();
-        return $products;
-    }
-
     public function byCategory($categoryId)
     {
     return Product::whereHas('categories', function ($query) use ($categoryId) {

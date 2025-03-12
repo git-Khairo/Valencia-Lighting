@@ -16,10 +16,6 @@ class LayoutController extends Controller
         $this->LayoutRepository = $LayoutRepository;
     }
 
-    public function index(){
-        return route('home');
-       }
-
     public function search(Request $request)
     {
         $query = $request->input('query');
@@ -41,8 +37,6 @@ class LayoutController extends Controller
     }
     public function defaultSearch()
     {
-
-
         $results = $this->LayoutRepository->defaultSearch();
 
         return response()->json([
@@ -51,5 +45,13 @@ class LayoutController extends Controller
             'categories' => CategoryCardResource::collection($results['categories']),
             'projects' => ProjectCardResource::collection($results['projects']),
         ],200);
+    }
+
+    public function getHomePageData(){
+        $products = ProductController::getLatestProducts();
+        $projects = ProjectController::getLatestProjects();
+        $category = CategoryController::getLatestCategory();
+
+        return response()->json(['message' => "home page data", 'products' => $products, 'projects' => $projects, 'category' => $category], 200);
     }
 }

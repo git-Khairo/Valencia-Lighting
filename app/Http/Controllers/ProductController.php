@@ -45,14 +45,11 @@ class ProductController extends Controller
         return ProductCardResource::collection($relatedProducts);
     }
 
-    public function getLatestProducts()
+    public static function getLatestProducts()
     {
-        $products = $this->ProductRepository->getLatestProducts();
+        $products = Product::latest()->take(6)->get();
 
-        return response()->json([
-            'message' => 'Latest Products',
-            'products' => ProductCardResource::collection($products),
-        ], 200);
+        return ProductCardResource::collection($products);
     }
 
     public function getSections()

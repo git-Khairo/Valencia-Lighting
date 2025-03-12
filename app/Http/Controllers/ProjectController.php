@@ -26,6 +26,13 @@ class ProjectController extends Controller
         return response()->json(['message' => 'Project', 'project' => new ProjectResource($project)], 200);
     }
 
+    public static function getLatestProjects()
+    {
+        $products = Project::latest()->take(5)->get();
+
+        return ProjectCardResource::collection($products);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
