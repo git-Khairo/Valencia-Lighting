@@ -18,11 +18,6 @@ class ProductRepository implements ProductRepositoryInterface
         return $product;
     }
 
-    public function getLatestProducts() {
-        $products = Product::latest()->take(10)->get();
-        return $products;
-    }
-
     public function byCategory($categoryId)
     {
     return Product::whereHas('categories', function ($query) use ($categoryId) {
@@ -58,7 +53,7 @@ class ProductRepository implements ProductRepositoryInterface
     }
 
 
-    public function getRelatedByCategories(string $code, int $limit = 4)
+    public function getRelatedByCategories(string $code, int $limit = 6)
     {
         $product = Product::where('code', $code)->with('categories')->firstOrFail();
         $categoryId = $product->categories->pluck('id')->toArray();

@@ -6,18 +6,31 @@ use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
 use App\Http\Resources\ProjectCardResource;
-
+use App\Http\Resources\ProjectResource;
 
 class ProjectController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function all()
     {
         $projects = Project::all();
 
         return response()->json(['message' => 'All Projects', 'projects' => ProjectCardResource::collection($projects)], 200);
+    }
+
+    public function index($id){
+        $project = Project::with('products')->findOrFail($id);
+
+        return response()->json(['message' => 'Project', 'project' => new ProjectResource($project)], 200);
+    }
+
+    public static function getLatestProjects()
+    {
+        $products = Project::latest()->take(5)->get();
+
+        return ProjectCardResource::collection($products);
     }
 
     /**

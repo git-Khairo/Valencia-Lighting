@@ -1,14 +1,7 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
-const HomeProject = () => {
-    const projects = [
-        { id: 1, image: "https://picsum.photos/200", title: "Side Project 1"},
-        { id: 2, image: "https://picsum.photos/200", title: "Side Project 2"},
-        { id: 3, image: "https://picsum.photos/200", title: "Main Project"},
-        { id: 4, image: "https://picsum.photos/200", title: "Side Project 3"},
-        { id: 5, image: "https://picsum.photos/200", title: "Side Project 4"},
-      ];
-
+const HomeProject = ({projects}) => {
     return ( 
         <>
            <motion.section
@@ -25,7 +18,8 @@ const HomeProject = () => {
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
           {projects.map((project, index) => (
-            <div
+            <Link
+            to={`/project/${project.id}`}
               key={project.id}
               className={`group rounded-xl shadow-lg overflow-hidden cursor-pointer ${
                 index === 1 // Changed to index 1 for consistency with previous examples
@@ -48,7 +42,7 @@ const HomeProject = () => {
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4">
-                    <div className="relative z-10">
+                    <div className="relative z-[3]">
                         <h3 className={`font-semibold text-white ${
                   index === 1
                     ? 'text-lg lg:text-4xl ' // Larger height for middle card
@@ -59,7 +53,7 @@ const HomeProject = () => {
                     </div>
                     </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 

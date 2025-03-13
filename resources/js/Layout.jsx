@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { FaSearch, FaTimes, FaMoon, FaSun, FaBars } from "react-icons/fa";
 import { FaFacebookF, FaInstagram, FaMapMarkerAlt } from "react-icons/fa";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Layout = ({ children }) => {
   const [showSearch, setShowSearch] = useState(false);
@@ -134,7 +134,7 @@ const Layout = ({ children }) => {
 
                 {/* Desktop Navigation */}
                 <div className="hidden md:flex space-x-8 ml-10 items-center">
-                  {["Products", "Projects", "Categories", "About Us"].map((item) => (
+                  {[ "Categories", "Products", "Projects", "About Us"].map((item) => (
                     <a
                       key={item}
                       href={`/${item}`}
@@ -218,13 +218,13 @@ const Layout = ({ children }) => {
                       <h3 className="text-gray-900 dark:text-white font-medium mb-3">Products</h3>
                       <div className="flex sm:justify-start mb-5 sm:mx-[2%] flex-wrap 2xl:gap-8 xl:gap-8 justify-normal gap-x-2 gap-y-2 sm:gap-3">
                         {limitedProducts.map((product, index) => (
-                          <div key={index} className="flex flex-col items-center">
+                          <Link to={`/product/${product.id}`} key={index} className="flex flex-col items-center" onClick={() => setShowSearch(!showSearch)}>
                             <div className="relative 2xl:h-36 2xl:w-32 lg:h-32 lg:w-28 md:h-28 md:w-24 sm:w-24 sm:h-28 w-20 h-24 xs:w-28 xs:h-32 rounded-lg overflow-hidden shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 ease-in-out">
                               <div className="absolute inset-0 rounded-xl bg-gradient-to-tr from-light-background via-light-background via-40% to-light-secondary dark:from-dark-secondary dark:via-dark-secondary dark:via-10% dark:to-dark-background"></div>
                               <img src="/build/assets/new.png" alt={product.name} className="absolute inset-0 w-full h-full object-cover" />
                             </div>
                             <p className="mt-2 text-sm text-center font-medium text-gray-900 dark:text-white">{product.name}</p>
-                          </div>
+                          </Link>
                         ))}
                       </div>
                     </div>
@@ -234,12 +234,12 @@ const Layout = ({ children }) => {
                       <h3 className="text-gray-900 dark:text-white font-medium mb-3">Categories</h3>
                       <div className="flex sm:justify-start mb-5 sm:mx-[2%] flex-wrap 2xl:gap-8 xl:gap-8 justify-normal gap-x-2 gap-y-2 sm:gap-3">
                         {limitedCategories.map((category, index) => (
-                          <div key={index} className="flex flex-col items-center">
+                          <Link to={`/category/${category.id}`} key={index} className="flex flex-col items-center" onClick={() => setShowSearch(!showSearch)}>
                             <div className="relative 2xl:h-36 2xl:w-32 lg:h-32 lg:w-28 md:h-28 md:w-24 sm:w-24 sm:h-28 w-20 h-24 xs:w-28 xs:h-32 rounded-lg overflow-hidden shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 ease-in-out">
                               <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url('/build/assets/new.png')` }}></div>
                             </div>
                             <p className="mt-2 text-sm text-center font-medium text-gray-900 dark:text-white">{category.type}</p>
-                          </div>
+                          </Link>
                         ))}
                       </div>
                     </div>
@@ -249,12 +249,12 @@ const Layout = ({ children }) => {
                       <h3 className="text-gray-900 dark:text-white font-medium mb-3">Projects</h3>
                       <div className="flex flex-wrap mx-[2%] gap-3">
                         {limitedProjects.map((project, index) => (
-                          <div key={index} className="flex flex-col items-center w-full">
+                          <Link to={`/project/${project.id}`} key={index} className="flex flex-col items-center w-full" onClick={() => setShowSearch(!showSearch)}>
                             <div className="relative lg:h-64 md:h-44 sm:h-32 h-28 w-full rounded-lg overflow-hidden shadow-md hover:shadow-lg hover:scale-[101%] transition-all duration-300 ease-in-out">
                               <img src={project.imageUrl} alt="Project" className="absolute inset-0 w-full h-full object-cover" />
                             </div>
                             <p className="mt-2 text-sm text-center font-medium text-gray-900 dark:text-white">{project.title}</p>
-                          </div>
+                          </Link>
                         ))}
                       </div>
                     </div>
