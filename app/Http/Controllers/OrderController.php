@@ -4,16 +4,36 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Http\Resources\OrderResource;
 use App\Models\Order;
+use App\Repository\OrderRepository;
+use App\RepositoryInterface\OrderRepositoryInterface;
 
 class OrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    protected $orderRepository;
+
+    public function __construct(OrderRepository $orderRepository)
+    {
+        $this->orderRepository = $orderRepository;
+    }
+
     public function index()
     {
-        return Order::all();
+        try {
+            $orders = $this->orderRepository->getAllOrdersWithProducts();
+
+            return response()->json([
+                'success' => true,
+                'data' => OrderResource::collection($orders),
+                'message' => 'Orders retrieved successfully'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error retrieving orders: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
@@ -52,12 +72,33 @@ class OrderController extends Controller
     }
 
 
+
     /**
      * Display the specified resource.
      */
-    public function show(Order $order)
+    public function show($id)
     {
-        //
+        try {
+            $order = $this->orderRepository->findOrderById($id);
+
+            if (!$order) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Order not found'
+                ], 404);
+            }
+            
+            return response()->json([
+                'success' => true,
+                'data' => new OrderResource($order),
+                'message' => 'Order retrieved successfully'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error retrieving order: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     /**

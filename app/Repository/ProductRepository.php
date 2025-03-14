@@ -8,6 +8,13 @@ use App\RepositoryInterface\ProductRepositoryInterface;
 
 class ProductRepository implements ProductRepositoryInterface
 {
+
+    protected $model;
+
+    public function __construct(Product $model)
+    {
+        $this->model = $model;
+    }
     public function allProducts()
     {
         return Product::all();
@@ -76,5 +83,28 @@ class ProductRepository implements ProductRepositoryInterface
         $project = Project::with('products')->findOrFail($projectId);
 
         return $project;
+    }
+
+    public function create(array $data): Product
+    {
+        return $this->model->create($data);
+    }
+
+    public function update($code, array $data)
+    {
+        $product = $this->byCode($code);
+        if ($product) {
+            $product->update($data);
+        }
+        return $product;
+    }
+
+    public function delete($code): bool
+    {
+        $product = $this->byCode($code);
+        if ($product) {
+            return $product->delete();
+        }
+        return false;
     }
 }

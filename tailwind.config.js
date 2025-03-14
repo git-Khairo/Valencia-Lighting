@@ -29,6 +29,8 @@ export default {
         },
         screens: {
           'xs': '440px',
+          '2.5xl': '1690px',
+          '3xl': '1960px',
         },
         fontFamily: {
           libreFranklin: ["Libre Franklin", "serif"],

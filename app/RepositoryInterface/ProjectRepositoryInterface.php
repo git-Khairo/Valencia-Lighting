@@ -1,12 +1,10 @@
 <?php
-
 namespace App\RepositoryInterface;
 
-use App\Models\Category;
+use App\Models\Project;
 
-interface CategoryRepositoryInterface
+interface ProjectRepositoryInterface
 {
-
     public function create(array $data);
 
     public function findById($id);

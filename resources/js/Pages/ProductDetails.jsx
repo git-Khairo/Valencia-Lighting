@@ -7,7 +7,7 @@ import ProductCard from '../Components/ProductCard';
 import Slider from 'react-slick';
 const ProductDetails = () => {
   const { code } = useParams(); // Extract the product ID from the URL
-  const { data, error, loading } = useFetch(`/api/product/${code}`);
+  const { data, error, loading } = useFetch(`/api/products/${code}`);
   let images = [];
 
   

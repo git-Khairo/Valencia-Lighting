@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('image');
             $table->string('brand');
             $table->text('description');
+            $table->date('dateOfRelease');
             $table->timestamps();
             $table->string('code')->unique();
         });

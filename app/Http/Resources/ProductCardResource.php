@@ -20,6 +20,7 @@ class ProductCardResource extends JsonResource
             'title'=> $this->title,
             'image' => $this->image,
             'brand' => $this->brand,
+            'quantity' => $this->pivot ? $this->pivot->quantity : ($this->quantity ?? null), // Fallback to attached quantity
         ];
     }
 }

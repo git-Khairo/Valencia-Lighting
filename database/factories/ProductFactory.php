@@ -17,6 +17,7 @@ class ProductFactory extends Factory
             'title' =>$this->faker->company(),
             'brand' => $this->faker->company(),
             'description' => $this->faker->paragraph(),
+            'dateOfRelease' => $this->faker->date(),
             'code' => $this->faker->unique()->ean13(), // Generates a unique 13-digit product code
         ];
     }

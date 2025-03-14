@@ -16,7 +16,7 @@ class StoreOrderRequest extends FormRequest
         return [
             'firstName' => 'required|string|max:255',
             'lastName' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:orders,email',
+            'email' => 'required|email|max:255',
             'phone' => 'required|string|regex:/^(\+?[0-9]{1,3})?([0-9]{10})$/',
             'products' => 'required|array',
             'products.*.product_id' => 'required|exists:products,id',
@@ -38,7 +38,6 @@ class StoreOrderRequest extends FormRequest
             'email.required' => 'The email address is required.',
             'email.email' => 'Please provide a valid email address.',
             'email.max' => 'The email address can not be longer than 255 characters.',
-            'email.unique' => 'This email address has already been used for an order.',
 
             'phone.required' => 'The phone number is required.',
             'phone.string' => 'The phone number must be a string.',

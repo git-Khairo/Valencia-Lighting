@@ -18,7 +18,7 @@ class Project extends Model
         'title',
         'image',
         'description',
-        'date',
+        'dateOfProject',
     ];
 
     public function products()
