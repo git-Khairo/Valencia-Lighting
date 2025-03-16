@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
@@ -16,9 +17,6 @@ Route::get('/search', [LayoutController::class, 'search']);
 Route::get('/defaultSearch', [LayoutController::class, 'defaultSearch']);
 Route::get('/home', [LayoutController::class, 'getHomePageData']);
 Route::post('/orders', [OrderController::class, 'store']);
-
-Route::get('/orders', [OrderController::class, 'index']);
-Route::get('/order/{id}', [OrderController::class,'show']);
 
 Route::prefix('products')->group(function () {
     Route::post('/', [ProductController::class, 'store']);      // Create a product
@@ -40,4 +38,11 @@ Route::prefix('categories')->group(function () {
     Route::delete('/{id}', [CategoryController::class, 'destroy']); // Delete a project
     Route::get('/', [CategoryController::class, 'index']);
     Route::get('/{id}', [CategoryController::class, 'show']);
+});
+
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+
+Route::middleware('auth:sanctum')->group(function() {
+    Route::get('/orders', [OrderController::class, 'index']);
+    Route::get('/order/{id}', [OrderController::class,'show']);
 });
