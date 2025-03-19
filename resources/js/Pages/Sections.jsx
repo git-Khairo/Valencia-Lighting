@@ -3,7 +3,7 @@ import useFetch from '../useFetch';
 
 const Sections = () => {
   const { data, error, loading } = useFetch('/api/sections');
-  console.log(error);
+  console.log(data);
 
   return (
     <div className="w-full m-0 md:w-full md:h-full pt-24">
@@ -19,7 +19,7 @@ const Sections = () => {
             Retry
           </button>
         </div>
-      ) : data && data.Sections ? (
+      ) : data.Sections ? (
         data.Sections.map((section) => (
           <Section
             key={section.category.id}

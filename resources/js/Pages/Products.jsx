@@ -18,7 +18,7 @@ const Products = () => {
             Retry
           </button>
         </div>
-        ) : data && data.products ? (
+        ) : data.products ? (
         <div className='w-11/12 m-auto pt-20'>
             {/* put here the filter for the products page */}
         <div className='grid grid-cols-3 gap-4'>

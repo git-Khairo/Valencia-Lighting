@@ -201,18 +201,12 @@ const Projects = () => {
               Retry
             </button>
           </div>
-        ) : data && data.projects ? (
+        ) :  data.projects ? (
           <div className="min-h-screen pb-8 pt-20 px-4 sm:py-20 sm:px-6 lg:px-8">
-            <div className="border-b-2 border-black mb-8 sm:mb-12 flex justify-between items-center">
+            <div className="mb-8 sm:mb-12">
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-clip-text">
                 Our Projects
               </h1>
-              <select className='px-3 py-2 rounded-lg' onChange={(event) => {console.log(event.target.value)}}>
-                <option value="All Time">All Time</option>
-                <option value="Last Week">Last Week</option>
-                <option value="Last 6 Months">Last 6 Months</option>
-                <option value="Last Year">Last Year</option>
-              </select>
             </div>
             <div className="space-y-4 sm:space-y-6 w-full">
               {data.projects.length >= 8 ? (
@@ -228,7 +222,7 @@ const Projects = () => {
             </div>
           </div>
         ) : (
-          <div className="text-center text-gray-500">No sections available</div>
+          <div className="text-center text-gray-500 pt-20">No Projects available</div>
         )}
       </>
     );

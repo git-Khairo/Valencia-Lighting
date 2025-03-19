@@ -121,7 +121,6 @@ class ProductController extends Controller
     public function getSections()
     {
         $categoryIds = Category::all()->pluck('id')->toArray();
-        $data = [];
 
         foreach ($categoryIds as $categoryId) {
             $products = $this->ProductRepository->byCategory([$categoryId])->inRandomOrder()->take(7)->get();

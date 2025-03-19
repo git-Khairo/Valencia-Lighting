@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
@@ -19,23 +18,14 @@ Route::get('/home', [LayoutController::class, 'getHomePageData']);
 Route::post('/orders', [OrderController::class, 'store']);
 
 Route::prefix('products')->group(function () {
-    Route::post('/', [ProductController::class, 'store']);      // Create a product
-    Route::put('/{code}', [ProductController::class, 'update']);  // Update a product
-    Route::delete('/{code}', [ProductController::class, 'destroy']); // Delete a product
     Route::get('/', [ProductController::class, 'filter']);
     Route::get('/{code}', [ProductController::class, 'byCode']);
 });
 Route::prefix('projects')->group(function () {
-    Route::post('/', [ProjectController::class, 'store']);      // Create a project
-    Route::put('/{id}', [ProjectController::class, 'update']);  // Update a project
-    Route::delete('/{id}', [ProjectController::class, 'destroy']); // Delete a project
     Route::get('/', [ProjectController::class, 'index']);
     Route::get('/{id}', [ProjectController::class, 'show']);
 });
 Route::prefix('categories')->group(function () {
-    Route::post('/', [CategoryController::class, 'store']);      // Create a project
-    Route::put('/{id}', [CategoryController::class, 'update']);  // Update a project
-    Route::delete('/{id}', [CategoryController::class, 'destroy']); // Delete a project
     Route::get('/', [CategoryController::class, 'index']);
     Route::get('/{id}', [CategoryController::class, 'show']);
 });
@@ -45,4 +35,16 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::middleware('auth:sanctum')->group(function() {
     Route::get('/orders', [OrderController::class, 'index']);
     Route::get('/order/{id}', [OrderController::class,'show']);
+
+    Route::post('/products', [ProductController::class, 'store']);     
+    Route::put('/products/{code}', [ProductController::class, 'update']); 
+    Route::delete('/products/{code}', [ProductController::class, 'destroy']);
+
+    Route::post('/projects', [ProjectController::class, 'store']);  
+    Route::put('/projects/{id}', [ProjectController::class, 'update']); 
+    Route::delete('/projects/{id}', [ProjectController::class, 'destroy']); 
+
+    Route::post('/categories', [CategoryController::class, 'store']);    
+    Route::put('/categories/{id}', [CategoryController::class, 'update']); 
+    Route::delete('/categories/{id}', [CategoryController::class, 'destroy']); 
 });

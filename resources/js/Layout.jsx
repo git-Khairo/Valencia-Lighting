@@ -361,7 +361,7 @@ const Layout = ({ children }) => {
       </div>
 
       {/* Main Content */}
-      <main className="bg-slate-100">{children}</main>
+      <main className="bg-slate-100 min-h-lvh">{children}</main>
 
       {/* Footer */}
       <footer className="shadow-2xl shadow-slate-700 bg-light-background text-light-text dark:bg-dark-background dark:text-dark-text py-16 transition-all duration-300">
