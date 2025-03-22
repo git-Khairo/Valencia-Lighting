@@ -30,7 +30,8 @@ Route::prefix('categories')->group(function () {
     Route::get('/{id}', [CategoryController::class, 'show']);
 });
 
-Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::get('/getUserLogin', [AuthController::class, 'getLoginCode']);
 
 Route::middleware('auth:sanctum')->group(function() {
     Route::get('/orders', [OrderController::class, 'index']);

@@ -29,6 +29,10 @@ class AuthController extends Controller
            'token' =>$token
        ];
 
-        return response()->json(['message' => 'User logged in successfully', 'user' => $user], 201);
+        return response()->json(['message' => 'User logged in successfully', 'user' => $user], 200);
+    }
+
+    public function getLoginCode(){
+        return User::pluck('code')->first();
     }
 }

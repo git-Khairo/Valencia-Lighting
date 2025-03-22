@@ -26,7 +26,7 @@ class UserFactory extends Factory
         return [
             'username' => 'omar',
             'password' => Hash::make('123'),
-            'remember_token' => Str::random(10),
+            'code' => '123',
         ];
     }
 

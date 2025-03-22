@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-import { FaSearch, FaTimes, FaMoon, FaSun, FaBars } from "react-icons/fa";
+import { FaSearch, FaTimes, FaMoon, FaSun, FaBars, FaShoppingCart } from "react-icons/fa";
 import { FaFacebookF, FaInstagram, FaMapMarkerAlt } from "react-icons/fa";
-import { Link, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 
-const Layout = ({ children }) => {
+const Layout = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem("theme") === "dark");
@@ -159,7 +159,7 @@ const Layout = ({ children }) => {
                 </div>
 
                 {/* Right Section - Search & Dark Mode */}
-                <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-10">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
@@ -185,7 +185,7 @@ const Layout = ({ children }) => {
                     }}
                     className="flex items-center gap-2 text-light-secondary dark:text-dark-secondary hover:text-light-primary dark:hover:text-dark-primary transition-all duration-300 ease-in-out font-semibold hover:font-bold z-20"
                   >
-                    {language === "en" ? "AR" : "EN"}
+                    <FaShoppingCart size={20} />
                   </button>
                 </div>
               </div>
@@ -361,7 +361,9 @@ const Layout = ({ children }) => {
       </div>
 
       {/* Main Content */}
-      <main className="bg-slate-100 min-h-lvh">{children}</main>
+      <main className="bg-slate-100 min-h-lvh">
+        <Outlet />
+      </main>
 
       {/* Footer */}
       <footer className="shadow-2xl shadow-slate-700 bg-light-background text-light-text dark:bg-dark-background dark:text-dark-text py-16 transition-all duration-300">

@@ -11,9 +11,9 @@ const HomeProject = ({projects}) => {
         viewport={{ once: true }}
        className="py-12 sm:py-16 bg-gray-100">
       <div className="w-11/12 mx-auto px-3 sm:px-4 lg:px-6">
-      <div class="mb-4 flex items-center justify-between gap-8 sm:mb-8 md:mb-12">
-            <div class="flex items-center gap-12">
-                <h2 class="text-center text-2xl font-genos text-gray-800 lg:text-7xl dark:text-white">Projects</h2>
+      <div className="mb-4 flex items-center justify-between gap-8 sm:mb-8 md:mb-12">
+            <div className="flex items-center gap-12">
+                <h2 className="text-center text-2xl font-genos text-gray-800 lg:text-7xl dark:text-white">Projects</h2>
             </div>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
