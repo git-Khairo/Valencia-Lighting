@@ -361,7 +361,7 @@ const Layout = () => {
       </div>
 
       {/* Main Content */}
-      <main className="bg-slate-100 min-h-lvh">
+      <main className="bg-white min-h-lvh">
         <Outlet />
       </main>
 

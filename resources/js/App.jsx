@@ -24,11 +24,6 @@ function ProtectedRoute({ children }){
     }
 }
 
-function ProtectedAdminRoute({ children }) {
-    const isAuthenticated = localStorage.getItem('token') ? true : false;
-    return isAuthenticated ? children : <Navigate to="/" />;
-}
-
 //For routes
 const App = () => {
     return ( 
@@ -53,15 +48,9 @@ const App = () => {
                 </Route>
 
                 {/* Admin Dashboard Routes */}
-                <Route element={<AdminLayout />} >
-                    <Route path="/admindashboard" element={
-                        <ProtectedAdminRoute>
-                            <Routes>
-                                <Route index path="/" element={<Dashboard />} />
-                            </Routes>
-                        </ProtectedAdminRoute>
-                    } />
-                </Route>
+                    <Route element={<AdminLayout />} >
+                        <Route index path="/admin/dashboard" element={<Dashboard />} />
+                    </Route>
 
                 <Route path="*" element={<NotFound />} />
             </Routes>
