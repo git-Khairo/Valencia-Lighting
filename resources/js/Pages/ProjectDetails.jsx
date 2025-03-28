@@ -8,7 +8,7 @@ import ProductCard from "../Components/ProductCard";
 import { useParams } from "react-router-dom";
 import useFetch from '../useFetch';
 
-const Project = () => {
+const ProjectDetails = () => {
   const { id } = useParams();
   const { data, error, loading } = useFetch(`/api/project/${id}`);
   let images = [];
@@ -267,4 +267,4 @@ className="flex flex-col md:flex-row items-center justify-between mx-auto bg-sla
      );
 }
  
-export default Project;
+export default ProjectDetails;

@@ -14,6 +14,7 @@ import {
 import Sidebar from './SideBar'; // Import the new Sidebar component
 
 const Dashboard = () => {
+<<<<<<< HEAD
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedNav, setSelectedNav] = useState('Dashboard');
   const [showAddDropdown, setShowAddDropdown] = useState(false);
@@ -255,4 +256,12 @@ const Dashboard = () => {
   );
 };
 
+=======
+
+    return ( 
+        <h1 className="title text-2xl">hello</h1>
+     );
+}
+ 
+>>>>>>> 47d967aa911a826bc41ab535d5c7d36a6906d1c2
 export default Dashboard;

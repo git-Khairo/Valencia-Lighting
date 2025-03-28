@@ -1,18 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom"; // For React Router (use 'next/link' for Next.js if needed)
 
+
+const truncateText = (text, maxLength = 20) => {
+  return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+};
 const ProductCard = ({ variant = "hover", product }) => {
   const [responsiveVariant, setResponsiveVariant] = useState(variant);
 
   useEffect(() => {
     // Function to check screen width and update the variant
     const handleResize = () => {
-      if (window.innerWidth < 768) {
+      if (window.innerWidth <= 440) {
+        setResponsiveVariant("no-hover");
+      } else if (window.innerWidth <= 768) {
         setResponsiveVariant("static");
       } else {
         setResponsiveVariant(variant);
       }
     };
+    
 
     // Initial check & event listener
     handleResize();
@@ -27,19 +34,19 @@ const ProductCard = ({ variant = "hover", product }) => {
   return (
     <Link to={`/product/${product.id}`} className="block">
       <div
-        className="xxs:h-[200px] small:h-[240px] xs:h-[280px] sm:h-[340px] md:h-[300px] lg:h-[310px] xl:h-[356px] 2xl:h-[400px] 
+        className=" min-h-36 xxs:h-[200px] sm:h-[300px] lg:h-[310px] xl:h-[356px] 2xl:h-[400px] 
         group relative rounded-lg overflow-hidden mx-1 shadow-md border border-gray-200 bg-white transition-all duration-300 ease-linear"
       >
         {/* Picture */}
         <div
           className={`w-full sm:h-[90%] xxs:h-[80%] p-3 transition-all duration-300 ease-linear ${
-            responsiveVariant === "hover" ? "group-hover:pb-6" : "pb-6"
+            responsiveVariant === "hover" ? "group-hover:pb-6" : "pb-1 sm:pb-6"
           }`}
         >
           <img
-            src="build/assets/hhh.webp" // Use image from product
+            src="https://picsum.photos/200" // Use image from product
             alt={product.title} // Use title as alt text
-            className={`w-full xxs:h-[80%] md:h-[95%] object-cover rounded-lg transition-all duration-150 ease-linear ${
+            className={`w-full xxs:h-[90%] md:h-[95%] object-cover rounded-lg transition-all duration-150 ease-linear ${
               responsiveVariant === "hover"
                 ? "group-hover:h-[90%]"
                 : responsiveVariant === "static"
@@ -51,18 +58,18 @@ const ProductCard = ({ variant = "hover", product }) => {
 
         {/* Visible Part + Extra Details */}
         <div
-          className={`w-full bg-white px-6 pb-6 flex flex-col shadow-md transition-all duration-300 ease-linear relative ${
+          className={`w-full bg-white px-6 md:pr-2 md:pl-4 pb-6 flex flex-col shadow-md transition-all duration-300 ease-linear relative ${
             responsiveVariant === "hover"
               ? "group-hover:-translate-y-[40px]"
               : responsiveVariant === "static"
-              ? "-translate-y-[40px]"
+              ? "sm:-translate-y-[40px]"
               : ""
           }`}
         >
           {/* Name & Code */}
-          <div className="flex justify-between w-full items-center">
-            <h3 className="sm:text-lg xxs:text-sm font-semibold">{product.name}</h3>
-            <p className="sm:text-base xxs:text-xs text-gray-500">#{product.id}</p>
+          <div className="flex flex-col sm:flex-row justify-between w-full items-center">
+            <h3 className="xl:text-xl text-sm xxs:text-sm font-semibold">{product.name}</h3>
+            <p className="md:text-xs text-[10px] text-gray-500">#{product.id}</p>
           </div>
 
           {/* Extra Details */}
@@ -76,8 +83,8 @@ const ProductCard = ({ variant = "hover", product }) => {
             }`}
           >
             <div className="flex xxs:flex-col sm:flex-row justify-between items-center">
-              <h3 className="xxs:text-xs xs:text-sm font-semibold">{product.title}</h3>
-              <button
+              <h3 className="xxs:text-xs text-xs font-semibold">{truncateText(product.title)}</h3>
+              {/* <button
                 className="inline-flex items-center font-normal xxs:text-[10px] xs:text-sm text-blue-600 hover:text-blue-800"
                 onClick={(e) => e.preventDefault()} // Prevent default link behavior inside Link
               >
@@ -97,7 +104,7 @@ const ProductCard = ({ variant = "hover", product }) => {
                     d="m1 9 4-4-4-4"
                   />
                 </svg>
-              </button>
+              </button> */}
             </div>
             <div className="flex justify-between items-center">
               <p className="text-sm text-gray-500 xxs:opacity-0 sm:opacity-100">Lorem ipsum sit amet.</p>
