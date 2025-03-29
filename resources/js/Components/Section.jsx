@@ -49,7 +49,7 @@ const Section = ({ category, products }) => {
       {displayedProducts.map((product) => (
         <div 
           key={product.id} 
-          className="xxs:w-[115%] small:w-full 3xl:max-h-[360px]"
+          className="xxs:w-[115%] sm:w-full 3xl:max-h-[360px]"
         >
           <ProductCard variant='hover' product={product} />
         </div>

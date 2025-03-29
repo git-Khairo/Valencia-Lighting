@@ -84,27 +84,6 @@ const ProductCard = ({ variant = "hover", product }) => {
           >
             <div className="flex xxs:flex-col sm:flex-row justify-between items-center">
               <h3 className="xxs:text-xs text-xs font-semibold">{truncateText(product.title)}</h3>
-              {/* <button
-                className="inline-flex items-center font-normal xxs:text-[10px] xs:text-sm text-blue-600 hover:text-blue-800"
-                onClick={(e) => e.preventDefault()} // Prevent default link behavior inside Link
-              >
-                Add to cart
-                <svg
-                  className="w-2.5 h-2.5 ms-2 rtl:rotate-180"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 6 10"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="m1 9 4-4-4-4"
-                  />
-                </svg>
-              </button> */}
             </div>
             <div className="flex justify-between items-center">
               <p className="text-sm text-gray-500 xxs:opacity-0 sm:opacity-100">Lorem ipsum sit amet.</p>

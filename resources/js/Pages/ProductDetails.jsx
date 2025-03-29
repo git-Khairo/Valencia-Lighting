@@ -227,6 +227,15 @@ const ProductDetails = () => {
         </div>
     
             <hr />
+    
+            {/* Labels */}
+            {/* <div className="flex flex-wrap items-center gap-2 3xl:pt-20">
+              {["IP44", "A++", "FLUX 90lm/W", "CRI 80/90"].map((label, index) => (
+                <span key={index} className="px-3 py-1 bg-gray-300 text-black rounded-full 3xl:text-2xl font-semibold border border-black">
+                  {label}
+                </span>
+              ))}
+            </div> */}
 
             {/* Download sheet button */}
             <div>

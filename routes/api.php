@@ -18,7 +18,7 @@ Route::get('/home', [LayoutController::class, 'getHomePageData']);
 Route::post('/orders', [OrderController::class, 'store']);
 
 Route::prefix('products')->group(function () {
-    Route::get('/', [ProductController::class, 'filter']);
+    Route::post('/', [ProductController::class, 'filter']);
     Route::get('/{code}', [ProductController::class, 'byCode']);
 });
 Route::prefix('projects')->group(function () {
@@ -38,7 +38,7 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::get('/orders', [OrderController::class, 'index']);
     Route::get('/order/{id}', [OrderController::class,'show']);
 
-    Route::post('/products', [ProductController::class, 'store']);     
+    Route::post('/products/store', [ProductController::class, 'store']);     
     Route::put('/products/{code}', [ProductController::class, 'update']); 
     Route::delete('/products/{code}', [ProductController::class, 'destroy']);
 

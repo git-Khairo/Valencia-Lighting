@@ -15,7 +15,7 @@ class ProductFactory extends Factory
             'name' => $this->faker->word(),
             'image' => "https://picsum.photos/200",
             'title' =>$this->faker->company(),
-            'brand' => $this->faker->company(),
+            'brand' => $this->faker->randomElement(['sila', 'radial']),
             'description' => $this->faker->paragraph(),
             'dateOfRelease' => $this->faker->date(),
             'code' => $this->faker->unique()->ean13(), // Generates a unique 13-digit product code

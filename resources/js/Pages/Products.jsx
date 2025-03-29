@@ -1,10 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductCard from "../Components/ProductCard";
-import useFetch from "../useFetch";
 import { FaSlidersH, FaTimes } from "react-icons/fa";
 import Pagination from "../Components/Pagination";
 import Slider from "react-slick";
-import { motion } from "framer-motion";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -17,13 +15,51 @@ const products = [
 ];
 
 const Products = () => {
-  const { data, error, loading } = useFetch("/api/sections");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(24); // Keep posts per page constant
- 
-   // Extract all products from all sections
-   const allProducts = data?.Sections?.flatMap((section) => section.products) || [];
+
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [categories, setCategories] = useState([]);
+  const [brand, setBrand] = useState("");
+
+  const updateFilter = (categoryID) => {
+    if(categories.find((id) => id === categoryID )){
+      setCategories(categories.filter(id => id !== categoryID));
+    }else{
+      setCategories([...categories, categoryID]);
+    }
+  }
+  
+
+  useEffect(() => {
+    fetch('/api/products', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "categories": categories,
+        "brand": brand
+      })
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setData(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, [brand, categories]);
  
    // **Reset to page 1 when data changes to avoid empty pages**
    useState(() => {
@@ -34,7 +70,9 @@ const Products = () => {
    // **Pagination logic**
    const lastPostIndex = currentPage * postsPerPage;
    const firstPostIndex = lastPostIndex - postsPerPage;
-   const currentPosts = allProducts.slice(firstPostIndex, lastPostIndex);
+   const currentPosts = data && data.products.slice(firstPostIndex, lastPostIndex);
+
+
    const ProductSliderSettings = {
     dots: true,
     arrows: false,
@@ -106,12 +144,12 @@ const Products = () => {
               <h3 className="font-semibold text-gray-700 dark:text-gray-300">Brand</h3>
               <div className="mt-2 space-y-2">
                 <label className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
-                  <input type="checkbox" className="form-checkbox h-4 w-4 text-blue-500" />
+                  <input type="radio" name="brand" checked={brand === 'sila'} value="sila" className="form-checkbox h-4 w-4 text-blue-500" onClick={(e) => setBrand(e.target.value)}/>
                   <span>Sila</span>
                 </label>
                 <label className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
-                  <input type="checkbox" className="form-checkbox h-4 w-4 text-blue-500" />
-                  <span>Mila</span>
+                  <input type="radio" name="brand" checked={brand === 'radial'} value="radial" className="form-checkbox h-4 w-4 text-blue-500" onClick={(e) => setBrand(e.target.value)}/>
+                  <span>radial</span>
                 </label>
               </div>
             </div>
@@ -122,7 +160,7 @@ const Products = () => {
               <div className="mt-2 space-y-2">
                 {Array.from({ length: 8 }, (_, i) => (
                   <label key={i} className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
-                    <input type="checkbox" className="form-checkbox h-4 w-4 text-blue-500" />
+                    <input type="checkbox" className="form-checkbox h-4 w-4 text-blue-500" onClick={() => updateFilter(i + 1)} checked={categories.includes(i + 1)} />
                     <span>Category {i + 1}</span>
                   </label>
                 ))}
@@ -130,7 +168,7 @@ const Products = () => {
             </div>
 
             {/* Clear Filters Button */}
-            <button className="w-full bg-slate-700 hover:bg-slate-800 text-white py-2 mt-4 rounded transition">
+            <button className="w-full bg-slate-700 hover:bg-slate-800 text-white py-2 mt-4 rounded transition" onClick={() => {setBrand(""); setCategories([])}}>
               Clear All
             </button>
           </div>
@@ -150,7 +188,7 @@ const Products = () => {
                 Retry
               </button>
             </div>
-          ) : allProducts.length > 0 ? (
+          ) : data && data.products.length > 0 ? (
             <>
               <div
                 className="grid 
@@ -170,7 +208,7 @@ const Products = () => {
               {/* **Pagination outside the grid** */}
               <div className="my-10 flex justify-center">
                 <Pagination
-                  totalPosts={allProducts.length}
+                  totalPosts={data.products.length}
                   postsPerPage={postsPerPage}
                   currentPage={currentPage}
                   setCurrentPage={setCurrentPage}
@@ -215,12 +253,12 @@ const Products = () => {
               <h3 className="font-semibold text-gray-700 dark:text-gray-300">Brand</h3>
               <div className="mt-2 space-y-2">
                 <label className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
-                  <input type="checkbox" className="form-checkbox h-4 w-4 text-blue-500" />
+                  <input type="radio" name="brand" value="sila" className="form-checkbox h-4 w-4 text-blue-500" checked={brand === 'sila'} onClick={(e) => setBrand(e.target.value)} />
                   <span>Sila</span>
                 </label>
                 <label className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
-                  <input type="checkbox" className="form-checkbox h-4 w-4 text-blue-500" />
-                  <span>Mila</span>
+                  <input type="radio" name="brand" value="radial" className="form-checkbox h-4 w-4 text-blue-500" checked={brand === 'radial'} onClick={(e) => setBrand(e.target.value)} />
+                  <span>Radial</span>
                 </label>
               </div>
             </div>
@@ -231,15 +269,18 @@ const Products = () => {
               <div className="mt-2 space-y-2">
                 {Array.from({ length: 8 }, (_, i) => (
                   <label key={i} className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
-                    <input type="checkbox" className="form-checkbox h-4 w-4 text-blue-500" />
+                    <input type="checkbox" className="form-checkbox h-4 w-4 text-blue-500" checked={categories.includes(i + 1)} onClick={() => updateFilter(i + 1)} />
                     <span>Category {i + 1}</span>
                   </label>
                 ))}
               </div>
             </div>
 
-            <button className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 mt-4 rounded transition">
+            <button className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 mt-4 rounded transition" onClick={() => setIsFilterOpen(false)}>
               Apply Filters
+            </button>
+            <button className="w-full bg-red-500 hover:bg-red-600 text-white py-2 mt-4 rounded transition" onClick={() => {setBrand(""); setCategories([]); setIsFilterOpen(false)}}>
+              Clear Filters
             </button>
           </div>
         </div>

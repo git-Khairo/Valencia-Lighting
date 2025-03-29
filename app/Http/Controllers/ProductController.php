@@ -138,7 +138,7 @@ class ProductController extends Controller
 
     public function filter(Request $request){
         $categoriesId = $request->input('categories',[]);
-        $brand= $request->input('brand',null);
+        $brand= $request->input('brand',[]);
 
         if(!empty($categoriesId)){
             $products=$this->ProductRepository->byCategories($categoriesId);
