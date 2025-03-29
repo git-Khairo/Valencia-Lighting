@@ -23,7 +23,7 @@ class OrderRepository implements OrderRepositoryInterface
     public function getAllOrdersWithProducts(): Collection
     {
         return $this->model->with(['products' => function ($query) {
-            $query->select('products.id', 'products.name', 'products.image', 'products_orders.quantity');
+            $query->select('products.code', 'products.brand','products.name', 'products.image', 'products.title','products_orders.quantity');
         }])
             ->select('id', 'firstName', 'lastName', 'email', 'phone', 'created_at')
             ->get();

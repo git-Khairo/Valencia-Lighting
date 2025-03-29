@@ -1,3 +1,4 @@
+// Layout.jsx
 import { useState, useEffect, useRef } from "react";
 import { FaSearch, FaTimes, FaMoon, FaSun, FaBars, FaShoppingCart } from "react-icons/fa";
 import { FaFacebookF, FaInstagram, FaMapMarkerAlt } from "react-icons/fa";
@@ -100,7 +101,7 @@ const Layout = () => {
           if (data.message === "Default Search") {
             setSearchResults({
               products: data.products || [],
-              categories: data.categories || [],
+              categories: data.products || [],
               projects: data.projects || [],
             });
           }
@@ -114,7 +115,7 @@ const Layout = () => {
   const limitedProjects = searchResults.projects.slice(0, isSmallScreen ? 2 : 3);
 
   return (
-    <div className="overflow-x-hidden w-full">
+    <div className="flex flex-col min-h-screen">
       <div className="fixed w-full z-10">
         <div
           className={`${showSearch ? "fixed inset-0 bg-gray/30 dark:bg-black/30 transition-opacity opacity-100 visible z-10 backdrop-blur-md" : ""}`}
@@ -122,7 +123,7 @@ const Layout = () => {
         >
           <nav
             className={`relative transition-all duration-700 ease-in-out w-full shadow-md ${
-              isHomePage && !isScrolled
+              isHomePage && !isScrolled && !showSearch
                 ? "bg-white/30 dark:bg-dark-background/50 backdrop-blur-md"
                 : "bg-light-background dark:bg-dark-background"
             }`}
@@ -176,7 +177,7 @@ const Layout = () => {
                     }}
                     className="text-light-secondary dark:text-dark-secondary hover:text-light-primary dark:hover:text-dark-primary transition-colors duration-700 z-20"
                   >
-                    {darkMode ? <FaSun size={20} /> : <FaMoon size={20} />} {/* Swapped icons */}
+                    {darkMode ? <FaSun size={20} /> : <FaMoon size={20} />}
                   </button>
                   <button
                     onClick={(e) => {
@@ -198,7 +199,7 @@ const Layout = () => {
             className={`absolute top-[63.49px] left-0 w-[100%] sm:w-[100%] 2xl:w-[50%] 2xl:mx-[25%] md:w-[72%] md:mx-[14%] lg:w-[60%] lg:mx-[20%] shadow-2xl rounded-b-lg transition-all duration-700 ease-in-out overflow-hidden ${
               showSearch
                 ? `opacity-100 visible xl:max-h-[500px] max-h-[340px] sm:max-h-[400px] z-10 ${
-                    isHomePage && !isScrolled
+                    isHomePage && !isScrolled && !showSearch
                       ? "bg-white/30 dark:bg-dark-background/50 backdrop-blur-md"
                       : "bg-light-background dark:bg-dark-background"
                   }`
@@ -361,7 +362,7 @@ const Layout = () => {
       </div>
 
       {/* Main Content */}
-      <main className="bg-white min-h-lvh">
+      <main className="flex-1">
         <Outlet />
       </main>
 
