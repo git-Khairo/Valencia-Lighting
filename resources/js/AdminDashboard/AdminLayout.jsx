@@ -29,17 +29,7 @@ const AdminLayout = () => {
 
     return ( 
         <div>
-        <div className="flex flex-col justify-center items-center">
-            <header>Admin Dashboard Header</header>
-            <nav>
-                <a href="">Overview</a> | 
-                <a href="">Users</a> | 
-                <a href="">Settings</a>
-            </nav>
-        </div>
-            <main>
-                <Outlet />
-            </main>
+          <Outlet />
         </div>
      );
 }
