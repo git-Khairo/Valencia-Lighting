@@ -259,11 +259,11 @@ const Products = () => {
               <h3 className="font-semibold text-gray-700 dark:text-gray-300">Brand</h3>
               <div className="mt-2 space-y-2">
                 <label className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
-                  <input type="radio" name="brand" value="sila" className="form-radio h-4 w-4 text-blue-500" checked={brand === 'sila'} onChange={(e) => setBrand(e.target.value)} />
+                  <input type="radio" name="brandMobile" value="sila" className="form-radio h-4 w-4 text-blue-500" checked={brand === 'sila'} onChange={(e) => setBrand(e.target.value)} />
                   <span>Sila</span>
                 </label>
                 <label className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
-                  <input type="radio" name="brand" value="radial" className="form-radio h-4 w-4 text-blue-500" checked={brand === 'radial'} onChange={(e) => setBrand(e.target.value)} />
+                  <input type="radio" name="brandMobile" value="radial" className="form-radio h-4 w-4 text-blue-500" checked={brand === 'radial'} onChange={(e) => setBrand(e.target.value)} />
                   <span>Radial</span>
                 </label>
               </div>
