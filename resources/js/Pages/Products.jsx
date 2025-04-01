@@ -1,17 +1,17 @@
 import { useCallback, useEffect, useState } from "react";
 import ProductCard from "../Components/ProductCard";
-import { FaSlidersH, FaTimes } from "react-icons/fa";
+import { FaChevronDown, FaEye, FaEyeSlash, FaMinus, FaPlus, FaSlidersH, FaTimes } from "react-icons/fa";
 import Pagination from "../Components/Pagination";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Filter from "../Components/Filter";
 
-const products = [
-  { id: 1, image: "https://picsum.photos/200" },
-  { id: 2, image: "https://picsum.photos/200"  },
-  { id: 3, image: "https://picsum.photos/200"  },
-  { id: 4, image: "https://picsum.photos/200"  },
+const productsSlider = [
+  { id: 1, image: "https://picsum.photos/200", "title": "Winter Sale", "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit." },
+  { id: 2, image: "https://picsum.photos/200", "title": "Spring Sale", "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit." },
+  { id: 3, image: "https://picsum.photos/200", "title": "Autumn Sale", "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit." },
+  { id: 4, image: "https://picsum.photos/200", "title": "Summer Sale", "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit." },
   
 ];
 
@@ -21,12 +21,15 @@ const Products = () => {
   const [postsPerPage] = useState(24); // Keep posts per page constant
   const [showFilters, setShowFilters] = useState(true);
   const [showSortDropdown, setShowSortDropdown] = useState(false);
-  const [sortOption, setSortOption] = useState('featured');
+  const [sortOption, setSortOption] = useState('Latest');
   const [data, setData] = useState(null);
+  const [products, setProducts] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [categories, setCategories] = useState([]);
   const [brand, setBrand] = useState("");
+  const [dropDownFilterIndoor, setDropDownFilterIndoor] = useState(false);
+  const [dropDownFilterOutdoor, setDropDownFilterOutdoor] = useState(false);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -69,7 +72,8 @@ const Products = () => {
         return response.json();
       })
       .then(data => {
-        setData(data);
+        setData(data.products);
+        setProducts(data.products)
         setLoading(false);
       })
       .catch(err => {
@@ -87,11 +91,31 @@ const Products = () => {
    // **Pagination logic**
    const lastPostIndex = currentPage * postsPerPage;
    const firstPostIndex = lastPostIndex - postsPerPage;
-   const currentPosts = data && data.products.slice(firstPostIndex, lastPostIndex);
+   const currentPosts = data && products.slice(firstPostIndex, lastPostIndex);
+
+   const handleSortAtoZ = () => {
+    const sortedData = [...products].sort((a, b) => a.name.localeCompare(b.name));
+    setProducts(sortedData); // Update state with the sorted array
+  };
+
+  const handleSortZtoA = () => {
+    const sortedData = [...products].sort((a, b) => b.name.localeCompare(a.name));
+    setProducts(sortedData); // Update state with the sorted array
+  };
+
+  const handleSortLatest = () => {
+    setProducts([...data]);
+  };
+
+  const sortFunctions = {
+    "A to Z": handleSortAtoZ,
+    "Z to A": handleSortZtoA,
+    "Latest": handleSortLatest,
+  };
 
 
    const ProductSliderSettings = {
-    dots: true,
+    dots: false,
     arrows: false,
     infinite: true,
     speed: 1500,
@@ -103,22 +127,21 @@ const Products = () => {
   };
  
   return (
-    <div className="w-full m-0 md:w-full">
+    <div className="w-full m-0 overflow-x-hidden md:overflow-x-visible">
       {/* Slider Section */}
       <section className="pt-16 pb-10">
       <div className="w-full">
         <Slider {...ProductSliderSettings}>
-          {products.map((product, index) => (
+          {productsSlider.map((product, index) => (
             <div key={product.id || index} className="relative">
               <img
                 src={product.image}
                 alt={`Product ${index + 1}`}
-                className="w-full h-[400px] object-cover"
+                className="w-full h-[200px] object-cover"
               />
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center space-y-4">
-                <h1 className="text-4xl font-bold text-white">Winter Sale</h1>
-                <p className="text-lg text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <button className="text-black text-base bg-white/40 px-4 py-1.5 rounded-md">Shop Now</button>
+                <h1 className="text-2xl md:text-4xl font-bold text-white">{product.title}</h1>
+                <p className="text-sm md:text-lg text-white">{product.description}</p>
               </div>
             </div>
           ))}
@@ -143,7 +166,7 @@ const Products = () => {
                   onClick={toggleFilters}
                 >
                   <span>{showFilters ? 'Hide Filters' : 'Show Filters'}</span>
-                  <i className={`fas fa-${showFilters ? 'eye-slash' : 'eye'}`}></i>
+                  {showFilters ? <FaEyeSlash /> : <FaEye />}
                 </button>
                 </div>
                 {/* Filter Button (Only visible on mobile) */}
@@ -162,17 +185,18 @@ const Products = () => {
                     onClick={() => setShowSortDropdown(!showSortDropdown)}
                   >
                     <span>Sort By: {sortOption}</span>
-                    <i className="fas fa-chevron-down"></i>
+                    <FaChevronDown />
                   </button>
                   {showSortDropdown && (
-                    <div className="absolute right-0 mt-2 w-48 bg-white border shadow-lg z-10">
-                      {['Featured', 'Price: Low to High', 'Price: High to Low', 'Newest'].map(option => (
+                    <div className="absolute text-center right-0 mt-2 w-40 bg-white border shadow-lg z-10">
+                      {['Latest', 'A to Z', 'Z to A'].map(option => (
                         <div
                           key={option}
                           className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
                           onClick={() => {
-                            setSortOption(option.toLowerCase());
+                            setSortOption(option);
                             setShowSortDropdown(false);
+                            sortFunctions[option]();
                           }}
                         >
                           {option}
@@ -195,7 +219,7 @@ const Products = () => {
                 Retry
               </button>
             </div>
-          ) : data && data.products.length > 0 ? (
+          ) : data && products.length > 0 ? (
             <>
               <div
                 className="grid 
@@ -206,7 +230,7 @@ const Products = () => {
                   w-full"
               >
                 {currentPosts.map((product) => (
-                  <div key={product.id} className="xxs:w-[115%] sm:w-full 3xl:max-h-[360px]">
+                  <div key={product.id} className="w-full 3xl:max-h-[360px]">
                     <ProductCard variant="static" product={product} />
                   </div>
                 ))}
@@ -215,7 +239,7 @@ const Products = () => {
               {/* **Pagination outside the grid** */}
               <div className="my-10 flex justify-center">
                 <Pagination
-                  totalPosts={data.products.length}
+                  totalPosts={data.length}
                   postsPerPage={postsPerPage}
                   currentPage={currentPage}
                   setCurrentPage={setCurrentPage}
@@ -237,7 +261,7 @@ const Products = () => {
         onClick={() => setIsFilterOpen(false)}
       >
         <div
-          className={`fixed bottom-0 right-0 w-64 h-full bg-light-background dark:bg-gray-900 shadow-lg p-4 transition-transform duration-500 ${
+          className={`fixed bottom-0 left-0 w-80 h-full bg-light-background dark:bg-gray-900 shadow-lg p-4 transition-transform duration-500 ${
             isFilterOpen ? "translate-y-0" : "translate-y-full"
           }`}
           onClick={(e) => e.stopPropagation()}
@@ -273,12 +297,34 @@ const Products = () => {
             <div className="mb-4">
               <h3 className="font-semibold text-gray-700 dark:text-gray-300">Categories</h3>
               <div className="mt-2 space-y-2">
-                {Array.from({ length: 8 }, (_, i) => (
-                  <label key={i} className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
-                    <input type="checkbox" className="form-checkbox h-4 w-4 text-blue-500" checked={categories.includes(i + 1)} onChange={() => updateFilter(i + 1)} />
-                    <span>Category {i + 1}</span>
-                  </label>
-                ))}
+                <div className={`flex justify-between items-center px-3 py-2 border-dashed border-b-2 ${dropDownFilterIndoor ? 'text-black border-black' : 'text-gray-400 border-gray-400'}`}  onClick={() => {setDropDownFilterIndoor(!dropDownFilterIndoor); setDropDownFilterOutdoor(false)}}>
+                <h2 className="text-lg">Indoor</h2>
+                {dropDownFilterIndoor ? <FaMinus /> : <FaPlus />}
+                </div>
+                <div className={`overflow-hidden transition-all duration-700 ease-in-out space-y-2 ${
+                        dropDownFilterIndoor ? 'max-h-44 opacity-100 translate-y-0' : 'max-h-0 opacity-0 -translate-y-2'
+                      }`}>
+                  {dropDownFilterIndoor && Array.from({ length: 5 }, (_, i) => (
+                    <label key={i} className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
+                      <input type="checkbox" className="form-checkbox h-4 w-4 text-blue-500" onChange={() => updateFilter(i + 1)} checked={categories.includes(i + 1)} />
+                      <span>Category {i + 1}</span>
+                    </label>
+                  ))}
+                  </div>
+                <div className={`flex justify-between items-center px-3 py-2 border-dashed border-b-2 ${dropDownFilterOutdoor ? 'text-black border-black' : 'text-gray-400 border-gray-400'}`} onClick={() => {setDropDownFilterOutdoor(!dropDownFilterOutdoor); setDropDownFilterIndoor(false)}}>
+                <h2 className="text-lg">Outdoor</h2>
+                {dropDownFilterOutdoor ? <FaMinus /> : <FaPlus/>}
+                </div>
+                <div className={`overflow-hidden transition-all duration-700 ease-in-out space-y-2 ${
+                        dropDownFilterOutdoor ? 'max-h-44 opacity-100 translate-y-0' : 'max-h-0 opacity-0 -translate-y-2'
+                      }`}>
+                  {dropDownFilterOutdoor && Array.from({ length: 5 }, (_, i) => (
+                    <label key={i} className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
+                      <input type="checkbox" className="form-checkbox h-4 w-4 text-blue-500" onChange={() => updateFilter(i + 6)} checked={categories.includes(i + 6)} />
+                      <span>Category {i + 6}</span>
+                    </label>
+                  ))}
+                  </div>
               </div>
             </div>
 
