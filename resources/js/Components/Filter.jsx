@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaMinus, FaPlus } from "react-icons/fa";
+import { FaLightbulb, FaMinus, FaPlus, FaRegLightbulb } from "react-icons/fa";
 
 const Filter = ({ updateFilter, categories, brand, setBrand, setCategories }) => {
   const [dropDownFilterIndoor, setDropDownFilterIndoor] = useState(false);
@@ -14,14 +14,28 @@ const Filter = ({ updateFilter, categories, brand, setBrand, setCategories }) =>
          {/* Brand Filter */}
          <div className="mb-4">
            <h3 className="font-semibold text-gray-700 dark:text-gray-300">Brand</h3>
-           <div className="mt-2 space-y-2">
-             <label className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
-             <input type="radio" name="brand" value="sila" className="form-radio h-4 w-4" checked={brand === "sila"} onChange={(e) => setBrand(e.target.value)} />
-               <span>Sila</span>
+           <div className="mt-2 space-y-4">
+             <label htmlFor="sila" className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
+             <input type="radio" id="sila" name="brand" value="sila" className="peer hidden" onChange={(e) => setBrand(e.target.value)} />
+             <span className="w-7 h-7 mr-2 flex items-center justify-center">
+              {brand === 'sila' ? (
+                <FaLightbulb size={20} />
+              ) : (
+                <FaRegLightbulb size={20}/>
+              )}
+            </span>
+            Sila
              </label>
-             <label className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
-             <input type="radio" name="brand" value="radial" className="form-radio h-4 w-4" checked={brand === "radial"} onChange={(e) => setBrand(e.target.value)} />
-               <span>Radial</span>
+             <label htmlFor="radial" className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
+             <input type="radio" id="radial" name="brand" value="radial" className="peer hidden" onChange={(e) => setBrand(e.target.value)} />
+             <span className="w-7 h-7 mr-2 flex items-center justify-center">
+              {brand === 'radial' ? (
+                <FaLightbulb size={20} />
+              ) : (
+                <FaRegLightbulb size={20}/>
+              )}
+            </span>
+            Radial
              </label>
            </div>
          </div>
@@ -39,7 +53,7 @@ const Filter = ({ updateFilter, categories, brand, setBrand, setCategories }) =>
                   }`}>
              {dropDownFilterIndoor && Array.from({ length: 5 }, (_, i) => (
                <label key={i} className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
-                 <input type="checkbox" className="form-checkbox h-4 w-4 text-blue-500" onChange={() => updateFilter(i + 1)} checked={categories.includes(i + 1)} />
+                 <input type="checkbox" className="form-checkbox h-4 w-4 accent-black" onChange={() => updateFilter(i + 1)} checked={categories.includes(i + 1)} />
                  <span>Category {i + 1}</span>
                </label>
              ))}
@@ -53,7 +67,7 @@ const Filter = ({ updateFilter, categories, brand, setBrand, setCategories }) =>
                   }`}>
              {dropDownFilterOutdoor && Array.from({ length: 5 }, (_, i) => (
                <label key={i} className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
-                 <input type="checkbox" className="form-checkbox h-4 w-4 text-blue-500" onChange={() => updateFilter(i + 6)} checked={categories.includes(i + 6)} />
+                 <input type="checkbox" className="form-checkbox h-4 w-4 accent-black" onChange={() => updateFilter(i + 6)} checked={categories.includes(i + 6)} />
                  <span>Category {i + 6}</span>
                </label>
              ))}

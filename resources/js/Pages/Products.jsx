@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import ProductCard from "../Components/ProductCard";
-import { FaChevronDown, FaEye, FaEyeSlash, FaMinus, FaPlus, FaSlidersH, FaTimes } from "react-icons/fa";
+import { FaChevronDown, FaEye, FaEyeSlash, FaLightbulb, FaMinus, FaPlus, FaRegLightbulb, FaSlidersH, FaTimes } from "react-icons/fa";
 import Pagination from "../Components/Pagination";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -150,7 +150,7 @@ const Products = () => {
     </section>
 
       {/* Main Content Layout */}
-      <div className="max-w-[1440px] mx-auto px-8 py-12">
+      <div className="max-w-[1440px] mx-auto px-3 py-12">
         <div className="flex gap-8">
         { showFilters &&
         <Filter updateFilter={updateFilter} brand={brand} categories={categories} setBrand={setBrand} setCategories={setCategories}/>
@@ -158,7 +158,7 @@ const Products = () => {
         {/* Products Section */}
         <div className={`${showFilters ? "w-4/5" : "w-full"} w-full`}>
         <div className="flex justify-between items-center mb-8">
-              <h2 className="text-2xl font-semibold">All Products</h2>
+              <h2 className="sm:text-2xl text-lg font-semibold hidden md:block">All Products</h2>
               <div className="flex items-center gap-3">
                 <div className="hidden md:block">
                 <button
@@ -173,7 +173,7 @@ const Products = () => {
                 <div className="block md:hidden">
                   <button
                     onClick={() => setIsFilterOpen(true)}
-                    className="!rounded-button flex items-center space-x-2 px-4 py-2 border ${darkMode ? 'border-gray-700 hover:bg-gray-800' : 'hover:bg-gray-100'} cursor-pointer whitespace-nowrap"
+                    className="flex items-center space-x-2 px-4 py-2 border ${darkMode ? 'border-gray-700 hover:bg-gray-800' : 'hover:bg-gray-100'} cursor-pointer whitespace-nowrap"
                   >
                     <FaSlidersH className="mr-1.5"/>
                     Filter
@@ -181,7 +181,7 @@ const Products = () => {
                 </div>
                 <div className="relative sort-dropdown">
                   <button
-                    className="!rounded-button flex items-center space-x-2 px-4 py-2 border hover:bg-gray-100 cursor-pointer whitespace-nowrap"
+                    className="flex items-center space-x-2 px-4 py-2 border hover:bg-gray-100 cursor-pointer whitespace-nowrap"
                     onClick={() => setShowSortDropdown(!showSortDropdown)}
                   >
                     <span>Sort By: {sortOption}</span>
@@ -223,10 +223,10 @@ const Products = () => {
             <>
               <div
                 className="grid 
-                  grid-cols-2 gap-x-6 gap-y-8 3xl:gap-y-20
+                  grid-cols-2 gap-y-8 3xl:gap-y-20
                   md:grid-cols-2 md:gap-6
                   lg:grid-cols-3  
-                  3xl:grid-cols-6 
+                  3xl:grid-cols-4 
                   w-full"
               >
                 {currentPosts.map((product) => (
@@ -283,12 +283,26 @@ const Products = () => {
               <h3 className="font-semibold text-gray-700 dark:text-gray-300">Brand</h3>
               <div className="mt-2 space-y-2">
                 <label className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
-                  <input type="radio" name="brandMobile" value="sila" className="form-radio h-4 w-4 text-blue-500" checked={brand === 'sila'} onChange={(e) => setBrand(e.target.value)} />
-                  <span>Sila</span>
+                  <input type="radio" name="brandMobile" value="sila" className="peer hidden" onChange={(e) => setBrand(e.target.value)} />
+                  <span className="w-7 h-7 mr-2 flex items-center justify-center">
+                  {brand === 'sila' ? (
+                    <FaLightbulb size={20} />
+                  ) : (
+                    <FaRegLightbulb size={20}/>
+                  )}
+                </span>
+                Sila
                 </label>
                 <label className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
-                  <input type="radio" name="brandMobile" value="radial" className="form-radio h-4 w-4 text-blue-500" checked={brand === 'radial'} onChange={(e) => setBrand(e.target.value)} />
-                  <span>Radial</span>
+                  <input type="radio" name="brandMobile" value="radial" className="peer hidden" onChange={(e) => setBrand(e.target.value)} />
+                 <span className="w-7 h-7 mr-2 flex items-center justify-center">
+                  {brand === 'radial' ? (
+                    <FaLightbulb size={20} />
+                  ) : (
+                    <FaRegLightbulb size={20}/>
+                  )}
+                </span>
+                Radial
                 </label>
               </div>
             </div>
@@ -306,7 +320,7 @@ const Products = () => {
                       }`}>
                   {dropDownFilterIndoor && Array.from({ length: 5 }, (_, i) => (
                     <label key={i} className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
-                      <input type="checkbox" className="form-checkbox h-4 w-4 text-blue-500" onChange={() => updateFilter(i + 1)} checked={categories.includes(i + 1)} />
+                      <input type="checkbox" className="form-checkbox h-4 w-4 accent-black" onChange={() => updateFilter(i + 1)} checked={categories.includes(i + 1)} />
                       <span>Category {i + 1}</span>
                     </label>
                   ))}
@@ -320,7 +334,7 @@ const Products = () => {
                       }`}>
                   {dropDownFilterOutdoor && Array.from({ length: 5 }, (_, i) => (
                     <label key={i} className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
-                      <input type="checkbox" className="form-checkbox h-4 w-4 text-blue-500" onChange={() => updateFilter(i + 6)} checked={categories.includes(i + 6)} />
+                      <input type="checkbox" className="form-checkbox h-4 w-4 accent-black" onChange={() => updateFilter(i + 6)} checked={categories.includes(i + 6)} />
                       <span>Category {i + 6}</span>
                     </label>
                   ))}
