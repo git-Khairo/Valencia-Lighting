@@ -53,8 +53,6 @@ class AuthController extends Controller
         if ($tokenExists) {
             return response()->json(true);
         }
-
-        return response()->json($request);
     
         return response()->json(false);
     }
