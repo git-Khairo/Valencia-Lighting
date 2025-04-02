@@ -14,46 +14,11 @@ import {
   faArrowLeft
 } from '@fortawesome/free-solid-svg-icons';
 import Sidebar from './SideBar';
-import debounce from 'lodash/debounce'; // You'll need to install lodash: npm install lodash
+import debounce from 'lodash/debounce';
 
-const SearchResults = ({ searchQuery, itemsPerPage }) => {
-  const [searchResults, setSearchResults] = useState({ products: [], categories: [], projects: [] });
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+// Separate component for SearchResults
+const SearchResults = ({ searchQuery, itemsPerPage, onEdit, onDelete, searchResults }) => {
   const [currentPage, setCurrentPage] = useState(1);
-
-  useEffect(() => {
-    const fetchSearchResults = debounce(async () => {
-      setLoading(true);
-      setError('');
-      try {
-        const url = searchQuery.length > 0 
-          ? `http://127.0.0.1:8000/api/search?query=${searchQuery}`
-          : 'http://127.0.0.1:8000/api/defaultSearch';
-        
-        const response = await fetch(url);
-        const data = await response.json();
-
-        if (data.message === 'Search' || data.message === 'Default Search') {
-          setSearchResults({
-            products: data.products.map(item => ({ ...item, type: 'product' })) || [],
-            categories: data.categories.map(item => ({ ...item, categoryType: item.type, type: 'category' })) || [],
-            projects: data.projects.map(item => ({ ...item, type: 'project' })) || [],
-          });
-        } else {
-          setError('No results found');
-        }
-      } catch {
-        setError('Failed to fetch search results');
-        setSearchResults({ products: [], categories: [], projects: [] });
-      } finally {
-        setLoading(false);
-      }
-    }, 300); // Debounce for 300ms
-
-    fetchSearchResults();
-    return () => fetchSearchResults.cancel(); // Cleanup debounce on unmount
-  }, [searchQuery]);
 
   const allItems = [
     ...searchResults.products,
@@ -77,90 +42,169 @@ const SearchResults = ({ searchQuery, itemsPerPage }) => {
     setCurrentPage(pageNumber);
   };
 
-  if (loading) {
-    return <div className="text-center py-4">Loading...</div>;
-  }
+  return (
+    <div>
+      {filteredItems.length === 0 ? (
+        <p className="text-center text-light-secondary dark:text-dark-secondary py-4">No results found.</p>
+      ) : (
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            {currentItems.map((item) => (
+              <div 
+                key={item.id} 
+                className="bg-white dark:bg-dark-secondary rounded-lg shadow-sm overflow-hidden flex flex-col h-full transition-all duration-200 hover:shadow-lg hover:scale-[1.02]"
+              >
+                <div className="h-40 sm:h-48 overflow-hidden">
+                  <img 
+                    src={item.image} 
+                    alt={item.name || item.title || item.categoryType} 
+                    className="w-full h-full object-cover" 
+                  />
+                </div>
+                <div className="p-4 sm:p-6 flex flex-col flex-grow">
+                  <div className="flex justify-between items-start mb-4">
+                    <h3 className="text-base sm:text-lg font-semibold text-light-text dark:text-dark-text transition-colors duration-200">
+                      {item.name || item.title || item.categoryType}
+                    </h3>
+                    <span className="px-2 sm:px-3 py-1 rounded-full text-xs font-medium bg-light-accent text-light-primary dark:bg-dark-accent dark:text-dark-primary transition-colors duration-200">
+                      {item.type === 'category' ? item.categoryType : item.type}
+                    </span>
+                  </div>
+                  <p className="text-light-secondary dark:text-dark-secondary mb-4 text-sm sm:text-base flex-grow transition-colors duration-200">
+                    {item.brand || item.categoryType || item.type}
+                  </p>
+                  <div className="flex justify-between space-x-2 mt-auto pt-4">
+                    <button
+                      onClick={() => onEdit(item)}
+                      className="px-3 sm:px-4 py-1 sm:py-2 text-xs sm:text-sm font-medium text-light-primary hover:bg-light-accent dark:text-dark-primary dark:hover:bg-dark-accent rounded-lg transition-all duration-200 hover:shadow-sm"
+                    >
+                      <FontAwesomeIcon icon={faEdit} className="mr-1 sm:mr-2" />
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => onDelete(item)}
+                      className="px-3 sm:px-4 py-1 sm:py-2 text-xs sm:text-sm font-medium text-red-600 hover:bg-red-100 dark:text-red-400 dark:hover:bg-red-900 rounded-lg transition-all duration-200 hover:shadow-sm"
+                    >
+                      <FontAwesomeIcon icon={faTrashCan} className="mr-1 sm:mr-2" />
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {totalPages > 1 && (
+            <div className="mt-6 flex justify-center items-center space-x-2">
+              <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="px-3 py-1 rounded-lg bg-light-secondary text-light-text dark:bg-dark-secondary dark:text-dark-text disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover:bg-light-accent dark:hover:bg-dark-accent"
+              >
+                <FontAwesomeIcon icon={faAngleLeft} />
+              </button>
+              {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
+                <button
+                  key={page}
+                  onClick={() => handlePageChange(page)}
+                  className={`px-3 py-1 rounded-lg transition-all duration-200 ${
+                    currentPage === page
+                      ? 'bg-light-primary text-white dark:bg-dark-primary'
+                      : 'bg-light-secondary text-light-text dark:bg-dark-secondary dark:text-dark-text hover:bg-light-accent dark:hover:bg-dark-accent'
+                  }`}
+                >
+                  {page}
+                </button>
+              ))}
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="px-3 py-1 rounded-lg bg-light-secondary text-light-text dark:bg-dark-secondary dark:text-dark-text disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover:bg-light-accent dark:hover:bg-dark-accent"
+              >
+                <FontAwesomeIcon icon={faAngleRight} />
+              </button>
+            </div>
+          )}
+        </>
+      )}
+    </div>
+  );
+};
+
+// New SelectionPage component
+const SelectionPage = ({ selectionType, formData, setFormData, onBack, searchResults }) => {
+  const [selectionSearch, setSelectionSearch] = useState('');
+  const options = {
+    selectedProjects: searchResults.projects.map(project => ({ value: project.id, label: project.title })),
+    selectedCategories: searchResults.categories.map(category => ({ value: category.id, label: category.categoryType })),
+    selectedProducts: searchResults.products.map(product => ({ value: product.id, label: product.title }))
+  }[selectionType] || [];
+  const selected = formData[selectionType] || [];
+  const displayType = selectionType.replace('selected', '').toLowerCase();
+
+  const filteredOptions = options.filter(option =>
+    option.label.toLowerCase().includes(selectionSearch.toLowerCase())
+  );
+
+  const toggleSelection = (value) => {
+    setFormData(prev => {
+      const current = prev[selectionType] || [];
+      const newSelected = current.includes(value)
+        ? current.filter(id => id !== value)
+        : [...current, value];
+      return { ...prev, [selectionType]: newSelected };
+    });
+  };
 
   return (
     <>
-      {error && <p className="text-red-500 mt-2">{error}</p>}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-        {currentItems.map((item) => (
-          <div 
-            key={item.id} 
-            className="bg-white dark:bg-dark-secondary rounded-lg shadow-sm overflow-hidden flex flex-col h-full transition-all duration-200 hover:shadow-lg hover:scale-[1.02]"
-          >
-            <div className="h-40 sm:h-48 overflow-hidden">
-              <img 
-                src={item.image} 
-                alt={item.name || item.title || item.categoryType} 
-                className="w-full h-full object-cover" 
-              />
-            </div>
-            <div className="p-4 sm:p-6 flex flex-col flex-grow">
-              <div className="flex justify-between items-start mb-4">
-                <h3 className="text-base sm:text-lg font-semibold text-light-text dark:text-dark-text transition-colors duration-200">
-                  {item.name || item.title || item.categoryType}
-                </h3>
-                <span className="px-2 sm:px-3 py-1 rounded-full text-xs font-medium bg-light-accent text-light-primary dark:bg-dark-accent dark:text-dark-primary transition-colors duration-200">
-                  {item.type === 'category' ? item.categoryType : item.type}
-                </span>
-              </div>
-              <p className="text-light-secondary dark:text-dark-secondary mb-4 text-sm sm:text-base flex-grow transition-colors duration-200">
-                {item.brand || item.categoryType || item.type}
-              </p>
-              <div className="flex justify-between space-x-2 mt-auto pt-4">
-                <button
-                  onClick={() => handleEdit(item)}
-                  className="px-3 sm:px-4 py-1 sm:py-2 text-xs sm:text-sm font-medium text-light-primary hover:bg-light-accent dark:text-dark-primary dark:hover:bg-dark-accent rounded-lg transition-all duration-200 hover:shadow-sm"
-                >
-                  <FontAwesomeIcon icon={faEdit} className="mr-1 sm:mr-2" />
-                  Edit
-                </button>
-                <button
-                  onClick={() => handleDelete(item)}
-                  className="px-3 sm:px-4 py-1 sm:py-2 text-xs sm:text-sm font-medium text-red-600 hover:bg-red-100 dark:text-red-400 dark:hover:bg-red-900 rounded-lg transition-all duration-200 hover:shadow-sm"
-                >
-                  <FontAwesomeIcon icon={faTrashCan} className="mr-1 sm:mr-2" />
-                  Delete
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
+      <div className="flex items-center mb-6">
+        <button 
+          onClick={onBack} 
+          className="mr-4 text-light-text dark:text-dark-text hover:text-light-primary dark:hover:text-dark-primary transition-all duration-200"
+        >
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </button>
+        <h3 className="text-xl font-semibold text-light-text dark:text-dark-text">Select {displayType.charAt(0).toUpperCase() + displayType.slice(1)}</h3>
       </div>
-
-      {totalPages > 1 && (
-        <div className="mt-6 flex justify-center items-center space-x-2">
-          <button
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-            className="px-3 py-1 rounded-lg bg-light-secondary text-light-text dark:bg-dark-secondary dark:text-dark-text disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover:bg-light-accent dark:hover:bg-dark-accent"
-          >
-            <FontAwesomeIcon icon={faAngleLeft} />
-          </button>
-          {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
-            <button
-              key={page}
-              onClick={() => handlePageChange(page)}
-              className={`px-3 py-1 rounded-lg transition-all duration-200 ${
-                currentPage === page
-                  ? 'bg-light-primary text-white dark:bg-dark-primary'
-                  : 'bg-light-secondary text-light-text dark:bg-dark-secondary dark:text-dark-text hover:bg-light-accent dark:hover:bg-dark-accent'
-              }`}
-            >
-              {page}
-            </button>
-          ))}
-          <button
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-            className="px-3 py-1 rounded-lg bg-light-secondary text-light-text dark:bg-dark-secondary dark:text-dark-text disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover:bg-light-accent dark:hover:bg-dark-accent"
-          >
-            <FontAwesomeIcon icon={faAngleRight} />
-          </button>
+      <div className="space-y-4">
+        <input
+          type="text"
+          placeholder={`Search ${displayType}...`}
+          value={selectionSearch}
+          onChange={(e) => setSelectionSearch(e.target.value)}
+          className="w-full px-4 py-2 border border-light-secondary dark:border-dark-secondary rounded-lg text-sm text-light-text dark:text-dark-text bg-light-background dark:bg-dark-background focus:ring-2 focus:ring-light-primary dark:focus:ring-dark-primary transition-all duration-200"
+        />
+        <div className="max-h-60 overflow-y-auto">
+          {filteredOptions.length === 0 ? (
+            <p className="text-sm text-light-secondary dark:text-dark-secondary px-3 py-2">No {displayType} found.</p>
+          ) : (
+            filteredOptions.map(option => (
+              <div
+                key={option.value}
+                className="flex items-center px-3 py-2 text-sm text-light-text dark:text-dark-text hover:bg-light-secondary dark:hover:bg-dark-accent cursor-pointer transition-all duration-200"
+                onClick={() => toggleSelection(option.value)}
+              >
+                <input
+                  type="checkbox"
+                  checked={selected.includes(option.value)}
+                  onChange={() => {}}
+                  className="mr-2"
+                />
+                {option.label}
+              </div>
+            ))
+          )}
         </div>
-      )}
+      </div>
+      <div className="flex justify-end mt-6">
+        <button 
+          onClick={onBack}
+          className="px-4 py-2 text-sm font-medium text-light-primary hover:bg-light-accent dark:text-dark-primary dark:hover:bg-dark-accent rounded-lg transition-all duration-200 hover:shadow-sm"
+        >
+          Done
+        </button>
+      </div>
     </>
   );
 };
@@ -171,24 +215,15 @@ const Dashboard = () => {
   const [addPage, setAddPage] = useState(1);
   const [addType, setAddType] = useState(null);
   const [addSelectionType, setAddSelectionType] = useState(null);
-  const [showEditModal, setShowEditModal] = useState(false);
-  const [editPage, setEditPage] = useState(1);
-  const [editSelectionType, setEditSelectionType] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
-  const [itemToEdit, setItemToEdit] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [searchResults, setSearchResults] = useState({ products: [], categories: [], projects: [] });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const deleteModalRef = useRef(null);
-  const editModalRef = useRef(null);
   const addModalRef = useRef(null);
 
-  const [editProductForm, setEditProductForm] = useState({
-    name: '', title: '', description: '', brand: '', image: null, dateOfRelease: '', code: '', datasheet: null,
-    selectedProjects: [], selectedCategories: []
-  });
-  const [editCategoryForm, setEditCategoryForm] = useState({ type: '', image: null, selectedProducts: [] });
-  const [editProjectForm, setEditProjectForm] = useState({
-    title: '', images: [], description: '', dateOfProject: '', selectedProducts: []
-  });
   const [addProductForm, setAddProductForm] = useState({
     name: '', title: '', description: '', brand: '', image: null, dateOfRelease: '', code: '', datasheet: null,
     selectedProjects: [], selectedCategories: []
@@ -201,15 +236,54 @@ const Dashboard = () => {
   const itemsPerPage = 9;
 
   useEffect(() => {
+    const fetchSearchResults = debounce(async () => {
+      setLoading(true);
+      setError('');
+      try {
+        const url = searchQuery.length > 0 
+          ? `http://127.0.0.1:8000/api/search?query=${searchQuery}`
+          : 'http://127.0.0.1:8000/api/defaultSearch';
+        
+        const response = await fetch(url, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`, // Remove if not needed
+          },
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+
+        if (data.message === 'Search' || data.message === 'Default Search') {
+          setSearchResults({
+            products: data.products?.map(item => ({ ...item, type: 'product' })) || [],
+            categories: data.categories?.map(item => ({ ...item, categoryType: item.type, type: 'category' })) || [],
+            projects: data.projects?.map(item => ({ ...item, type: 'project' })) || [],
+          });
+        } else {
+          setError('No results found');
+          setSearchResults({ products: [], categories: [], projects: [] });
+        }
+      } catch (err) {
+        setError(`Failed to fetch search results: ${err.message}`);
+        setSearchResults({ products: [], categories: [], projects: [] });
+      } finally {
+        setLoading(false);
+      }
+    }, 300);
+
+    fetchSearchResults();
+    return () => fetchSearchResults.cancel();
+  }, [searchQuery]);
+
+  useEffect(() => {
     const handleClickOutside = (event) => {
       if (deleteModalRef.current && !deleteModalRef.current.contains(event.target)) {
         setShowDeleteModal(false);
       }
-      if (editModalRef.current && !editModalRef.current.contains(event.target)) {
-        setShowEditModal(false);
-      }
       if (addModalRef.current && !addModalRef.current.contains(event.target)) {
         setShowAddModal(false);
+        setIsEditing(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -217,41 +291,39 @@ const Dashboard = () => {
   }, []);
 
   const handleEdit = (item) => {
-    setItemToEdit(item);
-    if (item) {
-      setEditPage(2);
-      if (item.type === 'product') {
-        setEditProductForm({
-          name: item.name || '',
-          title: item.title || '',
-          description: item.description || '',
-          brand: item.brand || '',
-          image: null,
-          dateOfRelease: item.dateOfRelease || '',
-          code: item.code || '',
-          datasheet: null,
-          selectedProjects: item.projects ? item.projects.map(p => p.id) : [],
-          selectedCategories: item.categories ? item.categories.map(c => c.id) : []
-        });
-      } else if (item.type === 'category') {
-        setEditCategoryForm({
-          type: item.categoryType || '',
-          image: null,
-          selectedProducts: item.products ? item.products.map(p => p.id) : []
-        });
-      } else if (item.type === 'project') {
-        setEditProjectForm({
-          title: item.title || '',
-          images: [],
-          description: item.description || '',
-          dateOfProject: item.dateOfProject || '',
-          selectedProducts: item.products ? item.products.map(p => p.id) : []
-        });
-      }
-    } else {
-      setEditPage(1);
+    setIsEditing(true);
+    setAddType(item.type.charAt(0).toUpperCase() + item.type.slice(1));
+    setAddPage(2);
+
+    if (item.type === 'product') {
+      setAddProductForm({
+        name: item.name || '',
+        title: item.title || '',
+        description: item.description || '',
+        brand: item.brand || '',
+        image: null,
+        dateOfRelease: item.dateOfRelease || '',
+        code: item.code || '',
+        datasheet: null,
+        selectedProjects: item.projects ? item.projects.map(p => p.id) : [],
+        selectedCategories: item.categories ? item.categories.map(c => c.id) : []
+      });
+    } else if (item.type === 'category') {
+      setAddCategoryForm({
+        type: item.categoryType || '',
+        image: null,
+        selectedProducts: item.products ? item.products.map(p => p.id) : []
+      });
+    } else if (item.type === 'project') {
+      setAddProjectForm({
+        title: item.title || '',
+        images: [],
+        description: item.description || '',
+        dateOfProject: item.dateOfProject || '',
+        selectedProducts: item.products ? item.products.map(p => p.id) : []
+      });
     }
-    setShowEditModal(true);
+    setShowAddModal(true);
   };
 
   const handleDelete = (item) => {
@@ -262,16 +334,6 @@ const Dashboard = () => {
   const confirmDelete = () => {
     setShowDeleteModal(false);
     setItemToDelete(null);
-  };
-
-  const confirmEdit = () => {
-    console.log('Product Form:', editProductForm);
-    console.log('Category Form:', editCategoryForm);
-    console.log('Project Form:', editProjectForm);
-    setShowEditModal(false);
-    setItemToEdit(null);
-    setEditPage(1);
-    setEditSelectionType(null);
   };
 
   const handleAddNext = (type) => {
@@ -285,23 +347,19 @@ const Dashboard = () => {
     setAddProjectForm({ title: '', images: [], description: '', dateOfProject: '', selectedProducts: [] });
   };
 
-  const handleEditNext = (type) => {
-    setItemToEdit({ type });
-    setEditPage(2);
-  };
-
   const confirmAdd = () => {
     if (addType === 'Product') {
-      console.log('Add Product:', addProductForm);
+      console.log(isEditing ? 'Edit Product:' : 'Add Product:', addProductForm);
     } else if (addType === 'Category') {
-      console.log('Add Category:', addCategoryForm);
+      console.log(isEditing ? 'Edit Category:' : 'Add Category:', addCategoryForm);
     } else if (addType === 'Project') {
-      console.log('Add Project:', addProjectForm);
+      console.log(isEditing ? 'Edit Project:' : 'Add Project:', addProjectForm);
     }
     setShowAddModal(false);
     setAddPage(1);
     setAddType(null);
     setAddSelectionType(null);
+    setIsEditing(false);
   };
 
   const handleAddBack = () => {
@@ -311,93 +369,13 @@ const Dashboard = () => {
     } else {
       setAddPage(1);
       setAddType(null);
-    }
-  };
-
-  const handleEditBack = () => {
-    if (editPage === 3) {
-      setEditPage(2);
-      setEditSelectionType(null);
-    } else {
-      setEditPage(1);
-      setItemToEdit(null);
+      setIsEditing(false);
     }
   };
 
   const handleAddSelect = (selectionType) => {
     setAddSelectionType(selectionType);
     setAddPage(3);
-  };
-
-  const handleEditSelect = (selectionType) => {
-    setEditSelectionType(selectionType);
-    setEditPage(3);
-  };
-
-  const toggleSelection = (formSetter, field, value) => {
-    formSetter(prev => {
-      const current = prev[field] || [];
-      const newSelected = current.includes(value)
-        ? current.filter(id => id !== value)
-        : [...current, value];
-      return { ...prev, [field]: newSelected };
-    });
-  };
-
-  const renderSelectionPage = (isAdd, selectionType, formData, formSetter) => {
-    const options = {
-      selectedProjects: searchResults.projects.map(project => ({ value: project.id, label: project.title })),
-      selectedCategories: searchResults.categories.map(category => ({ value: category.id, label: category.categoryType })),
-      selectedProducts: searchResults.products.map(product => ({ value: product.id, label: product.title }))
-    }[selectionType] || [];
-    const selected = formData[selectionType] || [];
-    const displayType = selectionType.replace('selected', '').toLowerCase();
-
-    return (
-      <>
-        <div className="flex items-center mb-6">
-          <button 
-            onClick={isAdd ? handleAddBack : handleEditBack} 
-            className="mr-4 text-light-text dark:text-dark-text hover:text-light-primary dark:hover:text-dark-primary transition-all duration-200"
-          >
-            <FontAwesomeIcon icon={faArrowLeft} />
-          </button>
-          <h3 className="text-xl font-semibold text-light-text dark:text-dark-text">Select {displayType.charAt(0).toUpperCase() + displayType.slice(1)}</h3>
-        </div>
-        <div className="space-y-4">
-          <input
-            type="text"
-            placeholder={`Search ${displayType}...`}
-            className="w-full px-4 py-2 border border-light-secondary dark:border-dark-secondary rounded-lg text-sm text-light-text dark:text-dark-text bg-light-background dark:bg-dark-background focus:ring-2 focus:ring-light-primary dark:focus:ring-dark-primary transition-all duration-200"
-          />
-          <div className="max-h-60 overflow-y-auto">
-            {options.map(option => (
-              <div
-                key={option.value}
-                className="flex items-center px-3 py-2 text-sm text-light-text dark:text-dark-text hover:bg-light-secondary dark:hover:bg-dark-accent cursor-pointer transition-all duration-200"
-                onClick={() => toggleSelection(formSetter, selectionType, option.value)}
-              >
-                <input
-                  type="checkbox"
-                  checked={selected.includes(option.value)}
-                  onChange={() => {}}
-                  className="mr-2"
-                />
-                {option.label}
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="flex justify-end mt-6">
-          <button 
-            onClick={isAdd ? handleAddBack : handleEditBack}
-            className="px-4 py-2 text-sm font-medium text-light-primary hover:bg-light-accent dark:text-dark-primary dark:hover:bg-dark-accent rounded-lg transition-all duration-200 hover:shadow-sm"
-          >
-            Done
-          </button>
-        </div>
-      </>
-    );
   };
 
   return (
@@ -418,7 +396,7 @@ const Dashboard = () => {
                 className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-light-secondary dark:text-dark-secondary transition-colors duration-200" 
               />
               <button
-                onClick={() => setShowAddModal(true)}
+                onClick={() => { setShowAddModal(true); setIsEditing(false); }}
                 className="absolute sm:right-[1px] h-full top-1/2 -translate-y-1/2 px-2 py-1 sm:px-3 sm:py-1.5 bg-light-primary text-white rounded-r-md hover:bg-light-accent dark:bg-dark-primary dark:hover:bg-dark-accent shadow-sm text-xs sm:text-sm transition-all duration-200 hover:shadow-md"
               >
                 <FontAwesomeIcon icon={faPlus} className="mr-1" />
@@ -427,7 +405,19 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <SearchResults searchQuery={searchQuery} itemsPerPage={itemsPerPage} />
+          {loading ? (
+            <div className="text-center py-4 text-light-text dark:text-dark-text">Loading...</div>
+          ) : error ? (
+            <div className="text-center py-4 text-red-500">{error}</div>
+          ) : (
+            <SearchResults 
+              searchQuery={searchQuery} 
+              itemsPerPage={itemsPerPage} 
+              onEdit={handleEdit} 
+              onDelete={handleDelete} 
+              searchResults={searchResults}
+            />
+          )}
         </main>
 
         <Sidebar />
@@ -462,342 +452,6 @@ const Dashboard = () => {
         </div>
       )}
 
-      {showEditModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4 transition-opacity duration-200">
-          <div 
-            ref={editModalRef} 
-            className="bg-white dark:bg-dark-secondary rounded-lg p-6 w-full max-w-lg shadow-lg transition-all duration-200 ease-in-out opacity-0 translate-y-[-20px] overflow-y-auto max-h-[80vh]"
-            style={showEditModal ? { opacity: 1, translateY: '0' } : {}}
-          >
-            {editPage === 1 && (
-              <>
-                <h3 className="text-xl font-semibold mb-6 text-light-text dark:text-dark-text">Edit Item</h3>
-                <div className="space-y-4">
-                  <button 
-                    onClick={() => handleEditNext('product')} 
-                    className="w-full px-4 py-2 text-sm text-light-text dark:text-dark-text bg-light-secondary dark:bg-dark-accent hover:bg-light-accent dark:hover:bg-dark-primary rounded-lg transition-all duration-200 flex items-center justify-start"
-                  >
-                    <FontAwesomeIcon icon={faBox} className="mr-2" />
-                    Product
-                  </button>
-                  <button 
-                    onClick={() => handleEditNext('category')} 
-                    className="w-full px-4 py-2 text-sm text-light-text dark:text-dark-text bg-light-secondary dark:bg-dark-accent hover:bg-light-accent dark:hover:bg-dark-primary rounded-lg transition-all duration-200 flex items-center justify-start"
-                  >
-                    <FontAwesomeIcon icon={faFolder} className="mr-2" />
-                    Category
-                  </button>
-                  <button 
-                    onClick={() => handleEditNext('project')} 
-                    className="w-full px-4 py-2 text-sm text-light-text dark:text-dark-text bg-light-secondary dark:bg-dark-accent hover:bg-light-accent dark:hover:bg-dark-primary rounded-lg transition-all duration-200 flex items-center justify-start"
-                  >
-                    <FontAwesomeIcon icon={faProjectDiagram} className="mr-2" />
-                    Project
-                  </button>
-                </div>
-                <div className="flex justify-end mt-6">
-                  <button 
-                    onClick={() => setShowEditModal(false)} 
-                    className="px-4 py-2 text-sm font-medium text-light-secondary hover:bg-light-secondary dark:text-dark-secondary dark:hover:bg-dark-accent rounded-lg transition-all duration-200 hover:shadow-sm"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </>
-            )}
-
-            {editPage === 2 && itemToEdit?.type === 'product' && (
-              <>
-                <div className="flex items-center mb-6">
-                  <button 
-                    onClick={handleEditBack} 
-                    className="mr-4 text-light-text dark:text-dark-text hover:text-light-primary dark:hover:text-dark-primary transition-all duration-200"
-                  >
-                    <FontAwesomeIcon icon={faArrowLeft} />
-                  </button>
-                  <h3 className="text-xl font-semibold text-light-text dark:text-dark-text">Edit Product</h3>
-                </div>
-                <div className="space-y-6">
-                  <div>
-                    <label className="block text-sm font-medium text-light-text dark:text-dark-text mb-2">Name</label>
-                    <input
-                      type="text"
-                      value={editProductForm.name}
-                      onChange={(e) => setEditProductForm({ ...editProductForm, name: e.target.value })}
-                      className="w-full px-4 py-2 border border-light-secondary dark:border-dark-secondary rounded-lg text-sm text-light-text dark:text-dark-text bg-light-background dark:bg-dark-background focus:ring-2 focus:ring-light-primary dark:focus:ring-dark-primary transition-all duration-200"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-light-text dark:text-dark-text mb-2">Title</label>
-                    <input
-                      type="text"
-                      value={editProductForm.title}
-                      onChange={(e) => setEditProductForm({ ...editProductForm, title: e.target.value })}
-                      className="w-full px-4 py-2 border border-light-secondary dark:border-dark-secondary rounded-lg text-sm text-light-text dark:text-dark-text bg-light-background dark:bg-dark-background focus:ring-2 focus:ring-light-primary dark:focus:ring-dark-primary transition-all duration-200"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-light-text dark:text-dark-text mb-2">Description</label>
-                    <textarea
-                      value={editProductForm.description}
-                      onChange={(e) => setEditProductForm({ ...editProductForm, description: e.target.value })}
-                      className="w-full px-4 py-2 border border-light-secondary dark:border-dark-secondary rounded-lg text-sm text-light-text dark:text-dark-text bg-light-background dark:bg-dark-background focus:ring-2 focus:ring-light-primary dark:focus:ring-dark-primary transition-all duration-200 min-h-[100px]"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-light-text dark:text-dark-text mb-2">Brand</label>
-                    <input
-                      type="text"
-                      value={editProductForm.brand}
-                      onChange={(e) => setEditProductForm({ ...editProductForm, brand: e.target.value })}
-                      className="w-full px-4 py-2 border border-light-secondary dark:border-dark-secondary rounded-lg text-sm text-light-text dark:text-dark-text bg-light-background dark:bg-dark-background focus:ring-2 focus:ring-light-primary dark:focus:ring-dark-primary transition-all duration-200"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-light-text dark:text-dark-text mb-2">Image</label>
-                    <div className="relative">
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => setEditProductForm({ ...editProductForm, image: e.target.files[0] })}
-                        className="w-full px-4 py-2 border border-light-secondary dark:border-dark-secondary rounded-lg text-sm text-light-text dark:text-dark-text bg-light-background dark:bg-dark-background focus:ring-2 focus:ring-light-primary dark:focus:ring-dark-primary transition-all duration-200 file:mr-4 file:py-2 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-light-primary file:text-white hover:file:bg-light-accent dark:file:bg-dark-primary dark:hover:file:bg-dark-accent"
-                      />
-                      <FontAwesomeIcon icon={faUpload} className="absolute right-3 top-1/2 -translate-y-1/2 text-light-secondary dark:text-dark-secondary" />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-light-text dark:text-dark-text mb-2">Date of Release</label>
-                    <input
-                      type="date"
-                      value={editProductForm.dateOfRelease}
-                      onChange={(e) => setEditProductForm({ ...editProductForm, dateOfRelease: e.target.value })}
-                      className="w-full px-4 py-2 border border-light-secondary dark:border-dark-secondary rounded-lg text-sm text-light-text dark:text-dark-text bg-light-background dark:bg-dark-background focus:ring-2 focus:ring-light-primary dark:focus:ring-dark-primary transition-all duration-200"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-light-text dark:text-dark-text mb-2">Code</label>
-                    <input
-                      type="text"
-                      value={editProductForm.code}
-                      onChange={(e) => setEditProductForm({ ...editProductForm, code: e.target.value })}
-                      className="w-full px-4 py-2 border border-light-secondary dark:border-dark-secondary rounded-lg text-sm text-light-text dark:text-dark-text bg-light-background dark:bg-dark-background focus:ring-2 focus:ring-light-primary dark:focus:ring-dark-primary transition-all duration-200"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-light-text dark:text-dark-text mb-2">Datasheet (PDF)</label>
-                    <div className="relative">
-                      <input
-                        type="file"
-                        accept=".pdf"
-                        onChange={(e) => setEditProductForm({ ...editProductForm, datasheet: e.target.files[0] })}
-                        className="w-full px-4 py-2 border border-light-secondary dark:border-dark-secondary rounded-lg text-sm text-light-text dark:text-dark-text bg-light-background dark:bg-dark-background focus:ring-2 focus:ring-light-primary dark:focus:ring-dark-primary transition-all duration-200 file:mr-4 file:py-2 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-light-primary file:text-white hover:file:bg-light-accent dark:file:bg-dark-primary dark:hover:file:bg-dark-accent"
-                      />
-                      <FontAwesomeIcon icon={faUpload} className="absolute right-3 top-1/2 -translate-y-1/2 text-light-secondary dark:text-dark-secondary" />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-light-text dark:text-dark-text mb-2">Projects</label>
-                    <button
-                      onClick={() => handleEditSelect('selectedProjects')}
-                      className="w-full px-4 py-2 text-sm text-light-text dark:text-dark-text bg-light-secondary dark:bg-dark-accent hover:bg-light-accent dark:hover:bg-dark-primary rounded-lg transition-all duration-200 text-left"
-                    >
-                      {editProductForm.selectedProjects.length > 0 
-                        ? `${editProductForm.selectedProjects.length} selected` 
-                        : 'Select projects'}
-                    </button>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-light-text dark:text-dark-text mb-2">Categories</label>
-                    <button
-                      onClick={() => handleEditSelect('selectedCategories')}
-                      className="w-full px-4 py-2 text-sm text-light-text dark:text-dark-text bg-light-secondary dark:bg-dark-accent hover:bg-light-accent dark:hover:bg-dark-primary rounded-lg transition-all duration-200 text-left"
-                    >
-                      {editProductForm.selectedCategories.length > 0 
-                        ? `${editProductForm.selectedCategories.length} selected` 
-                        : 'Select categories'}
-                    </button>
-                  </div>
-                </div>
-                <div className="flex justify-end space-x-4 mt-8">
-                  <button 
-                    onClick={() => setShowEditModal(false)} 
-                    className="px-4 py-2 text-sm font-medium text-light-secondary hover:bg-light-secondary dark:text-dark-secondary dark:hover:bg-dark-accent rounded-lg transition-all duration-200 hover:shadow-sm"
-                  >
-                    Cancel
-                  </button>
-                  <button 
-                    onClick={confirmEdit} 
-                    className="px-4 py-2 text-sm font-medium text-white bg-light-primary hover:bg-light-accent dark:bg-dark-primary dark:hover:bg-dark-accent rounded-lg transition-all duration-200 hover:shadow-sm"
-                  >
-                    Save
-                  </button>
-                </div>
-              </>
-            )}
-
-            {editPage === 2 && itemToEdit?.type === 'category' && (
-              <>
-                <div className="flex items-center mb-6">
-                  <button 
-                    onClick={handleEditBack} 
-                    className="mr-4 text-light-text dark:text-dark-text hover:text-light-primary dark:hover:text-dark-primary transition-all duration-200"
-                  >
-                    <FontAwesomeIcon icon={faArrowLeft} />
-                  </button>
-                  <h3 className="text-xl font-semibold text-light-text dark:text-dark-text">Edit Category</h3>
-                </div>
-                <div className="space-y-6">
-                  <div>
-                    <label className="block text-sm font-medium text-light-text dark:text-dark-text mb-2">Type</label>
-                    <input
-                      type="text"
-                      value={editCategoryForm.type}
-                      onChange={(e) => setEditCategoryForm({ ...editCategoryForm, type: e.target.value })}
-                      className="w-full px-4 py-2 border border-light-secondary dark:border-dark-secondary rounded-lg text-sm text-light-text dark:text-dark-text bg-light-background dark:bg-dark-background focus:ring-2 focus:ring-light-primary dark:focus:ring-dark-primary transition-all duration-200"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-light-text dark:text-dark-text mb-2">Image</label>
-                    <div className="relative">
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => setEditCategoryForm({ ...editCategoryForm, image: e.target.files[0] })}
-                        className="w-full px-4 py-2 border border-light-secondary dark:border-dark-secondary rounded-lg text-sm text-light-text dark:text-dark-text bg-light-background dark:bg-dark-background focus:ring-2 focus:ring-light-primary dark:focus:ring-dark-primary transition-all duration-200 file:mr-4 file:py-2 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-light-primary file:text-white hover:file:bg-light-accent dark:file:bg-dark-primary dark:hover:file:bg-dark-accent"
-                      />
-                      <FontAwesomeIcon icon={faUpload} className="absolute right-3 top-1/2 -translate-y-1/2 text-light-secondary dark:text-dark-secondary" />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-light-text dark:text-dark-text mb-2">Products</label>
-                    <button
-                      onClick={() => handleEditSelect('selectedProducts')}
-                      className="w-full px-4 py-2 text-sm text-light-text dark:text-dark-text bg-light-secondary dark:bg-dark-accent hover:bg-light-accent dark:hover:bg-dark-primary rounded-lg transition-all duration-200 text-left"
-                    >
-                      {editCategoryForm.selectedProducts.length > 0 
-                        ? `${editCategoryForm.selectedProducts.length} selected` 
-                        : 'Select products'}
-                    </button>
-                  </div>
-                </div>
-                <div className="flex justify-end space-x-4 mt-8">
-                  <button 
-                    onClick={() => setShowEditModal(false)} 
-                    className="px-4 py-2 text-sm font-medium text-light-secondary hover:bg-light-secondary dark:text-dark-secondary dark:hover:bg-dark-accent rounded-lg transition-all duration-200 hover:shadow-sm"
-                  >
-                    Cancel
-                  </button>
-                  <button 
-                    onClick={confirmEdit} 
-                    className="px-4 py-2 text-sm font-medium text-white bg-light-primary hover:bg-light-accent dark:bg-dark-primary dark:hover:bg-dark-accent rounded-lg transition-all duration-200 hover:shadow-sm"
-                  >
-                    Save
-                  </button>
-                </div>
-              </>
-            )}
-
-            {editPage === 2 && itemToEdit?.type === 'project' && (
-              <>
-                <div className="flex items-center mb-6">
-                  <button 
-                    onClick={handleEditBack} 
-                    className="mr-4 text-light-text dark:text-dark-text hover:text-light-primary dark:hover:text-dark-primary transition-all duration-200"
-                  >
-                    <FontAwesomeIcon icon={faArrowLeft} />
-                  </button>
-                  <h3 className="text-xl font-semibold text-light-text dark:text-dark-text">Edit Project</h3>
-                </div>
-                <div className="space-y-6">
-                  <div>
-                    <label className="block text-sm font-medium text-light-text dark:text-dark-text mb-2">Title</label>
-                    <input
-                      type="text"
-                      value={editProjectForm.title}
-                      onChange={(e) => setEditProjectForm({ ...editProjectForm, title: e.target.value })}
-                      className="w-full px-4 py-2 border border-light-secondary dark:border-dark-secondary rounded-lg text-sm text-light-text dark:text-dark-text bg-light-background dark:bg-dark-background focus:ring-2 focus:ring-light-primary dark:focus:ring-dark-primary transition-all duration-200"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-light-text dark:text-dark-text mb-2">Images (Multiple)</label>
-                    <div className="relative">
-                      <input
-                        type="file"
-                        accept="image/*"
-                        multiple
-                        onChange={(e) => setEditProjectForm({ ...editProjectForm, images: Array.from(e.target.files) })}
-                        className="w-full px-4 py-2 border border-light-secondary dark:border-dark-secondary rounded-lg text-sm text-light-text dark:text-dark-text bg-light-background dark:bg-dark-background focus:ring-2 focus:ring-light-primary dark:focus:ring-dark-primary transition-all duration-200 file:mr-4 file:py-2 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-light-primary file:text-white hover:file:bg-light-accent dark:file:bg-dark-primary dark:hover:file:bg-dark-accent"
-                      />
-                      <FontAwesomeIcon icon={faUpload} className="absolute right-3 top-1/2 -translate-y-1/2 text-light-secondary dark:text-dark-secondary" />
-                    </div>
-                    {editProjectForm.images.length > 0 && (
-                      <ul className="mt-3 space-y-1">
-                        {editProjectForm.images.map((file, index) => (
-                          <li key={index} className="text-sm text-light-text dark:text-dark-text truncate">{file.name}</li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-light-text dark:text-dark-text mb-2">Description</label>
-                    <textarea
-                      value={editProjectForm.description}
-                      onChange={(e) => setEditProjectForm({ ...editProjectForm, description: e.target.value })}
-                      className="w-full px-4 py-2 border border-light-secondary dark:border-dark-secondary rounded-lg text-sm text-light-text dark:text-dark-text bg-light-background dark:bg-dark-background focus:ring-2 focus:ring-light-primary dark:focus:ring-dark-primary transition-all duration-200 min-h-[100px]"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-light-text dark:text-dark-text mb-2">Date of Project</label>
-                    <input
-                      type="date"
-                      value={editProjectForm.dateOfProject}
-                      onChange={(e) => setEditProjectForm({ ...editProjectForm, dateOfProject: e.target.value })}
-                      className="w-full px-4 py-2 border border-light-secondary dark:border-dark-secondary rounded-lg text-sm text-light-text dark:text-dark-text bg-light-background dark:bg-dark-background focus:ring-2 focus:ring-light-primary dark:focus:ring-dark-primary transition-all duration-200"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-light-text dark:text-dark-text mb-2">Products</label>
-                    <button
-                      onClick={() => handleEditSelect('selectedProducts')}
-                      className="w-full px-4 py-2 text-sm text-light-text dark:text-dark-text bg-light-secondary dark:bg-dark-accent hover:bg-light-accent dark:hover:bg-dark-primary rounded-lg transition-all duration-200 text-left"
-                    >
-                      {editProjectForm.selectedProducts.length > 0 
-                        ? `${editProjectForm.selectedProducts.length} selected` 
-                        : 'Select products'}
-                    </button>
-                  </div>
-                </div>
-                <div className="flex justify-end space-x-4 mt-8">
-                  <button 
-                    onClick={() => setShowEditModal(false)} 
-                    className="px-4 py-2 text-sm font-medium text-light-secondary hover:bg-light-secondary dark:text-dark-secondary dark:hover:bg-dark-accent rounded-lg transition-all duration-200 hover:shadow-sm"
-                  >
-                    Cancel
-                  </button>
-                  <button 
-                    onClick={confirmEdit} 
-                    className="px-4 py-2 text-sm font-medium text-white bg-light-primary hover:bg-light-accent dark:bg-dark-primary dark:hover:bg-dark-accent rounded-lg transition-all duration-200 hover:shadow-sm"
-                  >
-                    Save
-                  </button>
-                </div>
-              </>
-            )}
-
-            {editPage === 3 && editSelectionType && (
-              renderSelectionPage(
-                false,
-                editSelectionType,
-                itemToEdit.type === 'product' ? editProductForm : 
-                itemToEdit.type === 'category' ? editCategoryForm : editProjectForm,
-                itemToEdit.type === 'product' ? setEditProductForm : 
-                itemToEdit.type === 'category' ? setEditCategoryForm : setEditProjectForm
-              )
-            )}
-          </div>
-        </div>
-      )}
-
       {showAddModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4 transition-opacity duration-200">
           <div 
@@ -805,7 +459,7 @@ const Dashboard = () => {
             className="bg-white dark:bg-dark-secondary rounded-lg p-6 w-full max-w-lg shadow-lg transition-all duration-200 ease-in-out opacity-0 translate-y-[-20px] overflow-y-auto max-h-[80vh]"
             style={showAddModal ? { opacity: 1, translateY: '0' } : {}}
           >
-            {addPage === 1 && (
+            {addPage === 1 && !isEditing && (
               <>
                 <h3 className="text-xl font-semibold mb-6 text-light-text dark:text-dark-text">Add New Item</h3>
                 <div className="space-y-4">
@@ -851,7 +505,9 @@ const Dashboard = () => {
                   >
                     <FontAwesomeIcon icon={faArrowLeft} />
                   </button>
-                  <h3 className="text-xl font-semibold text-light-text dark:text-dark-text">Add Product</h3>
+                  <h3 className="text-xl font-semibold text-light-text dark:text-dark-text">
+                    {isEditing ? 'Edit Product' : 'Add Product'}
+                  </h3>
                 </div>
                 <div className="space-y-6">
                   <div>
@@ -965,7 +621,7 @@ const Dashboard = () => {
                     onClick={confirmAdd} 
                     className="px-4 py-2 text-sm font-medium text-white bg-light-primary hover:bg-light-accent dark:bg-dark-primary dark:hover:bg-dark-accent rounded-lg transition-all duration-200 hover:shadow-sm"
                   >
-                    Save
+                    {isEditing ? 'Save' : 'Add'}
                   </button>
                 </div>
               </>
@@ -980,7 +636,9 @@ const Dashboard = () => {
                   >
                     <FontAwesomeIcon icon={faArrowLeft} />
                   </button>
-                  <h3 className="text-xl font-semibold text-light-text dark:text-dark-text">Add Category</h3>
+                  <h3 className="text-xl font-semibold text-light-text dark:text-dark-text">
+                    {isEditing ? 'Edit Category' : 'Add Category'}
+                  </h3>
                 </div>
                 <div className="space-y-6">
                   <div>
@@ -1027,7 +685,7 @@ const Dashboard = () => {
                     onClick={confirmAdd} 
                     className="px-4 py-2 text-sm font-medium text-white bg-light-primary hover:bg-light-accent dark:bg-dark-primary dark:hover:bg-dark-accent rounded-lg transition-all duration-200 hover:shadow-sm"
                   >
-                    Save
+                    {isEditing ? 'Save' : 'Add'}
                   </button>
                 </div>
               </>
@@ -1042,7 +700,9 @@ const Dashboard = () => {
                   >
                     <FontAwesomeIcon icon={faArrowLeft} />
                   </button>
-                  <h3 className="text-xl font-semibold text-light-text dark:text-dark-text">Add Project</h3>
+                  <h3 className="text-xl font-semibold text-light-text dark:text-dark-text">
+                    {isEditing ? 'Edit Project' : 'Add Project'}
+                  </h3>
                 </div>
                 <div className="space-y-6">
                   <div>
@@ -1114,21 +774,20 @@ const Dashboard = () => {
                     onClick={confirmAdd} 
                     className="px-4 py-2 text-sm font-medium text-white bg-light-primary hover:bg-light-accent dark:bg-dark-primary dark:hover:bg-dark-accent rounded-lg transition-all duration-200 hover:shadow-sm"
                   >
-                    Save
+                    {isEditing ? 'Save' : 'Add'}
                   </button>
                 </div>
               </>
             )}
 
             {addPage === 3 && addSelectionType && (
-              renderSelectionPage(
-                true,
-                addSelectionType,
-                addType === 'Product' ? addProductForm : 
-                addType === 'Category' ? addCategoryForm : addProjectForm,
-                addType === 'Product' ? setAddProductForm : 
-                addType === 'Category' ? setAddCategoryForm : setAddProjectForm
-              )
+              <SelectionPage
+                selectionType={addSelectionType}
+                formData={addType === 'Product' ? addProductForm : addType === 'Category' ? addCategoryForm : addProjectForm}
+                setFormData={addType === 'Product' ? setAddProductForm : addType === 'Category' ? setAddCategoryForm : setAddProjectForm}
+                onBack={handleAddBack}
+                searchResults={searchResults}
+              />
             )}
           </div>
         </div>
