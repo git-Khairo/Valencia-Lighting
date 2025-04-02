@@ -12,8 +12,9 @@ import Products from "./Pages/Products";
 import NotFound from "./Pages/NotFound";
 import SignIn from "./AdminDashboard/SignIn";
 import useFetch from "./useFetch";
-import Dashboard from "./AdminDashboard/DashBoard";
+import Dashboard from "./AdminDashboard/Dashboard";
 import AdminLayout from "./AdminDashboard/AdminLayout";
+import PricingList from "./Pages/PricingList";
 
 function ProtectedRoute({ children }){
     const { code } = useParams();
@@ -41,6 +42,7 @@ const App = () => {
                     <Route path="/categories" element={<Sections/>}/>
                     <Route path="/category/:id" element={<Products/>}/>
                     <Route path="/dashboard" element={<Dashboard/>}/>
+                    <Route path="/pricing list" element={<PricingList/>}/>
                     <Route path="/admin/:code" element={
                         <ProtectedRoute>
                             <SignIn />
