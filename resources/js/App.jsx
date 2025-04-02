@@ -42,7 +42,7 @@ const App = () => {
                     <Route path="/categories" element={<Sections/>}/>
                     <Route path="/category/:id" element={<Products/>}/>
                     <Route path="/dashboard" element={<Dashboard/>}/>
-                    <Route path="/pricing list" element={<PricingList/>}/>
+                    <Route path="/pricingList" element={<PricingList/>}/>
                     <Route path="/admin/:code" element={
                         <ProtectedRoute>
                             <SignIn />
