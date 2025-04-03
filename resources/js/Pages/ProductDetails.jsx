@@ -67,11 +67,11 @@ function App() {
         ) :  data ? (
     <div className="min-h-screen bg-gray-50 pt-20">
       {/* Product Section */}
-      <section className="container mx-auto px-4 py-8">
+      <section className="container mx-auto px-2 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Left Column - Product Image */}
           <div className="lg:w-1/2">
-            <div className="bg-white rounded-lg overflow-hidden shadow-lg h-full flex items-center justify-center p-4">
+            <div className="bg-white rounded-lg overflow-hidden shadow-lg flex items-center justify-center p-4">
               <img
                 src={product.image}
                 alt={product.id}
@@ -81,8 +81,9 @@ function App() {
           </div>
 
           {/* Right Column - Product Details */}
-          <div className="lg:w-1/2">
+          <div className="lg:w-1/2 px-4">
             <h1 className="text-3xl font-bold text-gray-900 mb-2">{product.name}</h1>
+            <p className="text-gray-600 text-lg mb-3">by <span className='text-blue-500'>{product.brand}</span></p>
             <div className="flex flex-wrap gap-2 mb-4">
               {product.categories.map((category) => (
               <span key={category} className="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full cursor-pointer">{category}</span>
@@ -152,18 +153,15 @@ function App() {
             {/* Add to Cart Section */}
             <div className="mb-6">
               <div className="flex items-center mb-6">
-                <div className="flex items-center">
-                  <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-md flex items-center justify-center cursor-pointer !rounded-button whitespace-nowrap mr-4">
+                <div className="flex items-center justify-center">
+                  <button className="bg-blue-600 hover:bg-blue-700 text-white py-1.5 px-3 sm:py-2 sm:px-6 rounded-md flex items-center justify-center cursor-pointer !rounded-button whitespace-nowrap mr-4">
                     <FaShoppingCart className="mr-2" />
                     Add to Cart
                   </button>
-                  <label htmlFor="quantity" className="block text-sm font-medium text-gray-700 mr-4">
-                    Quantity
-                  </label>
                   <div className="flex border border-gray-300 rounded-md">
                     <button
                       onClick={decrementQuantity}
-                      className="px-3 py-1 bg-gray-100 text-gray-600 hover:bg-gray-200 cursor-pointer !rounded-button whitespace-nowrap"
+                      className="px-3 py-1.5 bg-gray-100 text-gray-600 hover:bg-gray-200 cursor-pointer !rounded-button whitespace-nowrap"
                     >
                       <FaMinus />
                     </button>
@@ -176,7 +174,7 @@ function App() {
                     />
                     <button
                       onClick={incrementQuantity}
-                      className="px-3 py-1 bg-gray-100 text-gray-600 hover:bg-gray-200 cursor-pointer !rounded-button whitespace-nowrap"
+                      className="px-3 py-1.5 bg-gray-100 text-gray-600 hover:bg-gray-200 cursor-pointer !rounded-button whitespace-nowrap"
                     >
                       <FaPlus />
                     </button>
