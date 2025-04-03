@@ -605,7 +605,7 @@ const PricingList = () => {
                   type="submit"
                   className="w-full bg-[#1c4769] text-white py-3 px-4 rounded-md hover:bg-[#96c2e3] hover:text-[#1a1400] focus:outline-none focus:ring-2 focus:ring-[#96c2e3] focus:ring-offset-2 transition-colors cursor-pointer !rounded-button whitespace-nowrap"
                 >
-                  <FontAwesomeIcon icon={faLock} className="mr-2" /> Complete Purchase
+                    Submit
                 </button>
               </div>
             </form>
