@@ -1,7 +1,7 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
-const AdminLayout = () => {
+const Authentication = () => {
     const navigate = useNavigate();
 
      useEffect(() => {
@@ -34,4 +34,4 @@ const AdminLayout = () => {
      );
 }
  
-export default AdminLayout;
+export default Authentication;
