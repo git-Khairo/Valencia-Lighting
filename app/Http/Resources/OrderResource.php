@@ -14,7 +14,7 @@ class OrderResource extends JsonResource
             'lastName' => $this->lastName,
             'email' => $this->email,
             'phone' => $this->phone,
-            'created_at' => $this->created_at->toISOString(), // Optional: format date
+            'created_at' => $this->created_at, // Optional: format date
             'products' => ProductCardResource::collection($this->products),
         ];
     }

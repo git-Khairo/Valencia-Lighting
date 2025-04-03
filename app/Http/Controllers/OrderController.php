@@ -24,9 +24,8 @@ class OrderController extends Controller
             $orders = $this->orderRepository->getAllOrdersWithProducts();
 
             return response()->json([
-                'success' => true,
-                'data' => OrderResource::collection($orders),
-                'message' => 'Orders retrieved successfully'
+                'message' => 'Orders retrieved successfully',
+                'orders' => OrderResource::collection($orders)
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
