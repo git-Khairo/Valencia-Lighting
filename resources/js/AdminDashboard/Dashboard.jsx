@@ -437,7 +437,7 @@ const Dashboard = () => {
             <div className="flex justify-end space-x-4">
               <button 
                 onClick={() => setShowDeleteModal(false)} 
-                className="px-4 py-2 text-sm font-medium text-light-secondary hover:bg-light-secondary dark:text-dark-secondary dark:hover:bg-dark-accent rounded-lg transition-all duration-200 hover:shadow-sm"
+                className="px-4 py-2 text-sm font-medium text-light-secondary hover:text-light-text hover:bg-light-secondary dark:text-dark-secondary dark:hover:bg-dark-accent rounded-lg transition-all duration-200 hover:shadow-sm"
               >
                 Cancel
               </button>
@@ -465,21 +465,21 @@ const Dashboard = () => {
                 <div className="space-y-4">
                   <button 
                     onClick={() => handleAddNext('Product')} 
-                    className="w-full px-4 py-2 text-sm text-light-text dark:text-dark-text bg-light-secondary dark:bg-dark-accent hover:bg-light-accent dark:hover:bg-dark-primary rounded-lg transition-all duration-200 flex items-center justify-start"
+                    className="w-full px-4 py-2 border border-light-secondary dark:border-dark-secondary text-sm text-light-text dark:text-dark-text bg-light-background dark:bg-dark-accent hover:bg-light-secondary dark:hover:bg-dark-primary rounded-lg transition-all duration-200 flex items-center justify-start"
                   >
                     <FontAwesomeIcon icon={faBox} className="mr-2" />
                     Product
                   </button>
                   <button 
                     onClick={() => handleAddNext('Category')} 
-                    className="w-full px-4 py-2 text-sm text-light-text dark:text-dark-text bg-light-secondary dark:bg-dark-accent hover:bg-light-accent dark:hover:bg-dark-primary rounded-lg transition-all duration-200 flex items-center justify-start"
+                    className="w-full px-4 py-2 border border-light-secondary dark:border-dark-secondary text-sm text-light-text dark:text-dark-text bg-light-background dark:bg-dark-accent hover:bg-light-secondary dark:hover:bg-dark-primary rounded-lg transition-all duration-200 flex items-center justify-start"
                   >
                     <FontAwesomeIcon icon={faFolder} className="mr-2" />
                     Category
                   </button>
                   <button 
                     onClick={() => handleAddNext('Project')} 
-                    className="w-full px-4 py-2 text-sm text-light-text dark:text-dark-text bg-light-secondary dark:bg-dark-accent hover:bg-light-accent dark:hover:bg-dark-primary rounded-lg transition-all duration-200 flex items-center justify-start"
+                    className="w-full px-4 py-2 border border-light-secondary dark:border-dark-secondary text-sm text-light-text dark:text-dark-text bg-light-background dark:bg-dark-accent hover:bg-light-secondary dark:hover:bg-dark-primary rounded-lg transition-all duration-200 flex items-center justify-start"
                   >
                     <FontAwesomeIcon icon={faProjectDiagram} className="mr-2" />
                     Project
@@ -488,7 +488,7 @@ const Dashboard = () => {
                 <div className="flex justify-end mt-6">
                   <button 
                     onClick={() => setShowAddModal(false)} 
-                    className="px-4 py-2 text-sm font-medium text-light-secondary hover:bg-light-secondary dark:text-dark-secondary dark:hover:bg-dark-accent rounded-lg transition-all duration-200 hover:shadow-sm"
+                    className="px-4 py-2 text-sm font-medium text-light-secondary hover:text-light-text hover:bg-light-secondary dark:text-dark-secondary dark:hover:bg-dark-accent rounded-lg transition-all duration-200 hover:shadow-sm"
                   >
                     Cancel
                   </button>
@@ -591,7 +591,7 @@ const Dashboard = () => {
                     <label className="block text-sm font-medium text-light-text dark:text-dark-text mb-2">Projects</label>
                     <button
                       onClick={() => handleAddSelect('selectedProjects')}
-                      className="w-full px-4 py-2 text-sm text-light-text dark:text-dark-text bg-light-secondary dark:bg-dark-accent hover:bg-light-accent dark:hover:bg-dark-primary rounded-lg transition-all duration-200 text-left"
+                      className="w-full px-4 py-2 border border-light-secondary dark:border-dark-secondary text-sm text-light-text dark:text-dark-text bg-light-background dark:bg-dark-accent hover:bg-light-secondary dark:hover:bg-dark-primary rounded-lg transition-all duration-200 text-left"
                     >
                       {addProductForm.selectedProjects.length > 0 
                         ? `${addProductForm.selectedProjects.length} selected` 
@@ -602,7 +602,7 @@ const Dashboard = () => {
                     <label className="block text-sm font-medium text-light-text dark:text-dark-text mb-2">Categories</label>
                     <button
                       onClick={() => handleAddSelect('selectedCategories')}
-                      className="w-full px-4 py-2 text-sm text-light-text dark:text-dark-text bg-light-secondary dark:bg-dark-accent hover:bg-light-accent dark:hover:bg-dark-primary rounded-lg transition-all duration-200 text-left"
+                      className="w-full px-4 py-2 border border-light-secondary dark:border-dark-secondary text-sm text-light-text dark:text-dark-text bg-light-background dark:bg-dark-accent hover:bg-light-secondary dark:hover:bg-dark-primary rounded-lg transition-all duration-200 text-left"
                     >
                       {addProductForm.selectedCategories.length > 0 
                         ? `${addProductForm.selectedCategories.length} selected` 
@@ -613,7 +613,7 @@ const Dashboard = () => {
                 <div className="flex justify-end space-x-4 mt-8">
                   <button 
                     onClick={() => setShowAddModal(false)} 
-                    className="px-4 py-2 text-sm font-medium text-light-secondary hover:bg-light-secondary dark:text-dark-secondary dark:hover:bg-dark-accent rounded-lg transition-all duration-200 hover:shadow-sm"
+                    className="px-4 py-2 text-sm font-medium text-light-secondary hover:text-light-text hover:bg-light-secondary dark:text-dark-secondary dark:hover:bg-dark-accent rounded-lg transition-all duration-200 hover:shadow-sm"
                   >
                     Cancel
                   </button>
@@ -666,7 +666,7 @@ const Dashboard = () => {
                     <label className="block text-sm font-medium text-light-text dark:text-dark-text mb-2">Products</label>
                     <button
                       onClick={() => handleAddSelect('selectedProducts')}
-                      className="w-full px-4 py-2 text-sm text-light-text dark:text-dark-text bg-light-secondary dark:bg-dark-accent hover:bg-light-accent dark:hover:bg-dark-primary rounded-lg transition-all duration-200 text-left"
+                      className="w-full px-4 py-2 border border-light-secondary dark:border-dark-secondary text-sm text-light-text dark:text-dark-text bg-light-background dark:bg-dark-accent hover:bg-light-secondary dark:hover:bg-dark-primary rounded-lg transition-all duration-200 text-left"
                     >
                       {addCategoryForm.selectedProducts.length > 0 
                         ? `${addCategoryForm.selectedProducts.length} selected` 
@@ -677,7 +677,7 @@ const Dashboard = () => {
                 <div className="flex justify-end space-x-4 mt-8">
                   <button 
                     onClick={() => setShowAddModal(false)} 
-                    className="px-4 py-2 text-sm font-medium text-light-secondary hover:bg-light-secondary dark:text-dark-secondary dark:hover:bg-dark-accent rounded-lg transition-all duration-200 hover:shadow-sm"
+                    className="px-4 py-2 text-sm font-medium text-light-secondary hover:text-light-text hover:bg-light-secondary dark:text-dark-secondary dark:hover:bg-dark-accent rounded-lg transition-all duration-200 hover:shadow-sm"
                   >
                     Cancel
                   </button>
@@ -755,7 +755,7 @@ const Dashboard = () => {
                     <label className="block text-sm font-medium text-light-text dark:text-dark-text mb-2">Products</label>
                     <button
                       onClick={() => handleAddSelect('selectedProducts')}
-                      className="w-full px-4 py-2 text-sm text-light-text dark:text-dark-text bg-light-secondary dark:bg-dark-accent hover:bg-light-accent dark:hover:bg-dark-primary rounded-lg transition-all duration-200 text-left"
+                      className="w-full px-4 py-2 border border-light-secondary dark:border-dark-secondary  text-sm text-light-text dark:text-dark-text bg-light-background dark:bg-dark-accent hover:bg-light-secondary dark:hover:bg-dark-primary rounded-lg transition-all duration-200 text-left"
                     >
                       {addProjectForm.selectedProducts.length > 0 
                         ? `${addProjectForm.selectedProducts.length} selected` 
@@ -766,7 +766,7 @@ const Dashboard = () => {
                 <div className="flex justify-end space-x-4 mt-8">
                   <button 
                     onClick={() => setShowAddModal(false)} 
-                    className="px-4 py-2 text-sm font-medium text-light-secondary hover:bg-light-secondary dark:text-dark-secondary dark:hover:bg-dark-accent rounded-lg transition-all duration-200 hover:shadow-sm"
+                    className="px-4 py-2 text-sm font-medium text-light-secondary hover:text-light-text hover:bg-light-secondary dark:text-dark-secondary dark:hover:bg-dark-accent rounded-lg transition-all duration-200 hover:shadow-sm"
                   >
                     Cancel
                   </button>
