@@ -1,12 +1,24 @@
 import React, { useState } from 'react';
 import { FaShoppingCart, FaMinus, FaPlus, FaFileDownload } from "react-icons/fa";
+import { useParams } from 'react-router-dom';
+import useFetch from '../useFetch';  
+import Slider from 'react-slick';
+import ProductCard from '../Components/ProductCard';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 function App() {
-  const [quantity, setQuantity] = useState(1);
+  const { code } = useParams();
+  const { data, loading, error} = useFetch(`/api/products/${code}`);
+  const product = data && data.product && data.product.product;
+  const relatedProducts = data && data.product && data.product.relatedProducts;
+  const [quantity, setQuantity] = useState(0);
   const [activeTab, setActiveTab] = useState('description');
 
+  console.log(product);
+
   const handleQuantityChange = (e) => {
-    const value = parseInt(e.target.value);
+    const value = e.target.value;
     if (!isNaN(value) && value > 0) {
       setQuantity(value);
     }
@@ -17,22 +29,43 @@ function App() {
   };
 
   const decrementQuantity = () => {
-    if (quantity > 1) {
+    if (quantity > 0) {
       setQuantity(prev => prev - 1);
     }
   };
 
-  return (
-    <div className="min-h-screen bg-gray-50 pt-20">
-      {/* Breadcrumbs */}
-      <div className="container mx-auto px-4 py-3">
-        <div className="text-sm text-gray-500">
-          <a href="#" className="hover:text-blue-600">Home</a> 
-          <a href="#" className="hover:text-blue-600 mx-1">Products</a> 
-          <span className="text-gray-700 ml-1">Advanced Wireless Sensor Pro X7</span>
-        </div>
-      </div>
+  const RelatedProductsSlider = {
+    dots: true,
+    arrows: false,
+    infinite: true,
+    speed: 1000,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 5000,
+    pauseOnHover: false,
+    responsive: [
+      { breakpoint: 768, settings: { slidesToShow: 2 } },
+      { breakpoint: 425, settings: { slidesToShow: 1 } }
+    ],
+  };
 
+  return (
+  <>
+  {loading ? (
+          <div>Loading....</div>
+        ) : error ? (
+          <div className="text-center text-red-500 py-5">
+            <p>Error loading sections: {error.message || 'Something went wrong'}</p>
+            <button
+              className="mt-4 px-5 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+              onClick={() => window.location.reload()}
+            >
+              Retry
+            </button>
+          </div>
+        ) :  data ? (
+    <div className="min-h-screen bg-gray-50 pt-20">
       {/* Product Section */}
       <section className="container mx-auto px-4 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
@@ -40,8 +73,8 @@ function App() {
           <div className="lg:w-1/2">
             <div className="bg-white rounded-lg overflow-hidden shadow-lg h-full flex items-center justify-center p-4">
               <img
-                src="https://public.readdy.ai/ai/img_res/86fa8806e9e205f1b60b55d085ea0e3f.jpg"
-                alt="Advanced Wireless Sensor Pro X7"
+                src={product.image}
+                alt={product.id}
                 className="object-contain w-full h-full object-top"
               />
             </div>
@@ -49,12 +82,12 @@ function App() {
 
           {/* Right Column - Product Details */}
           <div className="lg:w-1/2">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Advanced Wireless Sensor Pro X7</h1>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">{product.name}</h1>
             <div className="flex flex-wrap gap-2 mb-4">
-              <span className="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full cursor-pointer">IoT Devices</span>
-              <span className="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full cursor-pointer">Sensors</span>
-              <span className="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full cursor-pointer">Smart Home</span>
-              <span className="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full cursor-pointer">Wireless</span>
+              {product.categories.map((category) => (
+              <span key={category} className="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full cursor-pointer">{category}</span>
+              ))}
+      
             </div>
 
             {/* Tabs */}
@@ -79,19 +112,7 @@ function App() {
                 {activeTab === 'description' && (
                   <div>
                     <p className="text-gray-700 mb-4">
-                      The Advanced Wireless Sensor Pro X7 is our latest innovation in IoT sensing technology.
-                      Designed for both home and industrial applications, this sensor provides real-time
-                      environmental monitoring with unparalleled accuracy and reliability.
-                    </p>
-                    <p className="text-gray-700 mb-4">
-                      With its extended battery life of up to 2 years and enhanced wireless range, the Pro X7
-                      can be deployed in challenging environments while maintaining consistent data transmission.
-                      The device features multiple sensing capabilities including temperature, humidity, air quality,
-                      and motion detection, all accessible through our intuitive mobile app or web dashboard.
-                    </p>
-                    <p className="text-gray-700">
-                      Each unit comes with our industry-leading 3-year warranty and free access to our cloud
-                      analytics platform for the first 12 months.
+                     {product.description}
                     </p>
                   </div>
                 )}
@@ -116,22 +137,6 @@ function App() {
                         <tr>
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Battery Life</td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Up to 24 months</td>
-                        </tr>
-                        <tr>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Wireless Range</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">300 feet (line of sight)</td>
-                        </tr>
-                        <tr>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Connectivity</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Wi-Fi, Bluetooth 5.0, Zigbee</td>
-                        </tr>
-                        <tr>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Sensors</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Temperature, Humidity, Motion, Air Quality</td>
-                        </tr>
-                        <tr>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Operating Temperature</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">-10°C to 60°C</td>
                         </tr>
                         <tr>
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Water Resistance</td>
@@ -192,89 +197,19 @@ function App() {
       {/* People Also Like Section */}
       <section className="container mx-auto px-4 py-12">
         <h2 className="text-2xl font-bold text-gray-900 mb-6">People Also Like</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {/* Product 1 */}
-          <div className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transition-transform hover:shadow-lg hover:-translate-y-1">
-            <div className="h-48 overflow-hidden">
-              <img
-                src="https://public.readdy.ai/ai/img_res/2cf1bd20a26930c133ed4d709dd02bb5.jpg"
-                alt="Smart Temperature Sensor"
-                className="w-full h-full object-cover object-top"
-              />
-            </div>
-            <div className="p-4">
-              <h3 className="text-lg font-semibold text-gray-900 mb-1">Smart Temperature Sensor</h3>
-              <p className="text-sm text-gray-600 mb-2">Wireless home monitoring system</p>
-              <div className="flex justify-between items-center">
-                <button className="text-gray-500 hover:text-blue-600 cursor-pointer">
-                  <FaShoppingCart />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Product 2 */}
-          <div className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transition-transform hover:shadow-lg hover:-translate-y-1">
-            <div className="h-48 overflow-hidden">
-              <img
-                src="https://public.readdy.ai/ai/img_res/19cf419b395e77fec8536d50bc3e48f5.jpg"
-                alt="Industrial Motion Detector"
-                className="w-full h-full object-cover object-top"
-              />
-            </div>
-            <div className="p-4">
-              <h3 className="text-lg font-semibold text-gray-900 mb-1">Industrial Motion Detector</h3>
-              <p className="text-sm text-gray-600 mb-2">Heavy-duty security sensor</p>
-              <div className="flex justify-between items-center">
-                <button className="text-gray-500 hover:text-blue-600 cursor-pointer">
-                  <FaShoppingCart />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Product 3 */}
-          <div className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transition-transform hover:shadow-lg hover:-translate-y-1">
-            <div className="h-48 overflow-hidden">
-              <img
-                src="https://public.readdy.ai/ai/img_res/313c88f35e213ca5e86ab2b2725bea21.jpg"
-                alt="Air Quality Monitor"
-                className="w-full h-full object-cover object-top"
-              />
-            </div>
-            <div className="p-4">
-              <h3 className="text-lg font-semibold text-gray-900 mb-1">Air Quality Monitor</h3>
-              <p className="text-sm text-gray-600 mb-2">Real-time air quality tracking</p>
-              <div className="flex justify-between items-center">
-                <button className="text-gray-500 hover:text-blue-600 cursor-pointer">
-                  <FaShoppingCart />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Product 4 */}
-          <div className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transition-transform hover:shadow-lg hover:-translate-y-1">
-            <div className="h-48 overflow-hidden">
-              <img
-                src="https://public.readdy.ai/ai/img_res/d54dd81e8f1de656a57ccd3a7c1bf245.jpg"
-                alt="Water Leak Detector"
-                className="w-full h-full object-cover object-top"
-              />
-            </div>
-            <div className="p-4">
-              <h3 className="text-lg font-semibold text-gray-900 mb-1">Water Leak Detector</h3>
-              <p className="text-sm text-gray-600 mb-2">Early warning water detection</p>
-              <div className="flex justify-between items-center">
-                <button className="text-gray-500 hover:text-blue-600 cursor-pointer">
-                  <FaShoppingCart />
-                </button>
-              </div>
-            </div>
-          </div>
+        <div className="w-full">
+        <Slider {...RelatedProductsSlider}>
+          {relatedProducts.map((product) => (
+            <ProductCard variant="no-hover" product={product} key={product.id}/>
+          ))}
+        </Slider>
         </div>
       </section>
     </div>
+     ) : (
+      <div className="text-center text-gray-500 pt-20">No Product available</div>
+    )}
+    </>
   );
 }
 

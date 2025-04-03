@@ -2,26 +2,43 @@ import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 const Sidebar = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const response = await axios.get('/api/orders');
-        setOrders(response.data.data);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching orders:', error);
-        setLoading(false);
+    const token = sessionStorage.getItem('token');
+    
+    if (!token) {
+      setError('No authentication token found');
+      setLoading(false);
+      return;
+    }
+  
+    fetch('/api/orders', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       }
-    };
-
-    fetchOrders();
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setOrders(data.orders);
+        setLoading(false);
+      })
+      .catch(err => {
+        setError(err.message);
+        setLoading(false);
+      });
   }, []);
 
   const handleOrderClick = (orderId) => {
@@ -63,7 +80,7 @@ const Sidebar = () => {
         </p>
       </div>
       <div className="p-6 space-y-5">
-        {orders.map((order) => (
+        {orders && orders.map((order) => (
           <div 
             key={order.id}
             onClick={() => handleOrderClick(order.id)}

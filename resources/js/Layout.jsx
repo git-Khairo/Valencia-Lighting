@@ -179,7 +179,8 @@ const Layout = () => {
                   >
                     {darkMode ? <FaSun size={20} /> : <FaMoon size={20} />}
                   </button>
-                  <button
+                  <Link
+                  to={'/pricingList'}
                     onClick={(e) => {
                       e.stopPropagation();
                       setLanguage(language === "en" ? "ar" : "en");
@@ -187,7 +188,7 @@ const Layout = () => {
                     className="flex items-center gap-2 text-light-secondary dark:text-dark-secondary hover:text-light-primary dark:hover:text-dark-primary transition-all duration-300 ease-in-out font-semibold hover:font-bold z-20"
                   >
                     <FaShoppingCart size={20} />
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
