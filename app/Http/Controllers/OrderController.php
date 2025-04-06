@@ -6,6 +6,7 @@ use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
+use App\Models\Product;
 use App\Repository\OrderRepository;
 use App\RepositoryInterface\OrderRepositoryInterface;
 
@@ -56,11 +57,16 @@ class OrderController extends Controller
             'lastName' => $validated['lastName'],
             'email' => $validated['email'],
             'phone' => $validated['phone'],
+            'address' => $validated['address']
         ]);
 
         // Attach products to the order
         foreach ($validated['products'] as $product) {
-            $order->products()->attach($product['product_id'], ['quantity' => $product['quantity']]);
+            // Find the product by its code
+            $productModel = Product::where('code', $product['id'])->firstOrFail();
+            
+            // Attach the product to the order using its ID
+            $order->products()->attach($productModel->id, ['quantity' => $product['quantity']]);
         }
 
         // Return a response, maybe the created order or a success message

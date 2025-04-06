@@ -10,8 +10,9 @@ import useFetch from '../useFetch';
 
 const PricingList = () => {
   const [formData, setFormData] = useState({
-    name: '', lastName: '', phone: '', email: '', city: '', country: ''
+    firstName: '', lastName: '', countryPrefix: '', phone: '', email: '', city: '', country: ''
   });
+
   const { data: RelatedProducts, loading:RelatedLoading, error:RelatedError} = useFetch('/api/latestProducts');
   const [cart, setCart] = useState(JSON.parse(sessionStorage.getItem('cart')) || []);
   const [data, setData] = useState(null);
@@ -273,12 +274,60 @@ const PricingList = () => {
     const selectedCountry = countryPrefixes.find(c => c.prefix === e.target.value);
     if (selectedCountry) {
       setFormData(prev => ({ ...prev, country: selectedCountry.name }));
+      setFormData(prev => ({ ...prev, countryPrefix: selectedCountry.prefix }));
     }
   };
 
+  const [resData, setResData] = useState(null);
+  const [resLoading, setResLoading] = useState(true);
+  const [resError, setResError] = useState(null);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-  };
+
+    let products;
+    try {
+      products = JSON.parse(sessionStorage.getItem('cart')) || [];
+      if (!Array.isArray(products) || products.length === 0) {
+        throw new Error("Cart is empty or invalid");
+      }
+    } catch (err) {
+      setResError(err.message);
+      setResLoading(false);
+      return;
+    }
+
+    const payload = {
+      "firstName": formData.firstName,
+      "lastName": formData.lastName,
+      "email": formData.email,
+      "phone": formData.countryPrefix + formData.phone,
+      "address": `${formData.country}, ${formData.city}`,
+      products
+    }
+
+    fetch('/api/orders', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload)
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setResData(data);
+        setResLoading(false);
+      })
+      .catch(err => {
+        setResError(err.message);
+        setResLoading(false);
+      });
+    };
 
   const RelatedProductsSlider = {
     dots: false,
@@ -361,7 +410,6 @@ const PricingList = () => {
           ) : (
             <></>
           )}
-
           <div className="w-full lg:w-1/3 bg-white rounded-lg shadow-sm">
             <div className="p-4 sm:p-6 border-b border-gray-200">
               <h2 className="text-lg sm:text-xl font-medium text-gray-900">Your Information</h2>
@@ -371,11 +419,11 @@ const PricingList = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">First Name</label>
-                    <input type="text" id="firstName" name="name" value={formData.name} onChange={handleInputChange} placeholder="John" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2 px-3" required />
+                    <input type="text" id="firstName" name="firstName" value={formData.firstName} onChange={handleInputChange} placeholder="John" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2 px-3" />
                   </div>
                   <div>
                     <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">Last Name</label>
-                    <input type="text" id="lastName" name="lastName" onChange={handleInputChange} placeholder="Doe" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2 px-3" required />
+                    <input type="text" id="lastName" name="lastName" onChange={handleInputChange} placeholder="Doe" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2 px-3" />
                   </div>
                 </div>
                 <div>
@@ -393,23 +441,23 @@ const PricingList = () => {
                         <ReactCountryFlag countryCode={countryPrefixes.find(c => c.prefix === countryPrefix)?.code} svg className="w-5 h-5" />
                       </span>
                     </div>
-                    <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleInputChange} placeholder="123-4567" className="block w-full sm:w-2/3 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2 px-3" required />
+                    <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleInputChange} placeholder="123-4567" className="block w-full sm:w-2/3 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2 px-3" />
                   </div>
                 </div>
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email Address</label>
-                  <input type="email" id="email" name="email" value={formData.email} onChange={handleInputChange} placeholder="john.doe@example.com" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2 px-3" required />
+                  <input type="email" id="email" name="email" value={formData.email} onChange={handleInputChange} placeholder="john.doe@example.com" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2 px-3" />
                 </div>
               </div>
               <div className="pt-4 border-t border-gray-200 space-y-4">
                 <h3 className="text-lg font-medium text-gray-900">Location</h3>
                 <div>
                   <label htmlFor="city" className="block text-sm font-medium text-gray-700">City</label>
-                  <input type="text" id="city" name="city" value={formData.city} onChange={handleInputChange} placeholder="New York" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2 px-3" required />
+                  <input type="text" id="city" name="city" value={formData.city} onChange={handleInputChange} placeholder="New York" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2 px-3" />
                 </div>
                 <div className="relative">
                   <label htmlFor="country" className="block text-sm font-medium text-gray-700">Country</label>
-                  <select id="country" name="country" value={formData.country} onChange={handleInputChange} className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2 pl-10 pr-4 appearance-none" required>
+                  <select id="country" name="country" value={formData.country} onChange={handleInputChange} className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2 pl-10 pr-4 appearance-none">
                     <option value="">Select Country</option>
                     {countries.map(country => (
                       <option key={country} value={country}>{country}</option>

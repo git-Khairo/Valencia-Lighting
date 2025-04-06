@@ -14,6 +14,7 @@ class Order extends Model
         'lastName',
         'email',
         'phone',
+        'address',
     ];
     public function products()
     {
