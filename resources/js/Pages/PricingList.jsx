@@ -1,31 +1,48 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMinus, faPlus, faTrashAlt, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faMinus, faPlus, faTrashAlt, } from '@fortawesome/free-solid-svg-icons';
 import ReactCountryFlag from 'react-country-flag';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from 'react-slick';
+import ProductCard from '../Components/ProductCard';
+import useFetch from '../useFetch';
 
 const PricingList = () => {
-  const [products, setProducts] = useState([
-    { id: 1, name: "Premium Wireless Headphones", description: "Noise-cancelling with 30h battery life", quantity: 1, image: "https://public.readdy.ai/ai/img_res/a51c5091717d94d4563355c0442b0099.jpg" },
-    { id: 2, name: "Smart Fitness Watch", description: "Tracks heart rate, steps, and sleep", quantity: 1, image: "https://public.readdy.ai/ai/img_res/8650f94d1fd376c84d7fdeec9dabe8d9.jpg" },
-    { id: 3, name: "Portable Bluetooth Speaker", description: "Waterproof with 12h playtime", quantity: 1, image: "https://public.readdy.ai/ai/img_res/1d6a8f172a0d216e0907e948dd05e3da.jpg" },
-    { id: 4, name: "Wireless Charging Pad", description: "Fast charging for all Qi devices", quantity: 1, image: "https://public.readdy.ai/ai/img_res/e068950ec7b1f867e4f8fd49ef3b35b9.jpg" },
-    { id: 5, name: "Ultra HD Action Camera", description: "4K recording with stabilization", quantity: 1, image: "https://public.readdy.ai/ai/img_res/7f65834b6e022409350f51f4be19f80a.jpg" }
-  ]);
-
-  const [relatedProducts] = useState([
-    { id: 101, name: "Premium Camera Tripod", description: "Stable and lightweight design", quantity: 1, image: "https://public.readdy.ai/ai/img_res/c43592fc2993cd3bd31fc0746f89cb0c.jpg" },
-    { id: 102, name: "Wireless Earbuds", description: "True wireless with charging case", quantity: 1, image: "https://public.readdy.ai/ai/img_res/1cac6d1f11a3f31601693add30c52a26.jpg" },
-    { id: 103, name: "Smart Home Hub", description: "Control all your smart devices", quantity: 1, image: "https://public.readdy.ai/ai/img_res/528ac2b7322760afb1e0d794e5d97fcb.jpg" },
-    { id: 104, name: "Ultra-Thin Power Bank", description: "20,000mAh high capacity", quantity: 1, image: "https://public.readdy.ai/ai/img_res/92e85a26dcb5394e49ea9c4fb669475e.jpg" },
-    { id: 105, name: "Premium Laptop Sleeve", description: "Waterproof and shock-resistant", quantity: 1, image: "https://public.readdy.ai/ai/img_res/e11531b513b19361c7b6240e3b6c4672.jpg" },
-    { id: 106, name: "Ergonomic Keyboard", description: "Mechanical keys with RGB lighting", quantity: 1, image: "https://public.readdy.ai/ai/img_res/42948735ab712bea1fad6432580ca1f8.jpg" }
-  ]);
-
   const [formData, setFormData] = useState({
-    name: '', lastName: '', phone: '', email: '', city: '', country: ''
+    firstName: '', lastName: '', countryPrefix: '', phone: '', email: '', city: '', country: ''
   });
 
-  const [activeSlide, setActiveSlide] = useState(0);
+  const { data: RelatedProducts, loading:RelatedLoading, error:RelatedError} = useFetch('/api/latestProducts');
+  const [cart, setCart] = useState(JSON.parse(sessionStorage.getItem('cart')) || []);
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetch('/api/cart', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(cart)
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setData(data.data);
+        setLoading(false);
+      })
+      .catch(err => {
+        setError(err.message);
+        setLoading(false);
+      });
+    }, [cart]);
+
   const [countryPrefix, setCountryPrefix] = useState('+1');
 
   // Complete list of all 195 sovereign countries with codes and prefixes
@@ -228,14 +245,23 @@ const PricingList = () => {
   const countries = useMemo(() => countryPrefixes.map(c => c.name).sort(), []);
 
   const handleQuantityChange = (id, newQuantity) => {
-    if (newQuantity < 1) return;
-    setProducts(products.map(product =>
-      product.id === id ? { ...product, quantity: newQuantity } : product
-    ));
+    if(newQuantity > 0){
+      const updatedCart = cart.map((item) => 
+        item.id === id 
+            ? { ...item, quantity: newQuantity }
+            : item
+    );
+    setCart(updatedCart);
+    sessionStorage.setItem('cart', JSON.stringify(updatedCart));
+    }else{
+      handleRemoveProduct(id);
+    }
   };
 
   const handleRemoveProduct = (id) => {
-    setProducts(products.filter(product => product.id !== id));
+    const updatedCart = cart.filter((item) => item.id !== id)
+    setCart(updatedCart);
+    sessionStorage.setItem('cart', JSON.stringify(updatedCart));
   };
 
   const handleInputChange = (e) => {
@@ -248,51 +274,107 @@ const PricingList = () => {
     const selectedCountry = countryPrefixes.find(c => c.prefix === e.target.value);
     if (selectedCountry) {
       setFormData(prev => ({ ...prev, country: selectedCountry.name }));
+      setFormData(prev => ({ ...prev, countryPrefix: selectedCountry.prefix }));
     }
   };
 
+  const [resData, setResData] = useState(null);
+  const [resLoading, setResLoading] = useState(true);
+  const [resError, setResError] = useState(null);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    console.log('Products:', products);
-  };
 
-  // Responsive slider logic
-  const getVisibleItems = () => {
-    if (window.innerWidth < 640) return 1; // sm: 1 item
-    if (window.innerWidth < 768) return 2; // md: 2 items
-    if (window.innerWidth < 1024) return 3; // lg: 3 items
-    return 4; // xl: 4 items
-  };
+    let products;
+    try {
+      products = JSON.parse(sessionStorage.getItem('cart')) || [];
+      if (!Array.isArray(products) || products.length === 0) {
+        throw new Error("Cart is empty or invalid");
+      }
+    } catch (err) {
+      setResError(err.message);
+      setResLoading(false);
+      return;
+    }
 
-  const visibleItems = getVisibleItems();
-  const maxSlide = Math.max(0, relatedProducts.length - visibleItems);
+    const payload = {
+      "firstName": formData.firstName,
+      "lastName": formData.lastName,
+      "email": formData.email,
+      "phone": formData.countryPrefix + formData.phone,
+      "address": `${formData.country}, ${formData.city}`,
+      products
+    }
 
-  const slideLeft = () => {
-    setActiveSlide(prev => (prev > 0 ? prev - 1 : 0));
-  };
+    fetch('/api/orders', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload)
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setResData(data);
+        setResLoading(false);
+      })
+      .catch(err => {
+        setResError(err.message);
+        setResLoading(false);
+      });
+    };
 
-  const slideRight = () => {
-    setActiveSlide(prev => (prev < maxSlide ? prev + 1 : maxSlide));
+  const RelatedProductsSlider = {
+    dots: false,
+    arrows: true,
+    infinite: false,
+    speed: 1000,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    autoplay: false,
+    autoplaySpeed: 5000,
+    pauseOnHover: false,
+    responsive: [
+      { breakpoint: 768, settings: { slidesToShow: 2 } },
+      { breakpoint: 425, settings: { slidesToShow: 1 } }
+    ],
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-6 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-100 py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-2xl sm:text-3xl font-semibold text-gray-900 mb-6">Your Cart</h1>
         <div className="flex flex-col lg:flex-row gap-6">
+        {loading ? (
+        <div>Loading....</div>
+      ) : error ? (
+        <div className="text-center text-red-500 py-5">
+          <p>Error loading sections: {error.message || 'Something went wrong'}</p>
+          <button
+            className="mt-4 px-5 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            onClick={() => window.location.reload()}
+          >
+            Retry
+          </button>
+        </div>
+      ) : data ? (
           <div className="w-full lg:w-2/3 bg-white rounded-lg shadow-sm overflow-hidden">
             <div className="p-4 sm:p-6 border-b border-gray-200">
               <h2 className="text-lg sm:text-xl font-medium text-gray-900">Products</h2>
             </div>
             <div className="overflow-y-auto max-h-[400px] sm:max-h-[500px] p-4 sm:p-6">
-              {products.length === 0 ? (
+              {!data ? (
                 <div className="text-center py-10">
                   <p className="text-gray-500">Your cart is empty</p>
                 </div>
               ) : (
                 <ul className="divide-y divide-gray-200">
-                  {products.map(product => (
+                  {data && data.map(product => (
                     <li key={product.id} className="py-4 flex flex-col sm:flex-row items-start sm:items-center gap-4">
                       <div className="h-16 w-16 sm:h-20 sm:w-20 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                         <img src={product.image} alt={product.name} className="h-full w-full object-cover object-top" />
@@ -325,7 +407,9 @@ const PricingList = () => {
               )}
             </div>
           </div>
-
+          ) : (
+            <></>
+          )}
           <div className="w-full lg:w-1/3 bg-white rounded-lg shadow-sm">
             <div className="p-4 sm:p-6 border-b border-gray-200">
               <h2 className="text-lg sm:text-xl font-medium text-gray-900">Your Information</h2>
@@ -335,11 +419,11 @@ const PricingList = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">First Name</label>
-                    <input type="text" id="firstName" name="name" value={formData.name} onChange={handleInputChange} placeholder="John" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2 px-3" required />
+                    <input type="text" id="firstName" name="firstName" value={formData.firstName} onChange={handleInputChange} placeholder="John" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2 px-3" />
                   </div>
                   <div>
                     <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">Last Name</label>
-                    <input type="text" id="lastName" name="lastName" onChange={handleInputChange} placeholder="Doe" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2 px-3" required />
+                    <input type="text" id="lastName" name="lastName" onChange={handleInputChange} placeholder="Doe" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2 px-3" />
                   </div>
                 </div>
                 <div>
@@ -357,23 +441,23 @@ const PricingList = () => {
                         <ReactCountryFlag countryCode={countryPrefixes.find(c => c.prefix === countryPrefix)?.code} svg className="w-5 h-5" />
                       </span>
                     </div>
-                    <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleInputChange} placeholder="123-4567" className="block w-full sm:w-2/3 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2 px-3" required />
+                    <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleInputChange} placeholder="123-4567" className="block w-full sm:w-2/3 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2 px-3" />
                   </div>
                 </div>
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email Address</label>
-                  <input type="email" id="email" name="email" value={formData.email} onChange={handleInputChange} placeholder="john.doe@example.com" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2 px-3" required />
+                  <input type="email" id="email" name="email" value={formData.email} onChange={handleInputChange} placeholder="john.doe@example.com" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2 px-3" />
                 </div>
               </div>
               <div className="pt-4 border-t border-gray-200 space-y-4">
                 <h3 className="text-lg font-medium text-gray-900">Location</h3>
                 <div>
                   <label htmlFor="city" className="block text-sm font-medium text-gray-700">City</label>
-                  <input type="text" id="city" name="city" value={formData.city} onChange={handleInputChange} placeholder="New York" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2 px-3" required />
+                  <input type="text" id="city" name="city" value={formData.city} onChange={handleInputChange} placeholder="New York" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2 px-3" />
                 </div>
                 <div className="relative">
                   <label htmlFor="country" className="block text-sm font-medium text-gray-700">Country</label>
-                  <select id="country" name="country" value={formData.country} onChange={handleInputChange} className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2 pl-10 pr-4 appearance-none" required>
+                  <select id="country" name="country" value={formData.country} onChange={handleInputChange} className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2 pl-10 pr-4 appearance-none">
                     <option value="">Select Country</option>
                     {countries.map(country => (
                       <option key={country} value={country}>{country}</option>
@@ -392,45 +476,36 @@ const PricingList = () => {
             </form>
           </div>
         </div>
-
-        <div className="mt-8 bg-white rounded-lg shadow-sm p-4 sm:p-6">
+        {RelatedLoading ? (
+        <div>Loading....</div>
+      ) : RelatedError ? (
+        <div className="text-center text-red-500 py-5">
+          <p>Error loading sections: {error.message || 'Something went wrong'}</p>
+          <button
+            className="mt-4 px-5 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            onClick={() => window.location.reload()}
+          >
+            Retry
+          </button>
+        </div>
+      ) : RelatedProducts ? (
+        <div className="my-8 bg-white rounded-lg shadow-sm p-4 sm:p-6">
           <div className="flex flex-col sm:flex-row justify-between items-center mb-4 sm:mb-6">
-            <h2 className="text-lg sm:text-xl font-medium text-gray-900 mb-4 sm:mb-0">Related Products</h2>
-            <div className="flex space-x-2">
-              <button onClick={slideLeft} className={`p-2 rounded-full bg-gray-100 text-gray-900 hover:bg-indigo-200 ${activeSlide === 0 ? 'opacity-50 cursor-not-allowed' : ''}`} disabled={activeSlide === 0}>
-                <FontAwesomeIcon icon={faChevronLeft} />
-              </button>
-              <button onClick={slideRight} className={`p-2 rounded-full bg-gray-100 text-gray-900 hover:bg-indigo-200 ${activeSlide >= maxSlide ? 'opacity-50 cursor-not-allowed' : ''}`} disabled={activeSlide >= maxSlide}>
-                <FontAwesomeIcon icon={faChevronRight} />
-              </button>
-            </div>
+            <h2 className="text-lg sm:text-xl font-medium text-gray-900 mb-4 sm:mb-0">More Products</h2>
           </div>
           <div className="relative overflow-hidden">
-            <div
-              className="flex transition-transform duration-300 ease-in-out"
-              style={{ transform: `translateX(-${activeSlide * (100 / visibleItems)}%)` }}
-            >
-              {relatedProducts.map(product => (
-                <div key={product.id} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 flex-shrink-0 px-2">
-                  <div className="border border-gray-300 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
-                    <div className="h-40 sm:h-48 overflow-hidden">
-                      <img src={product.image} alt={product.name} className="w-full h-full object-cover object-top" />
-                    </div>
-                    <div className="p-3 sm:p-4">
-                      <h3 className="text-sm font-medium text-gray-900 truncate">{product.name}</h3>
-                      <p className="mt-1 text-xs text-gray-500 truncate">{product.description}</p>
-                      <div className="mt-2 flex justify-end">
-                        <button className="text-xs bg-indigo-600 text-white py-1 px-2 sm:px-3 rounded-md hover:bg-indigo-700 transition-colors">
-                          Add to Cart
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+            <div className="w-full">
+            <Slider {...RelatedProductsSlider}>
+              {RelatedProducts.data.map(product => (
+                <ProductCard variant="no-hover" product={product} key={product.id}/>
               ))}
+              </Slider>
             </div>
           </div>
         </div>
+      ) : (
+        <div className="text-center text-gray-500 pt-20">No Products available</div>
+      )}
       </div>
     </div>
   );

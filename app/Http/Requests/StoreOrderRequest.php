@@ -20,8 +20,9 @@ class StoreOrderRequest extends FormRequest
             'lastName' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'phone' => 'required|string|regex:/^(\+?[0-9]{1,3})?([0-9]{10})$/',
+            'address' => 'required|string|max:255',
             'products' => 'required|array',
-            'products.*.product_id' => 'required|exists:products,id',
+            'products.*.id' => 'required',
             'products.*.quantity' => 'required|integer|min:1',
         ];
     }
@@ -44,6 +45,10 @@ class StoreOrderRequest extends FormRequest
             'phone.required' => 'The phone number is required.',
             'phone.string' => 'The phone number must be a string.',
             'phone.regex' => 'The phone number format is invalid. Please use a valid format (e.g., +123456789012 or 1234567890).',
+
+            'address.required' => 'The address is required.',
+            'address.string' => 'The address must be a string.',
+            'address.max' => 'The address can not be longer than 255 characters.',
 
             'products.required' => 'At least one product is required to place an order.',
             'products.array' => 'The products must be provided as an array.',

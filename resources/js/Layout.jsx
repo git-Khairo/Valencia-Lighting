@@ -1,6 +1,6 @@
 // Layout.jsx
 import { useState, useEffect, useRef } from "react";
-import { FaSearch, FaTimes, FaMoon, FaSun, FaBars, FaShoppingCart } from "react-icons/fa";
+import { FaSearch, FaTimes, FaMoon, FaSun, FaBars, FaReceipt } from "react-icons/fa";
 import { FaFacebookF, FaInstagram, FaMapMarkerAlt } from "react-icons/fa";
 import { Link, Outlet, useLocation } from "react-router-dom";
 
@@ -18,6 +18,8 @@ const Layout = () => {
   const contentRef = useRef(null);
   const dropdownRef = useRef(null);
   const location = useLocation();
+  const [cart, setCart] = useState(JSON.parse(sessionStorage.getItem('cart') || '[]'));
+  const linkRef = useRef(null);
 
   const isHomePage = location.pathname === "/" || location.pathname === "/home";
 
@@ -36,6 +38,27 @@ const Layout = () => {
   useEffect(() => {
     localStorage.setItem("language", language);
   }, [language]);
+
+
+  const updateCart = () => {
+    const newCart = JSON.parse(sessionStorage.getItem('cart') || '[]');
+    setCart(newCart); // Update state
+  };
+
+  useEffect(() => {
+    // Update pseudo-element whenever cart changes
+    if (linkRef.current) {
+      linkRef.current.style.setProperty('--cart-count', `"${cart.length}"`);
+    }
+
+    // Listen for cart updates (optional, requires custom event dispatch elsewhere)
+    window.addEventListener('cartUpdated', updateCart);
+
+    // Cleanup listener
+    return () => {
+      window.removeEventListener('cartUpdated', updateCart);
+    };
+  }, [cart]);
 
   // Handle Dark Mode Toggle
   useEffect(() => {
@@ -160,7 +183,7 @@ const Layout = () => {
                 </div>
 
                 {/* Right Section - Search & Dark Mode */}
-                <div className="flex items-center space-x-10">
+                <div className="flex items-center space-x-10 relative">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
@@ -181,13 +204,10 @@ const Layout = () => {
                   </button>
                   <Link
                   to={'/pricingList'}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setLanguage(language === "en" ? "ar" : "en");
-                    }}
-                    className="flex items-center gap-2 text-light-secondary dark:text-dark-secondary hover:text-light-primary dark:hover:text-dark-primary transition-all duration-300 ease-in-out font-semibold hover:font-bold z-20"
+                  ref={linkRef}
+                    className="flex items-center gap-2 text-light-secondary dark:text-dark-secondary hover:text-light-primary dark:hover:text-dark-primary transition-all duration-300 ease-in-out font-semibold hover:font-bold z-20 after:absolute after:w-3 after:h-3 after:bg-blue-800 after:rounded-full after:-top-2 after:-right-2 after:content-[var(--cart-count)] after:text-white after:text-xs after:flex after:items-center after:justify-center after:p-2"
                   >
-                    <FaShoppingCart size={20} />
+                    <FaReceipt size={20} />
                   </Link>
                 </div>
               </div>

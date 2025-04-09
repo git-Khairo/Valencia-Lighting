@@ -10,7 +10,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\AdminController;
 
-Route::get('/cart', [CartController::class, 'show']);
+Route::post('/cart', [CartController::class, 'show']);
 Route::get('/sections', [ProductController::class, 'getSections']);
 Route::get('/latestProducts', [ProductController::class, 'getLatestProducts']);
 Route::get('/search', [LayoutController::class, 'search']);

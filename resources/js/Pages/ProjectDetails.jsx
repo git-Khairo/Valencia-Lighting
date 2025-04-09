@@ -10,7 +10,7 @@ import useFetch from '../useFetch';
 
 const ProjectDetails = () => {
   const { id } = useParams();
-  const { data, error, loading } = useFetch(`/api/project/${id}`);
+  const { data, error, loading } = useFetch(`/api/projects/${id}`);
   let images = [];
 
   if(data.project){

@@ -17,7 +17,7 @@ class CartController extends Controller
 
     public function show(Request $request)
     {
-        $cartItems = $request->query('cart', []);
+        $cartItems = $request->toArray();
 
         if (empty($cartItems)) {
             return response()->json([
@@ -27,7 +27,7 @@ class CartController extends Controller
             ], 200);
         }
 
-        $productIds = array_column($cartItems, 'product_id');
+        $productIds = array_column($cartItems, 'id');
         $products = collect($productIds)->map(function ($id) {
             return $this->productRepository->byCode($id); 
         })->filter();
@@ -41,7 +41,7 @@ class CartController extends Controller
 
         // Attach quantities from cartItems
         $productsWithQuantities = $products->map(function ($product) use ($cartItems) {
-            $cartItem = collect($cartItems)->firstWhere('product_id', $product->code);
+            $cartItem = collect($cartItems)->firstWhere('id', $product->code);
             $product->quantity = $cartItem ? $cartItem['quantity'] : null;
             return $product;
         });

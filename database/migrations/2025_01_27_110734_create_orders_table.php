@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('lastName');
             $table->string('email');
             $table->string('phone');
+            $table->string('address');
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();
         });
