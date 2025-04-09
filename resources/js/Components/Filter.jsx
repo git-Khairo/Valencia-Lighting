@@ -6,7 +6,7 @@ const Filter = ({ updateFilter, categories, brand, setBrand, setCategories }) =>
   const [dropDownFilterOutdoor, setDropDownFilterOutdoor] = useState(false);
 
     return ( 
-       <div className="w-72 dark:bg-dark-secondary h-fit sticky top-[64px] overflow-y-auto hidden md:block my-5 transition-all duration-300 p-4 rounded-lg">
+      <div className="w-72 dark:bg-dark-secondary max-h-[calc(100vh-80px)] sticky top-[64px] overflow-y-auto hidden md:block my-5 transition-all duration-300 p-4 rounded-lg scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
          <div className="flex justify-between items-center border-b border-gray-300 dark:border-gray-700 pb-2 mb-4">
            <h2 className="text-xl font-bold text-gray-900 dark:text-white">Filters</h2>
          </div>
@@ -16,7 +16,7 @@ const Filter = ({ updateFilter, categories, brand, setBrand, setCategories }) =>
            <h3 className="font-semibold text-gray-700 dark:text-gray-300">Brand</h3>
            <div className="mt-2 space-y-4">
              <label htmlFor="sila" className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
-             <input type="radio" id="sila" name="brand" value="sila" className="peer hidden" onChange={(e) => setBrand(e.target.value)} />
+             <input type="radio" id="sila" name="brand" value="sila" className="peer hidden" onClick={(e) => brand === 'sila' ? setBrand("") : setBrand(e.target.value)} />
              <span className="w-7 h-7 mr-2 flex items-center justify-center">
               {brand === 'sila' ? (
                 <FaLightbulb size={20} />
@@ -27,7 +27,7 @@ const Filter = ({ updateFilter, categories, brand, setBrand, setCategories }) =>
             Sila
              </label>
              <label htmlFor="radial" className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
-             <input type="radio" id="radial" name="brand" value="radial" className="peer hidden" onChange={(e) => setBrand(e.target.value)} />
+             <input type="radio" id="radial" name="brand" value="radial" className="peer hidden" onClick={(e) => brand === 'radial' ? setBrand("") : setBrand(e.target.value)} />
              <span className="w-7 h-7 mr-2 flex items-center justify-center">
               {brand === 'radial' ? (
                 <FaLightbulb size={20} />

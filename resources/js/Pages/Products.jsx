@@ -52,6 +52,26 @@ const Products = () => {
       prev.includes(categoryID) ? prev.filter((c) => c !== categoryID) : [...prev, categoryID]
     );
   }
+
+  const handleSortAtoZ = () => {
+    const sortedData = [...products].sort((a, b) => a.name.localeCompare(b.name));
+    setProducts(sortedData); // Update state with the sorted array
+  };
+
+  const handleSortZtoA = () => {
+    const sortedData = [...products].sort((a, b) => b.name.localeCompare(a.name));
+    setProducts(sortedData); // Update state with the sorted array
+  };
+
+  const handleSortLatest = () => {
+    setProducts([...data]);
+  };
+
+  const sortFunctions = {
+    "A to Z": handleSortAtoZ,
+    "Z to A": handleSortZtoA,
+    "Latest": handleSortLatest,
+  };
   
 
   useEffect(() => {
@@ -72,8 +92,8 @@ const Products = () => {
         return response.json();
       })
       .then(data => {
+        setProducts(data.products);
         setData(data.products);
-        setProducts(data.products)
         setLoading(false);
       })
       .catch(err => {
@@ -81,37 +101,25 @@ const Products = () => {
         setLoading(false);
       });
   }, [brand, categories]);
- 
-   // **Reset to page 1 when data changes to avoid empty pages**
-   useEffect(() => {
+
+
+  useEffect(() => {
+    if(data){
+    sortFunctions[sortOption]();
+    }
+  }, [data])
+
+  
+  // **Reset to page 1 when data changes to avoid empty pages**
+  useEffect(() => {
     setCurrentPage(1);
   }, [data]);
-   
+  
 
    // **Pagination logic**
    const lastPostIndex = currentPage * postsPerPage;
    const firstPostIndex = lastPostIndex - postsPerPage;
    const currentPosts = data && products.slice(firstPostIndex, lastPostIndex);
-
-   const handleSortAtoZ = () => {
-    const sortedData = [...products].sort((a, b) => a.name.localeCompare(b.name));
-    setProducts(sortedData); // Update state with the sorted array
-  };
-
-  const handleSortZtoA = () => {
-    const sortedData = [...products].sort((a, b) => b.name.localeCompare(a.name));
-    setProducts(sortedData); // Update state with the sorted array
-  };
-
-  const handleSortLatest = () => {
-    setProducts([...data]);
-  };
-
-  const sortFunctions = {
-    "A to Z": handleSortAtoZ,
-    "Z to A": handleSortZtoA,
-    "Latest": handleSortLatest,
-  };
 
 
    const ProductSliderSettings = {
@@ -261,12 +269,12 @@ const Products = () => {
         onClick={() => setIsFilterOpen(false)}
       >
         <div
-          className={`fixed bottom-0 left-0 w-80 h-full bg-light-background dark:bg-gray-900 shadow-lg p-4 transition-transform duration-500 ${
+          className={`fixed bottom-0 left-0 w-full h-full bg-light-background dark:bg-gray-900 shadow-lg transition-transform duration-500 ${
             isFilterOpen ? "translate-y-0" : "translate-y-full"
           }`}
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="flex justify-between items-center border-b border-gray-300 dark:border-gray-700 pb-2 mb-4">
+          <div className="flex justify-between items-center border-b border-gray-300 dark:border-gray-700 px-4 pt-4 pb-2">
             <h2 className="text-xl font-bold text-gray-900 dark:text-white">Filters</h2>
             <button
               onClick={() => setIsFilterOpen(false)}
@@ -277,13 +285,13 @@ const Products = () => {
           </div>
 
           {/* Mobile Filters */}
-          <div className="p-4">
+          <div className="overflow-y-auto max-h-[calc(100vh-120px)] p-4">
             {/* Brand Filter */}
             <div className="mb-4">
               <h3 className="font-semibold text-gray-700 dark:text-gray-300">Brand</h3>
               <div className="mt-2 space-y-2">
                 <label className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
-                  <input type="radio" name="brandMobile" value="sila" className="peer hidden" onChange={(e) => setBrand(e.target.value)} />
+                <input type="radio" id="sila" name="brand" value="sila" className="peer hidden" onClick={(e) => brand === 'sila' ? setBrand("") : setBrand(e.target.value)} />
                   <span className="w-7 h-7 mr-2 flex items-center justify-center">
                   {brand === 'sila' ? (
                     <FaLightbulb size={20} />
@@ -294,7 +302,7 @@ const Products = () => {
                 Sila
                 </label>
                 <label className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
-                  <input type="radio" name="brandMobile" value="radial" className="peer hidden" onChange={(e) => setBrand(e.target.value)} />
+                <input type="radio" id="sila" name="brand" value="radial" className="peer hidden" onClick={(e) => brand === 'radial' ? setBrand("") : setBrand(e.target.value)} />
                  <span className="w-7 h-7 mr-2 flex items-center justify-center">
                   {brand === 'radial' ? (
                     <FaLightbulb size={20} />
