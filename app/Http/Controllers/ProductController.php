@@ -24,67 +24,50 @@ class ProductController extends Controller
     }
 
 
+
     public function store(StoreProductRequest $request)
     {
-        try {
-            // Get validated data from the request
-            $validated = $request->validated();
+        $validated = $request->validated();
 
-            // Create the product
-            $product = $this->ProductRepository->create($validated);
-
-            // Sync categories if provided
-            if ($request->has('category_ids')) {
-                $product->categories()->sync($request->input('category_ids'));
-            }
-
-            return response()->json([
-                'success' => true,
-                'data' => new FullProductResource($product->load('categories')),
-                'message' => 'Product created successfully'
-            ], 201);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Error creating product: ' . $e->getMessage()
-            ], 500);
+        if ($request->hasFile('image')) {
+            $validated['image'] = '/storage/' . $request->file('image')->store('products', 'public');
         }
+        if ($request->hasFile('datasheet')) {
+            $validated['datasheet'] = '/storage/' . $request->file('datasheet')->store('datasheets', 'public');
+        }
+
+        $product = Product::create($validated);
+
+        if ($request->has('category_ids')) $product->categories()->sync($request->category_ids);
+        if ($request->has('project_ids')) $product->projects()->sync($request->project_ids);
+
+        return response()->json(['product' => $product], 201);
     }
-
-
 
     public function update(UpdateProductRequest $request, $code)
     {
-        try {
-            // Get validated data from the request
-            $validated = $request->validated();
+        $product = Product::where('code', $code)->firstOrFail();
+        $validated = $request->validated();
 
-            // Update the product
-            $product = $this->ProductRepository->update($code, $validated);
+        
 
-            if (!$product) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Product not found'
-                ], 404);
-            }
-
-            // Sync categories if provided
-            if ($request->has('category_ids')) {
-                $product->categories()->sync($request->input('category_ids'));
-            }
-
-            return response()->json([
-                'success' => true,
-                'data' => new FullProductResource($product->load('categories')),
-                'message' => 'Product updated successfully'
-            ], 200);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Error updating product: ' . $e->getMessage()
-            ], 500);
+        if ($request->hasFile('image')) {
+            $validated['image'] = '/storage/' . $request->file('image')->store('products', 'public');
         }
+        if ($request->hasFile('datasheet')) {
+            $validated['datasheet'] = '/storage/' . $request->file('datasheet')->store('datasheets', 'public');
+        }
+
+        $product->update(['name'=>(string) $validated['name']]);
+        if ($request->has('category_ids')) {
+            $product->categories()->sync(array_unique($request->category_ids));
+        }
+        if ($request->has('project_ids')) {
+            $product->projects()->sync(array_unique($request->project_ids));
+        }
+        
+
+        return response()->json(['product' => $product,'val'=>$validated], 200);
     }
 
 
@@ -94,7 +77,7 @@ class ProductController extends Controller
 
         $relatedProducts = ProductController::related($code);
 
-        if(!$product){
+        if (!$product) {
             return response()->json(['message' => 'Product Not Found'], 404);
         }
         $product = [
@@ -136,26 +119,27 @@ class ProductController extends Controller
         return response()->json(['message' => 'Sections', 'Sections' => $section], 200);
     }
 
-    public function filter(Request $request){
-        $categoriesId = $request->input('categories',[]);
-        $brand= $request->input('brand',[]);
+    public function filter(Request $request)
+    {
+        $categoriesId = $request->input('categories', []);
+        $brand = $request->input('brand', []);
 
-        if(!empty($categoriesId)){
-            $products=$this->ProductRepository->byCategories($categoriesId);
-        }
-        else $products = $this->ProductRepository->allProducts();
+        if (!empty($categoriesId)) {
+            $products = $this->ProductRepository->byCategories($categoriesId);
+        } else $products = $this->ProductRepository->allProducts();
 
-        if($brand!==null){
+        if ($brand !== null) {
             $products = $this->ProductRepository->byBrand($products, $brand);
         }
-        
+
         return response()->json([
             'message' => 'Filtered Products',
-            'products' => ProductCardResource::collection($products)], 200);
+            'products' => ProductCardResource::collection($products)
+        ], 200);
     }
 
 
-    
+
     public function destroy($code)
     {
         try {
@@ -179,6 +163,4 @@ class ProductController extends Controller
             ], 500);
         }
     }
-
-
 }

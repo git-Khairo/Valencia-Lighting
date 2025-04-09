@@ -3,7 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Validation\Rule;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
 class StoreOrderRequest extends FormRequest
 {
     public function authorize()
@@ -53,5 +55,14 @@ class StoreOrderRequest extends FormRequest
             'products.*.quantity.integer' => 'The quantity must be a whole number.',
             'products.*.quantity.min' => 'The quantity must be at least 1.',
         ];
+    }
+    protected function failedValidation(Validator $validator)
+    {
+       // Convert all error messages into a single string
+       $errorMessage = implode(' ', $validator->errors()->all());
+
+       throw new HttpResponseException(response()->json([
+           'message' => $errorMessage,
+       ], 422)); // 422 Unprocessable Entity
     }
 }

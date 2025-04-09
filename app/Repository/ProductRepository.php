@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Models\Product;
 use App\Models\Project;
+use App\Http\Resources\FullProductResource;
 use App\RepositoryInterface\ProductRepositoryInterface;
 
 class ProductRepository implements ProductRepositoryInterface
@@ -85,7 +86,7 @@ class ProductRepository implements ProductRepositoryInterface
         return $project;
     }
 
-    public function create(array $data): Product
+    public function create(array $data)
     {
         return $this->model->create($data);
     }
@@ -106,5 +107,17 @@ class ProductRepository implements ProductRepositoryInterface
             return $product->delete();
         }
         return false;
+    }
+
+    public function allForSelection()
+    {
+        return Product::select('id', 'name', 'code')->get();
+    }
+
+
+    public function findFullByCode($code)
+    {
+        $product = Product::with(['categories', 'projects'])->where('code', $code)->firstOrFail();
+        return new FullProductResource($product);
     }
 }

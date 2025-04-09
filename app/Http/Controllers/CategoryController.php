@@ -22,8 +22,9 @@ class CategoryController extends Controller
         $this->CategoryRepository = $CategoryRepository;
     }
 
-    public function index(){
-        $categories= $this->CategoryRepository->allCategories();
+    public function index()
+    {
+        $categories = $this->CategoryRepository->allCategories();
 
         return response()->json(['message' => 'Categories', 'Categories' => $categories], 200);
     }
@@ -48,6 +49,13 @@ class CategoryController extends Controller
     {
         try {
             $validated = $request->validated();
+
+            // Handle image upload if present
+            if ($request->hasFile('image')) {
+                $path = $request->file('image')->store('categories', 'public');
+                $validated['image'] ='/storage/' . $path;
+            }
+
             $category = $this->CategoryRepository->create($validated);
 
             if (isset($validated['product_ids'])) {
@@ -57,7 +65,7 @@ class CategoryController extends Controller
             return response()->json([
                 'success' => true,
                 'data' => new CategoryResource($category->load('products')),
-                'message' => 'category created successfully'
+                'message' => 'Category created successfully'
             ], 201);
         } catch (\Exception $e) {
             return response()->json([
@@ -66,7 +74,6 @@ class CategoryController extends Controller
             ], 500);
         }
     }
-
     /**
      * Display the specified resource.
      */
@@ -92,12 +99,19 @@ class CategoryController extends Controller
     {
         try {
             $validated = $request->validated();
+
+            // Handle image upload if present
+            if ($request->hasFile('image')) {
+                $path = $request->file('image')->store('categories', 'public');
+                $validated['image'] ='/storage/' . $path;
+            }
+
             $category = $this->CategoryRepository->update($id, $validated);
 
             if (!$category) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'category not found'
+                    'message' => 'Category not found'
                 ], 404);
             }
 
@@ -108,7 +122,7 @@ class CategoryController extends Controller
             return response()->json([
                 'success' => true,
                 'data' => new CategoryResource($category->load('products')),
-                'message' => 'category updated successfully'
+                'message' => 'Category updated successfully'
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
@@ -129,13 +143,13 @@ class CategoryController extends Controller
             if (!$deleted) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'category not found'
+                    'message' => 'Category not found'
                 ], 404);
             }
 
             return response()->json([
                 'success' => true,
-                'message' => 'category deleted successfully'
+                'message' => 'Category deleted successfully'
             ], 200);
         } catch (\Exception $e) {
             return response()->json([

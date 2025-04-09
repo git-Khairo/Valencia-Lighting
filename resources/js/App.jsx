@@ -12,6 +12,7 @@ import Products from "./Pages/Products";
 import NotFound from "./Pages/NotFound";
 import SignIn from "./AdminDashboard/SignIn";
 import useFetch from "./useFetch";
+import Loading from "./Components/Loading"
 import Dashboard from "./AdminDashboard/Dashboard";
 import PricingList from "./Pages/PricingList";
 import Authentication from "./AdminDashboard/Authentication";
@@ -42,6 +43,7 @@ const App = () => {
                     <Route path="/categories" element={<Sections/>}/>
                     <Route path="/category/:id" element={<Products/>}/>
                     <Route path="/pricingList" element={<PricingList/>}/>
+                    <Route path="/dashboard" element={<Loading/>} />
                     <Route path="/admin/:code" element={
                         <ProtectedRoute>
                             <SignIn />

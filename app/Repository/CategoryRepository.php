@@ -5,6 +5,7 @@ namespace App\Repository;
 
 use App\Models\Category;
 use App\RepositoryInterface\CategoryRepositoryInterface;
+use App\Http\Resources\FullCategoryResource;
 
 class CategoryRepository implements CategoryRepositoryInterface
 {
@@ -48,5 +49,16 @@ class CategoryRepository implements CategoryRepositoryInterface
             return $category->delete();
         }
         return false;
+    }
+
+    public function allForSelection()
+    {
+        return Category::select('id', 'type')->get();
+    }
+
+    public function findFull($id)
+    {
+        $category = Category::with('products')->findOrFail($id);
+        return new FullCategoryResource($category);
     }
 }

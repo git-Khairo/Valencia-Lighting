@@ -1,9 +1,11 @@
 <?php
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
 class StoreProductRequest extends FormRequest
 {
     /**
@@ -11,32 +13,33 @@ class StoreProductRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        // Adjust authorization logic as needed (e.g., check user permissions)
-        return true; // For now, allow all requests; replace with auth logic if required
+        // Replace with your authorization logic
+        return true;
     }
 
     /**
      * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
      */
     public function rules(): array
     {
         return [
             'name' => 'required|string|max:15',
-            'title' => 'nullable|string|max:255',
-            'description' => 'nullable|string',
-            'brand' => 'nullable|string|max:255',
-            'image' => 'nullable|string|max:255',
-            'dateOfRelease' => 'nullable|date',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'brand' => 'required|string|max:255',
+            'image' => 'required|file|image|max:2048', // Max 2MB
+            'dateOfRelease' => 'required|date',
             'code' => [
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('products', 'code'), // Ensure code is unique in the products table
+                Rule::unique('products', 'code'),
             ],
-            'category_id' => 'sometimes|array',
-            'category_id.*' => 'exists:categories,id', // Each ID must exist in categories table
+            'datasheet' => 'required|file|mimes:pdf|max:10240', // Max 10MB
+            'category_ids' => 'sometimes|array',
+            'category_ids.*' => 'exists:categories,id',
+            'project_ids' => 'sometimes|array',
+            'project_ids.*' => 'exists:projects,id',
         ];
     }
 
@@ -47,9 +50,43 @@ class StoreProductRequest extends FormRequest
     {
         return [
             'name.required' => 'The product name is required.',
+            'name.string' => 'The product name must be a string.',
+            'name.max' => 'The product name must not exceed 15 characters.',
+            'title.required' => 'The title is required.',
+            'title.string' => 'The title must be a string.',
+            'title.max' => 'The title must not exceed 255 characters.',
+            'description.required' => 'The description is required.',
+            'description.string' => 'The description must be a string.',
+            'brand.required' => 'The brand is required.',
+            'brand.string' => 'The brand must be a string.',
+            'brand.max' => 'The brand must not exceed 255 characters.',
+            'image.required' => 'The image is required.',
+            'image.file' => 'The image must be a valid file.',
+            'image.image' => 'The image must be an image file (e.g., jpg, png).',
+            'image.max' => 'The image must not exceed 2MB.',
+            'dateOfRelease.required' => 'The date of release is required.',
+            'dateOfRelease.date' => 'The date of release must be a valid date.',
             'code.required' => 'The product code is required.',
+            'code.string' => 'The product code must be a string.',
+            'code.max' => 'The product code must not exceed 255 characters.',
             'code.unique' => 'This product code is already in use.',
+            'datasheet.required' => 'The datasheet is required.',
+            'datasheet.file' => 'The datasheet must be a valid file.',
+            'datasheet.mimes' => 'The datasheet must be a PDF file.',
+            'datasheet.max' => 'The datasheet must not exceed 10MB.',
+            'category_ids.array' => 'The category IDs must be an array.',
             'category_ids.*.exists' => 'One or more category IDs are invalid.',
+            'project_ids.array' => 'The project IDs must be an array.',
+            'project_ids.*.exists' => 'One or more project IDs are invalid.',
         ];
+    }
+    protected function failedValidation(Validator $validator)
+    {
+       // Convert all error messages into a single string
+       $errorMessage = implode(' ', $validator->errors()->all());
+
+       throw new HttpResponseException(response()->json([
+           'message' => $errorMessage,
+       ], 422)); // 422 Unprocessable Entity
     }
 }

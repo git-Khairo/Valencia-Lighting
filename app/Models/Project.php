@@ -16,11 +16,11 @@ class Project extends Model
      */
     protected $fillable = [
         'title',
-        'image',
+        'images',
         'description',
         'dateOfProject',
     ];
-
+    protected $casts = ['images' => 'array']; // Cast JSON to array
     public function products()
     {
         return $this->belongsToMany(

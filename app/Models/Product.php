@@ -24,6 +24,7 @@ class Product extends Model
         'brand',
         'image',
         'dateOfRelease',
+        'datasheet',
         'code',
     ];
 
@@ -42,7 +43,7 @@ class Product extends Model
             Project::class,
             'Products_Projects',
             'product_id',
-            'Project_id'
+            'project_id'
         );
     }
     public function orders()

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -16,8 +17,12 @@ class FullProductResource extends JsonResource
             'image' => $this->image,
             'dateOfRelease' => $this->dateOfRelease,
             'code' => $this->code,
-            'categories' => $this->categories->pluck('type'), // Simple list of category names
-            'projects' => $this->projects->pluck('title'),     // Simple list of project names
+            'categories' => $this->projects->map(function ($project) {
+                return ['id' => $project->id, 'type' => $project->title];
+            }),
+            'projects' => $this->projects->map(function ($project) {
+                return ['id' => $project->id, 'title' => $project->title];
+            }),
             'orders' => $this->orders->map(function ($order) {
                 return [
                     'order_id' => $order->id,

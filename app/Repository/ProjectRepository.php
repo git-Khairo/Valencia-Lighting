@@ -3,6 +3,7 @@ namespace App\Repository;
 
 use App\Models\Project;
 use App\RepositoryInterface\ProjectRepositoryInterface;
+use App\Http\Resources\FullProjectResource;
 
 class ProjectRepository implements ProjectRepositoryInterface
 {
@@ -40,5 +41,16 @@ class ProjectRepository implements ProjectRepositoryInterface
             return $project->delete();
         }
         return false;
+    }
+
+    public function allForSelection()
+    {
+        return Project::select('id', 'title')->get();
+    }
+
+    public function findFull($id)
+    {
+        $project = Project::with('products')->findOrFail($id);
+        return new FullProjectResource($project);
     }
 }
