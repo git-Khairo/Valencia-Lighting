@@ -6,6 +6,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Filter from "../Components/Filter";
+import { useParams } from "react-router-dom";
 
 const productsSlider = [
   { id: 1, image: "https://picsum.photos/200", "title": "Winter Sale", "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit." },
@@ -16,6 +17,7 @@ const productsSlider = [
 ];
 
 const Products = () => {
+  const { categoryNum } = useParams();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(24); // Keep posts per page constant
@@ -72,7 +74,13 @@ const Products = () => {
     "Z to A": handleSortZtoA,
     "Latest": handleSortLatest,
   };
-  
+
+  useEffect(() => {
+    setCategories([]);
+    if(categoryNum){
+      updateFilter(parseInt(categoryNum));
+    }
+  }, [categoryNum])
 
   useEffect(() => {
     fetch('/api/products', {

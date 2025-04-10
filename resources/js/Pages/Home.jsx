@@ -29,7 +29,7 @@ export default function HomePage() {
           </button>
         </div>
       ) : data ? (
-      <div className="w-full">
+      <div className="w-full overflow-x-hidden">
         <HomeSlider images={images} />
         <HomeProduct products={data.products} />
         <HomeCategory category={data.category} />

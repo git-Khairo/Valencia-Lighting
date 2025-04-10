@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FaShoppingCart, FaMinus, FaPlus, FaFileDownload } from "react-icons/fa";
+import { FaMinus, FaPlus, FaFileDownload, FaReceipt } from "react-icons/fa";
 import { useParams } from 'react-router-dom';
 import useFetch from '../useFetch';  
 import Slider from 'react-slick';
@@ -117,7 +117,7 @@ function App() {
               {/* Right Column - Product Details */}
               <div className="lg:w-1/2 px-4">
                 <h1 className="text-3xl font-bold text-gray-900 mb-2">{product.name}</h1>
-                <p className="text-gray-600 text-lg mb-3">by <span className='text-blue-500'>{product.brand}</span></p>
+                <p className="text-gray-600 text-lg mb-3">By <span className='text-blue-500'>{product.brand}</span></p>
                 <div className="flex flex-wrap gap-2 mb-4">
                   {product.categories.map((category) => (
                     <span key={category} className="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full cursor-pointer">{category}</span>
@@ -151,7 +151,7 @@ function App() {
                       </div>
                     )}
                     {activeTab === 'specifications' && (
-                      <div className="overflow-x-auto">
+                      <div className="overflow-x-visible">
                         <table className="min-w-full divide-y divide-gray-200">
                           <thead className="bg-gray-50">
                             <tr>
@@ -161,20 +161,20 @@ function App() {
                           </thead>
                           <tbody className="bg-white divide-y divide-gray-200">
                             <tr>
-                              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Dimensions</td>
-                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3.5 × 2.2 × 0.8 inches</td>
+                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm font-medium text-gray-900">Dimensions</td>
+                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm text-gray-500">3.5 × 2.2 × 0.8 inches</td>
                             </tr>
                             <tr>
-                              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Weight</td>
-                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">75g</td>
+                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm font-medium text-gray-900">Weight</td>
+                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm text-gray-500">75g</td>
                             </tr>
                             <tr>
-                              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Battery Life</td>
-                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Up to 24 months</td>
+                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm font-medium text-gray-900">Battery Life</td>
+                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm text-gray-500">Up to 24 months</td>
                             </tr>
                             <tr>
-                              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Water Resistance</td>
-                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">IP67 rated</td>
+                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm font-medium text-gray-900">Water Resistance</td>
+                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm text-gray-500">IP67 rated</td>
                             </tr>
                           </tbody>
                         </table>
@@ -188,16 +188,16 @@ function App() {
                   <div className="flex items-center mb-6">
                     <div className="flex items-center justify-center">
                       <button 
-                        className="bg-blue-600 hover:bg-blue-700 text-white py-1.5 px-3 sm:py-2 sm:px-6 rounded-md flex items-center justify-center cursor-pointer !rounded-button whitespace-nowrap mr-4"
+                        className="bg-blue-600 hover:bg-blue-700 text-white py-1 px-1.5 sm:py-2 sm:px-6 rounded-md flex items-center justify-center cursor-pointer !rounded-button whitespace-nowrap mr-4"
                         onClick={() => handleAddToCart()}
                       >
-                        <FaShoppingCart className="mr-2" />
-                        Add to Cart
+                        <FaReceipt className="mr-2" />
+                        Add to Pricing List
                       </button>
                       <div className="flex border border-gray-300 rounded-md">
                         <button
                           onClick={decrementQuantity}
-                          className="px-3 py-1.5 bg-gray-100 text-gray-600 hover:bg-gray-200 cursor-pointer !rounded-button whitespace-nowrap"
+                          className="px-1.5 py-1 bg-gray-100 text-gray-600 hover:bg-gray-200 cursor-pointer !rounded-button whitespace-nowrap"
                         >
                           <FaMinus />
                         </button>
@@ -210,7 +210,7 @@ function App() {
                         />
                         <button
                           onClick={incrementQuantity}
-                          className="px-3 py-1.5 bg-gray-100 text-gray-600 hover:bg-gray-200 cursor-pointer !rounded-button whitespace-nowrap"
+                          className="px-1.5 py-1 bg-gray-100 text-gray-600 hover:bg-gray-200 cursor-pointer !rounded-button whitespace-nowrap"
                         >
                           <FaPlus />
                         </button>

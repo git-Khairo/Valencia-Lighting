@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { FaSearch, FaTimes, FaMoon, FaSun, FaBars, FaReceipt } from "react-icons/fa";
 import { FaFacebookF, FaInstagram, FaMapMarkerAlt } from "react-icons/fa";
 import { Link, Outlet, useLocation } from "react-router-dom";
+import ScrollToTop from "./ScrollToTop";
 
 const Layout = () => {
   const [showSearch, setShowSearch] = useState(false);
@@ -138,6 +139,8 @@ const Layout = () => {
   const limitedProjects = searchResults.projects.slice(0, isSmallScreen ? 2 : 3);
 
   return (
+    <>
+    <ScrollToTop />
     <div className="flex flex-col min-h-screen">
       <div className="fixed w-full z-10">
         <div
@@ -422,27 +425,32 @@ const Layout = () => {
               </ul>
             </div>
             <div>
-              <h3 className="text-xl font-bold mb-4 text-light-primary dark:text-dark-primary">Our Services</h3>
+              <h3 className="text-xl font-bold mb-4 text-light-primary dark:text-dark-primary">Categories</h3>
               <ul className="space-y-2">
                 <li>
-                  <a href="#" className="hover:text-light-accent dark:hover:text-dark-accent transition-all duration-200">
+                  <Link to={`/products/1`} className="hover:text-light-accent dark:hover:text-dark-accent transition-all duration-200">
                     Residential Lighting
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-light-accent dark:hover:text-dark-accent transition-all duration-200">
+                  <Link to={`/products/2`} className="hover:text-light-accent dark:hover:text-dark-accent transition-all duration-200">
                     Commercial Solutions
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-light-accent dark:hover:text-dark-accent transition-all duration-200">
+                  <Link to={`/products/3`} className="hover:text-light-accent dark:hover:text-dark-accent transition-all duration-200">
                     Energy Efficient Systems
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-light-accent dark:hover:text-dark-accent transition-all duration-200">
+                  <Link to={`/products/4`} className="hover:text-light-accent dark:hover:text-dark-accent transition-all duration-200">
                     Smart Lighting
-                  </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link to={`/products/5`} className="hover:text-light-accent dark:hover:text-dark-accent transition-all duration-200">
+                    Smart Lighting
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -473,7 +481,6 @@ const Layout = () => {
             <div className="flex space-x-4 mt-6 md:mt-0">
               <img src="/sponsor1.png" alt="Sponsor 1" className="h-12 opacity-80 hover:opacity-100 transition-opacity duration-200" />
               <img src="/sponsor2.png" alt="Sponsor 2" className="h-12 opacity-80 hover:opacity-100 transition-opacity duration-200" />
-              <img src="/sponsor3.png" alt="Sponsor 3" className="h-12 opacity-80 hover:opacity-100 transition-opacity duration-200" />
             </div>
           </div>
           <div className="text-center text-sm mt-8 text-light-secondary dark:text-dark-secondary">
@@ -482,6 +489,7 @@ const Layout = () => {
         </div>
       </footer>
     </div>
+    </>
   );
 };
 
