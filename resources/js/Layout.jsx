@@ -4,12 +4,12 @@ import { FaSearch, FaTimes, FaMoon, FaSun, FaBars, FaReceipt } from "react-icons
 import { FaFacebookF, FaInstagram, FaMapMarkerAlt } from "react-icons/fa";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import ScrollToTop from "./ScrollToTop";
+import ReceiptIcon from "./Components/ReceiptIcon";
 
 const Layout = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem("theme") === "dark");
-  const [language, setLanguage] = useState(localStorage.getItem("language") || "en");
   const [searchQuery, setSearchQuery] = useState("");
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
@@ -19,9 +19,7 @@ const Layout = () => {
   const contentRef = useRef(null);
   const dropdownRef = useRef(null);
   const location = useLocation();
-  const [cart, setCart] = useState(JSON.parse(sessionStorage.getItem('cart') || '[]'));
-  const linkRef = useRef(null);
-
+  
   const isHomePage = location.pathname === "/" || location.pathname === "/home";
 
   // Handle clicks outside dropdown
@@ -34,32 +32,6 @@ const Layout = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [showSearch]);
-
-  // Handle Language Toggle
-  useEffect(() => {
-    localStorage.setItem("language", language);
-  }, [language]);
-
-
-  const updateCart = () => {
-    const newCart = JSON.parse(sessionStorage.getItem('cart') || '[]');
-    setCart(newCart); // Update state
-  };
-
-  useEffect(() => {
-    // Update pseudo-element whenever cart changes
-    if (linkRef.current) {
-      linkRef.current.style.setProperty('--cart-count', `"${cart.length}"`);
-    }
-
-    // Listen for cart updates (optional, requires custom event dispatch elsewhere)
-    window.addEventListener('cartUpdated', updateCart);
-
-    // Cleanup listener
-    return () => {
-      window.removeEventListener('cartUpdated', updateCart);
-    };
-  }, [cart]);
 
   // Handle Dark Mode Toggle
   useEffect(() => {
@@ -205,13 +177,7 @@ const Layout = () => {
                   >
                     {darkMode ? <FaSun size={20} /> : <FaMoon size={20} />}
                   </button>
-                  <Link
-                  to={'/pricingList'}
-                  ref={linkRef}
-                    className="flex items-center gap-2 text-light-secondary dark:text-dark-secondary hover:text-light-primary dark:hover:text-dark-primary transition-all duration-300 ease-in-out font-semibold hover:font-bold z-20 after:absolute after:w-3 after:h-3 after:bg-blue-800 after:rounded-full after:-top-2 after:-right-2 after:content-[var(--cart-count)] after:text-white after:text-xs after:flex after:items-center after:justify-center after:p-2"
-                  >
-                    <FaReceipt size={20} />
-                  </Link>
+                    <ReceiptIcon />
                 </div>
               </div>
             </div>

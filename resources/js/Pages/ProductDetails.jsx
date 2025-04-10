@@ -30,6 +30,7 @@ function App() {
 
   useEffect(() => {
     sessionStorage.setItem('cart', JSON.stringify(cart));
+    window.dispatchEvent(new Event('cartUpdated'));
   }, [cart]);
 
   const handleQuantityChange = (e) => {
@@ -67,6 +68,7 @@ function App() {
       setQuantity(newQuantity);
     }
   };
+
 
   const RelatedProductsSlider = {
     dots: true,
