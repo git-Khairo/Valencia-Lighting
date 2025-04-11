@@ -1,3 +1,4 @@
+// src/hooks/useFetch.js
 import { useState, useEffect } from 'react';
 
 const useFetch = (url, refetchTrigger = 0) => {
@@ -7,12 +8,12 @@ const useFetch = (url, refetchTrigger = 0) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true); // Reset loading state on each fetch
+      setLoading(true);
       try {
-        const token = sessionStorage.getItem('token'); // Get token for auth
+        const token = sessionStorage.getItem('token');
         const response = await fetch(url, {
           headers: {
-            'Authorization': `Bearer ${token}`, // Add token to headers
+            'Authorization': `Bearer ${token}`,
             'Accept': 'application/json',
           },
         });
@@ -22,18 +23,18 @@ const useFetch = (url, refetchTrigger = 0) => {
         }
 
         const result = await response.json();
-        setData(result); // Set raw data from API
-        setError(""); // Clear any previous error
+        setData(result);
+        setError("");
       } catch (err) {
         setError(err.message);
-        setData([]); // Reset data on error
+        setData([]);
       } finally {
-        setLoading(false); // Always set loading to false when done
+        setLoading(false);
       }
     };
 
     fetchData();
-  }, [url, refetchTrigger]); // Depend on both url and refetchTrigger
+  }, [url, refetchTrigger]);
 
   return { data, error, loading };
 };

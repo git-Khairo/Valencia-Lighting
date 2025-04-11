@@ -1,24 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import Card from './Card';
 
-const SearchResults = ({ searchQuery, itemsPerPage, onEdit, onDelete, searchResults }) => {
-  const [currentPage, setCurrentPage] = useState(1);
-
+const SearchResults = ({ searchQuery, itemsPerPage, onEdit, onDelete, searchResults, currentPage, setCurrentPage }) => {
   // Reset currentPage to 1 whenever searchQuery changes
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchQuery]);
+  }, [searchQuery, setCurrentPage]);
 
-  // Combine all items from searchResults (products, categories, projects)
   const allItems = [
     ...searchResults.products,
     ...searchResults.categories,
     ...searchResults.projects,
   ];
 
-  // No additional filtering since searchResults is already filtered by the server
   const totalPages = Math.ceil(allItems.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -31,7 +27,15 @@ const SearchResults = ({ searchQuery, itemsPerPage, onEdit, onDelete, searchResu
   return (
     <div>
       {allItems.length === 0 ? (
-        <p className="text-center text-light-secondary dark:text-dark-secondary py-4">No results found.</p>
+        <div className="text-center py-4 text-light-secondary dark:text-dark-secondary">
+          No items found.{' '}
+          <button
+            onClick={() => document.querySelector('.add-button')?.click()} // Trigger add button if available
+            className="text-blue-600 hover:text-blue-400 "
+          >
+            You Can Add a new item
+          </button>
+        </div>
       ) : (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
@@ -77,4 +81,4 @@ const SearchResults = ({ searchQuery, itemsPerPage, onEdit, onDelete, searchResu
   );
 };
 
-export default SearchResults;
+export default SearchResults; 

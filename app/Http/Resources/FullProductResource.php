@@ -17,7 +17,7 @@ class FullProductResource extends JsonResource
             'image' => $this->image,
             'dateOfRelease' => $this->dateOfRelease,
             'code' => $this->code,
-            'categories' => $this->projects->map(function ($project) {
+            'categories' => $this->categories->map(function ($project) {
                 return ['id' => $project->id, 'type' => $project->title];
             }),
             'projects' => $this->projects->map(function ($project) {

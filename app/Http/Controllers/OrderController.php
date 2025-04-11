@@ -64,7 +64,7 @@ class OrderController extends Controller
         foreach ($validated['products'] as $product) {
             // Find the product by its code
             $productModel = Product::where('code', $product['id'])->firstOrFail();
-            
+
             // Attach the product to the order using its ID
             $order->products()->attach($productModel->id, ['quantity' => $product['quantity']]);
         }
@@ -74,6 +74,26 @@ class OrderController extends Controller
             'success' => true,
             'order' => $order,
         ]);
+    }
+
+    public function endOrder($id)
+    {
+        try {
+            $order = Order::findOrFail($id);
+            $order->state = 1;
+            $order->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Order ended successfully.',
+                'order' => $order
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to end order: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
 
@@ -92,7 +112,7 @@ class OrderController extends Controller
                     'message' => 'Order not found'
                 ], 404);
             }
-            
+
             return response()->json([
                 'success' => true,
                 'data' => new OrderResource($order),

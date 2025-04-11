@@ -43,6 +43,7 @@ Route::post('/CheckAuth', [AuthController::class, 'checkAuth']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/orders', [OrderController::class, 'index']);
     Route::get('/order/{id}', [OrderController::class, 'show']);
+    Route::post('/order/{id}/end', [OrderController::class, 'endOrder']);
 
     Route::get('/selection-items', [AdminController::class, 'getSelectionItems']);
     Route::get('/edit-item/{id}', [AdminController::class, 'getEditItem']);

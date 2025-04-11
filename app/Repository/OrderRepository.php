@@ -22,10 +22,8 @@ class OrderRepository implements OrderRepositoryInterface
 
     public function getAllOrdersWithProducts(): Collection
     {
-        return $this->model->with(['products' => function ($query) {
-            $query->select('products.code', 'products.brand','products.name', 'products.image', 'products.title','products_orders.quantity');
-        }])
-            ->select('id', 'firstName', 'lastName', 'email', 'phone', 'created_at')
+        return $this->model
+            ->select('id', 'firstName', 'lastName', 'email', 'address' ,'phone', 'created_at')->where('state','!=',1)
             ->get();
     }
     public function findOrderById($id)
@@ -33,7 +31,7 @@ class OrderRepository implements OrderRepositoryInterface
         return $this->model->with(['products' => function ($query) {
             $query->select('products.code', 'products.name', 'products.image','products.title','products.brand');
         }])
-            ->select('id', 'firstName', 'lastName', 'email', 'phone', 'created_at')
+            ->select('id', 'firstName', 'lastName', 'email', 'phone', 'address' , 'created_at')
             ->find($id);
     }
 }

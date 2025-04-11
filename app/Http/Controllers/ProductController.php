@@ -58,7 +58,7 @@ class ProductController extends Controller
             $validated['datasheet'] = '/storage/' . $request->file('datasheet')->store('datasheets', 'public');
         }
 
-        $product->update(['name'=>(string) $validated['name']]);
+        $product->update($validated);
         if ($request->has('category_ids')) {
             $product->categories()->sync(array_unique($request->category_ids));
         }

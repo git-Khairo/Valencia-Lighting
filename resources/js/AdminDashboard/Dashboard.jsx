@@ -10,10 +10,12 @@ import {
   faArrowLeft,
   faBars,
 } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 import Sidebar from './SideBar';
 import Modal from './Modal';
 import SearchResults from './SearchResults';
 import SelectionPage from './SelectionPage';
+import FormValidation from './FormValidation'; // Import the new component
 import useFetch from '../useFetch';
 
 const Dashboard = () => {
@@ -27,8 +29,11 @@ const Dashboard = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [searchResults, setSearchResults] = useState({ products: [], categories: [], projects: [] });
+  const [currentPage, setCurrentPage] = useState(1);
+  const [formErrors, setFormErrors] = useState({}); // State for validation errors
   const deleteModalRef = useRef(null);
   const addModalRef = useRef(null);
+  const navigate = useNavigate();
 
   const [addProductForm, setAddProductForm] = useState({
     name: '',
@@ -51,12 +56,20 @@ const Dashboard = () => {
     selectedProducts: [],
   });
 
-  const itemsPerPage = 9;
+  const itemsPerPage = 6;
 
   const url = searchQuery.length > 0
     ? `http://127.0.0.1:8000/api/search?query=${searchQuery}`
     : 'http://127.0.0.1:8000/api/defaultSearch';
   const { data, loading, error } = useFetch(url);
+
+  // Initialize FormValidation
+  const { validateForm } = FormValidation({
+    formData: addType === 'Product' ? addProductForm : addType === 'Category' ? addCategoryForm : addProjectForm,
+    addType,
+    isEditing,
+    setErrors: setFormErrors,
+  });
 
   useEffect(() => {
     if (data && (data.message === 'Search' || data.message === 'Default Search')) {
@@ -65,8 +78,10 @@ const Dashboard = () => {
         categories: data.categories?.map(item => ({ ...item, categoryType: item.type, type: 'category' })) || [],
         projects: data.projects?.map(item => ({ ...item, type: 'project' })) || [],
       });
+      setCurrentPage(1);
     } else if (data) {
       setSearchResults({ products: [], categories: [], projects: [] });
+      setCurrentPage(1);
     }
   }, [data]);
 
@@ -78,6 +93,7 @@ const Dashboard = () => {
       if (addModalRef.current && !addModalRef.current.contains(event.target)) {
         setShowAddModal(false);
         setIsEditing(false);
+        setFormErrors({}); // Clear errors on modal close
       }
       if (isSidebarOpen && !event.target.closest('aside')) {
         setIsSidebarOpen(false);
@@ -115,7 +131,7 @@ const Dashboard = () => {
       }
       const responseData = await response.json();
       const data = responseData.data;
-
+      
       if (item.type === 'product') {
         setAddProductForm({
           name: data.name || '',
@@ -138,6 +154,7 @@ const Dashboard = () => {
         });
       } else if (item.type === 'project') {
         setAddProjectForm({
+          id: data.id || '',
           title: data.title || '',
           images: [],
           description: data.description || '',
@@ -188,12 +205,44 @@ const Dashboard = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      setSearchResults(prevResults => ({
-        products: prevResults.products.filter(item => item.type !== 'product' || item.code !== itemToDelete.code),
-        categories: prevResults.categories.filter(item => item.type !== 'category' || item.id !== itemToDelete.id),
-        projects: prevResults.projects.filter(item => item.type !== 'project' || item.id !== itemToDelete.id),
-      }));
+      let updatedResults;
+      switch (itemToDelete.type) {
+        case 'product':
+          updatedResults = {
+            ...searchResults,
+            products: searchResults.products.filter(item => item.id !== itemToDelete.id),
+          };
+          break;
+        case 'category':
+          updatedResults = {
+            ...searchResults,
+            categories: searchResults.categories.filter(item => item.id !== itemToDelete.id),
+          };
+          break;
+        case 'project':
+          updatedResults = {
+            ...searchResults,
+            projects: searchResults.projects.filter(item => item.id !== itemToDelete.id),
+          };
+          break;
+        default:
+          updatedResults = { ...searchResults };
+      }
 
+      const allItems = [
+        ...updatedResults.products,
+        ...updatedResults.categories,
+        ...updatedResults.projects,
+      ];
+      const totalPages = Math.ceil(allItems.length / itemsPerPage);
+
+      if (currentPage > totalPages && totalPages > 0) {
+        setCurrentPage(totalPages);
+      } else if (allItems.length === 0) {
+        setCurrentPage(1);
+      }
+
+      setSearchResults(updatedResults);
       setShowDeleteModal(false);
       setItemToDelete(null);
     } catch (error) {
@@ -220,16 +269,23 @@ const Dashboard = () => {
     });
     setAddCategoryForm({ id: null, type: '', image: null, selectedProducts: [] });
     setAddProjectForm({ title: '', images: [], description: '', dateOfProject: '', selectedProducts: [] });
+    setFormErrors({}); // Clear errors
   };
 
   const confirmAdd = async () => {
+    // Validate form before submission
+    const isValid = validateForm();
+    if (!isValid) {
+      return;
+    }
+
     try {
       const token = sessionStorage.getItem('token');
       if (!token) throw new Error('No authentication token found');
 
       const formData = new FormData();
       let url = '';
-      let method = isEditing ? 'PUT' : 'POST';
+      let method = isEditing ? 'POST' : 'POST';
 
       if (addType === 'Product') {
         url = isEditing ? `http://127.0.0.1:8000/api/products/${addProductForm.code}` : 'http://127.0.0.1:8000/api/products/store';
@@ -289,6 +345,7 @@ const Dashboard = () => {
       setAddType(null);
       setAddSelectionType(null);
       setIsEditing(false);
+      setFormErrors({}); // Clear errors on success
     } catch (error) {
       console.error(`Error ${isEditing ? 'updating' : 'adding'} ${addType}:`, error);
       alert(`Error: ${error.message}`);
@@ -303,6 +360,7 @@ const Dashboard = () => {
       setAddPage(1);
       setAddType(null);
       setIsEditing(false);
+      setFormErrors({}); // Clear errors
     }
   };
 
@@ -357,6 +415,8 @@ const Dashboard = () => {
               onEdit={handleEdit}
               onDelete={handleDelete}
               searchResults={searchResults}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
             />
           )}
         </main>
@@ -458,8 +518,9 @@ const Dashboard = () => {
                   type="text"
                   value={addProductForm.name}
                   onChange={(e) => setAddProductForm({ ...addProductForm, name: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200"
+                  className={`w-full px-4 py-2 border ${formErrors.name ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
                 />
+                {formErrors.name && <p className="text-red-500 text-xs mt-1">{formErrors.name}</p>}
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Title</label>
@@ -467,16 +528,18 @@ const Dashboard = () => {
                   type="text"
                   value={addProductForm.title}
                   onChange={(e) => setAddProductForm({ ...addProductForm, title: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200"
+                  className={`w-full px-4 py-2 border ${formErrors.title ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
                 />
+                {formErrors.title && <p className="text-red-500 text-xs mt-1">{formErrors.title}</p>}
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Description</label>
                 <textarea
                   value={addProductForm.description}
                   onChange={(e) => setAddProductForm({ ...addProductForm, description: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200 min-h-[100px]"
+                  className={`w-full px-4 py-2 border ${formErrors.description ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200 min-h-[100px]`}
                 />
+                {formErrors.description && <p className="text-red-500 text-xs mt-1">{formErrors.description}</p>}
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Brand</label>
@@ -484,8 +547,9 @@ const Dashboard = () => {
                   type="text"
                   value={addProductForm.brand}
                   onChange={(e) => setAddProductForm({ ...addProductForm, brand: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200"
+                  className={`w-full px-4 py-2 border ${formErrors.brand ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
                 />
+                {formErrors.brand && <p className="text-red-500 text-xs mt-1">{formErrors.brand}</p>}
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Image</label>
@@ -494,10 +558,11 @@ const Dashboard = () => {
                     type="file"
                     accept="image/*"
                     onChange={(e) => setAddProductForm({ ...addProductForm, image: e.target.files[0] })}
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 file:mr-4 file:py-2 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 dark:file:bg-blue-500 dark:hover:file:bg-blue-600 transition-all duration-200"
+                    className={`w-full px-4 py-2 border ${formErrors.image ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 file:mr-4 file:py-2 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 dark:file:bg-blue-500 dark:hover:file:bg-blue-600 transition-all duration-200`}
                   />
                   <FontAwesomeIcon icon={faUpload} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400" />
                 </div>
+                {formErrors.image && <p className="text-red-500 text-xs mt-1">{formErrors.image}</p>}
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Date of Release</label>
@@ -505,18 +570,22 @@ const Dashboard = () => {
                   type="date"
                   value={addProductForm.dateOfRelease}
                   onChange={(e) => setAddProductForm({ ...addProductForm, dateOfRelease: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200"
+                  className={`w-full px-4 py-2 border ${formErrors.dateOfRelease ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
                 />
+                {formErrors.dateOfRelease && <p className="text-red-500 text-xs mt-1">{formErrors.dateOfRelease}</p>}
               </div>
+              {!isEditing && (
               <div>
                 <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Code</label>
                 <input
                   type="text"
                   value={addProductForm.code}
                   onChange={(e) => setAddProductForm({ ...addProductForm, code: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200"
+                  className={`w-full px-4 py-2 border ${formErrors.code ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
                 />
+                {formErrors.code && <p className="text-red-500 text-xs mt-1">{formErrors.code}</p>}
               </div>
+              )}
               <div>
                 <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Datasheet (PDF)</label>
                 <div className="relative">
@@ -524,32 +593,35 @@ const Dashboard = () => {
                     type="file"
                     accept=".pdf"
                     onChange={(e) => setAddProductForm({ ...addProductForm, datasheet: e.target.files[0] })}
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 file:mr-4 file:py-2 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 dark:file:bg-blue-500 dark:hover:file:bg-blue-600 transition-all duration-200"
+                    className={`w-full px-4 py-2 border ${formErrors.datasheet ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 file:mr-4 file:py-2 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 dark:file:bg-blue-500 dark:hover:file:bg-blue-600 transition-all duration-200`}
                   />
                   <FontAwesomeIcon icon={faUpload} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400" />
                 </div>
+                {formErrors.datasheet && <p className="text-red-500 text-xs mt-1">{formErrors.datasheet}</p>}
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Projects</label>
                 <button
                   onClick={() => handleAddSelect('selectedProjects')}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-all duration-200 text-left"
+                  className={`w-full px-4 py-2 border ${formErrors.selectedProjects ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-all duration-200 text-left`}
                 >
                   {addProductForm.selectedProjects.length > 0
                     ? `${addProductForm.selectedProjects.length} selected`
                     : 'Select projects'}
                 </button>
+                {formErrors.selectedProjects && <p className="text-red-500 text-xs mt-1">{formErrors.selectedProjects}</p>}
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Categories</label>
                 <button
                   onClick={() => handleAddSelect('selectedCategories')}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-all duration-200 text-left"
+                  className={`w-full px-4 py-2 border ${formErrors.selectedCategories ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-all duration-200 text-left`}
                 >
                   {addProductForm.selectedCategories.length > 0
                     ? `${addProductForm.selectedCategories.length} selected`
                     : 'Select categories'}
                 </button>
+                {formErrors.selectedCategories && <p className="text-red-500 text-xs mt-1">{formErrors.selectedCategories}</p>}
               </div>
             </div>
             <div className="flex justify-end space-x-4 mt-8">
@@ -593,8 +665,9 @@ const Dashboard = () => {
                   type="text"
                   value={addCategoryForm.type}
                   onChange={(e) => setAddCategoryForm({ ...addCategoryForm, type: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200"
+                  className={`w-full px-4 py-2 border ${formErrors.type ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
                 />
+                {formErrors.type && <p className="text-red-500 text-xs mt-1">{formErrors.type}</p>}
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Image</label>
@@ -603,21 +676,23 @@ const Dashboard = () => {
                     type="file"
                     accept="image/*"
                     onChange={(e) => setAddCategoryForm({ ...addCategoryForm, image: e.target.files[0] })}
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 file:mr-4 file:py-2 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 dark:file:bg-blue-500 dark:hover:file:bg-blue-600 transition-all duration-200"
+                    className={`w-full px-4 py-2 border ${formErrors.image ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 file:mr-4 file:py-2 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 dark:file:bg-blue-500 dark:hover:file:bg-blue-600 transition-all duration-200`}
                   />
                   <FontAwesomeIcon icon={faUpload} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400" />
                 </div>
+                {formErrors.image && <p className="text-red-500 text-xs mt-1">{formErrors.image}</p>}
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Products</label>
                 <button
                   onClick={() => handleAddSelect('selectedProducts')}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-all duration-200 text-left"
+                  className={`w-full px-4 py-2 border ${formErrors.selectedProducts ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-all duration-200 text-left`}
                 >
                   {addCategoryForm.selectedProducts.length > 0
                     ? `${addCategoryForm.selectedProducts.length} selected`
                     : 'Select products'}
                 </button>
+                {formErrors.selectedProducts && <p className="text-red-500 text-xs mt-1">{formErrors.selectedProducts}</p>}
               </div>
             </div>
             <div className="flex justify-end space-x-4 mt-8">
@@ -661,8 +736,9 @@ const Dashboard = () => {
                   type="text"
                   value={addProjectForm.title}
                   onChange={(e) => setAddProjectForm({ ...addProjectForm, title: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200"
+                  className={`w-full px-4 py-2 border ${formErrors.title ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
                 />
+                {formErrors.title && <p className="text-red-500 text-xs mt-1">{formErrors.title}</p>}
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Images (Multiple)</label>
@@ -672,10 +748,14 @@ const Dashboard = () => {
                     accept="image/*"
                     multiple
                     onChange={(e) => setAddProjectForm({ ...addProjectForm, images: Array.from(e.target.files) })}
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 file:mr-4 file:py-2 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 dark:file:bg-blue-500 dark:hover:file:bg-blue-600 transition-all duration-200"
+                    className={`w-full px-4 py-2 border ${formErrors.images ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 file:mr-4 file:py-2 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 dark:file:bg-blue-500 dark:hover:file:bg-blue-600 transition-all duration-200`}
                   />
                   <FontAwesomeIcon icon={faUpload} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400" />
                 </div>
+                {formErrors.images && <p className="text-red-500 text-xs mt-1">{formErrors.images}</p>}
+                {Object.keys(formErrors).map((key) => (
+                  key.startsWith('images[') && <p key={key} className="text-red-500 text-xs mt-1">{formErrors[key]}</p>
+                ))}
                 {addProjectForm.images.length > 0 && (
                   <ul className="mt-3 space-y-1">
                     {addProjectForm.images.map((file, index) => (
@@ -689,8 +769,9 @@ const Dashboard = () => {
                 <textarea
                   value={addProjectForm.description}
                   onChange={(e) => setAddProjectForm({ ...addProjectForm, description: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200 min-h-[100px]"
+                  className={`w-full px-4 py-2 border ${formErrors.description ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200 min-h-[100px]`}
                 />
+                {formErrors.description && <p className="text-red-500 text-xs mt-1">{formErrors.description}</p>}
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Date of Project</label>
@@ -698,19 +779,21 @@ const Dashboard = () => {
                   type="date"
                   value={addProjectForm.dateOfProject}
                   onChange={(e) => setAddProjectForm({ ...addProjectForm, dateOfProject: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200"
+                  className={`w-full px-4 py-2 border ${formErrors.dateOfProject ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
                 />
+                {formErrors.dateOfProject && <p className="text-red-500 text-xs mt-1">{formErrors.dateOfProject}</p>}
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Products</label>
                 <button
                   onClick={() => handleAddSelect('selectedProducts')}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-all duration-200 text-left"
+                  className={`w-full px-4 py-2 border ${formErrors.selectedProducts ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-all duration-200 text-left`}
                 >
                   {addProjectForm.selectedProducts.length > 0
                     ? `${addProjectForm.selectedProducts.length} selected`
                     : 'Select products'}
                 </button>
+                {formErrors.selectedProducts && <p className="text-red-500 text-xs mt-1">{formErrors.selectedProducts}</p>}
               </div>
             </div>
             <div className="flex justify-end space-x-4 mt-8">

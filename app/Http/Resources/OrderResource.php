@@ -13,6 +13,7 @@ class OrderResource extends JsonResource
             'firstName' => $this->firstName,
             'lastName' => $this->lastName,
             'email' => $this->email,
+            'address'=>$this->address,
             'phone' => $this->phone,
             'created_at' => $this->created_at, // Optional: format date
             'products' => ProductCardResource::collection($this->products),

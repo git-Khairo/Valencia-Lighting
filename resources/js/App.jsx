@@ -16,6 +16,7 @@ import Loading from "./Components/Loading"
 import Dashboard from "./AdminDashboard/Dashboard";
 import PricingList from "./Pages/PricingList";
 import Authentication from "./AdminDashboard/Authentication";
+import OrderDetails from "./AdminDashboard/OrderDetails";
 
 function ProtectedRoute({ children }){
     const { code } = useParams();
@@ -34,6 +35,7 @@ const App = () => {
                 {/* Public Routes */}
                 <Route element={<Layout />} >
                     <Route index path="/" element={<Home />} />
+                    <Route path="/order/:id" element={<OrderDetails />} />
                     <Route path="/home" element={<Home />} />
                     <Route path="/projects" element={<Projects />} />
                     <Route path="/products" element={<Products />} />

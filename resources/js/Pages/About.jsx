@@ -8,11 +8,9 @@ import { MdTune } from "react-icons/md";
 import { GiStreetLight } from "react-icons/gi";
 import { GiPartyFlags } from "react-icons/gi";
 
-// Content Section 16 Component
 
 
 function ContentSection16() {
-
     const [isExpanded, setIsExpanded] = useState(false);
 
     return (
@@ -34,12 +32,9 @@ function ContentSection16() {
                                 required by our internal customers are available from sourcing and serial supply to the end of life cycle.
                             </p>
 
-                            {/* Expandable Text with Smooth Transition */}
+                            {/* Expandable Text (Hidden by default on small screens) */}
                             <div
-                                className={`grid transition-all duration-500 ease-in-out ${isExpanded
-                                        ? "grid-rows-[1fr] opacity-100 scale-100"
-                                        : "grid-rows-[0fr] opacity-0 scale-95"
-                                    }`}
+                                className={`grid transition-all duration-500 ease-in-out md:hidden  grid-rows-[1fr] opacity-100 scale-100`}
                             >
                                 <div className="overflow-hidden">
                                     <p className="font-normal text-gray-600 xs:text-xs sm:text-sm md:text-md lg:text-lg xl:text-xl 2xl:text-2xl">
@@ -52,14 +47,18 @@ function ContentSection16() {
                                 </div>
                             </div>
 
-                            {/* Toggle Button */}
-                            <button
-                                onClick={() => setIsExpanded(!isExpanded)}
-                                className="mt-4 text-blue-600 font-medium transition-colors duration-200 hover:text-blue-800"
-                                aria-expanded={isExpanded}
-                            >
-                                {isExpanded ? "Hide" : "Read More"}
-                            </button>
+                            {/* Full Text (Always visible on medium and larger screens) */}
+                            <div className="hidden md:block">
+                                <p className="font-normal text-gray-600 xs:text-xs sm:text-sm md:text-md lg:text-lg xl:text-xl 2xl:text-2xl">
+                                    Being successful together means setting out on a path and working together to achieve the objectives we
+                                    set ourselves. This is why we think not only from our perspective with every project but also from the
+                                    perspective of the supplier. We do everything possible to maintain a business relationship based on
+                                    partnership that offers both sides sustainable and value-adding perspectives. We stand by what we do, and
+                                    you can rely on our promise.
+                                </p>
+                            </div>
+
+                           
                         </div>
                     </div>
 
@@ -75,7 +74,8 @@ function ContentSection16() {
             </div>
         </section>
     );
-};
+}
+
 
 
 // Testimonial Section 16 Component
