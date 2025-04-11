@@ -93,7 +93,7 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function update($code, array $data)
     {
-        $product = $this->byCode($code);
+        $product = self::byCode($code);
         if ($product) {
             $product->update($data);
         }
