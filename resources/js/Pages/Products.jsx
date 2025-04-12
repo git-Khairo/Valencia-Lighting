@@ -7,6 +7,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Filter from "../Components/Filter";
 import { useParams } from "react-router-dom";
+import Loading from '../Components/Loading';
 
 const productsSlider = [
   { id: 1, image: "https://picsum.photos/200", "title": "Winter Sale", "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit." },
@@ -143,6 +144,20 @@ const Products = () => {
   };
  
   return (
+    <>
+    {loading ? (
+      <Loading />
+    ) : error ? (
+      <div className="text-center text-red-500 py-20">
+        <p>Error loading products: {error.message || "Something went wrong"}</p>
+        <button
+          className="mt-4 px-5 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          onClick={() => window.location.reload()}
+        >
+          Retry
+        </button>
+      </div>
+    ) : (
     <div className="w-full m-0 overflow-x-hidden md:overflow-x-visible">
       {/* Slider Section */}
       <section className="pt-16 pb-10">
@@ -223,19 +238,7 @@ const Products = () => {
                 </div>
               </div>
             </div>
-          {loading ? (
-            <div className="text-center text-gray-500">Loading products...</div>
-          ) : error ? (
-            <div className="text-center text-red-500 py-5">
-              <p>Error loading products: {error.message || "Something went wrong"}</p>
-              <button
-                className="mt-4 px-5 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-                onClick={() => window.location.reload()}
-              >
-                Retry
-              </button>
-            </div>
-          ) : data && products.length > 0 ? (
+          {data && products.length > 0 ? (
             <>
               <div
                 className="grid 
@@ -369,6 +372,8 @@ const Products = () => {
       </div>
       </div>
     </div>
+    )}
+    </>
   );
 };
 

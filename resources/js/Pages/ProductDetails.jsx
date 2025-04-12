@@ -6,6 +6,7 @@ import Slider from 'react-slick';
 import ProductCard from '../Components/ProductCard';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Loading from '../Components/Loading';
 
 function App() {
   const { code } = useParams();
@@ -89,9 +90,9 @@ function App() {
   return (
     <>
       {loading ? (
-        <div>Loading....</div>
+        <Loading />
       ) : error ? (
-        <div className="text-center text-red-500 py-5">
+        <div className="text-center text-red-500 py-20">
           <p>Error loading sections: {error.message || 'Something went wrong'}</p>
           <button
             className="mt-4 px-5 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"

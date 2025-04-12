@@ -11,8 +11,6 @@ import { GiPartyFlags } from "react-icons/gi";
 
 
 function ContentSection16() {
-    const [isExpanded, setIsExpanded] = useState(false);
-
     return (
         <section className="p-8 mt-16">
             <div className="mx-auto">

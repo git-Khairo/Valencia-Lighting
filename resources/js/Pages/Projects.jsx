@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import useFetch from '../useFetch';
+import Loading from '../Components/Loading';
 
 const Row3 = (data) => {
     return (
@@ -190,9 +191,9 @@ const Projects = () => {
     return (
       <>
         {loading ? (
-          <div>Loading....</div>
+          <Loading />
         ) : error ? (
-          <div className="text-center text-red-500 py-5">
+          <div className="text-center text-red-500 py-20">
             <p>Error loading sections: {error.message || 'Something went wrong'}</p>
             <button
               className="mt-4 px-5 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"

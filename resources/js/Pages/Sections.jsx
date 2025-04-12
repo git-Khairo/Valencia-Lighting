@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Section from '../Components/Section';
 import useFetch from '../useFetch';
 import Pagination from '../Components/Pagination';
+import Loading from '../Components/Loading';
 
 const Sections = () => {
   const { data, error, loading } = useFetch('/api/sections');
@@ -19,9 +20,9 @@ const Sections = () => {
   return (
     <div className="w-full m-0 md:w-full md:h-full pt-24">
       {loading ? (
-        <div className="text-center text-gray-500">Loading sections...</div>
+        <Loading />
       ) : error ? (
-        <div className="text-center text-red-500 py-5">
+        <div className="text-center text-red-500 py-20">
           <p>Error loading sections: {error.message || 'Something went wrong'}</p>
           <button
             className="mt-4 px-5 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"

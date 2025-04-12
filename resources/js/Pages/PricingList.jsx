@@ -1,16 +1,16 @@
 // PricingList.js
 import React, { useState, useMemo, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMinus, faPlus, faTrashAlt, faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faMinus, faPlus, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import ReactCountryFlag from 'react-country-flag';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
 import ProductCard from '../Components/ProductCard';
 import useFetch from '../useFetch';
 import Modal from '../Components/Modal';
 import { countryPrefixes } from '../Constants/CountryPrefix';
+import Loading from '../Components/Loading';
 
 const PricingList = () => {
   const [formData, setFormData] = useState({
@@ -229,9 +229,9 @@ const PricingList = () => {
             </div>
             <div className="overflow-y-auto max-h-[500px] p-4 sm:p-6">
               {loading ? (
-                <div>Loading....</div>
+                <Loading />
               ) : error ? (
-                <div className="text-center text-red-500 py-5">
+                <div className="text-center text-red-500 py-20">
                   <p>{error}</p>
                   <button className="mt-4 px-5 py-2 bg-blue-500 text-white rounded" onClick={() => window.location.reload()}>Retry</button>
                 </div>
@@ -413,7 +413,7 @@ const PricingList = () => {
 
         {/* Related Products Section */}
         {RelatedLoading ? (
-          <div>Loading...</div>
+          <Loading />
         ) : RelatedError ? (
           <div className="text-red-500">{RelatedError.message}</div>
         ) : RelatedProducts ? (

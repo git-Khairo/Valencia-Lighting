@@ -1,10 +1,11 @@
 // Layout.jsx
 import { useState, useEffect, useRef } from "react";
-import { FaSearch, FaTimes, FaMoon, FaSun, FaBars, FaReceipt } from "react-icons/fa";
-import { FaFacebookF, FaInstagram, FaMapMarkerAlt } from "react-icons/fa";
+import { FaSearch, FaTimes, FaMoon, FaSun, FaBars } from "react-icons/fa";
+import { FaInstagram, FaMapMarkerAlt } from "react-icons/fa";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import ScrollToTop from "./ScrollToTop";
 import ReceiptIcon from "./Components/ReceiptIcon";
+import Loading from './Components/Loading'
 
 const Layout = () => {
   const [showSearch, setShowSearch] = useState(false);
@@ -110,6 +111,14 @@ const Layout = () => {
   const limitedCategories = searchResults.categories.slice(0, isSmallScreen ? 4 : 6);
   const limitedProjects = searchResults.projects.slice(0, isSmallScreen ? 2 : 3);
 
+  if(loading){
+    return (
+      <Loading />
+    )
+  }else if(error){
+    <h1>An Error occured</h1>
+  }
+
   return (
     <>
     <ScrollToTop />
@@ -146,7 +155,7 @@ const Layout = () => {
 
                 {/* Desktop Navigation */}
                 <div className="hidden md:flex space-x-8 ml-10 items-center">
-                  {["Categories", "Products", "Projects", "About Us"].map((item) => (
+                  {["Products","Categories", "Projects", "About Us"].map((item) => (
                     <a
                       key={item}
                       href={`/${item}`}
@@ -364,35 +373,65 @@ const Layout = () => {
               "Lighting up your world, one innovation at a time."
             </h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-10 text-center md:text-left mb-12">
             <div>
               <h3 className="text-xl font-bold mb-4 text-light-primary dark:text-dark-primary">Quick Links</h3>
               <ul className="space-y-2">
                 <li>
-                  <a href="#" className="hover:text-light-accent dark:hover:text-dark-accent transition-all duration-200">
+                  <Link to={'/'} className="hover:text-light-accent dark:hover:text-dark-accent transition-all duration-200">
                     Home
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-light-accent dark:hover:text-dark-accent transition-all duration-200">
-                    About Us
-                  </a>
+                  <Link to={'/products'} className="hover:text-light-accent dark:hover:text-dark-accent transition-all duration-200">
+                  Products
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-light-accent dark:hover:text-dark-accent transition-all duration-200">
-                    Our Services
-                  </a>
+                  <Link to={'categories'} className="hover:text-light-accent dark:hover:text-dark-accent transition-all duration-200">
+                    Categories
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-light-accent dark:hover:text-dark-accent transition-all duration-200">
-                    Contact
-                  </a>
+                  <Link to={'projects'} className="hover:text-light-accent dark:hover:text-dark-accent transition-all duration-200">
+                    Projects
+                  </Link>
                 </li>
               </ul>
             </div>
             <div>
-              <h3 className="text-xl font-bold mb-4 text-light-primary dark:text-dark-primary">Categories</h3>
+              <h3 className="text-xl font-bold mb-4 text-light-primary dark:text-dark-primary">Outdoor</h3>
               <ul className="space-y-2">
+                <li>
+                  <Link to={`/products/1`} className="hover:text-light-accent dark:hover:text-dark-accent transition-all duration-200">
+                    Residential Lighting
+                  </Link>
+                </li>
+                <li>
+                  <Link to={`/products/2`} className="hover:text-light-accent dark:hover:text-dark-accent transition-all duration-200">
+                    Commercial Solutions
+                  </Link>
+                </li>
+                <li>
+                  <Link to={`/products/3`} className="hover:text-light-accent dark:hover:text-dark-accent transition-all duration-200">
+                    Energy Efficient Systems
+                  </Link>
+                </li>
+                <li>
+                  <Link to={`/products/4`} className="hover:text-light-accent dark:hover:text-dark-accent transition-all duration-200">
+                    Smart Lighting
+                  </Link>
+                </li>
+                <li>
+                  <Link to={`/products/5`} className="hover:text-light-accent dark:hover:text-dark-accent transition-all duration-200">
+                    Smart Lighting
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div>
+            <h3 className="text-xl font-bold mb-4 text-light-primary dark:text-dark-primary">Indoor</h3>
+            <ul className="space-y-2">
                 <li>
                   <Link to={`/products/1`} className="hover:text-light-accent dark:hover:text-dark-accent transition-all duration-200">
                     Residential Lighting
@@ -431,19 +470,14 @@ const Layout = () => {
             <div className="mb-6 md:mb-0">
               <h2 className="text-3xl font-bold text-light-primary dark:text-dark-primary">Valencia Lighting</h2>
             </div>
-            <div className="flex flex-col items-center space-y-4">
               <div className="flex space-x-6">
-                <a href="#" className="text-3xl hover:scale-110 transition-transform hover:text-light-primary dark:hover:text-dark-primary">
-                  <FaFacebookF />
-                </a>
                 <a href="#" className="text-3xl hover:scale-110 transition-transform hover:text-light-primary dark:hover:text-dark-primary">
                   <FaInstagram />
                 </a>
+                <a href="" className="text-3xl text-light-secondary dark:text-dark-secondary hover:text-light-primary dark:hover:text-dark-primary transition-all duration-200">
+                  <FaMapMarkerAlt />
+                </a>
               </div>
-              <div className="text-3xl text-light-secondary dark:text-dark-secondary hover:text-light-primary dark:hover:text-dark-primary transition-all duration-200">
-                <FaMapMarkerAlt />
-              </div>
-            </div>
             <div className="flex space-x-4 mt-6 md:mt-0">
               <img src="/sponsor1.png" alt="Sponsor 1" className="h-12 opacity-80 hover:opacity-100 transition-opacity duration-200" />
               <img src="/sponsor2.png" alt="Sponsor 2" className="h-12 opacity-80 hover:opacity-100 transition-opacity duration-200" />
