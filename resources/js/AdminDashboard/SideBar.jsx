@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingBag, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import Loading from '../Components/Loading';
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
   const [orders, setOrders] = useState([]);
@@ -61,13 +62,21 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 
   if (loading) {
     return (
-      <aside
-        className={`fixed top-0 right-0 h-full w-72 bg-white dark:bg-gray-800 border-l border-gray-200 
-          dark:border-gray-700 shadow-lg transform transition-transform duration-300 z-40 overflow-y-auto 
-          ${isOpen ? 'translate-x-0' : 'translate-x-full'} md:translate-x-0 md:sticky md:top-16 md:h-[calc(100vh-64px)]`}
+      <Loading />
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="text-center text-red-500 py-20">
+      <p>Error loading sections: {error.message || 'Something went wrong'}</p>
+      <button
+        className="mt-4 px-5 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        onClick={() => window.location.reload()}
       >
-        <div className="p-6 text-gray-900 dark:text-gray-100">Loading...</div>
-      </aside>
+        Retry
+      </button>
+    </div>
     );
   }
 
