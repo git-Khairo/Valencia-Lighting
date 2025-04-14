@@ -224,7 +224,7 @@ function App() {
                   <div className="flex items-center mb-6">
                     <div className="flex items-center justify-center">
                       <button 
-                        className="bg-blue-600 hover:bg-blue-700 text-white py-1 px-1.5 sm:py-2 sm:px-6 rounded-md flex items-center justify-center cursor-pointer !rounded-button whitespace-nowrap mr-4"
+                        className="bg-blue-600 hover:bg-blue-700 text-white py-1 px-1.5 sm:py-2 sm:px-6 rounded-md flex items-center justify-center cursor-pointer !rounded-button whitespace-nowrap mr-2"
                         onClick={() => handleAddToCart()}
                       >
                         <FaReceipt className="mr-2" />
@@ -233,7 +233,7 @@ function App() {
                       <div className="flex border border-gray-300 rounded-md">
                         <button
                           onClick={decrementQuantity}
-                          className="px-1.5 py-1 bg-gray-100 text-gray-600 hover:bg-gray-200 cursor-pointer !rounded-button whitespace-nowrap"
+                          className="px-2 py-1.5 sm:py-2 bg-gray-100 text-gray-600 hover:bg-gray-200 cursor-pointer !rounded-button whitespace-nowrap"
                         >
                           <FaMinus />
                         </button>
@@ -242,19 +242,19 @@ function App() {
                           id="quantity"
                           value={quantity}
                           onChange={handleQuantityChange}
-                          className="w-12 text-center border-none focus:ring-0 text-gray-700"
+                          className="w-10 text-center border-none focus:ring-0 text-gray-700"
                         />
                         <button
                           onClick={incrementQuantity}
-                          className="px-1.5 py-1 bg-gray-100 text-gray-600 hover:bg-gray-200 cursor-pointer !rounded-button whitespace-nowrap"
+                          className="px-2 py-1.5 sm:py-2 bg-gray-100 text-gray-600 hover:bg-gray-200 cursor-pointer !rounded-button whitespace-nowrap"
                         >
                           <FaPlus />
                         </button>
                       </div>
                     </div>
                   </div>
-                  <div className="flex">
-                    <button className="border border-gray-300 hover:bg-gray-50 text-gray-700 py-3 px-6 rounded-md flex items-center justify-center cursor-pointer !rounded-button whitespace-nowrap" onClick={() => downloadDatasheet(product.id)}>
+                  <div className="flex justify-center items-center mt-10">
+                    <button className="border border-gray-300 hover:bg-gray-50 text-gray-700 py-2 px-6 rounded-md flex items-center justify-center cursor-pointer !rounded-button whitespace-nowrap" onClick={() => downloadDatasheet(product.id)}>
                       <FaFileDownload className="mr-2" />
                       Download Datasheet
                     </button>
