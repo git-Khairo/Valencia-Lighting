@@ -33,62 +33,106 @@ class ProjectController extends Controller
         return ProjectCardResource::collection($projects);
     }
 
+    // Store a new project
     public function store(StoreProjectRequest $request)
     {
         $validated = $request->validated();
 
+        // Handle image upload if present
         if ($request->hasFile('images')) {
             $paths = [];
+            // Store each image and prepare the paths
             foreach ($request->file('images') as $image) {
                 $paths[] = '/storage/' . $image->store('projects', 'public');
             }
-            $validated['images'] = json_encode($paths);
+            $validated['images'] = json_encode($paths); // Save image paths as JSON
         }
 
+        // Create the project and associate products
         $project = Project::create($validated);
-        if ($request->has('product_ids')) $project->products()->sync($request->product_ids);
+        if ($request->has('product_ids')) {
+            $project->products()->sync($request->product_ids);
+        }
 
         return response()->json(['project' => $project], 201);
     }
 
+    // Update an existing project
     public function update(UpdateProjectRequest $request, $id)
     {
-        $project = Project::findOrFail($id);
-        $validated = $request->validated();
-
-        if ($request->hasFile('images')) {
-            $paths = [];
-            foreach ($request->file('images') as $image) {
-                $paths[] = '/storage/' . $image->store('projects', 'public');
+        try {
+            $project = Project::findOrFail($id);
+            $validated = $request->validated();
+    
+            if ($request->hasFile('images')) {
+                $paths = [];
+                if ($project->images) {
+                    $oldImages = json_decode($project->images, true);
+                    if (is_array($oldImages)) {
+                        foreach ($oldImages as $oldImage) {
+                            $this->deleteFile($oldImage);
+                        }
+                    }
+                }
+                foreach ($request->file('images') as $image) {
+                    $paths[] = '/storage/' . $image->store('projects', 'public');
+                }
+                $validated['images'] = json_encode($paths);
+            } elseif ($request->has('existing_images')) {
+                $validated['images'] = $request->input('existing_images');
             }
-            $validated['images'] = json_encode($paths);
-        } elseif ($request->has('existing_images')) {
-            $validated['images'] = $request->input('existing_images');
+    
+            $project->update($validated);
+    
+            // Handle product_ids
+            $productIds = $request->input('product_ids');
+            if (is_string($productIds)) {
+                $productIds = json_decode($productIds, true) ?? [];
+            } else {
+                $productIds = $productIds ?? [];
+            }
+            $project->products()->sync(array_unique($productIds));
+    
+            return response()->json([
+                'success' => true,
+                'data' => $project,
+                'message' => 'Project updated successfully'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error updating project: ' . $e->getMessage()
+            ], 500);
         }
-
-        $project->update($validated);
-        if ($request->has('product_ids')) {
-            $uniqueProductIds = array_unique($request->product_ids);
-            $project->products()->sync($uniqueProductIds);
-        }
-
-        return response()->json(['project' => $project], 200);
     }
-
-    public function show($id)
+    
+    // Helper method to delete files from storage
+    private function deleteFile($filePath)
     {
-        $project = Project::with('products')->findOrFail($id);
-        return response()->json(['message' => 'Project', 'project' => new ProjectResource($project)], 200);
+        $filePath = public_path() . $filePath; // Get the full file path
+        if (file_exists($filePath)) {
+            unlink($filePath); // Delete the file from storage
+        }
     }
-
-
+    
 
     public function destroy($id)
     {
         try {
-            $project = $this->projectRepository->delete($id);
+            $project = Project::findOrFail($id);
 
-            if (!$project) {
+            // Delete the associated images if they exist
+            if ($project->images) {
+                $oldImages = json_decode($project->images); // Decoding the JSON array of image paths
+                foreach ($oldImages as $oldImage) {
+                    $this->deleteFile($oldImage); // Delete each image
+                }
+            }
+
+            // Now delete the project
+            $deleted = $this->projectRepository->delete($id);
+
+            if (!$deleted) {
                 return response()->json(['success' => false, 'message' => 'Project not found'], 404);
             }
 

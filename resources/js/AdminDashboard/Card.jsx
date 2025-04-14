@@ -20,7 +20,7 @@ const Card = ({ item, onEdit, onDelete }) => {
             {item.name || item.title || item.categoryType}
           </h3>
           <span className="px-2 sm:px-3 py-1 rounded-full text-xs font-medium bg-light-accent text-light-primary dark:bg-dark-accent dark:text-dark-primary transition-colors duration-200">
-            {item.type === 'category' ? item.categoryType : item.type}
+            { item.type}
           </span>
         </div>
         <p className="text-light-secondary dark:text-dark-secondary mb-4 text-sm sm:text-base flex-grow transition-colors duration-200">

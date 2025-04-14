@@ -278,17 +278,19 @@ const Dashboard = () => {
     if (!isValid) {
       return;
     }
-
+  
     try {
       const token = sessionStorage.getItem('token');
       if (!token) throw new Error('No authentication token found');
-
+  
       const formData = new FormData();
       let url = '';
       let method = isEditing ? 'POST' : 'POST';
-
+  
       if (addType === 'Product') {
-        url = isEditing ? `http://127.0.0.1:8000/api/products/${addProductForm.code}` : 'http://127.0.0.1:8000/api/products/store';
+        url = isEditing
+          ? `http://127.0.0.1:8000/api/products/${addProductForm.code}`
+          : 'http://127.0.0.1:8000/api/products/store';
         formData.append('name', addProductForm.name);
         formData.append('title', addProductForm.title || '');
         formData.append('description', addProductForm.description || '');
@@ -297,21 +299,28 @@ const Dashboard = () => {
         formData.append('dateOfRelease', addProductForm.dateOfRelease || '');
         formData.append('code', addProductForm.code);
         if (addProductForm.datasheet) formData.append('datasheet', addProductForm.datasheet);
+        // Always send category_ids, even if empty
         addProductForm.selectedCategories.forEach((id, index) => {
           formData.append(`category_ids[${index}]`, id);
         });
+        // Always send project_ids, even if empty
         addProductForm.selectedProjects.forEach((id, index) => {
           formData.append(`project_ids[${index}]`, id);
         });
       } else if (addType === 'Category') {
-        url = isEditing ? `http://127.0.0.1:8000/api/categories/${addCategoryForm.id}` : 'http://127.0.0.1:8000/api/categories';
+        url = isEditing
+          ? `http://127.0.0.1:8000/api/categories/${addCategoryForm.id}`
+          : 'http://127.0.0.1:8000/api/categories';
         formData.append('type', addCategoryForm.type);
         if (addCategoryForm.image) formData.append('image', addCategoryForm.image);
+        // Always send product_ids, even if empty
         addCategoryForm.selectedProducts.forEach((id, index) => {
           formData.append(`product_ids[${index}]`, id);
         });
       } else if (addType === 'Project') {
-        url = isEditing ? `http://127.0.0.1:8000/api/projects/${addProjectForm.id}` : 'http://127.0.0.1:8000/api/projects';
+        url = isEditing
+          ? `http://127.0.0.1:8000/api/projects/${addProjectForm.id}`
+          : 'http://127.0.0.1:8000/api/projects';
         formData.append('title', addProjectForm.title);
         if (addProjectForm.images.length > 0) {
           addProjectForm.images.forEach((image, index) => {
@@ -320,11 +329,12 @@ const Dashboard = () => {
         }
         formData.append('description', addProjectForm.description || '');
         formData.append('dateOfProject', addProjectForm.dateOfProject || '');
+        // Always send product_ids, even if empty
         addProjectForm.selectedProducts.forEach((id, index) => {
           formData.append(`product_ids[${index}]`, id);
         });
       }
-
+  
       const response = await fetch(url, {
         method: method,
         headers: {
@@ -332,13 +342,13 @@ const Dashboard = () => {
         },
         body: formData,
       });
-
+  
       const result = await response.json();
-
+  
       if (!response.ok) {
         throw new Error(result.message || 'Failed to save data');
       }
-
+  
       console.log(`${isEditing ? 'Edited' : 'Added'} ${addType}:`, result.data);
       setShowAddModal(false);
       setAddPage(1);

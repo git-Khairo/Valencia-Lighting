@@ -45,29 +45,65 @@ class ProductController extends Controller
     }
 
     public function update(UpdateProductRequest $request, $code)
-    {
+{
+    try {
         $product = Product::where('code', $code)->firstOrFail();
         $validated = $request->validated();
 
-        
-
         if ($request->hasFile('image')) {
+            if ($product->image) {
+                $this->deleteFile($product->image);
+            }
             $validated['image'] = '/storage/' . $request->file('image')->store('products', 'public');
         }
+
         if ($request->hasFile('datasheet')) {
+            if ($product->datasheet) {
+                $this->deleteFile($product->datasheet);
+            }
             $validated['datasheet'] = '/storage/' . $request->file('datasheet')->store('datasheets', 'public');
         }
 
         $product->update($validated);
-        if ($request->has('category_ids')) {
-            $product->categories()->sync(array_unique($request->category_ids));
-        }
-        if ($request->has('project_ids')) {
-            $product->projects()->sync(array_unique($request->project_ids));
-        }
-        
 
-        return response()->json(['product' => $product,'val'=>$validated], 200);
+        // Handle category_ids
+        $categoryIds = $request->input('category_ids');
+        if (is_string($categoryIds)) {
+            $categoryIds = json_decode($categoryIds, true) ?? [];
+        } else {
+            $categoryIds = $categoryIds ?? [];
+        }
+        $product->categories()->sync(array_unique($categoryIds));
+
+        // Handle project_ids
+        $projectIds = $request->input('project_ids');
+        if (is_string($projectIds)) {
+            $projectIds = json_decode($projectIds, true) ?? [];
+        } else {
+            $projectIds = $projectIds ?? [];
+        }
+        $product->projects()->sync(array_unique($projectIds));
+
+        return response()->json([
+            'success' => true,
+            'data' => $product,
+            'message' => 'Product updated successfully'
+        ], 200);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Error updating product: ' . $e->getMessage()
+        ], 500);
+    }
+}
+
+    // Helper method to delete a file from storage
+    private function deleteFile($filePath)
+    {
+        $filePath = public_path() . $filePath;  // Get the full file path
+        if (file_exists($filePath)) {
+            unlink($filePath);  // Delete the file from storage
+        }
     }
 
 
@@ -143,14 +179,29 @@ class ProductController extends Controller
     public function destroy($code)
     {
         try {
-            $deleted = $this->ProductRepository->delete($code);
+            // Find the product by code
+            $product = $this->ProductRepository->ByCode($code);
 
-            if (!$deleted) {
+            // If the product doesn't exist, return an error
+            if (!$product) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Product not found'
                 ], 404);
             }
+
+            // Delete the image if it exists
+            if ($product->image) {
+                $this->deleteFile($product->image);
+            }
+
+            // Delete the datasheet if it exists
+            if ($product->datasheet) {
+                $this->deleteFile($product->datasheet);
+            }
+
+            // Now delete the product
+            $this->ProductRepository->delete($code);
 
             return response()->json([
                 'success' => true,

@@ -3,10 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import useFetch from '../useFetch';
 
-
-
-
-
 const SelectionPage = ({ selectionType, formData, setFormData, onBack, addType }) => {
   const [selectionSearch, setSelectionSearch] = useState('');
 
@@ -30,7 +26,7 @@ const SelectionPage = ({ selectionType, formData, setFormData, onBack, addType }
           data.projects?.map(project => ({
             value: `project_${project.id}`,
             label: project.title,
-            rawId: Number(project.id), // Ensure numeric ID
+            rawId: Number(project.id),
             type: 'project',
           })) || [];
       } else if (selectionType === 'selectedCategories') {
@@ -38,7 +34,7 @@ const SelectionPage = ({ selectionType, formData, setFormData, onBack, addType }
           data.categories?.map(category => ({
             value: `category_${category.id}`,
             label: category.type,
-            rawId: Number(category.id), // Ensure numeric ID
+            rawId: Number(category.id),
             type: 'category',
           })) || [];
       }
@@ -47,7 +43,7 @@ const SelectionPage = ({ selectionType, formData, setFormData, onBack, addType }
         data.products?.map(product => ({
           value: `product_${product.id}`,
           label: product.name,
-          rawId: Number(product.id), // Ensure numeric ID
+          rawId: Number(product.id),
           type: 'product',
         })) || [];
     }
@@ -68,7 +64,7 @@ const SelectionPage = ({ selectionType, formData, setFormData, onBack, addType }
       const rawId = option.rawId;
       let newSelected;
 
-      // Explicitly handle based on selectionType to ensure separation
+      console.log('Before Toggle - Current Selected:', current, 'Option:', option); // Debug log
       if (selectionType === 'selectedProjects' && option.type === 'project') {
         newSelected = current.includes(rawId)
           ? current.filter(id => id !== rawId)
@@ -82,13 +78,15 @@ const SelectionPage = ({ selectionType, formData, setFormData, onBack, addType }
           ? current.filter(id => id !== rawId)
           : [...current, rawId];
       } else {
-        // Invalid type; no change
         newSelected = current;
       }
 
+      console.log('After Toggle - New Selected:', newSelected); // Debug log
       return { ...prev, [selectionType]: newSelected };
     });
   };
+
+  console.log('Rendering SelectionPage - Selected:', selected); // Debug log
 
   return (
     <>
