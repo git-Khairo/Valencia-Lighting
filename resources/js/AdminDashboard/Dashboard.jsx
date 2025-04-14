@@ -339,8 +339,7 @@ const Dashboard = () => {
       if (!response.ok) {
         throw new Error(result.message || 'Failed to save data');
       }
-
-      console.log(`${isEditing ? 'Edited' : 'Added'} ${addType}:`, result.data);
+      
       setShowAddModal(false);
       setAddPage(1);
       setAddType(null);

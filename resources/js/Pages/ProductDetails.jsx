@@ -70,6 +70,39 @@ function App() {
     }
   };
 
+  const downloadDatasheet = async (productId) => {
+    try {
+      const response = await fetch('/api/download', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify({ code: productId }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Network response was not ok: ${response.status}`);
+      }
+  
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+  
+      // Create a temporary <a> tag to trigger the download
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${product.name || 'datasheet'}.pdf`; // Fallback name if productName is undefined
+      document.body.appendChild(a);
+      a.click();
+  
+      // Clean up
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Error downloading the file:', error);
+      alert('Failed to download datasheet.');
+    }
+  };
+
 
   const RelatedProductsSlider = {
     dots: true,
@@ -221,7 +254,7 @@ function App() {
                     </div>
                   </div>
                   <div className="flex">
-                    <button className="border border-gray-300 hover:bg-gray-50 text-gray-700 py-3 px-6 rounded-md flex items-center justify-center cursor-pointer !rounded-button whitespace-nowrap">
+                    <button className="border border-gray-300 hover:bg-gray-50 text-gray-700 py-3 px-6 rounded-md flex items-center justify-center cursor-pointer !rounded-button whitespace-nowrap" onClick={() => downloadDatasheet(product.id)}>
                       <FaFileDownload className="mr-2" />
                       Download Datasheet
                     </button>

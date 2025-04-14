@@ -13,7 +13,7 @@ use App\Http\Resources\ProductCardResource;
 use App\Http\Resources\CategoryCardResource;
 use App\Http\Resources\FullProductResource;
 use App\Http\Resources\ProductResource;
-
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -30,10 +30,10 @@ class ProductController extends Controller
         $validated = $request->validated();
 
         if ($request->hasFile('image')) {
-            $validated['image'] = '/storage/' . $request->file('image')->store('products', 'public');
+            $validated['image'] = $request->file('image')->store('products', 'public');
         }
         if ($request->hasFile('datasheet')) {
-            $validated['datasheet'] = '/storage/' . $request->file('datasheet')->store('datasheets', 'public');
+            $validated['datasheet'] = $request->file('datasheet')->store('datasheets', 'public');
         }
 
         $product = Product::create($validated);
@@ -52,10 +52,10 @@ class ProductController extends Controller
         
 
         if ($request->hasFile('image')) {
-            $validated['image'] = '/storage/' . $request->file('image')->store('products', 'public');
+            $validated['image'] = $request->file('image')->store('products', 'public');
         }
         if ($request->hasFile('datasheet')) {
-            $validated['datasheet'] = '/storage/' . $request->file('datasheet')->store('datasheets', 'public');
+            $validated['datasheet'] = $request->file('datasheet')->store('datasheets', 'public');
         }
 
         $product->update($validated);
@@ -163,4 +163,28 @@ class ProductController extends Controller
             ], 500);
         }
     }
+
+    public function download(Request $request)
+{
+    $request->validate([
+        'code' => 'required|string',
+    ]);
+
+    // Find the product
+    $product = Product::where('code', $request->code)->first();
+
+    if (!$product) {
+        return response()->json(['error' => 'Product not found.'], 404);
+    }
+
+    // Get the path to the datasheet and remove '/public/' prefix
+    $filePath = $product->datasheet;
+
+    // Check if the file exists
+    if ($filePath && Storage::disk('public')->exists($filePath)) {
+        return Storage::disk('public')->download($filePath, $product->name . '.pdf');
+    }
+
+    return response()->json(['error' => 'File not found.'], 404);
+}
 }
