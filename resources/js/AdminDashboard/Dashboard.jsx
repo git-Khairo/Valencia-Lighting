@@ -15,8 +15,9 @@ import Sidebar from './SideBar';
 import Modal from './Modal';
 import SearchResults from './SearchResults';
 import SelectionPage from './SelectionPage';
-import FormValidation from './FormValidation'; // Import the new component
+import FormValidation from './FormValidation';
 import useFetch from '../useFetch';
+import Loading from '../Components/Loading';
 
 const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -415,7 +416,7 @@ const Dashboard = () => {
           </div>
 
           {loading ? (
-            <div className="text-center py-4 text-gray-900 dark:text-gray-100">Loading...</div>
+            <div className="text-center py-4 text-gray-900 dark:text-gray-100"><Loading /></div>
           ) : error ? (
             <div className="text-center py-4 text-red-500">{error}</div>
           ) : (

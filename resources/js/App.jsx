@@ -35,7 +35,6 @@ const App = () => {
                 {/* Public Routes */}
                 <Route element={<Layout />} >
                     <Route index path="/" element={<Home />} />
-                    <Route path="/order/:id" element={<OrderDetails />} />
                     <Route path="/home" element={<Home />} />
                     <Route path="/projects" element={<Projects />} />
                     <Route path="/products" element={<Products />} />
@@ -56,6 +55,7 @@ const App = () => {
                 {/* Admin Dashboard Routes */}
                     <Route element={<Authentication />} >
                         <Route index path="/admin/dashboard" element={<Dashboard />} />
+                        <Route path="/order/:id" element={<OrderDetails />} />
                     </Route>
 
                 <Route path="*" element={<NotFound />} />

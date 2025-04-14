@@ -7,6 +7,7 @@ import "slick-carousel/slick/slick-theme.css";
 import ProductCard from "../Components/ProductCard";
 import { useParams } from "react-router-dom";
 import useFetch from '../useFetch';
+import Loading from '../Components/Loading';
 
 const ProjectDetails = () => {
   const { id } = useParams();
@@ -59,9 +60,9 @@ const ProjectDetails = () => {
   return (
    <>
    {loading ? (
-      <div className="text-center text-gray-500">Loading sections...</div>
+      <Loading />
     ) : error ? (
-      <div className="text-center text-red-500 py-5">
+      <div className="text-center text-red-500 py-20">
         <p>Error loading Project: {error.message || 'Something went wrong'}</p>
         <button
           className="mt-4 px-5 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"

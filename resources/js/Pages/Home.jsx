@@ -4,6 +4,7 @@ import HomeProject from '../Components/HomeProject';
 import HomeProduct from '../Components/HomeProduct';
 import HomeCategory from '../Components/HomeCategory';
 import useFetch from '../useFetch';
+import Loading from '../Components/Loading';
 
 
 export default function HomePage() {
@@ -17,9 +18,9 @@ export default function HomePage() {
   return (
     <>
     {loading ? (
-        <div className="text-center text-gray-500">Loading sections...</div>
+        <Loading />
       ) : error ? (
-        <div className="text-center text-red-500 py-5">
+        <div className="text-center text-red-500 py-20">
           <p>Error loading sections: {error.message || 'Something went wrong'}</p>
           <button
             className="mt-4 px-5 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"

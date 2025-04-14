@@ -29,6 +29,8 @@ Route::prefix('projects')->group(function () {
     Route::get('/', [ProjectController::class, 'index']);
     Route::get('/{id}', [ProjectController::class, 'show']);
 });
+Route::post('/download', [ProductController::class, 'download']);
+
 Route::prefix('categories')->group(function () {
     Route::get('/', [CategoryController::class, 'index']);
     Route::get('/{id}', [CategoryController::class, 'show']);

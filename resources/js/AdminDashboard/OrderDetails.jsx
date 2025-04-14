@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Modal from './Modal';
+import Loading from '../Components/Loading';
 
 const OrderDetails = () => {
   const { id } = useParams();
@@ -95,10 +96,10 @@ const OrderDetails = () => {
   };
 
 
-  if (loading) return <div className="p-6 text-gray-700">Loading order...</div>;
+  if (loading) return <Loading />;
 
   if (!order) return <div className="p-6 text-red-500">Order not found.</div>;
-  console.log(order);
+
   return (
     <div className="min-h-300 bg-gray-100 py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">

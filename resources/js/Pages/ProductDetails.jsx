@@ -6,6 +6,7 @@ import Slider from 'react-slick';
 import ProductCard from '../Components/ProductCard';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Loading from '../Components/Loading';
 
 function App() {
   const { code } = useParams();
@@ -69,6 +70,39 @@ function App() {
     }
   };
 
+  const downloadDatasheet = async (productId) => {
+    try {
+      const response = await fetch('/api/download', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify({ code: productId }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Network response was not ok: ${response.status}`);
+      }
+  
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+  
+      // Create a temporary <a> tag to trigger the download
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${product.name || 'datasheet'}.pdf`; // Fallback name if productName is undefined
+      document.body.appendChild(a);
+      a.click();
+  
+      // Clean up
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Error downloading the file:', error);
+      alert('Failed to download datasheet.');
+    }
+  };
+
 
   const RelatedProductsSlider = {
     dots: true,
@@ -89,9 +123,9 @@ function App() {
   return (
     <>
       {loading ? (
-        <div>Loading....</div>
+        <Loading />
       ) : error ? (
-        <div className="text-center text-red-500 py-5">
+        <div className="text-center text-red-500 py-20">
           <p>Error loading sections: {error.message || 'Something went wrong'}</p>
           <button
             className="mt-4 px-5 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
@@ -190,7 +224,7 @@ function App() {
                   <div className="flex items-center mb-6">
                     <div className="flex items-center justify-center">
                       <button 
-                        className="bg-blue-600 hover:bg-blue-700 text-white py-1 px-1.5 sm:py-2 sm:px-6 rounded-md flex items-center justify-center cursor-pointer !rounded-button whitespace-nowrap mr-4"
+                        className="bg-blue-600 hover:bg-blue-700 text-white py-1 px-1.5 sm:py-2 sm:px-6 rounded-md flex items-center justify-center cursor-pointer !rounded-button whitespace-nowrap mr-2"
                         onClick={() => handleAddToCart()}
                       >
                         <FaReceipt className="mr-2" />
@@ -199,7 +233,7 @@ function App() {
                       <div className="flex border border-gray-300 rounded-md">
                         <button
                           onClick={decrementQuantity}
-                          className="px-1.5 py-1 bg-gray-100 text-gray-600 hover:bg-gray-200 cursor-pointer !rounded-button whitespace-nowrap"
+                          className="px-2 py-1.5 sm:py-2 bg-gray-100 text-gray-600 hover:bg-gray-200 cursor-pointer !rounded-button whitespace-nowrap"
                         >
                           <FaMinus />
                         </button>
@@ -208,19 +242,19 @@ function App() {
                           id="quantity"
                           value={quantity}
                           onChange={handleQuantityChange}
-                          className="w-12 text-center border-none focus:ring-0 text-gray-700"
+                          className="w-10 text-center border-none focus:ring-0 text-gray-700"
                         />
                         <button
                           onClick={incrementQuantity}
-                          className="px-1.5 py-1 bg-gray-100 text-gray-600 hover:bg-gray-200 cursor-pointer !rounded-button whitespace-nowrap"
+                          className="px-2 py-1.5 sm:py-2 bg-gray-100 text-gray-600 hover:bg-gray-200 cursor-pointer !rounded-button whitespace-nowrap"
                         >
                           <FaPlus />
                         </button>
                       </div>
                     </div>
                   </div>
-                  <div className="flex">
-                    <button className="border border-gray-300 hover:bg-gray-50 text-gray-700 py-3 px-6 rounded-md flex items-center justify-center cursor-pointer !rounded-button whitespace-nowrap">
+                  <div className="flex justify-center items-center mt-10">
+                    <button className="border border-gray-300 hover:bg-gray-50 text-gray-700 py-2 px-6 rounded-md flex items-center justify-center cursor-pointer !rounded-button whitespace-nowrap" onClick={() => downloadDatasheet(product.id)}>
                       <FaFileDownload className="mr-2" />
                       Download Datasheet
                     </button>
