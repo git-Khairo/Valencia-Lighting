@@ -17,7 +17,8 @@ Route::get('/search', [LayoutController::class, 'search']);
 Route::get('/defaultSearch', [LayoutController::class, 'defaultSearch']);
 Route::get('/home', [LayoutController::class, 'getHomePageData']);
 Route::post('/orders', [OrderController::class, 'store']);
-
+Route::post('/download', [ProductController::class, 'download']);
+Route::get('/suggested', [LayoutController::class, 'suggested']);
 
 
 
@@ -29,7 +30,6 @@ Route::prefix('projects')->group(function () {
     Route::get('/', [ProjectController::class, 'index']);
     Route::get('/{id}', [ProjectController::class, 'show']);
 });
-Route::post('/download', [ProductController::class, 'download']);
 
 Route::prefix('categories')->group(function () {
     Route::get('/', [CategoryController::class, 'index']);

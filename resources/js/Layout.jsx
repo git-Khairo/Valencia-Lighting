@@ -6,6 +6,7 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 import ScrollToTop from "./ScrollToTop";
 import ReceiptIcon from "./Components/ReceiptIcon";
 import Loading from './Components/Loading'
+import useFetch from './useFetch';
 
 const Layout = () => {
   const [showSearch, setShowSearch] = useState(false);
@@ -20,6 +21,8 @@ const Layout = () => {
   const contentRef = useRef(null);
   const dropdownRef = useRef(null);
   const location = useLocation();
+
+  const { data } = useFetch('/api/suggested');
   
   const isHomePage = location.pathname === "/" || location.pathname === "/home";
 
@@ -221,7 +224,7 @@ const Layout = () => {
                 <div className="sm:block hidden sm:w-[30%] w-[30%] overflow-hidden p-2">
                   <h4 className="text-gray-900 dark:text-white font-semibold mb-2">Suggestions</h4>
                   <ul className="space-y-2">
-                    {["Floor Lamps", "Marge", "Oh!", "Marge_FL65", "Oh!_Mars"].map((item, index) => (
+                    {data.map((item, index) => (
                       <li
                         key={index}
                         onClick={() => setSearchQuery(item)}
