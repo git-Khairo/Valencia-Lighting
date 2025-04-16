@@ -7,6 +7,9 @@ use App\Repository\LayoutRepository;
 use App\Http\Resources\ProductCardResource;
 use App\Http\Resources\CategoryCardResource;
 use App\Http\Resources\ProjectCardResource;
+use App\Models\Category;
+use App\Models\Product;
+use App\Models\Project;
 
 class LayoutController extends Controller
 {
@@ -53,5 +56,13 @@ class LayoutController extends Controller
         $category = CategoryController::getLatestCategory();
 
         return response()->json(['message' => "home page data", 'products' => $products, 'projects' => $projects, 'category' => $category], 200);
+    }
+
+    public function suggested(){
+        $products = Product::select('name')->latest()->take(2)->pluck('name')->toArray();
+        $categories = Category::select('type')->latest()->take(2)->pluck('type')->toArray();
+        $project = Project::select('title')->latest()->take(1)->pluck('title')->toArray();
+    
+        return array_merge($products, $categories, $project);
     }
 }
