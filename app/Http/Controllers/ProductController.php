@@ -207,4 +207,28 @@ class ProductController extends Controller
             'products' => ProductCardResource::collection($products)
         ], 200);
     }
+
+    public function download(Request $request)
+    {
+        $request->validate([
+            'code' => 'required|string',
+        ]);
+    
+        // Find the product
+        $product = Product::where('code', $request->code)->first();
+    
+        if (!$product) {
+            return response()->json(['error' => 'Product not found.'], 404);
+        }
+    
+        // Get the path to the datasheet and remove '/public/' prefix
+        $filePath = $product->datasheet;
+    
+        // Check if the file exists
+        if ($filePath && Storage::disk('public')->exists($filePath)) {
+            return Storage::disk('public')->download($filePath, $product->name . '.pdf');
+        }
+    
+        return response()->json(['error' => 'File not found.'], 404);
+    }
 }
