@@ -1,36 +1,130 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
-const HomeCategory = ({category}) => {
-    return ( 
-        <>
-            <motion.section 
-    initial={{ opacity: 0, y: 50 }} 
-    whileInView={{ opacity: 1, y:0 }}
-    transition={{ duration: 1 }} 
-    viewport={{ once: true }}
-     className="bg-white dark:bg-gray-800 h-full py-6 sm:py-8 lg:py-12">
-    <div className="mx-auto max-w-screen-2xl px-4 md:px-8">
-        <div className="mb-4 flex items-center justify-between gap-8 sm:mb-8 md:mb-12">
-            <div className="flex items-center gap-12">
-                <h2 className="text-center text-2xl font-genos text-gray-800 lg:text-7xl dark:text-white">Categories</h2>
+const HomeCategory = ({ category }) => {
+    return (    
+        <motion.section
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            viewport={{ once: true }}
+            className="bg-white dark:bg-gray-900 py-6 px-4"
+        >
+            <div className="mx-auto  w-full flex flex-col">
+                {/* Title */}
+                <div className="mb-4">
+                    <h2 className="text-2xl font-genos text-gray-800 lg:text-7xl dark:text-white">Categories</h2>
+                </div>
+
+                <div className="grid gap-4 mt-4 flex-grow grid-cols-1 md:grid-cols-4 md:grid-rows-2">
+                    {category[0] && (
+                        <Link
+                            to={`/category/${category[0].id}`}
+                            className="relative rounded-lg overflow-hidden transform transition-transform duration-500 hover:scale-[1.03]
+                                       md:row-span-2 md:col-span-1 h-60 md:h-auto"
+                        >
+                            <img
+                                src={category[0].image}
+                                alt={category[0].type}
+                                className="absolute inset-0 w-full h-full object-cover"
+                                onError={(e) => (e.target.src = "/fallback-image.jpg")}
+                            />
+                            <div className="absolute inset-0 bg-black/10 hover:bg-black/30 transition-all duration-300" />
+                            <div className="mb-4 text-center">
+                            <h2 className="text-xl font-genos text-gray-800 lg:text-5xl dark:text-white">
+                            {category[0].type}
+                                </h2>
+                         </div>
+                        </Link>
+                    )}
+
+                    {category[1] && (
+                        <Link
+                            to={`/category/${category[3].id}`}
+                            className="relative rounded-lg overflow-hidden transform transition-transform duration-500 hover:scale-[1.03]
+                                       md:col-span-2 md:row-span-1 h-60"
+                        >
+                            <img
+                                src={category[1].image}
+                                alt={category[3].type}
+                                className="absolute inset-0 w-full h-full object-cover"
+                                onError={(e) => (e.target.src = "/fallback-image.jpg")}
+                            />
+                            <div className="absolute inset-0 bg-black/10 hover:bg-black/30 transition-all duration-300" />
+                            <div className="mb-4 text-center">
+                            <h2 className="text-xl font-genos text-gray-800 lg:text-5xl dark:text-white">
+                            {category[1].type}
+                                </h2>
+                         </div>
+                        </Link>
+                    )}
+
+                    {category[2] && (
+                        <Link
+                            to={`/category/${category[2].id}`}
+                            className="relative rounded-lg overflow-hidden transform transition-transform duration-500 hover:scale-[1.03]
+                                       md:col-span-1 md:row-span-1 h-60 md:h-auto"
+                        >
+                            <img
+                                src={category[2].image}
+                                alt={category[2].type}
+                                className="absolute inset-0 w-full h-[80%] object-cover"
+                                onError={(e) => (e.target.src = "/fallback-image.jpg")}
+                            />
+                            <div className=" absolute inset-0 bg-black/10 hover:bg-black/30  transition-all duration-300" />
+                            <div className="mt-48 ml-1">
+                            <h2 className="text-xl font-genos text-gray-800 lg:text-5xl dark:text-white">
+                            {category[2].type}
+                                </h2>
+                         </div>
+                        </Link>
+                    )}
+                    {category[2] && (
+                        <Link
+                            to={`/category/${category[2].id}`}
+                            className="relative rounded-lg overflow-hidden transform transition-transform duration-500 hover:scale-[1.03]
+                                       md:col-span-1 md:row-span-1 h-60 md:h-auto"
+                        >
+                            <img
+                                src={category[2].image}
+                                alt={category[2].type}
+                                className="absolute inset-0 w-full h-full object-cover"
+                                onError={(e) => (e.target.src = "/fallback-image.jpg")}
+                            />
+                            <div className="absolute inset-0 bg-black/10 hover:bg-black/30 transition-all duration-300" />
+                            <div className="mb-4 text-center">
+                            <h2 className="text-xl font-genos text-gray-800 lg:text-5xl dark:text-white">
+                            bati5
+                                </h2>
+                         </div>
+                        </Link>
+                    )}
+
+                {category[3] && (
+                        <Link
+                            to={`/category/${category[3].id}`}
+                            className="relative rounded-lg overflow-hidden transform transition-transform duration-500 hover:scale-[1.03]
+                                       md:col-span-2 md:row-span-1 h-60"
+                        >
+                            <img
+                                src={category[1].image}
+                                alt={category[3].type}
+                                className="absolute inset-0 w-[70%] h-full object-cover"
+                                onError={(e) => (e.target.src = "/fallback-image.jpg")}
+                            />
+                            <div className="absolute inset-0 bg-black/10 hover:bg-black/30 transition-all duration-300" />
+                            <div className="mt-48 text-end mr-2">
+                            <h2 className="text-xl font-genos text-gray-800 lg:text-5xl dark:text-white">
+                            {category[3].type}
+                                </h2>
+                         </div>
+                        </Link>
+                    )}
+                    
+                </div>
             </div>
-        </div>
+        </motion.section>
+    );
+};
 
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:gap-6 xl:gap-8">
-            {category.map((cat, index) => (
-                <Link to={`/category/${cat.id}`} key={cat.id}
-                    className={`group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-80 ${index === 1 || index === 2 ? 'md:col-span-2' : 'md:col-span-1'}`}>
-                    <img src={cat.image} alt="Photo by Minh Pham" className="absolute inset-0 h-full w-full object-cover object-center transition duration-700 ease-in-out group-hover:scale-110" />
-
-                    <span className="relative ml-4 mb-3 inline-block text-sm text-white md:ml-5 md:text-lg">{cat.type}</span>
-                </Link>
-            ))}
-        </div>
-    </div>
-</motion.section>
-        </>
-     );
-}
- 
 export default HomeCategory;

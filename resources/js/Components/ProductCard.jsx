@@ -44,7 +44,7 @@ const ProductCard = ({ variant = "hover", product }) => {
           }`}
         >
           <img
-            src="https://picsum.photos/200" // Use image from product
+            src={product.image}// Use image from product
             alt={product.title} // Use title as alt text
             className={`w-full xxs:h-[90%] md:h-[95%] object-cover rounded-lg transition-all duration-150 ease-linear ${
               responsiveVariant === "hover"
