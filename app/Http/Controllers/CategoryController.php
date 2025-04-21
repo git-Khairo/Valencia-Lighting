@@ -32,7 +32,7 @@ class CategoryController extends Controller
 
     public static function getLatestCategory()
     {
-        $products = Category::latest()->take(4)->get();
+        $products = Category::latest()->take(5)->get();
 
         return CategoryCardResource::collection($products);
     }
