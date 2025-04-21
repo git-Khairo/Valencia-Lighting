@@ -5,7 +5,6 @@ import { FaInstagram, FaMapMarkerAlt } from "react-icons/fa";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import ScrollToTop from "./ScrollToTop";
 import ReceiptIcon from "./Components/ReceiptIcon";
-import Loading from './Components/Loading'
 import useFetch from './useFetch';
 
 const Layout = () => {
@@ -16,7 +15,6 @@ const Layout = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [searchResults, setSearchResults] = useState({ products: [], categories: [], projects: [] });
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const contentRef = useRef(null);
   const dropdownRef = useRef(null);
@@ -74,7 +72,6 @@ const Layout = () => {
   // Handle Search
   useEffect(() => {
     if (searchQuery.length > 0) {
-      setLoading(true);
       setError("");
       fetch(`/api/search?query=${searchQuery}`)
         .then((response) => response.json())
@@ -88,11 +85,9 @@ const Layout = () => {
           } else {
             setError("No results found");
           }
-          setLoading(false);
         })
         .catch(() => {
           setError("Failed to fetch search results");
-          setLoading(false);
         });
     } else {
       fetch("/api/defaultSearch")
@@ -114,11 +109,7 @@ const Layout = () => {
   const limitedCategories = searchResults.categories.slice(0, isSmallScreen ? 4 : 6);
   const limitedProjects = searchResults.projects.slice(0, isSmallScreen ? 2 : 3);
 
-  if(loading){
-    return (
-      <Loading />
-    )
-  }else if(error){
+  if(error){
     <h1>An Error occured</h1>
   }
 
