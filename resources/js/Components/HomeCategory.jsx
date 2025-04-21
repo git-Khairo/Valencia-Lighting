@@ -40,13 +40,13 @@ const HomeCategory = ({ category }) => {
 
                     {category[1] && (
                         <Link
-                            to={`/category/${category[3].id}`}
+                            to={`/category/${category[1].id}`}
                             className="relative rounded-lg overflow-hidden transform transition-transform duration-500 hover:scale-[1.03]
                                        md:col-span-2 md:row-span-1 h-60"
                         >
                             <img
                                 src={category[1].image}
-                                alt={category[3].type}
+                                alt={category[1].type}
                                 className="absolute inset-0 w-full h-full object-cover"
                                 onError={(e) => (e.target.src = "/fallback-image.jpg")}
                             />
@@ -79,43 +79,43 @@ const HomeCategory = ({ category }) => {
                          </div>
                         </Link>
                     )}
-                    {category[2] && (
+                    {category[3] && (
                         <Link
-                            to={`/category/${category[2].id}`}
+                            to={`/category/${category[3].id}`}
                             className="relative rounded-lg overflow-hidden transform transition-transform duration-500 hover:scale-[1.03]
                                        md:col-span-1 md:row-span-1 h-60 md:h-auto"
                         >
                             <img
-                                src={category[2].image}
-                                alt={category[2].type}
+                                src={category[3].image}
+                                alt={category[3].type}
                                 className="absolute inset-0 w-full h-full object-cover"
                                 onError={(e) => (e.target.src = "/fallback-image.jpg")}
                             />
                             <div className="absolute inset-0 bg-black/10 hover:bg-black/30 transition-all duration-300" />
                             <div className="mb-4 text-center">
                             <h2 className="text-xl font-genos text-gray-800 lg:text-5xl dark:text-white">
-                            bati5
+                            {category[3].type}
                                 </h2>
                          </div>
                         </Link>
                     )}
 
-                {category[3] && (
+                {category[4] && (
                         <Link
-                            to={`/category/${category[3].id}`}
+                            to={`/category/${category[4].id}`}
                             className="relative rounded-lg overflow-hidden transform transition-transform duration-500 hover:scale-[1.03]
                                        md:col-span-2 md:row-span-1 h-60"
                         >
                             <img
-                                src={category[1].image}
-                                alt={category[3].type}
+                                src={category[4].image}
+                                alt={category[4].type}
                                 className="absolute inset-0 w-[70%] h-full object-cover"
                                 onError={(e) => (e.target.src = "/fallback-image.jpg")}
                             />
                             <div className="absolute inset-0 bg-black/10 hover:bg-black/30 transition-all duration-300" />
                             <div className="mt-48 text-end mr-2">
                             <h2 className="text-xl font-genos text-gray-800 lg:text-5xl dark:text-white">
-                            {category[3].type}
+                            {category[4].type}
                                 </h2>
                          </div>
                         </Link>
@@ -127,4 +127,4 @@ const HomeCategory = ({ category }) => {
     );
 };
 
-export default HomeCategory;
+export default HomeCategory;    
