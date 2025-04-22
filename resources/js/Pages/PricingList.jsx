@@ -218,14 +218,18 @@ const PricingList = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-20 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-light-background dark:bg-gray-900 py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-2xl sm:text-3xl font-semibold text-gray-900 mb-6">Your Cart</h1>
+      <h1 className="my-4 font-black font-Agdasima text-3xl md:text-4xl lg:text-5xl 3xl:text-7xl text-left leading-snug text-light-primary dark:text-dark-primary ">
+                    Your Cart
+                </h1>
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Cart Section */}
-          <div className="w-full lg:w-2/3 bg-white rounded-lg shadow-sm overflow-hidden">
+          <div className="w-full lg:w-2/3 bg-light-background dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden">
             <div className="p-4 sm:p-6 border-b border-gray-200">
-              <h2 className="text-lg sm:text-xl font-medium text-gray-900">Products</h2>
+            <h2 className="my-4 font-black font-Agdasima text-lg md:text-xl lg:text-3xl 3xl:text-5xl text-left leading-snug text-light-primary dark:text-dark-accent ">
+                    Products
+                </h2>
             </div>
             <div className="overflow-y-auto max-h-[500px] p-4 sm:p-6">
               {loading ? (
@@ -265,46 +269,48 @@ const PricingList = () => {
                   ))}
                 </ul>
               ) : (
-                <div className="text-center py-10 text-gray-500">Your cart is empty</div>
+                <div className="text-center py-10 text-light-text2 dark:text-dark-secondary">Your cart is empty</div>
               )}
             </div>
           </div>
 
           {/* Info Form */}
-          <div className="w-full lg:w-1/3 bg-white rounded-lg shadow-sm">
+          <div className="w-full lg:w-1/3 bg-light-background dark:bg-gray-800 rounded-lg shadow-sm">
             <div className="p-4 sm:p-6 border-b border-gray-200">
-              <h2 className="text-lg sm:text-xl font-medium text-gray-900">Your Information</h2>
+            <h2 className="my-4 font-black font-Agdasima text-lg md:text-xl lg:text-3xl 3xl:text-5xl text-left leading-snug text-light-primary dark:text-dark-accent ">
+                    Information
+                </h2>
             </div>
             <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-6">
               <div className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">First Name</label>
+                    <label htmlFor="firstName" className="block text-sm font-medium text-light-primary dark:text-dark-primary">First Name</label>
                     <input
                       type="text"
                       name="firstName"
                       value={formData.firstName}
                       onChange={handleInputChange}
-                      className={`mt-1 block w-full border rounded-md px-3 py-2 ${formErrors.firstName ? 'border-red-500' : 'border-gray-300'}`}
+                      className={`mt-1 block w-full border rounded-md px-3 py-2 ${formErrors.firstName ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-light-primary focus:border-dark-accent`}
                       placeholder="John"
                     />
                     {formErrors.firstName && <p className="text-red-500 text-xs mt-1">{formErrors.firstName}</p>}
                   </div>
                   <div>
-                    <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">Last Name</label>
+                    <label htmlFor="lastName" className="block text-sm font-medium text-light-primary dark:text-dark-primary">Last Name</label>
                     <input
                       type="text"
                       name="lastName"
                       value={formData.lastName}
                       onChange={handleInputChange}
-                      className={`mt-1 block w-full border rounded-md px-3 py-2 ${formErrors.lastName ? 'border-red-500' : 'border-gray-300'}`}
+                      className={`mt-1 block w-full border rounded-md px-3 py-2 ${formErrors.lastName ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-light-primary focus:border-dark-accent`}
                       placeholder="Doe"
                     />
                     {formErrors.lastName && <p className="text-red-500 text-xs mt-1">{formErrors.lastName}</p>}
                   </div>
                 </div>
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Phone Number</label>
+                  <label htmlFor="phone" className="block text-sm font-medium text-light-primary dark:text-dark-primary">Phone Number</label>
                   <div className="mt-1 flex gap-2">
                     <div className="relative w-1/3">
                       <select
@@ -312,7 +318,7 @@ const PricingList = () => {
                         name="countryPrefix"
                         value={countryPrefix}
                         onChange={handlePrefixChange}
-                        className="block w-full border rounded-md px-3 py-2 pl-10 appearance-none bg-white border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                        className="block w-full border rounded-md px-3 py-2 pl-10 appearance-none bg-white border-gray-300 focus:outline-none focus:ring-light-primary focus:border-dark-accent"
                       >
                         {countryPrefixes.map(c => (
                           <option key={c.code} value={c.prefix}>{c.prefix} ({c.name})</option>
@@ -332,49 +338,49 @@ const PricingList = () => {
                       name="phone"
                       value={formData.phone}
                       onChange={handleInputChange}
-                      className={`block w-2/3 border rounded-md px-3 py-2 ${formErrors.phone ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-indigo-500 focus:border-indigo-500`}
+                      className={`block w-2/3 border rounded-md px-3 py-2 ${formErrors.phone ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-light-primary focus:border-dark-accent`}
                       placeholder="123-456-7890"
                     />
                   </div>
                   {formErrors.phone && <p className="text-red-500 text-xs mt-1">{formErrors.phone}</p>}
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email Address</label>
+                  <label htmlFor="email" className="block text-sm font-medium text-light-primary dark:text-dark-primary">Email Address</label>
                   <input
                     type="email"
                     id="email"
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className={`mt-1 block w-full border rounded-md px-3 py-2 ${formErrors.email ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-indigo-500 focus:border-indigo-500`}
+                    className={`mt-1 block w-full border rounded-md px-3 py-2 ${formErrors.email ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-light-primary focus:border-dark-accent`}
                     placeholder="john.doe@example.com"
                   />
                   {formErrors.email && <p className="text-red-500 text-xs mt-1">{formErrors.email}</p>}
                 </div>
               </div>
               <div className="pt-4 border-t border-gray-200 space-y-4">
-                <h3 className="text-lg font-medium text-gray-900">Location</h3>
+                <h3 className="text-lg font-medium  text-light-primary dark:text-dark-primary">Location</h3>
                 <div>
-                  <label htmlFor="city" className="block text-sm font-medium text-gray-700">City</label>
+                  <label htmlFor="city" className="block text-sm font-medium  text-light-primary dark:text-dark-primary">City</label>
                   <input
                     type="text"
                     id="city"
                     name="city"
                     value={formData.city}
                     onChange={handleInputChange}
-                    className={`mt-1 block w-full border rounded-md px-3 py-2 ${formErrors.city ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-indigo-500 focus:border-indigo-500`}
+                    className={`mt-1 block w-full border rounded-md px-3 py-2 ${formErrors.city ? 'border-red-500' : 'border-gray-300'} focus:outline-none ocus:outline-none focus:ring-light-primary focus:border-dark-accent`}
                     placeholder="New York"
                   />
                   {formErrors.city && <p className="text-red-500 text-xs mt-1">{formErrors.city}</p>}
                 </div>
                 <div className="relative">
-                  <label htmlFor="country" className="block text-sm font-medium text-gray-700">Country</label>
+                  <label htmlFor="country" className="block text-sm font-medium  text-light-primary dark:text-dark-primary">Country</label>
                   <select
                     id="country"
                     name="country"
                     value={formData.country}
                     onChange={handleInputChange}
-                    className={`mt-1 block w-full border rounded-md px-3 py-2 pl-10 ${formErrors.country ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-indigo-500 focus:border-indigo-500`}
+                    className={`mt-1 block w-full border rounded-md px-3 py-2 pl-10 ${formErrors.country ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-light-primary focus:border-dark-accent`}
                   >
                     <option value="">Select Country</option>
                     {countries.map(c => (
@@ -396,7 +402,7 @@ const PricingList = () => {
               <button
                 type="submit"
                 disabled={resLoading}
-                className={`w-full py-2 px-4 rounded text-white ${resLoading ? 'bg-indigo-400 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-700'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
+                className={`w-full py-2 px-4 rounded text-white ${resLoading ? 'bg-indigo-400 cursor-not-allowed' : 'bg-light-primary dark:bg-dark-accent hover:bg-slate-800 dark:hover:bg-[#00437a8d]'}`}
               >
                 {resLoading ? (
                   <svg className="animate-spin h-5 w-5 mx-auto text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -417,8 +423,10 @@ const PricingList = () => {
         ) : RelatedError ? (
           <div className="text-red-500">{RelatedError.message}</div>
         ) : RelatedProducts ? (
-          <div className="my-10 bg-white rounded-lg shadow-sm p-6">
-            <h2 className="text-lg sm:text-xl font-medium text-gray-900 mb-4">More Products</h2>
+          <div className="my-10 bg-light-background dark:bg-dark-background rounded-lg shadow-sm p-6">
+            <h2 className="my-4 font-black font-Agdasima text-lg md:text-xl lg:text-3xl 3xl:text-5xl text-left leading-snug text-light-primary dark:text-dark-accent ">
+                    More Products
+                </h2>
             <Slider {...RelatedProductsSlider}>
               {RelatedProducts.data.map(product => (
                 <ProductCard key={product.id} product={product} variant="no-hover" />
