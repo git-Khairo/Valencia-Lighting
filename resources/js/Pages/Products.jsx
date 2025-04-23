@@ -204,7 +204,7 @@ const Products = () => {
                 <div className="block md:hidden">
                   <button
                     onClick={() => setIsFilterOpen(true)}
-                    className="flex items-center space-x-2 px-4 py-2 border ${darkMode ? 'border-gray-700 hover:bg-gray-800' : 'hover:bg-gray-100'} cursor-pointer whitespace-nowrap"
+                    className="flex items-center space-x-2 px-4 py-2 font-Jura border-2 border-light-text text-light-text dark:border-dark-text dark:text-dark-text hover:border-light-primary hover:text-light-primary hover:dark:border-dark-primary hover:dark:text-dark-primary cursor-pointer whitespace-nowrap"
                   >
                     <FaSlidersH className="mr-1.5"/>
                     Filter
@@ -280,16 +280,16 @@ const Products = () => {
         onClick={() => setIsFilterOpen(false)}
       >
         <div
-          className={`fixed bottom-0 left-0 w-full h-full bg-light-background dark:bg-gray-900 shadow-lg transition-transform duration-500 ${
+          className={`fixed bottom-0 left-0 w-full h-full bg-light-background dark:bg-dark-background shadow-lg transition-transform duration-500 ${
             isFilterOpen ? "translate-y-0" : "translate-y-full"
           }`}
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex justify-between items-center border-b border-gray-300 dark:border-gray-700 px-4 pt-4 pb-2">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white">Filters</h2>
+            <h2 className="text-xl font-EncodeSansCondensed text-light-text dark:text-dark-text">Filters</h2>
             <button
               onClick={() => setIsFilterOpen(false)}
-              className="text-gray-800 dark:text-gray-200 hover:text-red-500 transition-colors duration-300"
+              className="text-light-text dark:text-dark-text transition-colors duration-300"
             >
               <FaTimes size={22} />
             </button>
@@ -298,10 +298,10 @@ const Products = () => {
           {/* Mobile Filters */}
           <div className="overflow-y-auto max-h-[calc(100vh-120px)] p-4">
             {/* Brand Filter */}
-            <div className="mb-4">
-              <h3 className="font-semibold text-gray-700 dark:text-gray-300">Brand</h3>
+            <div className="mb-4 font-EncodeSansCondensed text-light-text dark:text-dark-text">
+              <h3 className="font-semibold text-light-text dark:text-dark-text">Brand</h3>
               <div className="mt-2 space-y-2">
-                <label className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
+                <label className="flex items-center space-x-2 text-light-text dark:text-dark-text">
                 <input type="radio" id="sila" name="brand" value="sila" className="peer hidden" onClick={(e) => brand === 'sila' ? setBrand("") : setBrand(e.target.value)} />
                   <span className="w-7 h-7 mr-2 flex items-center justify-center">
                   {brand === 'sila' ? (
@@ -312,7 +312,7 @@ const Products = () => {
                 </span>
                 Sila
                 </label>
-                <label className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
+                <label className="flex items-center space-x-2 text-light-text dark:text-dark-text">
                 <input type="radio" id="sila" name="brand" value="radial" className="peer hidden" onClick={(e) => brand === 'radial' ? setBrand("") : setBrand(e.target.value)} />
                  <span className="w-7 h-7 mr-2 flex items-center justify-center">
                   {brand === 'radial' ? (
@@ -328,31 +328,31 @@ const Products = () => {
 
             {/* Categories Filter */}
             <div className="mb-4">
-              <h3 className="font-semibold text-gray-700 dark:text-gray-300">Categories</h3>
+              <h3 className="font-EncodeSansCondensed text-light-text dark:text-dark-text text-xl">Categories</h3>
               <div className="mt-2 space-y-2">
-                <div className={`flex justify-between items-center px-3 py-2 border-dashed border-b-2 ${dropDownFilterIndoor ? 'text-black border-black' : 'text-gray-400 border-gray-400'}`}  onClick={() => {setDropDownFilterIndoor(!dropDownFilterIndoor); setDropDownFilterOutdoor(false)}}>
-                <h2 className="text-lg">Indoor</h2>
+                <div className={`flex justify-between items-center px-3 py-2 border-dashed border-b-2 ${dropDownFilterIndoor ? 'text-light-text border-dark-background dark:text-dark-text dark:border-light-background' : 'text-light-secondary border-light-secondary'}`}  onClick={() => {setDropDownFilterIndoor(!dropDownFilterIndoor); setDropDownFilterOutdoor(false)}}>
+                <h2 className="text-lg font-EncodeSansCondensed">Indoor</h2>
                 {dropDownFilterIndoor ? <FaMinus /> : <FaPlus />}
                 </div>
                 <div className={`overflow-hidden transition-all duration-700 ease-in-out space-y-2 ${
                         dropDownFilterIndoor ? 'max-h-44 opacity-100 translate-y-0' : 'max-h-0 opacity-0 -translate-y-2'
                       }`}>
                   {dropDownFilterIndoor && Array.from({ length: 5 }, (_, i) => (
-                    <label key={i} className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
+                    <label key={i} className="flex items-center space-x-2 text-light-text dark:text-dark-text font-EncodeSansCondensed">
                       <input type="checkbox" className="form-checkbox h-4 w-4 accent-black" onChange={() => updateFilter(i + 1)} checked={categories.includes(i + 1)} />
                       <span>Category {i + 1}</span>
                     </label>
                   ))}
                   </div>
-                <div className={`flex justify-between items-center px-3 py-2 border-dashed border-b-2 ${dropDownFilterOutdoor ? 'text-black border-black' : 'text-gray-400 border-gray-400'}`} onClick={() => {setDropDownFilterOutdoor(!dropDownFilterOutdoor); setDropDownFilterIndoor(false)}}>
-                <h2 className="text-lg">Outdoor</h2>
+                <div className={`flex justify-between items-center px-3 py-2 border-dashed border-b-2 ${dropDownFilterOutdoor ? 'text-light-text border-dark-background dark:text-dark-text dark:border-light-background' : 'text-light-secondary border-light-secondary'}`} onClick={() => {setDropDownFilterOutdoor(!dropDownFilterOutdoor); setDropDownFilterIndoor(false)}}>
+                <h2 className="text-lg font-EncodeSansCondensed">Outdoor</h2>
                 {dropDownFilterOutdoor ? <FaMinus /> : <FaPlus/>}
                 </div>
                 <div className={`overflow-hidden transition-all duration-700 ease-in-out space-y-2 ${
                         dropDownFilterOutdoor ? 'max-h-44 opacity-100 translate-y-0' : 'max-h-0 opacity-0 -translate-y-2'
                       }`}>
                   {dropDownFilterOutdoor && Array.from({ length: 5 }, (_, i) => (
-                    <label key={i} className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
+                    <label key={i} className="flex items-center space-x-2 text-light-text dark:text-dark-text font-EncodeSansCondensed">
                       <input type="checkbox" className="form-checkbox h-4 w-4 accent-black" onChange={() => updateFilter(i + 6)} checked={categories.includes(i + 6)} />
                       <span>Category {i + 6}</span>
                     </label>
@@ -361,10 +361,10 @@ const Products = () => {
               </div>
             </div>
 
-            <button className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 mt-4 rounded transition" onClick={() => setIsFilterOpen(false)}>
+            <button className="w-full font-Jura border-2 bg-light-primary hover:bg-light-background hover:border-light-primary text-light-background hover:text-light-primary dark:bg-dark-primary hover:dark:bg-dark-background hover:dark:border-dark-primary dark:text-dark-background hover:dark:text-dark-primary dark:border-dark-background py-2 mt-4 rounded transition" onClick={() => setIsFilterOpen(false)}>
               Apply Filters
             </button>
-            <button className="w-full bg-red-500 hover:bg-red-600 text-white py-2 mt-4 rounded transition" onClick={() => {setBrand(""); setCategories([]); setIsFilterOpen(false)}}>
+            <button className="w-full font-Jura border-2 bg-light-background hover:bg-light-secondary2 hover:border-light-secondary2 text-light-secondary2 hover:text-light-background dark:bg-dark-background hover:dark:bg-dark-secondary2 hover:dark:border-dark-secondary2 dark:text-dark-secondary2 hover:dark:text-dark-background dark:border-dark-secondary2 py-2 mt-4 rounded transition" onClick={() => {setBrand(""); setCategories([]); setIsFilterOpen(false)}}>
               Clear Filters
             </button>
           </div>
