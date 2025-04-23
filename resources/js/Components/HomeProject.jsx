@@ -43,7 +43,7 @@ const HomeProject = ({projects}) => {
                 />
                 <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4">
                     <div className="relative z-[3]">
-                        <h3 className={`font-semibold text-white ${
+                        <h3 className={`font-SulphurPoint text-white ${
                   index === 1
                     ? 'text-lg lg:text-4xl ' // Larger height for middle card
                     : 'text-base lg:text-xl' // Smaller height for side cards
@@ -61,7 +61,7 @@ const HomeProject = ({projects}) => {
         <div className="text-center mt-10">
           <a
             href="/projects"
-            className="inline-block px-6 py-3 text-light-primary dark:text-dark-primary border-[1px] font-Montserrat border-light-primary dark:border-dark-primary rounded-lg hover:bg-light-primary hover:dark:bg-dark-primary hover:dark:text-light-text hover:text-dark-text transition-colors duration-200 ease-in-out"
+            className="inline-block px-6 py-3 text-light-primary dark:text-dark-primary border-2 font-Jura border-light-primary dark:border-dark-primary rounded-lg hover:bg-light-primary hover:dark:bg-dark-primary hover:dark:text-light-text hover:text-dark-text transition-colors duration-200 ease-in-out"
           >
             View All Projects
           </a>

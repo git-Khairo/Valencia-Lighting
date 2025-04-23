@@ -40,7 +40,7 @@ const HomeCategory = ({ category }) => {
                                 />
                                 <div className="absolute inset-0 bg-black/10 hover:bg-black/30 transition-all duration-300" />
                                 <div className="absolute bottom-4 left-4 z-10 px-2 py-1 rounded">
-                                <h2 className="text-xl font-genos text-white lg:text-4xl">{cat.type}</h2>
+                                <h2 className="text-xl font-SulphurPoint text-light-background lg:text-4xl">{cat.type}</h2>
                              </div>
                             </Link>
                         );

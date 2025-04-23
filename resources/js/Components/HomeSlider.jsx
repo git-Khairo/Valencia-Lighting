@@ -33,7 +33,7 @@ const HomeSlider = ({ images }) => {
             />
             <div className="absolute inset-0 bg-black opacity-10"></div>
             <div className="absolute inset-0 flex justify-center items-center">
-              <h2 className="text-white font-Montserrat text-3xl">{image.title}</h2>
+              <h2 className="text-white font-SulphurPoint text-3xl">{image.title}</h2>
             </div>
           </div>
         ))}

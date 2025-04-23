@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from "framer-motion";
+import { Link } from 'react-router-dom';
 
 function AboutPreview() {
   return (
@@ -18,7 +19,7 @@ function AboutPreview() {
           className="w-full h-full object-cover"
         />
         {/* Gradient Overlay for Better Readability */}
-        <div className="absolute inset-0 bg-black/50"></div>
+        <div className="absolute inset-0 bg-black/50 dark:bg-white/40"></div>
       </motion.div>
 
       {/* Text Content on Image */}
@@ -29,21 +30,21 @@ function AboutPreview() {
         viewport={{ once: true }}
         className="absolute inset-0 flex flex-col items-center justify-center text-center px-8"
       >
-        <h2 className="text-white font-black text-4xl md:text-5xl leading-snug">
+        <h2 className="text-light-background2 dark:text-dark-background2 font-EncodeSansCondensed text-4xl md:text-5xl leading-snug">
           Who We Are
         </h2>
-        <p className="text-gray-200 text-lg md:text-xl max-w-3xl mt-4">
+        <p className="text-light-background2 dark:text-dark-background2 font-Jura text-lg md:text-xl max-w-3xl mt-4">
           As a leading international specialist in architectural lighting, we blend{" "}
-          <strong className="text-white">innovation</strong>,{" "}
-          <strong className="text-white">sustainability</strong>, and{" "}
-          <strong className="text-white">design excellence</strong> to shape illuminating experiences.
+          <strong className="text-light-background2 dark:text-dark-background2">innovation</strong>,{" "}
+          <strong className="text-light-background2 dark:text-dark-background2">sustainability</strong>, and{" "}
+          <strong className="text-light-background2 dark:text-dark-background2">design excellence</strong> to shape illuminating experiences.
         </p>
-        <a
-          href="/about"
-          className="mt-6 bg-white text-blue-900 font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-gray-200 transition"
+        <Link
+          to={"/about us"}
+          className="mt-6 bg-light-background font-Jura text-light-primary font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-light-background2 transition"
         >
           Learn More →
-        </a>
+        </Link>
       </motion.div>
     </section>
   );

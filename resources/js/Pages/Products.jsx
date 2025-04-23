@@ -158,7 +158,7 @@ const Products = () => {
         </button>
       </div>
     ) : (
-    <div className="w-full m-0 overflow-x-hidden md:overflow-x-visible">
+    <div className="w-full m-0 bg-light-background dark:bg-dark-background text-light-text dark:text-dark-text overflow-x-hidden md:overflow-x-visible">
       {/* Slider Section */}
       <section className="pt-16 pb-10">
       <div className="w-full">
@@ -171,8 +171,8 @@ const Products = () => {
                 className="w-full h-[200px] object-cover"
               />
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center space-y-4">
-                <h1 className="text-2xl md:text-4xl font-bold text-white">{product.title}</h1>
-                <p className="text-sm md:text-lg text-white">{product.description}</p>
+                <h1 className="text-2xl md:text-4xl font-SulphurPoint text-white">{product.title}</h1>
+                <p className="text-sm md:text-lg text-white font-Jura">{product.description}</p>
               </div>
             </div>
           ))}
@@ -189,11 +189,11 @@ const Products = () => {
         {/* Products Section */}
         <div className={`${showFilters ? "w-4/5" : "w-full"} w-full`}>
         <div className="flex justify-between items-center mb-8">
-              <h2 className="sm:text-2xl text-lg font-semibold hidden md:block">All Products</h2>
+              <h2 className="sm:text-2xl text-lg font-SulphurPoint hidden md:block">All Products</h2>
               <div className="flex items-center gap-3">
                 <div className="hidden md:block">
                 <button
-                  className="!rounded-button flex items-center space-x-2 px-4 py-2 border hover:bg-gray-100 cursor-pointer whitespace-nowrap"
+                  className="!rounded-button flex items-center space-x-2 px-4 py-2 font-Jura border-2 border-light-text text-light-text dark:border-dark-text dark:text-dark-text hover:border-light-primary hover:text-light-primary hover:dark:border-dark-primary hover:dark:text-dark-primary cursor-pointer whitespace-nowrap"
                   onClick={toggleFilters}
                 >
                   <span>{showFilters ? 'Hide Filters' : 'Show Filters'}</span>
@@ -212,18 +212,18 @@ const Products = () => {
                 </div>
                 <div className="relative sort-dropdown">
                   <button
-                    className="flex items-center space-x-2 px-4 py-2 border hover:bg-gray-100 cursor-pointer whitespace-nowrap"
+                    className="flex items-center space-x-2 px-4 py-2 font-Jura border-2 border-light-text text-light-text dark:border-dark-text dark:text-dark-text hover:border-light-primary hover:text-light-primary hover:dark:border-dark-primary hover:dark:text-dark-primary cursor-pointer whitespace-nowrap"
                     onClick={() => setShowSortDropdown(!showSortDropdown)}
                   >
                     <span>Sort By: {sortOption}</span>
                     <FaChevronDown />
                   </button>
                   {showSortDropdown && (
-                    <div className="absolute text-center right-0 mt-2 w-40 bg-white border shadow-lg z-10">
-                      {['Latest', 'A to Z', 'Z to A'].map(option => (
+                    <div className="absolute text-center right-0 mt-2 w-40 bg-light-background dark:bg-dark-background border shadow-lg z-10">
+                      {['Latest', 'A → Z', 'Z → A'].map(option => (
                         <div
                           key={option}
-                          className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                          className="px-4 py-2 hover:bg-light-secondary hover:dark:bg-dark-secondary hover:text-light-text hover:dark:text-dark-text cursor-pointer"
                           onClick={() => {
                             setSortOption(option);
                             setShowSortDropdown(false);
