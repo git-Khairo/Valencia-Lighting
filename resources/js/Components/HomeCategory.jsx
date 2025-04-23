@@ -8,12 +8,12 @@ const HomeCategory = ({ category }) => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
             viewport={{ once: true }}
-            className="bg-white dark:bg-gray-900 py-6 px-4"
+            className="bg-light-background2 dark:bg-dark-background2 py-6 px-4"
         >
             <div className="mx-auto w-11/12 flex flex-col">
                 {/* Title */}
                 <div className="mb-4">
-                    <h2 className="text-2xl font-genos text-gray-800 lg:text-7xl dark:text-white">Categories</h2>
+                    <h2 className="text-2xl font-EncodeSansCondensed text-light-text lg:text-6xl dark:text-dark-text">Categories</h2>
                 </div>
 
                 <div className="grid gap-4 mt-4 flex-grow grid-cols-1 md:grid-cols-4 md:grid-rows-2">

@@ -22,7 +22,7 @@ const HomeSlider = ({ images }) => {
     whileInView={{ opacity: 1, scale: 1 }}
     transition={{ duration: 0.8 }}
     viewport={{ once: true }}
-    className="w-full">
+    className="w-full bg-light-background dark:bg-dark-background">
       <Slider {...imageSliderSettings}>
         {images.map((image, index) => (
           <div key={index} className="relative">
@@ -33,7 +33,7 @@ const HomeSlider = ({ images }) => {
             />
             <div className="absolute inset-0 bg-black opacity-10"></div>
             <div className="absolute inset-0 flex justify-center items-center">
-              <h2 className="text-white font-limeLight text-3xl">{image.title}</h2>
+              <h2 className="text-white font-Montserrat text-3xl">{image.title}</h2>
             </div>
           </div>
         ))}

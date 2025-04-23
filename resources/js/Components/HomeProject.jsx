@@ -9,11 +9,11 @@ const HomeProject = ({projects}) => {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
         viewport={{ once: true }}
-       className="py-12 sm:py-16 bg-gray-100">
+       className="py-12 sm:py-16 bg-light-background dark:bg-dark-background">
       <div className="w-11/12 mx-auto px-3 sm:px-4 lg:px-6">
       <div className="mb-4 flex items-center justify-between gap-8 sm:mb-8 md:mb-12">
             <div className="flex items-center gap-12">
-                <h2 className="text-center text-2xl font-genos text-gray-800 lg:text-7xl dark:text-white">Projects</h2>
+                <h2 className="text-center text-2xl font-EncodeSansCondensed text-light-text dark:text-dark-text lg:text-6xl">Projects</h2>
             </div>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
@@ -61,7 +61,7 @@ const HomeProject = ({projects}) => {
         <div className="text-center mt-10">
           <a
             href="/projects"
-            className="inline-block px-6 py-3 text-black border-2 border-black font-semibold rounded-lg hover:bg-black hover:text-white transition-colors"
+            className="inline-block px-6 py-3 text-light-primary dark:text-dark-primary border-[1px] font-Montserrat border-light-primary dark:border-dark-primary rounded-lg hover:bg-light-primary hover:dark:bg-dark-primary hover:dark:text-light-text hover:text-dark-text transition-colors duration-200 ease-in-out"
           >
             View All Projects
           </a>

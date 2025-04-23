@@ -28,11 +28,11 @@ const HomeProduct = ({ products }) => {
     whileInView={{ opacity: 1, y:0 }}
     transition={{ duration: 1 }} 
     viewport={{ once: true }}
-    className="mx-auto px-10 py-20 flex flex-col md:flex-row items-center gap-6">
+    className="mx-auto px-10 py-20 flex flex-col md:flex-row items-center gap-6 bg-light-background dark:bg-dark-background dark:text-dark-text">
       {/* Left Static Description */}
       <div className="md:w-1/3 text-center md:text-left">
-        <h2 className="text-4xl font-bold text-gray-900 font-serif md:text-3xl">Latest Products</h2>
-        <p className="mt-4 text-gray-600 text-xs sm:text-xl md:lg">
+        <h2 className="text-4xl text-light-text dark:text-dark-text font-EncodeSansCondensed md:text-5xl">Latest Products</h2>
+        <p className="mt-4 text-light-secondary2 dark:text-dark-secondary2 text-xs sm:text-xl font-Jura">
           These are the products used in the project. Scroll through to see them all.
         </p>
       </div>

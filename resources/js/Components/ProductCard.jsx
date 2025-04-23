@@ -35,7 +35,7 @@ const ProductCard = ({ variant = "hover", product }) => {
     <Link to={`/product/${product.id}`} className="block">
       <div
         className=" min-h-36 xxs:h-[200px] sm:h-[300px] lg:h-[310px] xl:h-[356px] 2xl:h-[400px] 
-        group relative rounded-lg overflow-hidden mx-1 shadow-md border border-gray-200 bg-white transition-all duration-300 ease-linear"
+        group relative rounded-lg overflow-hidden mx-1 shadow-md border border-light-secondary bg-white transition-all duration-300 ease-linear dark:bg-dark-background dark:border-dark-secondary"
       >
         {/* Picture */}
         <div
@@ -58,7 +58,7 @@ const ProductCard = ({ variant = "hover", product }) => {
 
         {/* Visible Part + Extra Details */}
         <div
-          className={`w-full bg-white px-6 md:pr-2 md:pl-4 pb-6 flex flex-col shadow-md transition-all duration-300 ease-linear relative ${
+          className={`w-full bg-white px-6 md:pr-2 md:pl-4 pb-6 flex flex-col shadow-md transition-all duration-300 ease-linear relative dark:bg-dark-background ${
             responsiveVariant === "hover"
               ? "group-hover:-translate-y-[40px]"
               : responsiveVariant === "static"
@@ -68,8 +68,8 @@ const ProductCard = ({ variant = "hover", product }) => {
         >
           {/* Name & Code */}
           <div className="flex flex-col sm:flex-row justify-between w-full items-center">
-            <h3 className="xl:text-xl text-sm xxs:text-sm font-semibold">{product.name}</h3>
-            <p className="md:text-xs text-[10px] text-gray-500">#{product.id}</p>
+            <h3 className="xl:text-2xl text-sm font-semibold font-Gruppo dark:text-dark-text">{product.name}</h3>
+            <p className="md:text-base text-[10px] text-gray-500 font-Gruppo dark:text-dark-secondary2">#{product.id}</p>
           </div>
 
           {/* Extra Details */}
