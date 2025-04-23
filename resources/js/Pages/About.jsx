@@ -7,20 +7,20 @@ function ContentSection16() {
     return (
         <section className="p-8 mt-16 font-AverageSans bg-light-background dark:bg-dark-background ">
             <div className="mx-auto">
-                <h2 className="my-4 ml-6 font-Agdasima font-semibold text-3xl md:text-4xl lg:text-5xl 3xl:text-8xl text-left leading-snug text-light-primary dark:text-dark-primary ">
+                <h2 className="my-4 ml-6 font-Gruppo font-semibold text-3xl md:text-4xl lg:text-5xl 3xl:text-8xl text-left leading-snug text-light-primary dark:text-dark-primary ">
                     ABOUT US
                 </h2>
                 <div className="flex flex-col md:flex-row gap-8 lg:gap-12 ">
                     <div className="flex flex-col gap-6 md:w-1/2">
                         <div className="p-6">
-                            <p className="font-serif text-sm md:text-lg lg:text-xl xl:text-2xl 3xl:text-4xl text-light-text2 dark:text-dark-secondary">
+                            <p className="font-SulphurPoint text-sm md:text-lg lg:text-xl xl:text-2xl 3xl:text-4xl text-light-text dark:text-dark-text">
                                 As a leading international specialist for architectural lighting, our tools represent quality, innovation,
                                 design, efficiency, and reliability. We think and work holistically, ensuring that the products and services
                                 required by our internal customers are available from sourcing and serial supply to the end of life cycle.
                             </p>
                             <div className="grid transition-all duration-500 ease-in-out md:hidden grid-rows-[1fr] opacity-100 scale-100">
                                 <div className="overflow-hidden">
-                                    <p className="font-serif text-sm md:text-lg lg:text-xl xl:text-2xl  3xl:text-4xl text-light-text2 dark:text-dark-secondary">
+                                    <p className="font-SulphurPoint text-sm md:text-lg lg:text-xl xl:text-2xl  3xl:text-4xl text-light-text dark:text-dark-text">
                                         Being successful together means setting out on a path and working together to achieve the objectives we
                                         set ourselves. This is why we think not only from our perspective with every project but also from the
                                         perspective of the supplier. We do everything possible to maintain a business relationship based on
@@ -29,7 +29,7 @@ function ContentSection16() {
                                 </div>
                             </div>
                             <div className="hidden md:block">
-                                <p className="font-serif text-sm md:text-lg lg:text-xl xl:text-2xl 3xl:text-4xl text-light-text2 dark:text-dark-secondary">
+                                <p className="font-SulphurPoint text-sm md:text-lg lg:text-xl xl:text-2xl 3xl:text-4xl text-light-text dark:text-dark-text">
                                     Being successful together means setting out on a path and working together to achieve the objectives we
                                     set ourselves. This is why we think not only from our perspective with every project but also from the
                                     perspective of the supplier. We do everything possible to maintain a business relationship based on
@@ -57,10 +57,10 @@ function TestimonialSection16() {
     return (
         <section className="p-8 font-AverageSans bg-light-background dark:bg-dark-background ">
             <div className="mx-auto">
-                <h2 className="my-4 font-black font-Agdasima text-3xl md:text-4xl lg:text-5xl 3xl:text-7x text-left leading-snug text-light-primary dark:text-dark-accent ">
+                <h2 className="my-4 font-black font-Gruppo text-3xl md:text-4xl lg:text-5xl 3xl:text-7x text-left leading-snug text-light-primary dark:text-dark-primary ">
                     Mission
                 </h2>
-                <h5 className="mb-6 ml-6 font-serif text-sm md:text-lg lg:text-xl xl:text-xl 3xl:text-2xl text-light-text dark:text-dark-text">
+                <h5 className="mb-6 ml-6 font-SulphurPoint text-sm md:text-lg lg:text-xl xl:text-xl 3xl:text-2xl text-light-text dark:text-dark-text">
                     We simplify complex lighting projects through <strong>exceptional customer experiences</strong> driven by <strong>innovation, design, and sustainability</strong>.
                 </h5>
                 <div className="flex flex-col md:flex-row items-center gap-12 ml-6">
@@ -71,9 +71,9 @@ function TestimonialSection16() {
                         {items.map((item, index) => (
                             <div
                                 key={index}
-                                className="p-6 border border-light-accent dark:border-dark-accent shadow-md rounded-lg bg-white dark:bg-gray-900 hover:scale-[102%] transition-all duration-500 ease-in-out"
+                                className="p-6 border border-light-accent dark:border-dark-primary shadow-md rounded-lg bg-white dark:bg-dark-lighterbackground hover:scale-[102%] transition-all duration-500 ease-in-out"
                             >
-                                <p className="text-lg md:text-xl lg:text-2xl font-normal font-Agdasima text-light-primary dark:text-dark-primary" dangerouslySetInnerHTML={{ __html: item.text }} />
+                                <p className="text-lg md:text-lg lg:text-xl font-normal font-SulphurPoint text-light-primary dark:text-dark-text" dangerouslySetInnerHTML={{ __html: item.text }} />
                                 <h6 className="mt-4 text-lg md:text-xl lg:text-2xl font-bold font-Agdasima text-light-primary dark:text-dark-primary">{item.title}</h6>
                             </div>
                         ))}
@@ -94,31 +94,104 @@ function Timeline() {
     ];
 
     return (
-        <div className="p-8 bg-light-background dark:bg-dark-background ">
-            <h2 className="my-4 font-Agdasima font-black text-3xl md:text-4xl lg:text-5xl 3xl:text-7xl text-left leading-snug text-light-primary dark:text-dark-accent">
-                Our Journey
-            </h2>
-            <div className="flex flex-col lg:flex-row justify-between gap-10 mt-10">
-                {events.map((event, index) => (
-                    <motion.div
-                        key={index}
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: index * 0.2 }}
-                        viewport={{ once: true }}
-                        className="flex flex-col items-center text-center flex-1"
-                    >
-                        <div className="w-14 h-14 flex items-center justify-center rounded-full border-4 shadow-md mb-2"
-                             style={{ borderColor: event.color }}>
-                            <span className="font-bold" style={{ color: event.color }}>{event.year}</span>
-                        </div>
-                        <h3 className="text-lg font-semibold font-Agdasima" style={{ color: event.color }}>{event.title}</h3>
-                        <p className="text-sm text-gray-500">{event.description}</p>
-                    </motion.div>
-                ))}
+        <div className="p-8 font-AverageSans bg-light-background dark:bg-dark-background ">
+            <h2 className="my-4 ml-6 font-Gruppo font-semibold text-3xl md:text-4xl lg:text-5xl 3xl:text-8xl text-left leading-snug text-light-primary dark:text-dark-primary">
+                Our Journey</h2>
+
+            {/* ✅ Small Screen (Vertical Timeline) */}
+            <div className="md:hidden relative flex flex-col items-center ">
+                <div className="absolute top-0 bottom-0 w-1  bg-gradient-to-b from-[#1c4769] via-[#96c2e3] to-[#a3a3a3]"></div>
+
+                <div className="flex flex-col gap-10 relative ml-8">
+                    {events.map((event, index) => (
+                        <motion.div
+                            key={index}
+                            initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.6, delay: index * 0.2 }}
+                            viewport={{ once: true }}
+                            className={`flex items-center gap-5 ${index % 2 === 0 ? "flex-row" : "flex-row-reverse"}`}
+                        >
+                            <div className="relative w-14 h-14 bg-white border-4 border-[#1c4769] flex items-center justify-center rounded-full shadow-md">
+                                <span className="text-[#1a1400] font-bold font-Agdasima ">{event.year}</span>
+
+                            </div>
+
+                            <div className=" bg-white p-6 rounded-lg shadow-md w-auto j">
+                                <h3 className="text-base font-semibold font-Agdasima text-[#1c4769]">{event.title}</h3>
+                                {/* <p className="text-[#a3a3a3] text-sm mt-2 hidden">{event.description}</p>   */}
+                            </div>
+                        </motion.div>
+                    ))}
+                </div>
+            </div>
+
+            {/* ✅ Medium Screens (Horizontal Timeline) */}
+            <div className="hidden md:flex lg:hidden relative justify-center mt-20 mb-6 px-8">
+                <div className="absolute top-1/2 w-11/12 max-w-4xl h-1.5 bg-gradient-to-r from-[#1c4769] via-[#96c2e3] to-[#a3a3a3] rounded-full"></div>
+
+                <div className="flex w-full max-w-4xl justify-between mx-auto">
+                    {events.map((event, index) => (
+                        <motion.div
+                            key={index}
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: index * 0.2 }}
+                            viewport={{ once: true }}
+                            className="flex flex-col items-center flex-1 min-w-[100px]"
+                        >
+                            {/* Circle */}
+                            <div className="relative">
+                                <div className="w-12 h-12 flex border-4 items-center rounded-full justify-center shadow-md" style={{ borderColor: event.color }}>
+                                    <span className="font-bold" style={{ color: event.color }}>{event.year}</span>
+                                </div>
+                                <div className="w-1 h-10 mx-auto" style={{ backgroundColor: event.color }}></div>
+
+                            </div>
+
+                            {/* Text */}
+                            <div className={`text-center mt-4 w-auto md:${index % 2 === 0 ? "mb-8" : "mt-8"}`}>
+                                <h3 className="text-lg font-semibold font-Agdasima" style={{ color: event.color }}>{event.title}</h3>
+                                <p className="text-[#a3a3a3] text-xs w-28 ">{event.description}</p>
+                            </div>
+                        </motion.div>
+                    ))}
+                </div>
+            </div>
+
+            {/* ✅ Large Screens (Wider Horizontal Timeline) */}
+            <div className="hidden lg:flex relative justify-center mt-28 mb-14 px-12">
+                <div className="absolute top-1/2 w-11/12 max-w-6xl h-2 bg-gradient-to-r from-[#1c4769] via-[#729ebf] to-[#a3a3a3] rounded-full"></div>
+
+                <div className="flex w-full max-w-6xl justify-between mx-auto">
+                    {events.map((event, index) => (
+                        <motion.div
+                            key={index}
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: index * 0.2 }}
+                            viewport={{ once: true }}
+                            className="flex flex-col items-center flex-1 min-w-[140px]"
+                        >
+                            {/* Circle */}
+                            <div className="relative">
+                                <div className="w-14 h-14 flex border-4 items-center rounded-full justify-center shadow-md" style={{ borderColor: event.color }}>
+                                    <span className="font-bold font-Agdasima" style={{ color: event.color }}>{event.year}</span>
+                                </div>
+                                <div className="w-1 h-7 mx-auto" style={{ backgroundColor: event.color }}></div>
+                            </div>
+
+                            {/* Text */}
+                            <div className={`text-center mt-4 w-auto lg:${index % 2 === 0 ? "mb-12" : "mt-12"}`}>
+                                <h3 className="text-2xl font-semibold font-Agdasima" style={{ color: event.color }}>{event.title}</h3>
+                                <p className="text-[#a3a3a3] text-sm w-40  ">{event.description}</p>
+                            </div>
+                        </motion.div>
+                    ))}
+                </div>
             </div>
         </div>
-    );
+    );  
 }
 
 const services = [
@@ -142,7 +215,7 @@ const Services = () => {
                     {services.slice(0, 4).map(({ icon: Icon, title }, index) => (
                         <div
                             key={index}
-                            className="flex flex-col items-center p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md transition-transform transform hover:scale-105 duration-300"
+                            className="flex flex-col items-center p-6 bg-white dark:bg-dark-lighterbackground rounded-lg shadow-md transition-transform transform hover:scale-105 duration-300"
                         >
                             <Icon className="text-5xl text-light-primary dark:text-dark-primary mb-3 border-2 border-light-primary dark:border-dark-primary p-3 rounded-full" />
                             <h3 className="text-lg font-Agdasima font-semibold text-light-text dark:text-dark-text">
@@ -155,7 +228,7 @@ const Services = () => {
                     {services.slice(4).map(({ icon: Icon, title }, index) => (
                         <div
                             key={index}
-                            className={`flex flex-col items-center p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md transition-transform transform hover:scale-105 duration-300 ${
+                            className={`flex flex-col items-center p-6 bg-white dark:bg-dark-lighterbackground rounded-lg shadow-md transition-transform transform hover:scale-105 duration-300 ${
                                 index === 2 ? "lg:col-span-1 col-span-3 w-full" : ""
                             }`}
                         >

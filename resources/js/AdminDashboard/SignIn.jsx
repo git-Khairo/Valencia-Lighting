@@ -50,17 +50,17 @@ const SignIn = () => {
   };
 
     return ( 
-        <div className="flex min-h-full flex-1 flex-col justify-center px-6 pb-20 pt-32 lg:px-8">
+        <div className="flex min-h-full flex-1 flex-col justify-center px-6 pb-20 pt-32 lg:px-8 bg-light-background dark:bg-dark-background ">
            {errors && (
                 <p className="my-5 text-red-500 text-center">{errors}</p>
             )}
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
+          {/* <img
             alt="Logo"
             src="https://picsum.photos/200"
             className="mx-auto h-10 w-auto"
-          />
-          <h2 className="mt-5 text-center text-2xl/9 font-bold text-gray-900">
+          /> */}
+          <h2 className="mt-5 text-center text-3xl font-bold text-light-primary dark:text-dark-primary">
             Sign in
           </h2>
         </div>
@@ -68,7 +68,7 @@ const SignIn = () => {
         <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-md">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="username" className="block text-sm/6 font-medium text-gray-900">
+              <label htmlFor="username" className="block text-sm/6 font-medium  text-light-primary dark:text-dark-primary">
                 Username
               </label>
               <div className="mt-2">
@@ -77,14 +77,14 @@ const SignIn = () => {
                   name="username"
                   type="text"
                   onChange={handleChange}
-                  className="block w-full rounded-lg bg-white px-3 py-2 text-lg text-gray-900 focus:outline-indigo-600 border-2 border-indigo-600"
+                  className="block w-full rounded-lg px-3 py-2 text-lg text-light-text dark:text-dark-text bg-light-background dark:bg-dark-background border-2 border-light-primary dark:border-dark-secondary"
                 />
               </div>
             </div>
 
             <div>
               <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm/6 font-medium text-gray-900">
+                <label htmlFor="password" className="block text-sm/6 font-medium text-light-primary dark:text-dark-primary">
                   Password
                 </label>
               </div>
@@ -94,7 +94,7 @@ const SignIn = () => {
                   name="password"
                   type="password"
                   onChange={handleChange}
-                  className="block w-full rounded-lg bg-white px-3 py-2 text-lg text-gray-900 focus:outline-indigo-600 border-2 border-indigo-600"
+                  className="block w-full rounded-lg px-3 py-2 text-lg text-light-text dark:text-dark-text bg-light-background dark:bg-dark-background border-2 border-light-primary dark:border-dark-secondary"
                 />
               </div>
             </div>
@@ -102,7 +102,7 @@ const SignIn = () => {
             <div>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-700"
+                className="flex w-full justify-center rounded-md bg-light-primary dark:bg-dark-primary px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-[#00437ae3] dark:hover:bg-[#96c2e3d4]"
               >
                 Sign in
               </button>
