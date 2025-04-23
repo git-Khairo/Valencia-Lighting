@@ -135,13 +135,13 @@ function App() {
           </button>
         </div>
       ) : data ? (
-        <div className="min-h-screen bg-gray-50 pt-20">
+        <div className="min-h-screen bg-light-background dark:bg-dark-background pt-20">
           {/* Product Section */}
           <section className="container mx-auto px-2 py-8">
             <div className="flex flex-col lg:flex-row gap-8">
               {/* Left Column - Product Image */}
               <div className="lg:w-1/2">
-                <div className="bg-white rounded-lg overflow-hidden shadow-lg flex items-center justify-center p-4">
+                <div className="bg-light-background dark:bg-dark-lighterbackground rounded-lg overflow-hidden shadow-lg flex items-center justify-center p-4">
                   <img
                     src={product.image}
                     alt={product.id}
@@ -152,11 +152,11 @@ function App() {
 
               {/* Right Column - Product Details */}
               <div className="lg:w-1/2 px-4">
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">{product.name}</h1>
-                <p className="text-gray-600 text-lg mb-3">By <span className='text-blue-500'>{product.brand}</span></p>
+                <h1 className="text-3xl font-bold text-light-primary dark:text-dark-primary mb-2">{product.name}</h1>
+                <p className="text-gray-600 text-lg mb-3">By <span className='text-light-accent dark:text-dark-accent font-bold font-Jura'>{product.brand}</span></p>
                 <div className="flex flex-wrap gap-2 mb-4">
                   {product.categories.map((category) => (
-                    <span key={category} className="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full cursor-pointer">{category}</span>
+                    <span key={category} className="dark:bg-dark-primary bg-light-accent text-light-primary dark:text-dark-accent text-xs font-medium px-3 py-1 rounded-full cursor-pointer">{category}</span>
                   ))}
                 </div>
 
@@ -165,13 +165,13 @@ function App() {
                   <div className="border-b border-gray-200">
                     <nav className="flex space-x-8">
                       <button
-                        className={`py-4 px-1 border-b-2 font-medium text-sm cursor-pointer whitespace-nowrap ${activeTab === 'description' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
+                        className={`py-4 px-1 border-b-2 font-medium text-sm cursor-pointer whitespace-nowrap ${activeTab === 'description' ? 'border-light-primary text-light-primary dark:border-dark-primary dark:text-dark-primary ' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
                         onClick={() => setActiveTab('description')}
                       >
                         Description
                       </button>
                       <button
-                        className={`py-4 px-1 border-b-2 font-medium text-sm cursor-pointer whitespace-nowrap ${activeTab === 'specifications' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
+                        className={`py-4 px-1 border-b-2 font-medium text-sm cursor-pointer whitespace-nowrap ${activeTab === 'specifications' ? 'border-light-primary text-light-primary dark:border-dark-primary dark:text-dark-primary ' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
                         onClick={() => setActiveTab('specifications')}
                       >
                         Specifications
@@ -181,35 +181,35 @@ function App() {
                   <div className="py-4">
                     {activeTab === 'description' && (
                       <div>
-                        <p className="text-gray-700 mb-4">
+                        <p className="text-gray-700 dark:text-dark-text mb-4">
                           {product.description}
                         </p>
                       </div>
                     )}
                     {activeTab === 'specifications' && (
                       <div className="overflow-x-visible">
-                        <table className="min-w-full divide-y divide-gray-200">
-                          <thead className="bg-gray-50">
+                        <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-500">
+                          <thead className="bg-gray-50 dark:bg-black">
                             <tr>
                               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Specification</th>
                               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Details</th>
                             </tr>
                           </thead>
-                          <tbody className="bg-white divide-y divide-gray-200">
+                          <tbody className="bg-white divide-y divide-gray-200 dark:divide-dark-background dark:bg-dark-lighterbackground">
                             <tr>
-                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm font-medium text-gray-900">Dimensions</td>
+                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm font-medium text-gray-900 dark:text-dark-text">Dimensions</td>
                               <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm text-gray-500">3.5 × 2.2 × 0.8 inches</td>
                             </tr>
                             <tr>
-                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm font-medium text-gray-900">Weight</td>
+                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm font-medium text-gray-900 dark:text-dark-text">Weight</td>
                               <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm text-gray-500">75g</td>
                             </tr>
                             <tr>
-                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm font-medium text-gray-900">Battery Life</td>
+                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm font-medium text-gray-900 dark:text-dark-text">Battery Life</td>
                               <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm text-gray-500">Up to 24 months</td>
                             </tr>
                             <tr>
-                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm font-medium text-gray-900">Water Resistance</td>
+                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm font-medium text-gray-900 dark:text-dark-text">Water Resistance</td>
                               <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm text-gray-500">IP67 rated</td>
                             </tr>
                           </tbody>
@@ -224,16 +224,16 @@ function App() {
                   <div className="flex items-center mb-6">
                     <div className="flex items-center justify-center">
                       <button 
-                        className="bg-blue-600 hover:bg-blue-700 text-white py-1 px-1.5 sm:py-2 sm:px-6 rounded-md flex items-center justify-center cursor-pointer !rounded-button whitespace-nowrap mr-2"
+                        className="bg-light-primary dark:bg-dark-primary hover:bg-[#00437ae3] dark:hover:bg-[#96c2e3d4] text-white py-1 px-1.5 sm:py-2 sm:px-6 rounded-md flex items-center justify-center cursor-pointer !rounded-button whitespace-nowrap mr-2"
                         onClick={() => handleAddToCart()}
                       >
                         <FaReceipt className="mr-2" />
                         Add to Pricing List
                       </button>
-                      <div className="flex border border-gray-300 rounded-md">
+                      <div className="flex border border-gray-300 dark:border-gray-500 rounded-lg">
                         <button
                           onClick={decrementQuantity}
-                          className="px-2 py-1.5 sm:py-2 bg-gray-100 text-gray-600 hover:bg-gray-200 cursor-pointer !rounded-button whitespace-nowrap"
+                          className="px-2 py-1.5 sm:py-2 bg-gray-100 dark:bg-dark-lighterbackground text-gray-600 hover:bg-gray-200 cursor-pointer rounded-lg whitespace-nowrap"
                         >
                           <FaMinus />
                         </button>
@@ -242,11 +242,11 @@ function App() {
                           id="quantity"
                           value={quantity}
                           onChange={handleQuantityChange}
-                          className="w-10 text-center border-none focus:ring-0 text-gray-700"
+                          className="w-10 text-center border-none focus:ring-0 dark:bg-black text-gray-700 dark:text-dark-text"
                         />
                         <button
                           onClick={incrementQuantity}
-                          className="px-2 py-1.5 sm:py-2 bg-gray-100 text-gray-600 hover:bg-gray-200 cursor-pointer !rounded-button whitespace-nowrap"
+                          className="px-2 py-1.5 sm:py-2 bg-gray-100 dark:bg-dark-lighterbackground text-gray-600 hover:bg-gray-200 cursor-pointer rounded-lg whitespace-nowrap"
                         >
                           <FaPlus />
                         </button>
@@ -254,7 +254,7 @@ function App() {
                     </div>
                   </div>
                   <div className="flex justify-center items-center mt-10">
-                    <button className="border border-gray-300 hover:bg-gray-50 text-gray-700 py-2 px-6 rounded-md flex items-center justify-center cursor-pointer !rounded-button whitespace-nowrap" onClick={() => downloadDatasheet(product.id)}>
+                    <button className="border border-gray-300 dark:border-none bg-light-primary dark:bg-dark-primary hover:bg-[#00437ae3] dark:hover:bg-[#96c2e3d4] text-white py-2 px-6 rounded-md flex items-center justify-center cursor-pointer !rounded-button whitespace-nowrap" onClick={() => downloadDatasheet(product.id)}>
                       <FaFileDownload className="mr-2" />
                       Download Datasheet
                     </button>
@@ -266,7 +266,7 @@ function App() {
 
           {/* People Also Like Section */}
           <section className="container mx-auto px-4 py-12">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">People Also Like</h2>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-dark-text mb-6">People Also Like</h2>
             <div className="w-full">
               <Slider {...RelatedProductsSlider}>
                 {relatedProducts.map((product) => (

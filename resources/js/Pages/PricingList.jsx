@@ -218,16 +218,16 @@ const PricingList = () => {
   };
 
   return (
-    <div className="min-h-screen bg-light-background dark:bg-gray-900 py-20 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-light-background dark:bg-dark-background py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
       <h1 className="my-4 font-black font-Agdasima text-3xl md:text-4xl lg:text-5xl 3xl:text-7xl text-left leading-snug text-light-primary dark:text-dark-primary ">
                     Your Cart
                 </h1>
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Cart Section */}
-          <div className="w-full lg:w-2/3 bg-light-background dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden">
-            <div className="p-4 sm:p-6 border-b border-gray-200">
-            <h2 className="my-4 font-black font-Agdasima text-lg md:text-xl lg:text-3xl 3xl:text-5xl text-left leading-snug text-light-primary dark:text-dark-accent ">
+          <div className="w-full lg:w-2/3 bg-light-background dark:bg-dark-lighterbackground rounded-lg shadow-sm overflow-hidden">
+            <div className="p-4 sm:p-6 border-b border-gray-200 dark:border-dark-background">
+            <h2 className="my-4 font-black font-Agdasima text-lg md:text-xl lg:text-3xl 3xl:text-5xl text-left leading-snug text-light-primary dark:text-dark-primary ">
                     Products
                 </h2>
             </div>
@@ -275,147 +275,147 @@ const PricingList = () => {
           </div>
 
           {/* Info Form */}
-          <div className="w-full lg:w-1/3 bg-light-background dark:bg-gray-800 rounded-lg shadow-sm">
-            <div className="p-4 sm:p-6 border-b border-gray-200">
-            <h2 className="my-4 font-black font-Agdasima text-lg md:text-xl lg:text-3xl 3xl:text-5xl text-left leading-snug text-light-primary dark:text-dark-accent ">
-                    Information
-                </h2>
-            </div>
-            <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-6">
-              <div className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="firstName" className="block text-sm font-medium text-light-primary dark:text-dark-primary">First Name</label>
-                    <input
-                      type="text"
-                      name="firstName"
-                      value={formData.firstName}
-                      onChange={handleInputChange}
-                      className={`mt-1 block w-full border rounded-md px-3 py-2 ${formErrors.firstName ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-light-primary focus:border-dark-accent`}
-                      placeholder="John"
-                    />
-                    {formErrors.firstName && <p className="text-red-500 text-xs mt-1">{formErrors.firstName}</p>}
-                  </div>
-                  <div>
-                    <label htmlFor="lastName" className="block text-sm font-medium text-light-primary dark:text-dark-primary">Last Name</label>
-                    <input
-                      type="text"
-                      name="lastName"
-                      value={formData.lastName}
-                      onChange={handleInputChange}
-                      className={`mt-1 block w-full border rounded-md px-3 py-2 ${formErrors.lastName ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-light-primary focus:border-dark-accent`}
-                      placeholder="Doe"
-                    />
-                    {formErrors.lastName && <p className="text-red-500 text-xs mt-1">{formErrors.lastName}</p>}
-                  </div>
-                </div>
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-light-primary dark:text-dark-primary">Phone Number</label>
-                  <div className="mt-1 flex gap-2">
-                    <div className="relative w-1/3">
-                      <select
-                        id="countryPrefix"
-                        name="countryPrefix"
-                        value={countryPrefix}
-                        onChange={handlePrefixChange}
-                        className="block w-full border rounded-md px-3 py-2 pl-10 appearance-none bg-white border-gray-300 focus:outline-none focus:ring-light-primary focus:border-dark-accent"
-                      >
-                        {countryPrefixes.map(c => (
-                          <option key={c.code} value={c.prefix}>{c.prefix} ({c.name})</option>
-                        ))}
-                      </select>
-                      <span className="absolute inset-y-0 left-0 flex items-center pl-2">
-                        <ReactCountryFlag
-                          countryCode={countryPrefixes.find(c => c.prefix === countryPrefix)?.code}
-                          svg
-                          className="w-5 h-5"
-                        />
-                      </span>
-                    </div>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      className={`block w-2/3 border rounded-md px-3 py-2 ${formErrors.phone ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-light-primary focus:border-dark-accent`}
-                      placeholder="123-456-7890"
-                    />
-                  </div>
-                  {formErrors.phone && <p className="text-red-500 text-xs mt-1">{formErrors.phone}</p>}
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-light-primary dark:text-dark-primary">Email Address</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className={`mt-1 block w-full border rounded-md px-3 py-2 ${formErrors.email ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-light-primary focus:border-dark-accent`}
-                    placeholder="john.doe@example.com"
-                  />
-                  {formErrors.email && <p className="text-red-500 text-xs mt-1">{formErrors.email}</p>}
-                </div>
-              </div>
-              <div className="pt-4 border-t border-gray-200 space-y-4">
-                <h3 className="text-lg font-medium  text-light-primary dark:text-dark-primary">Location</h3>
-                <div>
-                  <label htmlFor="city" className="block text-sm font-medium  text-light-primary dark:text-dark-primary">City</label>
-                  <input
-                    type="text"
-                    id="city"
-                    name="city"
-                    value={formData.city}
-                    onChange={handleInputChange}
-                    className={`mt-1 block w-full border rounded-md px-3 py-2 ${formErrors.city ? 'border-red-500' : 'border-gray-300'} focus:outline-none ocus:outline-none focus:ring-light-primary focus:border-dark-accent`}
-                    placeholder="New York"
-                  />
-                  {formErrors.city && <p className="text-red-500 text-xs mt-1">{formErrors.city}</p>}
-                </div>
-                <div className="relative">
-                  <label htmlFor="country" className="block text-sm font-medium  text-light-primary dark:text-dark-primary">Country</label>
-                  <select
-                    id="country"
-                    name="country"
-                    value={formData.country}
-                    onChange={handleInputChange}
-                    className={`mt-1 block w-full border rounded-md px-3 py-2 pl-10 ${formErrors.country ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-light-primary focus:border-dark-accent`}
-                  >
-                    <option value="">Select Country</option>
-                    {countries.map(c => (
-                      <option key={c} value={c}>{c}</option>
-                    ))}
-                  </select>
-                  {formData.country && (
-                    <span className="absolute inset-y-0 left-0 flex items-center pl-3 pt-6">
-                      <ReactCountryFlag
-                        countryCode={countryPrefixes.find(c => c.name === formData.country)?.code}
-                        svg
-                        className="w-5 h-5"
-                      />
-                    </span>
-                  )}
-                  {formErrors.country && <p className="text-red-500 text-xs mt-1">{formErrors.country}</p>}
-                </div>
-              </div>
-              <button
-                type="submit"
-                disabled={resLoading}
-                className={`w-full py-2 px-4 rounded text-white ${resLoading ? 'bg-indigo-400 cursor-not-allowed' : 'bg-light-primary dark:bg-dark-accent hover:bg-slate-800 dark:hover:bg-[#00437a8d]'}`}
-              >
-                {resLoading ? (
-                  <svg className="animate-spin h-5 w-5 mx-auto text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                ) : (
-                  'Submit'
-                )}
-              </button>
-            </form>
-          </div>
+          <div className="w-full lg:w-1/3 bg-light-background dark:bg-dark-lighterbackground rounded-lg shadow-sm">
+  <div className="p-4 sm:p-6 border-b border-gray-200 dark:border-dark-background">
+    <h2 className="my-4 font-black font-Agdasima text-lg md:text-xl lg:text-3xl 3xl:text-5xl text-left leading-snug text-light-primary dark:text-dark-primary ">
+      Information
+    </h2>
+  </div>
+  <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-6">
+    <div className="space-y-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label htmlFor="firstName" className="block text-sm font-medium text-light-primary dark:text-dark-primary">First Name</label>
+          <input
+            type="text"
+            name="firstName"
+            value={formData.lastName}
+            onChange={handleInputChange}
+            className={`mt-1 block w-full border rounded-md px-3 py-2 text-light-text dark:text-dark-text bg-light-background dark:bg-dark-background ${formErrors.firstName ? 'border-red-500' : 'border-gray-300 dark:border-transparent focus:dark:border-dark-secondary'} focus:outline-none focus:ring-light-primary focus:border-dark-accent`}
+            placeholder="John"
+          />
+          {formErrors.firstName && <p className="text-red-500 text-xs mt-1">{formErrors.firstName}</p>}
         </div>
+        <div>
+          <label htmlFor="lastName" className="block text-sm font-medium text-light-primary dark:text-dark-primary">Last Name</label>
+          <input
+            type="text"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleInputChange}
+            className={`mt-1 block w-full border rounded-md px-3 py-2 text-light-text dark:text-dark-text bg-light-background dark:bg-dark-background ${formErrors.lastName ? 'border-red-500' : 'border-gray-300 dark:border-transparent focus:dark:border-dark-secondary'} focus:outline-none focus:ring-light-primary focus:border-dark-accent`}
+            placeholder="Doe"
+          />
+          {formErrors.lastName && <p className="text-red-500 text-xs mt-1">{formErrors.lastName}</p>}
+        </div>
+      </div>
+      <div>
+        <label htmlFor="phone" className="block text-sm font-medium text-light-primary dark:text-dark-primary">Phone Number</label>
+        <div className="mt-1 flex gap-2">
+          <div className="relative w-1/3">
+            <select
+              id="countryPrefix"
+              name="countryPrefix"
+              value={countryPrefix}
+              onChange={handlePrefixChange}
+              className="block w-full border rounded-md px-3 py-2 pl-10 appearance-none text-light-text dark:text-dark-text bg-light-background dark:bg-dark-background border-gray-300 dark:border-transparent focus:dark:border-dark-secondary focus:outline-none focus:ring-light-primary focus:border-dark-accent"
+            >
+              {countryPrefixes.map(c => (
+                <option key={c.code} value={c.prefix}>{c.prefix} ({c.name})</option>
+              ))}
+            </select>
+            <span className="absolute inset-y-0 left-0 flex items-center pl-2">
+              <ReactCountryFlag
+                countryCode={countryPrefixes.find(c => c.prefix === countryPrefix)?.code}
+                svg
+                className="w-5 h-5"
+              />
+            </span>
+          </div>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            value={formData.phone}
+            onChange={handleInputChange}
+            className={`block w-2/3 border rounded-md px-3 py-2 text-light-text dark:text-dark-text bg-light-background dark:bg-dark-background ${formErrors.phone ? 'border-red-500' : 'border-gray-300 dark:border-transparent focus:dark:border-dark-secondary'} focus:outline-none focus:ring-light-primary focus:border-dark-accent`}
+            placeholder="123-456-7890"
+          />
+        </div>
+        {formErrors.phone && <p className="text-red-500 text-xs mt-1">{formErrors.phone}</p>}
+      </div>
+      <div>
+        <label htmlFor="email" className="block text-sm font-medium text-light-primary dark:text-dark-primary">Email Address</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          value={formData.email}
+          onChange={handleInputChange}
+          className={`mt-1 block w-full border rounded-md px-3 py-2 text-light-text dark:text-dark-text bg-light-background dark:bg-dark-background ${formErrors.email? 'border-red-500' : 'border-gray-300 dark:border-transparent focus:dark:border-dark-secondary'} focus:outline-none focus:ring-light-primary focus:border-dark-accent`}
+          placeholder="john.doe@example.com"
+        />
+        {formErrors.email && <p className="text-red-500 text-xs mt-1">{formErrors.email}</p>}
+      </div>
+    </div>
+    <div className="pt-4 border-t border-gray-200 dark:border-dark-background space-y-4">
+      <h3 className="text-lg font-medium  text-light-primary dark:text-dark-primary">Location</h3>
+      <div>
+        <label htmlFor="city" className="block text-sm font-medium  text-light-primary dark:text-dark-primary">City</label>
+        <input
+          type="text"
+          id="city"
+          name="city"
+          value={formData.city}
+          onChange={handleInputChange}
+          className={`mt-1 block w-full border rounded-md px-3 py-2 text-light-text dark:text-dark-text bg-light-background dark:bg-dark-background ${formErrors.city ? 'border-red-500' : 'border-gray-300 dark:border-transparent focus:dark:border-dark-secondary'} focus:outline-none focus:ring-light-primary focus:border-dark-accen`}
+          placeholder="New York"
+        />
+        {formErrors.city && <p className="text-red-500 text-xs mt-1">{formErrors.city}</p>}
+      </div>
+      <div className="relative">
+        <label htmlFor="country" className="block text-sm font-medium  text-light-primary dark:text-dark-primary">Country</label>
+        <select
+          id="country"
+          name="country"
+          value={formData.country}
+          onChange={handleInputChange}
+          className={`mt-1 block w-full border rounded-md px-3 py-2 pl-10  text-light-text dark:text-dark-text bg-light-background dark:bg-dark-background ${formErrors.country? 'border-red-500' : 'border-gray-300 dark:border-transparent focus:dark:border-dark-secondary'} focus:outline-none focus:ring-light-primary focus:border-dark-accen`}
+        >
+          <option value="">Select Country</option>
+          {countries.map(c => (
+            <option key={c} value={c}>{c}</option>
+          ))}
+        </select>
+        {formData.country && (
+          <span className="absolute inset-y-0 left-0 flex items-center pl-3 pt-6">
+            <ReactCountryFlag
+              countryCode={countryPrefixes.find(c => c.name === formData.country)?.code}
+              svg
+              className="w-5 h-5"
+            />
+          </span>
+        )}
+        {formErrors.country && <p className="text-red-500 text-xs mt-1">{formErrors.country}</p>}
+      </div>
+    </div>
+    <button
+      type="submit"
+      disabled={resLoading}
+      className={`w-full py-2 px-4 rounded text-white ${resLoading ? 'bg-indigo-400 cursor-not-allowed' : 'bg-light-primary dark:bg-dark-accent hover:bg-[#00437ae1] dark:hover:bg-[#00437a8d]'}`}
+    >
+      {resLoading ? (
+        <svg className="animate-spin h-5 w-5 mx-auto text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+      ) : (
+        'Submit'
+      )}
+    </button>
+  </form>
+</div>
+</div>
 
         {/* Related Products Section */}
         {RelatedLoading ? (
@@ -424,7 +424,7 @@ const PricingList = () => {
           <div className="text-red-500">{RelatedError.message}</div>
         ) : RelatedProducts ? (
           <div className="my-10 bg-light-background dark:bg-dark-background rounded-lg shadow-sm p-6">
-            <h2 className="my-4 font-black font-Agdasima text-lg md:text-xl lg:text-3xl 3xl:text-5xl text-left leading-snug text-light-primary dark:text-dark-accent ">
+            <h2 className="my-4 font-black font-Agdasima text-lg md:text-xl lg:text-3xl 3xl:text-5xl text-left leading-snug text-light-primary dark:text-dark-primary ">
                     More Products
                 </h2>
             <Slider {...RelatedProductsSlider}>
