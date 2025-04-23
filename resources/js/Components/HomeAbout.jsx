@@ -30,7 +30,7 @@ function AboutPreview() {
         viewport={{ once: true }}
         className="absolute inset-0 flex flex-col items-center justify-center text-center px-8"
       >
-        <h2 className="text-light-background2 dark:text-dark-background2 font-EncodeSansCondensed text-4xl md:text-5xl leading-snug">
+        <h2 className="text-light-background2 dark:text-dark-background2 font-Montserrat text-4xl md:text-5xl leading-snug">
           Who We Are
         </h2>
         <p className="text-light-background2 dark:text-dark-background2 font-Jura text-lg md:text-xl max-w-3xl mt-4">

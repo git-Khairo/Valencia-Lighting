@@ -71,8 +71,8 @@ const Products = () => {
   };
 
   const sortFunctions = {
-    "A to Z": handleSortAtoZ,
-    "Z to A": handleSortZtoA,
+    "A → Z": handleSortAtoZ,
+    "Z → A": handleSortZtoA,
     "Latest": handleSortLatest,
   };
 
@@ -189,7 +189,7 @@ const Products = () => {
         {/* Products Section */}
         <div className={`${showFilters ? "w-4/5" : "w-full"} w-full`}>
         <div className="flex justify-between items-center mb-8">
-              <h2 className="sm:text-2xl text-lg font-SulphurPoint hidden md:block">All Products</h2>
+              <h2 className="sm:text-4xl text-lg font-Montserrat hidden md:block">Products</h2>
               <div className="flex items-center gap-3">
                 <div className="hidden md:block">
                 <button
@@ -223,7 +223,7 @@ const Products = () => {
                       {['Latest', 'A → Z', 'Z → A'].map(option => (
                         <div
                           key={option}
-                          className="px-4 py-2 hover:bg-light-secondary hover:dark:bg-dark-secondary hover:text-light-text hover:dark:text-dark-text cursor-pointer"
+                          className="px-4 py-2 hover:bg-light-secondary hover:dark:bg-dark-secondary hover:text-light-text hover:dark:text-dark-text cursor-pointer font-Jura"
                           onClick={() => {
                             setSortOption(option);
                             setShowSortDropdown(false);

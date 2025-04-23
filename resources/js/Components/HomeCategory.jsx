@@ -13,7 +13,7 @@ const HomeCategory = ({ category }) => {
             <div className="mx-auto w-11/12 flex flex-col">
                 {/* Title */}
                 <div className="mb-4">
-                    <h2 className="text-2xl font-EncodeSansCondensed text-light-text lg:text-6xl dark:text-dark-text">Categories</h2>
+                    <h2 className="text-2xl font-Montserrat text-light-text lg:text-6xl dark:text-dark-text">Categories</h2>
                 </div>
 
                 <div className="grid gap-4 mt-4 flex-grow grid-cols-1 md:grid-cols-4 md:grid-rows-2">

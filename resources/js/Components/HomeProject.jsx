@@ -13,7 +13,7 @@ const HomeProject = ({projects}) => {
       <div className="w-11/12 mx-auto px-3 sm:px-4 lg:px-6">
       <div className="mb-4 flex items-center justify-between gap-8 sm:mb-8 md:mb-12">
             <div className="flex items-center gap-12">
-                <h2 className="text-center text-2xl font-EncodeSansCondensed text-light-text dark:text-dark-text lg:text-6xl">Projects</h2>
+                <h2 className="text-center text-2xl font-Montserrat text-light-text dark:text-dark-text lg:text-6xl">Projects</h2>
             </div>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
