@@ -18,7 +18,7 @@ const Row3 = (data) => {
                 className="w-full h-80 sm:h-96 md:h-[425px] lg:h-[500px] object-cover transition-transform duration-700 group-hover:scale-110"
             />
             <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4">
-                    <h3 className="text-lg sm:text-3xl font-semibold text-white cursor-pointer">
+                    <h3 className="text-lg sm:text-3xl font-Montserrat text-white cursor-pointer">
                     {project.title}
                     </h3>
             </div>
@@ -45,7 +45,7 @@ const Row2 = (data) => {
                         className="w-full h-80 sm:h-96 md:h-[425px] object-cover transition-transform duration-700 group-hover:scale-110"
                         />
                         <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4">
-                            <h3 className="text-lg sm:text-3xl font-semibold text-white cursor-pointer">
+                            <h3 className="text-lg sm:text-3xl font-Montserrat text-white cursor-pointer">
                                 {project.title}
                             </h3>
                         </div>
@@ -72,7 +72,7 @@ const Row1 = (data) => {
                     className="w-full h-80 sm:h-96 md:h-[400px] object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4">
-                        <h3 className="text-lg sm:text-3xl font-semibold text-white cursor-pointer">
+                        <h3 className="text-lg sm:text-3xl font-Montserrat text-white cursor-pointer">
                         {project.title}
                         </h3>
                 </div>
@@ -99,7 +99,7 @@ const Row3Style = ({projects, pointer}) => {
                     className="w-full h-80 sm:h-96 md:h-[400px] object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4">
-                        <h3 className="text-lg sm:text-3xl font-semibold text-white cursor-pointer">
+                        <h3 className="text-lg sm:text-3xl font-Montserrat text-white cursor-pointer">
                         {project.title}
                         </h3>
                 </div>
@@ -171,7 +171,7 @@ const Projects = () => {
     };
   
     return (
-      <>
+      <div className='bg-light-background dark:bg-dark-background'>
         {loading ? (
           <Loading />
         ) : error ? (
@@ -207,7 +207,7 @@ const Projects = () => {
         ) : (
           <div className="text-center text-gray-500 pt-20">No Projects available</div>
         )}
-      </>
+      </div>
     );
   };
 

@@ -5,10 +5,10 @@ const HomeProject = ({projects}) => {
     return ( 
         <>
            <motion.section
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-        viewport={{ once: true }}
+       initial={{ opacity: 0, scale: 1.2 }}
+       whileInView={{ opacity: 1, scale: 1 }}
+       transition={{ duration: 0.8 }}
+       viewport={{ once: true }}
        className="py-12 sm:py-16 bg-light-background dark:bg-dark-background">
       <div className="w-11/12 mx-auto px-3 sm:px-4 lg:px-6">
       <div className="mb-4 flex items-center justify-between gap-8 sm:mb-8 md:mb-12">
@@ -37,7 +37,7 @@ const HomeProject = ({projects}) => {
                 }`}
               >
                 <img
-                  src={project.image}
+                  src={project.images}
                   alt={project.title}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />

@@ -66,7 +66,7 @@ const ProjectDetails = () => {
         </button>
       </div>
     ) : data && data.project ? (
-   <div className='scroll-smooth pt-20'>
+   <div className='scroll-smooth pt-20 bg-light-background dark:bg-dark-background'>
    <motion.section 
         initial={{ opacity: 0, y: 50 }} 
         whileInView={{ opacity: 1, y:0 }} 
@@ -74,10 +74,10 @@ const ProjectDetails = () => {
         viewport={{ once: true }} 
     >
     <div className='mx-2 my-5 sm:mx-10'>
-      <h1 className="text-3xl font-bold font-serif md:text-5xl">{data.project.title}</h1>
+      <h1 className="text-3xl text-light-text dark:text-dark-text font-Montserrat md:text-5xl">{data.project.title}</h1>
       <div className="flex justify-between items-center py-5">
-        <div className="text-gray-600 text-sm sm:text-lg">{data.project.description}</div>
-        <div className="text-gray-600 text-sm sm:text-lg">Project Address</div>
+        <div className="text-light-text dark:text-dark-text font-SulphurPoint text-base sm:text-xl">{data.project.description}</div>
+        <div className="text-light-text dark:text-dark-text font-SulphurPoint text-base sm:text-xl">Project Address</div>
       </div>
     </div>
     <Slider {...ImageSliderSettings} className="w-screen max-h-fits">
@@ -101,8 +101,8 @@ const ProjectDetails = () => {
             className="mx-auto my-10 sm:my-20 sm:p-6 grid grid-cols-1 md:grid-cols-2 space-x-10"
         >
             <div className="flex flex-col justify-center mx-10">
-                <h2 className="text-xl sm:text-3xl font-bold text-gray-800 mb-4">Project Description</h2>
-                <p className="text-gray-600 text-base md:text-lg">
+                <h2 className="text-xl sm:text-3xl font-Montserrat text-light-primary dark:text-dark-primary mb-4">Project Description</h2>
+                <p className="text-light-text dark:text-dark-text font-Jura text-base md:text-lg">
                 This project is an architectural masterpiece that integrates modern design principles with 
                 sustainability. The use of high-quality materials ensures durability and aesthetic appeal.
                 Located in the heart of New York, this project serves as a benchmark for future developments.
@@ -115,7 +115,7 @@ const ProjectDetails = () => {
                   }`}
                 >
                 <div className="overflow-hidden">
-                    <p className="text-gray-600 text-base md:text-lg">
+                    <p className="text-light-text dark:text-dark-text font-Jura text-base md:text-lg">
                     This project is an architectural masterpiece that integrates modern design principles with 
                 sustainability. The use of high-quality materials ensures durability and aesthetic appeal.
                 Located in the heart of New York, this project serves as a benchmark for future developments.
@@ -136,28 +136,24 @@ const ProjectDetails = () => {
             </div>
 
             <div className="mt-5">
-                <h2 className="text-2xl font-semibold mb-4">Project Details</h2>
+                <h2 className="text-2xl font-Montserrat mb-4 text-light-primary dark:text-dark-primary text">Project Details</h2>
                 <table className="w-11/12 sm:w-full">
                     <tbody>
                         <tr className="border-b">
-                            <td className="px-2 py-5 font-medium text-blue-950">Date:</td>
-                            <td className="px-2 py-5">{data.project.date}</td>
+                            <td className="px-2 py-5 font-Montserrat text-light-text dark:text-dark-text">Date:</td>
+                            <td className="px-2 py-5 font-SulphurPoint text-light-text dark:text-dark-text">{data.project.dateOfProject}</td>
                         </tr>
                         <tr className="border-b">
-                            <td className="px-2 py-5 font-medium text-blue-950">Location:</td>
-                            <td className="px-2 py-5">New York, USA</td>
+                            <td className="px-2 py-5 font-Montserrat text-light-text dark:text-dark-text">Location:</td>
+                            <td className="px-2 py-5 font-SulphurPoint text-light-text dark:text-dark-text">New York, USA</td>
                         </tr>
                         <tr className="border-b">
-                            <td className="px-2 py-5 font-medium text-blue-950">Products Used:</td>
-                            <td className="px-2 py-5">Concrete, Steel, Glass</td>
+                            <td className="px-2 py-5 font-Montserrat text-light-text dark:text-dark-text">Products Used:</td>
+                            <td className="px-2 py-5 font-SulphurPoint text-light-text dark:text-dark-text">Concrete, Steel, Glass</td>
                         </tr>
                         <tr className="border-b">
-                            <td className="px-2 py-5 font-medium text-blue-950">Architect:</td>
-                            <td className="px-2 py-5">John Doe</td>
-                        </tr>
-                        <tr>
-                            <td className="px-2 py-5 font-medium text-blue-950">Designer:</td>
-                            <td className="px-2 py-5">Mike McWay</td>
+                            <td className="px-2 py-5 font-Montserrat text-light-text dark:text-dark-text">Partners:</td>
+                            <td className="px-2 py-5 font-SulphurPoint text-light-text dark:text-dark-text">John Doe</td>
                         </tr>
                     </tbody>
                 </table>
@@ -168,11 +164,19 @@ initial={{ opacity: 0, y: 50 }}
 whileInView={{ opacity: 1, y:0 }}
 transition={{ duration: 1 }} 
 viewport={{ once: true }}
-className="flex flex-col md:flex-row items-center justify-between mx-auto bg-slate-50">
+className="flex flex-col md:flex-row items-center justify-between mx-auto bg-light-background dark:bg-dark-background">
       {/* Left Content */}
       <div className="md:w-1/2 text-center md:text-left px-10 pt-5 sm:pt-0">
-        <h2 className="text-2xl lg:text-4xl font-bold text-gray-900">Your Title Here</h2>
-        <p className="mt-2 text-gray-600 text-sm sm:text-base">
+        <h2 className="text-2xl lg:text-4xl text-light-primary dark:text-dark-primary font-Montserrat border-b pb-3 border-light-primary dark:border-dark-primary">Your Title Here</h2>
+        <p className="mt-2 text-light-text dark:text-dark-text sm:text-lg font-Jura">
+          This is a description of the section. It provides some brief
+          information about the content displayed in this section.
+          This is a description of the section. It provides some brief
+          information about the content displayed in this section.
+          This is a description of the section. It provides some brief
+          information about the content displayed in this section.
+          This is a description of the section. It provides some brief
+          information about the content displayed in this section.
           This is a description of the section. It provides some brief
           information about the content displayed in this section.
           This is a description of the section. It provides some brief
@@ -196,7 +200,7 @@ className="flex flex-col md:flex-row items-center justify-between mx-auto bg-sla
     viewport={{ once: true }} 
     className='flex flex-col justify-center items-center w-full px-10 pt-14 text-center md:pb-5'>
     
-    <p className='font-medium text-base sm:text-lg md:text-xl mb-6'>
+    <p className='font-SulphurPoint text-light-text dark:text-dark-text text-base sm:text-lg md:text-xl mb-6'>
         This is a description of the section. It provides some brief
         information about the content displayed in this section.
         This is a description of the section. It provides some brief
@@ -222,8 +226,12 @@ className="flex flex-col md:flex-row items-center justify-between mx-auto bg-sla
       </div>
       {/* Left Content */}
       <div className="md:w-1/2 text-center md:text-left px-10">
-        <h2 className="text-2xl sm:text-3xl md:text:3xl text-center font-bold text-gray-900 font-serif">Your Title Here</h2>
-        <p className="mt-4 mb-10 text-gray-600 text-sm sm:text-base md:text:lg">
+        <h2 className="text-2xl sm:text-3xl md:text:3xl text-center text-light-primary dark:text-dark-primary font-Montserrat border-b pb-3 border-light-primary dark:border-dark-primary">Your Title Here</h2>
+        <p className="mt-4 mb-10 text-light-text dark:text-dark-text font-Jura text-sm sm:text-base md:text-xl">
+          This is a description of the section. It provides some brief
+          information about the content displayed in this section.
+          This is a description of the section. It provides some brief
+          information about the content displayed in this section.
           This is a description of the section. It provides some brief
           information about the content displayed in this section.
           This is a description of the section. It provides some brief
@@ -239,8 +247,8 @@ className="flex flex-col md:flex-row items-center justify-between mx-auto bg-sla
     className="mx-auto px-10 py-20 flex flex-col md:flex-row items-center gap-6">
       {/* Left Static Description */}
       <div className="md:w-1/3 text-center md:text-left">
-        <h2 className="text-4xl font-bold text-gray-900 font-serif md:text-3xl">Project Products</h2>
-        <p className="mt-4 text-gray-600 text-xs sm:text-xl md:lg">
+        <h2 className="text-3xl text-light-primary dark:text-dark-primary font-Montserrat md:text-4xl">Project Products</h2>
+        <p className="mt-4 text-light-text dark:text-dark-text font-Jura text-xs sm:text-lg md:xl">
           These are the products used in the project. Scroll through to see them all.
         </p>
       </div>

@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 const HomeCategory = ({ category }) => {
     return (    
         <motion.section
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-            viewport={{ once: true }}
+        initial={{ opacity: 0, scale: 1.2 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
             className="bg-light-background2 dark:bg-dark-background2 py-6 px-4"
         >
             <div className="mx-auto w-11/12 flex flex-col">

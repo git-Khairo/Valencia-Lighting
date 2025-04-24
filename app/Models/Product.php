@@ -26,6 +26,11 @@ class Product extends Model
         'dateOfRelease',
         'datasheet',
         'code',
+        'material',
+        'productNumber',
+        'length',
+        'color',
+        'accessories'
     ];
 
     public function categories()

@@ -18,7 +18,12 @@ class ProductFactory extends Factory
             'brand' => $this->faker->randomElement(['sila', 'radial']),
             'description' => $this->faker->paragraph(),
             'dateOfRelease' => $this->faker->date(),
-            'code' => $this->faker->unique()->ean13(), // Generates a unique 13-digit product code
+            'code' => $this->faker->unique()->ean13(),
+            'material' => $this->faker->word(),
+            'productNumber' => $this->faker->word(),
+            'length' => $this->faker->word(),
+            'color' => $this->faker->word(),
+            'accessories' => $this->faker->word(),
         ];
     }
 }

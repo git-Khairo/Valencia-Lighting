@@ -24,9 +24,9 @@ const HomeProduct = ({ products }) => {
     return ( 
         <>
     <motion.section 
-    initial={{ opacity: 0, y: 50 }} 
-    whileInView={{ opacity: 1, y:0 }}
-    transition={{ duration: 1 }} 
+    initial={{ opacity: 0, scale: 1.2 }}
+    whileInView={{ opacity: 1, scale: 1 }}
+    transition={{ duration: 0.8 }}
     viewport={{ once: true }}
     className="mx-auto px-10 py-20 flex flex-col md:flex-row items-center gap-6 bg-light-background dark:bg-dark-background dark:text-dark-text">
       {/* Left Static Description */}

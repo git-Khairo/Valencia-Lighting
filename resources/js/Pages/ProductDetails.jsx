@@ -141,7 +141,7 @@ function App() {
         </div>
       ) : data ? (
         <div className="min-h-screen bg-light-background dark:bg-dark-background pt-20">
-          <FaArrowLeft size={25} className='mx-5' onClick={handleBack}/>
+          <FaArrowLeft size={25} className='mx-5 cursor-pointer text-light-text dark:text-dark-text' onClick={handleBack}/>
           {/* Product Section */}
           <section className="container mx-auto px-2 pb-8 pt-4">
             <div className="flex flex-col lg:flex-row gap-8">
@@ -158,11 +158,11 @@ function App() {
 
               {/* Right Column - Product Details */}
               <div className="lg:w-1/2 px-4">
-                <h1 className="text-3xl font-bold text-light-primary dark:text-dark-primary mb-2">{product.name}</h1>
-                <p className="text-gray-600 text-lg mb-3">By <span className='text-light-accent dark:text-dark-accent font-bold font-Jura'>{product.brand}</span></p>
+                <h1 className="text-3xl font-Montserrat text-light-text dark:text-dark-text mb-2">{product.name}</h1>
+                <p className="text-light-text dark:text-dark-text text-lg mb-3 font-SulphurPoint">By <span className='text-light-primary dark:text-dark-primary font-bold font-SulphurPoint'>{product.brand}</span></p>
                 <div className="flex flex-wrap gap-2 mb-4">
                   {product.categories.map((category) => (
-                    <span key={category} className="dark:bg-dark-primary bg-light-accent text-light-primary dark:text-dark-accent text-xs font-medium px-3 py-1 rounded-full cursor-pointer">{category}</span>
+                    <span key={category} className="dark:bg-dark-primary bg-light-accent text-light-text dark:text-dark-text text-sm font-SulphurPoint px-3 py-1 rounded-full cursor-pointer">{category}</span>
                   ))}
                 </div>
 
@@ -171,13 +171,13 @@ function App() {
                   <div className="border-b border-gray-200">
                     <nav className="flex space-x-8">
                       <button
-                        className={`py-4 px-1 border-b-2 font-medium text-sm cursor-pointer whitespace-nowrap ${activeTab === 'description' ? 'border-light-primary text-light-primary dark:border-dark-primary dark:text-dark-primary ' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
+                        className={`py-4 px-1 border-b-2 font-Montserrat text-sm cursor-pointer whitespace-nowrap ${activeTab === 'description' ? 'border-light-primary text-light-primary dark:border-dark-primary dark:text-dark-primary ' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
                         onClick={() => setActiveTab('description')}
                       >
                         Description
                       </button>
                       <button
-                        className={`py-4 px-1 border-b-2 font-medium text-sm cursor-pointer whitespace-nowrap ${activeTab === 'specifications' ? 'border-light-primary text-light-primary dark:border-dark-primary dark:text-dark-primary ' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
+                        className={`py-4 px-1 border-b-2 font-Montserrat text-sm cursor-pointer whitespace-nowrap ${activeTab === 'specifications' ? 'border-light-primary text-light-primary dark:border-dark-primary dark:text-dark-primary ' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
                         onClick={() => setActiveTab('specifications')}
                       >
                         Specifications
@@ -187,7 +187,7 @@ function App() {
                   <div className="py-4">
                     {activeTab === 'description' && (
                       <div>
-                        <p className="text-gray-700 dark:text-dark-text mb-4">
+                        <p className="text-light-text dark:text-dark-text mb-4 font-Jura">
                           {product.description}
                         </p>
                       </div>
@@ -195,28 +195,28 @@ function App() {
                     {activeTab === 'specifications' && (
                       <div className="overflow-x-visible">
                         <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-500">
-                          <thead className="bg-gray-50 dark:bg-black">
+                          <thead className="bg-light-background dark:bg-dark-background">
                             <tr>
                               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Specification</th>
                               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Details</th>
                             </tr>
                           </thead>
-                          <tbody className="bg-white divide-y divide-gray-200 dark:divide-dark-background dark:bg-dark-lighterbackground">
+                          <tbody className="bg-light-[#f5f5f5] divide-y divide-gray-200 dark:divide-dark-background dark:bg-dark-background2">
                             <tr>
-                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm font-medium text-gray-900 dark:text-dark-text">Dimensions</td>
-                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm text-gray-500">3.5 × 2.2 × 0.8 inches</td>
+                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm font-Montserrat text-gray-900 dark:text-dark-text">Dimensions</td>
+                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-base md:text-sm text-dark-secondary dark:text-light-secondary font-SulphurPoint">3.5 × 2.2 × 0.8 inches</td>
                             </tr>
                             <tr>
-                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm font-medium text-gray-900 dark:text-dark-text">Weight</td>
-                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm text-gray-500">75g</td>
+                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm font-Montserrat text-gray-900 dark:text-dark-text">Weight</td>
+                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-sm md:text-sm text-dark-secondary dark:text-light-secondary font-SulphurPoint">75g</td>
                             </tr>
                             <tr>
-                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm font-medium text-gray-900 dark:text-dark-text">Battery Life</td>
-                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm text-gray-500">Up to 24 months</td>
+                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm font-Montserrat text-gray-900 dark:text-dark-text">Battery Life</td>
+                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-sm md:text-sm text-dark-secondary dark:text-light-secondary font-SulphurPoint">Up to 24 months</td>
                             </tr>
                             <tr>
-                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm font-medium text-gray-900 dark:text-dark-text">Water Resistance</td>
-                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm text-gray-500">IP67 rated</td>
+                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm font-Montserrat text-gray-900 dark:text-dark-text">Water Resistance</td>
+                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-sm md:text-sm text-dark-secondary dark:text-light-secondary font-SulphurPoint">IP67 rated</td>
                             </tr>
                           </tbody>
                         </table>
@@ -230,16 +230,16 @@ function App() {
                   <div className="flex items-center mb-6">
                     <div className="flex items-center justify-center">
                       <button 
-                        className="bg-light-primary dark:bg-dark-primary hover:bg-[#00437ae3] dark:hover:bg-[#96c2e3d4] text-white py-1 px-1.5 sm:py-2 sm:px-6 rounded-md flex items-center justify-center cursor-pointer !rounded-button whitespace-nowrap mr-2"
+                        className="bg-light-primary dark:bg-dark-primary hover:bg-[#00437ae3] dark:hover:bg-[#96c2e3d4] text-white py-1 px-1.5 sm:py-2 sm:px-6 rounded-md flex items-center justify-center cursor-pointer !rounded-button whitespace-nowrap mr-2 font-Jura"
                         onClick={() => handleAddToCart()}
                       >
                         <FaReceipt className="mr-2" />
                         Add to Pricing List
                       </button>
-                      <div className="flex border border-gray-300 dark:border-gray-500 rounded-lg">
+                      <div className="flex border border-gray-300 dark:border-gray-500 rounded-md">
                         <button
                           onClick={decrementQuantity}
-                          className="px-2 py-1.5 sm:py-2 bg-gray-100 dark:bg-dark-lighterbackground text-gray-600 hover:bg-gray-200 cursor-pointer rounded-lg whitespace-nowrap"
+                          className="px-2 py-1.5 sm:py-2 dark:bg-dark-secondary2 cursor-pointer rounded-tl-md rounded-bl-md"
                         >
                           <FaMinus />
                         </button>
@@ -248,11 +248,11 @@ function App() {
                           id="quantity"
                           value={quantity}
                           onChange={handleQuantityChange}
-                          className="w-10 text-center border-none focus:ring-0 dark:bg-black text-gray-700 dark:text-dark-text"
+                          className="w-10 text-center focus:ring-0 bg-light-background2 font-Montserrat"
                         />
                         <button
                           onClick={incrementQuantity}
-                          className="px-2 py-1.5 sm:py-2 bg-gray-100 dark:bg-dark-lighterbackground text-gray-600 hover:bg-gray-200 cursor-pointer rounded-lg whitespace-nowrap"
+                          className="px-2 py-1.5 sm:py-2 dark:bg-dark-secondary2 cursor-pointer rounded-tr-md rounded-br-md"
                         >
                           <FaPlus />
                         </button>
@@ -260,7 +260,7 @@ function App() {
                     </div>
                   </div>
                   <div className="flex justify-center items-center mt-10">
-                    <button className="border border-gray-300 dark:border-none bg-light-primary dark:bg-dark-primary hover:bg-[#00437ae3] dark:hover:bg-[#96c2e3d4] text-white py-2 px-6 rounded-md flex items-center justify-center cursor-pointer !rounded-button whitespace-nowrap" onClick={() => downloadDatasheet(product.id)}>
+                    <button className="border border-gray-300 dark:border-none bg-light-primary dark:bg-dark-primary hover:bg-[#00437ae3] dark:hover:bg-[#96c2e3d4] text-white py-2 px-6 rounded-md flex items-center justify-center cursor-pointer !rounded-button whitespace-nowrap font-Jura" onClick={() => downloadDatasheet(product.id)}>
                       <FaFileDownload className="mr-2" />
                       Download Datasheet
                     </button>
@@ -272,7 +272,7 @@ function App() {
 
           {/* People Also Like Section */}
           <section className="container mx-auto px-4 py-12">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-dark-text mb-6">People Also Like</h2>
+            <h2 className="text-3xl font-Montserrat text-light-primary dark:text-dark-primary border-b pb-3 border-light-primary dark:border-dark-primary mb-6">People Also Like</h2>
             <div className="w-full">
               <Slider {...RelatedProductsSlider}>
                 {relatedProducts.map((product) => (
