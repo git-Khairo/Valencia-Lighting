@@ -60,8 +60,8 @@ const Dashboard = () => {
   const itemsPerPage = 6;
 
   const url = searchQuery.length > 0
-    ? `http://127.0.0.1:8000/api/search?query=${searchQuery}`
-    : 'http://127.0.0.1:8000/api/defaultSearch';
+    ? `/api/search?query=${searchQuery}`
+    : '/api/defaultSearch';
   const { data, loading, error } = useFetch(url);
 
   const { validateForm } = FormValidation({
@@ -119,7 +119,7 @@ const Dashboard = () => {
 
     try {
       const token = sessionStorage.getItem('token');
-      const url = `http://127.0.0.1:8000/api/edit-item/${item.id}?type=${item.type}`;
+      const url = `/api/edit-item/${item.id}?type=${item.type}`;
       const response = await fetch(url, {
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -181,13 +181,13 @@ const Dashboard = () => {
       let url = '';
       switch (itemToDelete.type) {
         case 'product':
-          url = `http://127.0.0.1:8000/api/products/${itemToDelete.id}`;
+          url = `/api/products/${itemToDelete.id}`;
           break;
         case 'category':
-          url = `http://127.0.0.1:8000/api/categories/${itemToDelete.id}`;
+          url = `/api/categories/${itemToDelete.id}`;
           break;
         case 'project':
-          url = `http://127.0.0.1:8000/api/projects/${itemToDelete.id}`;
+          url = `/api/projects/${itemToDelete.id}`;
           break;
         default:
           throw new Error('Invalid item type');
@@ -288,8 +288,8 @@ const Dashboard = () => {
   
       if (addType === 'Product') {
         url = isEditing
-          ? `http://127.0.0.1:8000/api/products/${addProductForm.code}`
-          : 'http://127.0.0.1:8000/api/products/store';
+          ? `/api/products/${addProductForm.code}`
+          : '/api/products/store';
         formData.append('name', addProductForm.name);
         formData.append('title', addProductForm.title || '');
         formData.append('description', addProductForm.description || '');
@@ -306,8 +306,8 @@ const Dashboard = () => {
         });
       } else if (addType === 'Category') {
         url = isEditing
-          ? `http://127.0.0.1:8000/api/categories/${addCategoryForm.id}`
-          : 'http://127.0.0.1:8000/api/categories';
+          ? `/api/categories/${addCategoryForm.id}`
+          : '/api/categories';
         formData.append('type', addCategoryForm.type);
         if (addCategoryForm.image) formData.append('image', addCategoryForm.image);
         addCategoryForm.selectedProducts.forEach((id, index) => {
@@ -315,8 +315,8 @@ const Dashboard = () => {
         });
       } else if (addType === 'Project') {
         url = isEditing
-          ? `http://127.0.0.1:8000/api/projects/${addProjectForm.id}`
-          : 'http://127.0.0.1:8000/api/projects';
+          ? `/api/projects/${addProjectForm.id}`
+          : '/api/projects';
         formData.append('title', addProjectForm.title);
         if (addProjectForm.images.length > 0) {
           addProjectForm.images.forEach((image, index) => {
