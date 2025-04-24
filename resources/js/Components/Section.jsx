@@ -34,15 +34,17 @@ const Section = ({ category, products }) => {
       mb-[7%] 3xl:mb-[7%] w-full px-6 md:px-8 ">
       
       {/* Category Box */}
-      <Link 
-        to={`/products`} 
-        className="w-full "
-      >
-        <div 
-          className="w-full h-full text-white bg-blue-400 rounded-lg shadow-md flex items-center justify-center"
-        >
-          <h2 className="text-lg md:text-2xl font-semibold">{category?.type}</h2>
-        </div>
+      <Link to={`/products`} className="w-full">
+      <div className="relative w-full h-full rounded-lg shadow-md overflow-hidden">
+        <img
+          src="https://picsum.photos/200"
+          alt="Category background"
+          className="w-full h-full object-cover"
+        />
+        <h2 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-lg md:text-2xl font-semibold text-light-background bg-light-text bg-opacity-50 p-2 rounded-lg font-Montserrat">
+          {category?.type}
+        </h2>
+      </div>
       </Link>
 
       {/* Product Cards */}

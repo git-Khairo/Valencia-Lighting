@@ -18,7 +18,7 @@ const Sections = () => {
   const currentSections = allSections.slice(firstPostIndex, lastPostIndex);
 
   return (
-    <div className="w-full m-0 md:w-full md:h-full pt-24">
+    <div className="w-full m-0 md:w-full md:h-full pt-24 bg-light-background dark:bg-dark-background">
       {loading ? (
         <Loading />
       ) : error ? (
@@ -41,7 +41,7 @@ const Sections = () => {
             />
           ))}
           {/* Pagination Component */}
-          <div className="my-10 flex justify-center">
+          <div className="py-10 flex justify-center">
             <Pagination
               totalPosts={allSections.length}
               postsPerPage={postsPerPage}

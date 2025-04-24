@@ -17,7 +17,7 @@ class ProjectCardResource extends JsonResource
         return [
             'id' => $this->id,
             'title'=> $this->title,
-            'image' => $this->image,
+            'images' => json_decode($this->images)[0],
         ];
     }
 }

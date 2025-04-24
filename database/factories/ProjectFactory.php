@@ -14,7 +14,7 @@ class ProjectFactory extends Factory
     {
         return [
             'title' => $this->faker->word(),
-            'images' => "https://picsum.photos/200",
+            'images' => json_encode(['https://picsum.photos/200','https://picsum.photos/200']),
             'description' => $this->faker->word(),
             'dateOfProject' => $this->faker->date(),
         ];

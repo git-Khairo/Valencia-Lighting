@@ -11,7 +11,7 @@ class ProjectResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'image' => $this->image,
+            'images' => json_decode($this->images),
             'description' => $this->description,
             'dateOfProject' => $this->dateOfProject, 
             'products' => ProductCardResource::collection($this->products),

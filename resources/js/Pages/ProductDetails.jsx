@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { FaMinus, FaPlus, FaFileDownload, FaReceipt } from "react-icons/fa";
-import { useParams } from 'react-router-dom';
+import { FaMinus, FaPlus, FaFileDownload, FaReceipt, FaArrowLeft } from "react-icons/fa";
+import { useNavigate, useParams } from 'react-router-dom';
 import useFetch from '../useFetch';  
 import Slider from 'react-slick';
 import ProductCard from '../Components/ProductCard';
@@ -13,6 +13,11 @@ function App() {
   const { data, loading, error } = useFetch(`/api/products/${code}`);
   const product = data && data.product && data.product.product;
   const relatedProducts = data && data.product && data.product.relatedProducts;
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate(-1); // Navigates back to the previous page
+  };
 
   // Initialize cart from sessionStorage
   const [cart, setCart] = useState(() => {
@@ -136,8 +141,9 @@ function App() {
         </div>
       ) : data ? (
         <div className="min-h-screen bg-light-background dark:bg-dark-background pt-20">
+          <FaArrowLeft size={25} className='mx-5' onClick={handleBack}/>
           {/* Product Section */}
-          <section className="container mx-auto px-2 py-8">
+          <section className="container mx-auto px-2 pb-8 pt-4">
             <div className="flex flex-col lg:flex-row gap-8">
               {/* Left Column - Product Image */}
               <div className="lg:w-1/2">

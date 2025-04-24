@@ -31,7 +31,7 @@ const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [searchResults, setSearchResults] = useState({ products: [], categories: [], projects: [] });
   const [currentPage, setCurrentPage] = useState(1);
-  const [formErrors, setFormErrors] = useState({}); // State for validation errors
+  const [formErrors, setFormErrors] = useState({});
   const deleteModalRef = useRef(null);
   const addModalRef = useRef(null);
   const navigate = useNavigate();
@@ -64,7 +64,6 @@ const Dashboard = () => {
     : 'http://127.0.0.1:8000/api/defaultSearch';
   const { data, loading, error } = useFetch(url);
 
-  // Initialize FormValidation
   const { validateForm } = FormValidation({
     formData: addType === 'Product' ? addProductForm : addType === 'Category' ? addCategoryForm : addProjectForm,
     addType,
@@ -94,7 +93,7 @@ const Dashboard = () => {
       if (addModalRef.current && !addModalRef.current.contains(event.target)) {
         setShowAddModal(false);
         setIsEditing(false);
-        setFormErrors({}); // Clear errors on modal close
+        setFormErrors({});
       }
       if (isSidebarOpen && !event.target.closest('aside')) {
         setIsSidebarOpen(false);
@@ -138,7 +137,7 @@ const Dashboard = () => {
           name: data.name || '',
           title: data.title || '',
           description: data.description || '',
-          brand: data.brand || '',
+          brand: ['Radial', 'Sila'].includes(data.brand) ? data.brand : '',
           image: null,
           dateOfRelease: data.dateOfRelease || '',
           code: data.code || '',
@@ -270,11 +269,10 @@ const Dashboard = () => {
     });
     setAddCategoryForm({ id: null, type: '', image: null, selectedProducts: [] });
     setAddProjectForm({ title: '', images: [], description: '', dateOfProject: '', selectedProducts: [] });
-    setFormErrors({}); // Clear errors
+    setFormErrors({});
   };
 
   const confirmAdd = async () => {
-    // Validate form before submission
     const isValid = validateForm();
     if (!isValid) {
       return;
@@ -300,11 +298,9 @@ const Dashboard = () => {
         formData.append('dateOfRelease', addProductForm.dateOfRelease || '');
         formData.append('code', addProductForm.code);
         if (addProductForm.datasheet) formData.append('datasheet', addProductForm.datasheet);
-        // Always send category_ids, even if empty
         addProductForm.selectedCategories.forEach((id, index) => {
           formData.append(`category_ids[${index}]`, id);
         });
-        // Always send project_ids, even if empty
         addProductForm.selectedProjects.forEach((id, index) => {
           formData.append(`project_ids[${index}]`, id);
         });
@@ -314,7 +310,6 @@ const Dashboard = () => {
           : 'http://127.0.0.1:8000/api/categories';
         formData.append('type', addCategoryForm.type);
         if (addCategoryForm.image) formData.append('image', addCategoryForm.image);
-        // Always send product_ids, even if empty
         addCategoryForm.selectedProducts.forEach((id, index) => {
           formData.append(`product_ids[${index}]`, id);
         });
@@ -330,7 +325,6 @@ const Dashboard = () => {
         }
         formData.append('description', addProjectForm.description || '');
         formData.append('dateOfProject', addProjectForm.dateOfProject || '');
-        // Always send product_ids, even if empty
         addProjectForm.selectedProducts.forEach((id, index) => {
           formData.append(`product_ids[${index}]`, id);
         });
@@ -356,7 +350,7 @@ const Dashboard = () => {
       setAddType(null);
       setAddSelectionType(null);
       setIsEditing(false);
-      setFormErrors({}); // Clear errors on success
+      setFormErrors({});
     } catch (error) {
       console.error(`Error ${isEditing ? 'updating' : 'adding'} ${addType}:`, error);
       alert(`Error: ${error.message}`);
@@ -371,7 +365,7 @@ const Dashboard = () => {
       setAddPage(1);
       setAddType(null);
       setIsEditing(false);
-      setFormErrors({}); // Clear errors
+      setFormErrors({});
     }
   };
 
@@ -435,7 +429,6 @@ const Dashboard = () => {
         <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
       </div>
 
-      {/* Delete Modal */}
       <Modal
         isOpen={showDeleteModal}
         onClose={() => setShowDeleteModal(false)}
@@ -462,7 +455,6 @@ const Dashboard = () => {
         </div>
       </Modal>
 
-      {/* Add/Edit Modal */}
       <Modal
         isOpen={showAddModal}
         onClose={() => setShowAddModal(false)}
@@ -554,12 +546,15 @@ const Dashboard = () => {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Brand</label>
-                <input
-                  type="text"
+                <select
                   value={addProductForm.brand}
                   onChange={(e) => setAddProductForm({ ...addProductForm, brand: e.target.value })}
                   className={`w-full px-4 py-2 border ${formErrors.brand ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
-                />
+                >
+                  <option value="" disabled>Select a brand</option>
+                  <option value="Radial">Radial</option>
+                  <option value="Sila">Sila</option>
+                </select>
                 {formErrors.brand && <p className="text-red-500 text-xs mt-1">{formErrors.brand}</p>}
               </div>
               <div>
@@ -697,7 +692,7 @@ const Dashboard = () => {
                 <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Products</label>
                 <button
                   onClick={() => handleAddSelect('selectedProducts')}
-                  className={`w-full px-4 py-2 border ${formErrors.selectedProducts ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-all duration-200 text-left`}
+                  className={`w-full px-4 py-2 border ${formErrors.selectedProducts ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} text-sm text seres-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-all duration-200 text-left`}
                 >
                   {addCategoryForm.selectedProducts.length > 0
                     ? `${addCategoryForm.selectedProducts.length} selected`

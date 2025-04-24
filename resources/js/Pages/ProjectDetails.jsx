@@ -12,12 +12,6 @@ import Loading from '../Components/Loading';
 const ProjectDetails = () => {
   const { id } = useParams();
   const { data, error, loading } = useFetch(`/api/projects/${id}`);
-  let images = [];
-
-  if(data.project){
-   images = [data.project.image, data.project.image];
-  }
-    
 
   const ProductSliderSettings = {
     dots: true,
@@ -87,11 +81,11 @@ const ProjectDetails = () => {
       </div>
     </div>
     <Slider {...ImageSliderSettings} className="w-screen max-h-fits">
-      {images.map((image, index) => (
+      {data.project.images.map((image, index) => (
         <div key={index}>
           <img
             src={image}
-            className="w-screen max-h-dvh object-cover"
+            className="w-screen h-svh object-cover"
             alt={`Slide ${index + 1}`}
           />
         </div>
@@ -189,7 +183,7 @@ className="flex flex-col md:flex-row items-center justify-between mx-auto bg-sla
       {/* Right Image */}
       <div className="w-full md:w-1/2 mt-6 md:mt-0">
         <img
-          src={data.project.image}
+          src={data.project.images[0]}
           alt="Descriptive Alt Text"
           className="w-full h-auto"
         />
@@ -221,7 +215,7 @@ className="flex flex-col md:flex-row items-center justify-between mx-auto bg-sla
       {/* Right Image */}
       <div className="w-full p-4 sm:p-14 md:w-1/2 md:p-2 mt-6 md:mt-0">
         <img
-          src={data.project.image}
+          src={data.project.images[1]}
           alt="Descriptive Alt Text"
           className="w-full h-auto rounded-xl"
         />

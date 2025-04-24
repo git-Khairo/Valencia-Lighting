@@ -9,23 +9,18 @@ const Row3 = (data) => {
         <Link
         to={`/project/${project.id}`}
         key={project.id}
-        className="group relative overflow-hidden rounded-lg bg-white"
+        className="relative overflow-hidden rounded-lg bg-white"
         >
-        <div className="relative w-full">
+        <div className="w-full">
             <img
-                src={project.image}
+                src={project.images}
                 alt={project.title}
                 className="w-full h-80 sm:h-96 md:h-[425px] lg:h-[500px] object-cover transition-transform duration-700 group-hover:scale-110"
             />
             <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4">
-                <div className="relative z-10">
                     <h3 className="text-lg sm:text-3xl font-semibold text-white cursor-pointer">
                     {project.title}
                     </h3>
-                    <p className="text-gray-200 text-xs sm:text-sm mt-1 sm:mt-2">
-                    {project.description}
-                    </p>
-                </div>
             </div>
         </div>
         </Link>
@@ -41,23 +36,18 @@ const Row2 = (data) => {
                 <Link
                 to={`/project/${project.id}`}
                     key={project.id}
-                    className="group relative overflow-hidden rounded-lg bg-white"
+                    className="relative overflow-hidden rounded-lg bg-white"
                 >
-                    <div className="relative w-full">
+                    <div className="w-full">
                         <img
-                        src={project.image}
+                        src={project.images}
                         alt={project.title}
                         className="w-full h-80 sm:h-96 md:h-[425px] object-cover transition-transform duration-700 group-hover:scale-110"
                         />
                         <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4">
-                        <div className="relative z-10">
                             <h3 className="text-lg sm:text-3xl font-semibold text-white cursor-pointer">
                                 {project.title}
                             </h3>
-                            <p className="text-gray-200 text-xs sm:text-sm mt-1 sm:mt-2 cursor-pointer">
-                                {project.description}
-                            </p>
-                        </div>
                         </div>
                     </div>
                 </Link>
@@ -73,23 +63,18 @@ const Row1 = (data) => {
             <Link
             to={`/project/${project.id}`}
             key={project.id}
-            className="group relative overflow-hidden rounded-lg bg-white"
+            className="relative overflow-hidden rounded-lg bg-white"
             >
-            <div className="relative w-full">
+            <div className="w-full">
                 <img
-                    src={project.image}
+                    src={project.images}
                     alt={project.title}
                     className="w-full h-80 sm:h-96 md:h-[400px] object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4">
-                    <div className="relative z-10">
                         <h3 className="text-lg sm:text-3xl font-semibold text-white cursor-pointer">
                         {project.title}
                         </h3>
-                        <p className="text-gray-200 text-xs sm:text-sm mt-1 sm:mt-2">
-                        {project.description}
-                        </p>
-                    </div>
                 </div>
             </div>
             </Link>
@@ -105,23 +90,18 @@ const Row3Style = ({projects, pointer}) => {
             <Link
             to={`/project/${project.id}`}
             key={project.id}
-            className={`group relative overflow-hidden rounded-lg bg-white ${pointer === index ? "lg:col-span-3 sm:col-span-1" : "lg:col-span-2 sm:col-span-1"}`}
+            className={`relative overflow-hidden rounded-lg bg-white ${pointer === index ? "lg:col-span-3 sm:col-span-1" : "lg:col-span-2 sm:col-span-1"}`}
             >
-            <div className="relative w-full">
+            <div className="w-full">
                 <img
-                    src={project.image}
+                    src={project.images}
                     alt={project.title}
                     className="w-full h-80 sm:h-96 md:h-[400px] object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4">
-                    <div className="relative z-10">
                         <h3 className="text-lg sm:text-3xl font-semibold text-white cursor-pointer">
                         {project.title}
                         </h3>
-                        <p className="text-gray-200 text-xs sm:text-sm mt-1 sm:mt-2">
-                        {project.description}
-                        </p>
-                    </div>
                 </div>
             </div>
             </Link>
@@ -133,6 +113,8 @@ const Row3Style = ({projects, pointer}) => {
 
 const Projects = () => {
     const { data, error, loading } = useFetch('/api/projects');
+
+    console.log(data);
 
     const initialProjectState = (projects) => {
       const rows = [];

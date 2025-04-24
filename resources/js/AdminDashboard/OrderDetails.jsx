@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Modal from './Modal';
 import Loading from '../Components/Loading';
+import { FaArrowLeft } from 'react-icons/fa';
 
 const OrderDetails = () => {
   const { id } = useParams();
@@ -101,7 +102,10 @@ const OrderDetails = () => {
   if (!order) return <div className="p-6 text-red-500">Order not found.</div>;
 
   return (
-    <div className="min-h-300 bg-gray-100 py-20 px-4 sm:px-6 lg:px-8">
+    <div className="bg-gray-100 py-10 px-4 sm:px-6 lg:px-8 h-lvh">
+      <Link to={'/admin/dashboard'}>
+        <FaArrowLeft size={30} className='mb-5'/>
+      </Link>
       <div className="max-w-7xl mx-auto">
         <h1 className="text-2xl font-semibold text-gray-900 mb-6">Order #{order.id}</h1>
         <div className="flex flex-col-reverse md:flex-row gap-6">

@@ -13,6 +13,7 @@ class CategoryFactory extends Factory
         return [
             'type' => $this->faker->word(),
             'image' => "https://picsum.photos/200",
+            'location' => $this->faker->randomElement(['Indoor', 'Outdoor']),
 
         ];
     }

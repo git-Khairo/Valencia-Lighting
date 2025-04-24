@@ -220,14 +220,14 @@ const PricingList = () => {
   return (
     <div className="min-h-screen bg-light-background dark:bg-dark-background py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-      <h1 className="my-4 font-black font-Agdasima text-3xl md:text-4xl lg:text-5xl 3xl:text-7xl text-left leading-snug text-light-primary dark:text-dark-primary ">
+      <h1 className="my-4 font-Montserrat text-3xl md:text-4xl lg:text-5xl 3xl:text-7xl text-left leading-snug text-light-primary dark:text-dark-primary ">
                     Your Cart
                 </h1>
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Cart Section */}
-          <div className="w-full lg:w-2/3 bg-light-background dark:bg-dark-lighterbackground rounded-lg shadow-sm overflow-hidden">
-            <div className="p-4 sm:p-6 border-b border-gray-200 dark:border-dark-background">
-            <h2 className="my-4 font-black font-Agdasima text-lg md:text-xl lg:text-3xl 3xl:text-5xl text-left leading-snug text-light-primary dark:text-dark-primary ">
+          <div className="w-full lg:w-2/3 bg-light-background dark:bg-dark-background2 rounded-lg shadow-sm overflow-hidden">
+            <div className="p-4 sm:p-6 border-b border-light-secondary dark:border-dark-secondary">
+            <h2 className="my-4 font-Montserrat text-lg md:text-xl lg:text-3xl 3xl:text-5xl text-left leading-snug text-light-primary dark:text-dark-primary ">
                     Products
                 </h2>
             </div>
@@ -246,21 +246,21 @@ const PricingList = () => {
                       <div className="flex items-start gap-4">
                         <img src={product.image} alt={product.name} className="w-20 h-20 object-cover rounded border" />
                         <div className="flex flex-col">
-                          <h3 className="text-sm font-medium text-gray-900">{product.name}</h3>
-                          <p className="text-sm text-gray-500">{product.description}</p>
-                          <div className="mt-2 flex items-center border rounded">
-                            <button onClick={() => handleQuantityChange(product.id, product.quantity - 1)} className="px-2 py-1 hover:bg-gray-100">
+                          <h3 className="text-lg font-SulphurPoint text-light-text dark:text-dark-text">{product.name}</h3>
+                          <p className="text-sm text-light-text dark:text-dark-text">{product.description}</p>
+                          <div className="mt-2 flex items-center border rounded-md">
+                            <button onClick={() => handleQuantityChange(product.id, product.quantity - 1)} className="px-2 py-1 dark:bg-dark-secondary2">
                               <FontAwesomeIcon icon={faMinus} />
                             </button>
-                            <input type="text" value={product.quantity} readOnly className="w-10 text-center border-0" />
-                            <button onClick={() => handleQuantityChange(product.id, product.quantity + 1)} className="px-2 py-1 hover:bg-gray-100">
+                            <input type="text" value={product.quantity} readOnly className="w-10 py-1 text-center font-Montserrat bg-light-background2" />
+                            <button onClick={() => handleQuantityChange(product.id, product.quantity + 1)} className="px-2 py-1 dark:bg-dark-secondary2">
                               <FontAwesomeIcon icon={faPlus} />
                             </button>
                           </div>
                         </div>
                       </div>
                       <div className="flex items-center">
-                        <button onClick={() => openDeleteModal(product.id)} className="text-red-500 text-sm hover:text-red-700 flex items-center">
+                        <button onClick={() => openDeleteModal(product.id)} className="text-red-500 text-sm hover:text-red-700 flex items-center font-SulphurPoint">
                           <FontAwesomeIcon icon={faTrashAlt} className="mr-1" />
                           Remove
                         </button>
@@ -269,15 +269,15 @@ const PricingList = () => {
                   ))}
                 </ul>
               ) : (
-                <div className="text-center py-10 text-light-text2 dark:text-dark-secondary">Your cart is empty</div>
+                <div className="text-center py-10 text-light-secondary dark:text-dark-secondary">Your cart is empty</div>
               )}
             </div>
           </div>
 
           {/* Info Form */}
-          <div className="w-full lg:w-1/3 bg-light-background dark:bg-dark-lighterbackground rounded-lg shadow-sm">
-  <div className="p-4 sm:p-6 border-b border-gray-200 dark:border-dark-background">
-    <h2 className="my-4 font-black font-Agdasima text-lg md:text-xl lg:text-3xl 3xl:text-5xl text-left leading-snug text-light-primary dark:text-dark-primary ">
+          <div className="w-full lg:w-1/3 bg-light-background dark:bg-dark-background2 rounded-lg shadow-sm">
+  <div className="p-4 sm:p-6 border-b border-light-secondary dark:border-dark-secondary">
+    <h2 className="my-4 font-Montserrat text-lg md:text-xl lg:text-3xl 3xl:text-5xl text-left leading-snug text-light-primary dark:text-dark-primary ">
       Information
     </h2>
   </div>
@@ -285,7 +285,7 @@ const PricingList = () => {
     <div className="space-y-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label htmlFor="firstName" className="block text-sm font-medium text-light-primary dark:text-dark-primary">First Name</label>
+          <label htmlFor="firstName" className="block text-sm font-Montserrat text-light-primary dark:text-dark-primary">First Name</label>
           <input
             type="text"
             name="firstName"
@@ -297,7 +297,7 @@ const PricingList = () => {
           {formErrors.firstName && <p className="text-red-500 text-xs mt-1">{formErrors.firstName}</p>}
         </div>
         <div>
-          <label htmlFor="lastName" className="block text-sm font-medium text-light-primary dark:text-dark-primary">Last Name</label>
+          <label htmlFor="lastName" className="block text-sm font-Montserrat text-light-primary dark:text-dark-primary">Last Name</label>
           <input
             type="text"
             name="lastName"
@@ -310,7 +310,7 @@ const PricingList = () => {
         </div>
       </div>
       <div>
-        <label htmlFor="phone" className="block text-sm font-medium text-light-primary dark:text-dark-primary">Phone Number</label>
+        <label htmlFor="phone" className="block text-sm font-Montserrat text-light-primary dark:text-dark-primary">Phone Number</label>
         <div className="mt-1 flex gap-2">
           <div className="relative w-1/3">
             <select
@@ -345,7 +345,7 @@ const PricingList = () => {
         {formErrors.phone && <p className="text-red-500 text-xs mt-1">{formErrors.phone}</p>}
       </div>
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-light-primary dark:text-dark-primary">Email Address</label>
+        <label htmlFor="email" className="block text-sm font-Montserrat text-light-primary dark:text-dark-primary">Email Address</label>
         <input
           type="email"
           id="email"
@@ -359,9 +359,9 @@ const PricingList = () => {
       </div>
     </div>
     <div className="pt-4 border-t border-gray-200 dark:border-dark-background space-y-4">
-      <h3 className="text-lg font-medium  text-light-primary dark:text-dark-primary">Location</h3>
+      <h3 className="text-lg font-Montserrat  text-light-primary dark:text-dark-primary">Location</h3>
       <div>
-        <label htmlFor="city" className="block text-sm font-medium  text-light-primary dark:text-dark-primary">City</label>
+        <label htmlFor="city" className="block text-sm font-Montserrat  text-light-primary dark:text-dark-primary">City</label>
         <input
           type="text"
           id="city"
@@ -374,7 +374,7 @@ const PricingList = () => {
         {formErrors.city && <p className="text-red-500 text-xs mt-1">{formErrors.city}</p>}
       </div>
       <div className="relative">
-        <label htmlFor="country" className="block text-sm font-medium  text-light-primary dark:text-dark-primary">Country</label>
+        <label htmlFor="country" className="block text-sm font-Montserrat text-light-primary dark:text-dark-primary">Country</label>
         <select
           id="country"
           name="country"
@@ -402,16 +402,9 @@ const PricingList = () => {
     <button
       type="submit"
       disabled={resLoading}
-      className={`w-full py-2 px-4 rounded text-white ${resLoading ? 'bg-indigo-400 cursor-not-allowed' : 'bg-light-primary dark:bg-dark-accent hover:bg-[#00437ae1] dark:hover:bg-[#00437a8d]'}`}
+      className={`w-full py-2 px-4 rounded text-white ${resLoading ? 'bg-light-primary cursor-not-allowed' : 'bg-light-primary dark:bg-dark-primary hover:bg-[#00437ae1] dark:hover:bg-[#A5D8FF]'}`}
     >
-      {resLoading ? (
-        <svg className="animate-spin h-5 w-5 mx-auto text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-        </svg>
-      ) : (
-        'Submit'
-      )}
+        Submit
     </button>
   </form>
 </div>
@@ -424,7 +417,7 @@ const PricingList = () => {
           <div className="text-red-500">{RelatedError.message}</div>
         ) : RelatedProducts ? (
           <div className="my-10 bg-light-background dark:bg-dark-background rounded-lg shadow-sm p-6">
-            <h2 className="my-4 font-black font-Agdasima text-lg md:text-xl lg:text-3xl 3xl:text-5xl text-left leading-snug text-light-primary dark:text-dark-primary ">
+            <h2 className="my-4 font-Montserrat text-lg md:text-xl lg:text-3xl 3xl:text-5xl text-left leading-snug text-light-primary dark:text-dark-primary ">
                     More Products
                 </h2>
             <Slider {...RelatedProductsSlider}>

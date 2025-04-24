@@ -76,7 +76,7 @@ const Filter = ({ updateFilter, categories, brand, setBrand, setCategories }) =>
          </div>
 
          {/* Clear Filters Button */}
-         <button className="w-full font-Jura border-2 bg-light-primary hover:bg-light-background hover:border-light-primary text-light-background hover:text-light-primary dark:bg-dark-primary hover:dark:bg-dark-background hover:dark:border-dark-primary dark:text-dark-background hover:dark:text-dark-primary dark:border-dark-background py-2 mt-4 rounded transition" onClick={() => {setBrand(''); setCategories([])}}>
+         <button className="w-full font-Jura border-2 bg-light-primary border-light-primary hover:bg-light-background hover:border-light-primary text-light-background hover:text-light-primary dark:bg-dark-primary hover:dark:bg-dark-background hover:dark:border-dark-primary dark:text-dark-background hover:dark:text-dark-primary dark:border-dark-primary py-2 mt-4 rounded transition" onClick={() => {setBrand(''); setCategories([])}}>
            Clear All
          </button>
        </div>
