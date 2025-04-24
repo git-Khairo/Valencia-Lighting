@@ -153,7 +153,7 @@ const Layout = () => {
                     <a
                       key={item}
                       href={`/${item}`}
-                      className="relative text-light-text dark:text-dark-text hover:text-light-primary dark:hover:text-dark-primary font-medium transition-colors duration-500 after:content-[''] after:absolute after:bottom-[-6px] after:left-1/2 after:w-0 after:h-[2.5px] after:bg-light-primary dark:after:bg-dark-primary after:rounded-full after:transition-all after:duration-500 hover:after:w-[120%] hover:after:left-[-10%]"
+                      className="relative font-SulphurPoint text-light-text dark:text-dark-text hover:text-light-primary dark:hover:text-dark-primary font-medium transition-colors duration-500 after:content-[''] after:absolute after:bottom-[-6px] after:left-1/2 after:w-0 after:h-[2.5px] after:bg-light-primary dark:after:bg-dark-primary after:rounded-full after:transition-all after:duration-500 hover:after:w-[120%] hover:after:left-[-10%]"
                     >
                       {item}
                     </a>
