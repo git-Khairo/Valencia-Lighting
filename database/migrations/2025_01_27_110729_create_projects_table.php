@@ -11,8 +11,11 @@ return new class extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->json('images'); // Change to json for multiple images
-            $table->string('description'); // Should be text for longer content
+            $table->json('images');
+            $table->string('description');
+            $table->string('quote');
+            $table->string('location');
+            $table->string('partners');
             $table->date('dateOfProject');
             $table->timestamps();
         });

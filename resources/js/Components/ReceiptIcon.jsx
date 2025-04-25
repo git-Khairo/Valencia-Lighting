@@ -35,7 +35,7 @@ const ReceiptIcon = () => {
         <Link
             to={'/pricingList'}
             ref={linkRef}
-            className="flex items-center gap-2 text-light-secondary dark:text-dark-secondary hover:text-light-primary dark:hover:text-dark-primary transition-all duration-300 ease-in-out font-semibold hover:font-bold z-20 after:absolute after:w-3 after:h-3 after:bg-blue-800 after:rounded-full after:-top-2 after:-right-2 after:content-[var(--cart-count)] after:text-white after:text-xs after:flex after:items-center after:justify-center after:p-2"
+            className="flex items-center gap-2 text-light-secondary2 dark:text-dark-secondary2 hover:text-light-primary dark:hover:text-dark-primary transition-all duration-300 ease-in-out font-semibold hover:font-bold z-20 after:absolute after:w-3 after:h-3 after:bg-light-primary after:dark:bg-dark-primary after:rounded-full after:-top-2 after:-right-2 after:content-[var(--cart-count)] after:text-white after:text-xs after:flex after:items-center after:justify-center after:p-2"
         >
             <FaReceipt size={20} />
         </Link>

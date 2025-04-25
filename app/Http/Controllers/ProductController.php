@@ -29,7 +29,7 @@ class ProductController extends Controller
         $validated = $request->validated();
 
         if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('products', 'public');
+            $validated['image'] = '/storage/' . $request->file('image')->store('products', 'public');
         }
         if ($request->hasFile('datasheet')) {
             $validated['datasheet'] = $request->file('datasheet')->store('datasheets', 'public');
@@ -54,7 +54,7 @@ class ProductController extends Controller
                 if ($product->image) {
                     $this->deleteFile($product->image);
                 }
-                $path = $request->file('image')->store('products', 'public');
+                $path = '/storage/' .  $request->file('image')->store('products', 'public');
                 $validated['image'] = $path;
             }
 

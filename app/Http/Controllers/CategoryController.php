@@ -52,8 +52,8 @@ class CategoryController extends Controller
 
             // Handle image upload if present
             if ($request->hasFile('image')) {
-                $path = $request->file('image')->store('categories', 'public');
-                $validated['image'] = '/storage/' . $path;
+                $path = '/storage/' . $request->file('image')->store('categories', 'public');
+                $validated['image'] = $path;
             }
 
             $category = $this->CategoryRepository->create($validated);
@@ -106,8 +106,8 @@ class CategoryController extends Controller
             if ($category && $category->image) {
                 $this->deleteFile($category->image);
             }
-            $path = $request->file('image')->store('categories', 'public');
-            $validated['image'] = '/storage/' . $path;
+            $path = '/storage/' .  $request->file('image')->store('categories', 'public');
+            $validated['image'] = $path;
         }
 
         // Update the category

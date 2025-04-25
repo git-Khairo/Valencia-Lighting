@@ -12,7 +12,6 @@ import Products from "./Pages/Products";
 import NotFound from "./Pages/NotFound";
 import SignIn from "./AdminDashboard/SignIn";
 import useFetch from "./useFetch";
-import Loading from "./Components/Loading"
 import Dashboard from "./AdminDashboard/Dashboard";
 import PricingList from "./Pages/PricingList";
 import Authentication from "./AdminDashboard/Authentication";

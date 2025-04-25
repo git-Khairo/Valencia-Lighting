@@ -10,7 +10,7 @@ const Card = ({ item, onEdit, onDelete }) => {
         <img
           src={item.image}
           alt={item.name || item.title || item.categoryType}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-contain"
         />
       </div>
       {/* Content Section */}

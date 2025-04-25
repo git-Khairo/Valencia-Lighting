@@ -37,7 +37,7 @@ const Section = ({ category, products }) => {
       <Link to={`/products`} className="w-full">
       <div className="relative w-full h-full rounded-lg shadow-md overflow-hidden">
         <img
-          src="https://picsum.photos/200"
+          src={category.image}
           alt="Category background"
           className="w-full h-full object-cover"
         />
