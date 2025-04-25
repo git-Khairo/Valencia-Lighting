@@ -12,6 +12,8 @@ const Sections = () => {
   // Extract sections data
   const allSections = data?.Sections || [];
 
+  console.log(allSections);
+
   // Pagination logic
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;

@@ -142,8 +142,9 @@ const Layout = () => {
                   >
                     <FaBars size={22} />
                   </button>
-                  <div className="text-2xl font-bold text-gray-900 dark:text-white">
-                    <a href="/">Logo</a>
+                  <div className="flex justify-center items-center space-x-2 text-2xl text-light-text dark:text-dark-text">
+                    <img src="/storage/logo/radial logo.png" alt="" className="h-12" />
+                    <a href="/" className="font-Montserrat">Vallencia Lighting</a>
                   </div>
                 </div>
 
@@ -361,7 +362,7 @@ const Layout = () => {
 
       {/* Footer */}
       <footer className="shadow-2xl shadow-slate-700 bg-light-background text-light-text dark:bg-dark-background dark:text-dark-text py-16 transition-all duration-300">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-10">
             <h2 className="text-2xl md:text-3xl font-SulphurPoint text-light-primary dark:text-dark-primary">
               "Lighting up your world, one innovation at a time."
@@ -462,7 +463,8 @@ const Layout = () => {
             </div>
           </div>
           <div className="flex flex-col md:flex-row justify-between items-center border-t border-gray-300 dark:border-gray-700 pt-6">
-            <div className="mb-6 md:mb-0">
+            <div className="flex justify-center items-center space-x-2 mb-6 md:mb-0">
+              <img src="/storage/logo/radial logo.png" alt="" className="h-12" />
               <h2 className="text-2xl font-Montserrat text-light-primary dark:text-dark-primary">Vallencia Lighting</h2>
             </div>
               <div className="flex space-x-6">
@@ -474,8 +476,8 @@ const Layout = () => {
                 </a>
               </div>
             <div className="flex space-x-4 mt-6 md:mt-0">
-              <img src="/sponsor1.png" alt="Sponsor 1" className="h-12 opacity-80 hover:opacity-100 transition-opacity duration-200" />
-              <img src="/sponsor2.png" alt="Sponsor 2" className="h-12 opacity-80 hover:opacity-100 transition-opacity duration-200" />
+              <img src="/storage/logo/sila logo.png" alt="Sponsor 1" className="h-12 opacity-80 hover:opacity-100 transition-opacity duration-200" />
+              <img src="/storage/logo/radial logo.png" alt="Sponsor 2" className="h-12 opacity-80 hover:opacity-100 transition-opacity duration-200" />
             </div>
           </div>
           <div className="flex justify-center font-Montserrat text-sm mt-8 text-light-secondary dark:text-dark-secondary">
