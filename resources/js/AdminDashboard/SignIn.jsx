@@ -52,17 +52,12 @@ const SignIn = () => {
 
     return ( 
       <>
-      <Authentication />
+      {/* <Authentication /> */}
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 pb-20 pt-32 lg:px-8 bg-light-background dark:bg-dark-background ">
            {errors && (
                 <p className="my-5 text-red-500 text-center">{errors}</p>
             )}
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          {/* <img
-            alt="Logo"
-            src="https://picsum.photos/200"
-            className="mx-auto h-10 w-auto"
-          /> */}
           <h2 className="mt-5 text-center text-3xl font-bold text-light-primary dark:text-dark-primary">
             Sign in
           </h2>
