@@ -8,7 +8,7 @@ const SelectionPage = ({ selectionType, formData, setFormData, onBack, addType }
 
   // Guard against undefined addType
   const type = addType ? addType.toLowerCase() : '';
-  const url = type ? `http://127.0.0.1:8000/api/selection-items?type=${type}` : null;
+  const url = type ? `/api/selection-items?type=${type}` : null;
   const { data, loading, error } = useFetch(url);
 
   const [options, setOptions] = useState([]);

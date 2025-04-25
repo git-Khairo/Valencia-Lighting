@@ -24,6 +24,9 @@ class UpdateProjectRequest extends FormRequest
 {
     return [
         'title' => 'sometimes|required|string|max:255', // Allow partial updates
+        'quote' => 'required|string|max:255',
+        'location' => 'required|string|max:255',
+        'partners' => 'required|string|max:255',
         'images' => 'sometimes|array',
         'images.*' => 'file|image|max:2048',
         'description' => 'sometimes|required|string',
@@ -42,6 +45,15 @@ class UpdateProjectRequest extends FormRequest
         'title.required' => 'The project title is required.',
         'title.string' => 'The project title must be a string.',
         'title.max' => 'The project title must not exceed 255 characters.',
+        'quote.required' => 'The project quote is required.',
+        'quote.string' => 'The project quote must be a string.',
+        'quote.max' => 'The project quote must not exceed 255 characters.',
+        'location.required' => 'The project location is required.',
+        'location.string' => 'The project location must be a string.',
+        'location.max' => 'The project location must not exceed 255 characters.',
+        'partners.required' => 'The project partners is required.',
+        'partners.string' => 'The project partners must be a string.',
+        'partners.max' => 'The project partners must not exceed 255 characters.',
         'images.array' => 'The images must be an array.',
         'images.*.file' => 'Each image must be a valid file.',
         'images.*.image' => 'Each image must be an image file (e.g., jpg, png).',

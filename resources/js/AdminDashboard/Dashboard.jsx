@@ -41,6 +41,11 @@ const Dashboard = () => {
     title: '',
     description: '',
     brand: '',
+    material: '',
+    productNumber: '',
+    length: '',
+    color: '',
+    accessories: '',
     image: null,
     dateOfRelease: '',
     code: '',
@@ -48,11 +53,14 @@ const Dashboard = () => {
     selectedProjects: [],
     selectedCategories: [],
   });
-  const [addCategoryForm, setAddCategoryForm] = useState({ type: '', image: null, selectedProducts: [] });
+  const [addCategoryForm, setAddCategoryForm] = useState({ type: '', image: null, location: '', selectedProducts: [] });
   const [addProjectForm, setAddProjectForm] = useState({
     title: '',
     images: [],
     description: '',
+    quote: '',
+    location: '',
+    partners: '',
     dateOfProject: '',
     selectedProducts: [],
   });
@@ -137,7 +145,12 @@ const Dashboard = () => {
           name: data.name || '',
           title: data.title || '',
           description: data.description || '',
-          brand: ['Radial', 'Sila'].includes(data.brand) ? data.brand : '',
+          material: data.material || '',
+          productNumber: data.productNumber || '',
+          length: data.length || '',
+          color: data.color || '',
+          accessories: data.accessories || '',
+          brand: data.brand || '',
           image: null,
           dateOfRelease: data.dateOfRelease || '',
           code: data.code || '',
@@ -149,6 +162,7 @@ const Dashboard = () => {
         setAddCategoryForm({
           id: data.id,
           type: data.type || '',
+          location: data.location || '',
           image: null,
           selectedProducts: data.products ? data.products.map(p => p.id) : [],
         });
@@ -156,6 +170,9 @@ const Dashboard = () => {
         setAddProjectForm({
           id: data.id || '',
           title: data.title || '',
+          quote: data.quote || '',
+          location: data.location || '',
+          partners: data.partners || '',
           images: [],
           description: data.description || '',
           dateOfProject: data.dateOfProject || '',
@@ -256,19 +273,33 @@ const Dashboard = () => {
     setAddType(type);
     setAddPage(2);
     setAddProductForm({
-      name: '',
-      title: '',
-      description: '',
-      brand: '',
-      image: null,
-      dateOfRelease: '',
-      code: '',
-      datasheet: null,
-      selectedProjects: [],
-      selectedCategories: [],
+    name: '',
+    title: '',
+    description: '',
+    brand: '',
+    material: '',
+    productNumber: '',
+    length: '',
+    color: '',
+    accessories: '',
+    image: null,
+    dateOfRelease: '',
+    code: '',
+    datasheet: null,
+    selectedProjects: [],
+    selectedCategories: [],
     });
-    setAddCategoryForm({ id: null, type: '', image: null, selectedProducts: [] });
-    setAddProjectForm({ title: '', images: [], description: '', dateOfProject: '', selectedProducts: [] });
+    setAddCategoryForm({ type: '', image: null, location: '', selectedProducts: [] });
+    setAddProjectForm({ 
+      title: '',
+      images: [],
+      description: '',
+      quote: '',
+      location: '',
+      partners: '',
+      dateOfProject: '',
+      selectedProducts: []
+     });
     setFormErrors({});
   };
 
@@ -292,6 +323,11 @@ const Dashboard = () => {
           : '/api/products/store';
         formData.append('name', addProductForm.name);
         formData.append('title', addProductForm.title || '');
+        formData.append('material', addProductForm.material || '');
+        formData.append('productNumber', addProductForm.productNumber || '');
+        formData.append('length', addProductForm.length || '');
+        formData.append('color', addProductForm.color || '');
+        formData.append('accessories', addProductForm.accessories || '');
         formData.append('description', addProductForm.description || '');
         formData.append('brand', addProductForm.brand || '');
         if (addProductForm.image) formData.append('image', addProductForm.image);
@@ -309,6 +345,7 @@ const Dashboard = () => {
           ? `/api/categories/${addCategoryForm.id}`
           : '/api/categories';
         formData.append('type', addCategoryForm.type);
+        formData.append('location', addCategoryForm.location);
         if (addCategoryForm.image) formData.append('image', addCategoryForm.image);
         addCategoryForm.selectedProducts.forEach((id, index) => {
           formData.append(`product_ids[${index}]`, id);
@@ -318,6 +355,9 @@ const Dashboard = () => {
           ? `/api/projects/${addProjectForm.id}`
           : '/api/projects';
         formData.append('title', addProjectForm.title);
+        formData.append('quote', addProjectForm.quote);
+        formData.append('location', addProjectForm.location);
+        formData.append('partners', addProjectForm.partners);
         if (addProjectForm.images.length > 0) {
           addProjectForm.images.forEach((image, index) => {
             formData.append(`images[${index}]`, image);
@@ -558,6 +598,56 @@ const Dashboard = () => {
                 {formErrors.brand && <p className="text-red-500 text-xs mt-1">{formErrors.brand}</p>}
               </div>
               <div>
+                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Material</label>
+                <input
+                  type="text"
+                  value={addProductForm.material}
+                  onChange={(e) => setAddProductForm({ ...addProductForm, material: e.target.value })}
+                  className={`w-full px-4 py-2 border ${formErrors.material ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
+                />
+                {formErrors.material && <p className="text-red-500 text-xs mt-1">{formErrors.material}</p>}
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Product Number</label>
+                <input
+                  type="text"
+                  value={addProductForm.productNumber}
+                  onChange={(e) => setAddProductForm({ ...addProductForm, productNumber: e.target.value })}
+                  className={`w-full px-4 py-2 border ${formErrors.productNumber ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
+                />
+                {formErrors.productNumber && <p className="text-red-500 text-xs mt-1">{formErrors.productNumber}</p>}
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Length </label>
+                <input
+                  type="text"
+                  value={addProductForm.length}
+                  onChange={(e) => setAddProductForm({ ...addProductForm, length: e.target.value })}
+                  className={`w-full px-4 py-2 border ${formErrors.length ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
+                />
+                {formErrors.length && <p className="text-red-500 text-xs mt-1">{formErrors.length}</p>}
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Color</label>
+                <input
+                  type="text"
+                  value={addProductForm.color}
+                  onChange={(e) => setAddProductForm({ ...addProductForm, color: e.target.value })}
+                  className={`w-full px-4 py-2 border ${formErrors.color ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
+                />
+                {formErrors.color && <p className="text-red-500 text-xs mt-1">{formErrors.color}</p>}
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Accessories</label>
+                <input
+                  type="text"
+                  value={addProductForm.accessories}
+                  onChange={(e) => setAddProductForm({ ...addProductForm, accessories: e.target.value })}
+                  className={`w-full px-4 py-2 border ${formErrors.accessories ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
+                />
+                {formErrors.accessories && <p className="text-red-500 text-xs mt-1">{formErrors.accessories}</p>}
+              </div>
+              <div>
                 <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Image</label>
                 <div className="relative">
                   <input
@@ -676,6 +766,19 @@ const Dashboard = () => {
                 {formErrors.type && <p className="text-red-500 text-xs mt-1">{formErrors.type}</p>}
               </div>
               <div>
+                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Location</label>
+                <select
+                  value={addCategoryForm.location}
+                  onChange={(e) => setAddCategoryForm({ ...addCategoryForm, location: e.target.value })}
+                  className={`w-full px-4 py-2 border ${formErrors.location ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
+                >
+                  <option value="" disabled>Select a Location</option>
+                  <option value="Indoor">Indoor</option>
+                  <option value="Outdoor">Outdoor</option>
+                </select>
+                {formErrors.location && <p className="text-red-500 text-xs mt-1">{formErrors.location}</p>}
+              </div>
+              <div>
                 <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Image</label>
                 <div className="relative">
                   <input
@@ -745,6 +848,36 @@ const Dashboard = () => {
                   className={`w-full px-4 py-2 border ${formErrors.title ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
                 />
                 {formErrors.title && <p className="text-red-500 text-xs mt-1">{formErrors.title}</p>}
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Quote</label>
+                <input
+                  type="text"
+                  value={addProjectForm.quote}
+                  onChange={(e) => setAddProjectForm({ ...addProjectForm, quote: e.target.value })}
+                  className={`w-full px-4 py-2 border ${formErrors.quote ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
+                />
+                {formErrors.quote && <p className="text-red-500 text-xs mt-1">{formErrors.quote}</p>}
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Location</label>
+                <input
+                  type="text"
+                  value={addProjectForm.location}
+                  onChange={(e) => setAddProjectForm({ ...addProjectForm, location: e.target.value })}
+                  className={`w-full px-4 py-2 border ${formErrors.location ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
+                />
+                {formErrors.location && <p className="text-red-500 text-xs mt-1">{formErrors.location}</p>}
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Partners</label>
+                <input
+                  type="text"
+                  value={addProjectForm.partners}
+                  onChange={(e) => setAddProjectForm({ ...addProjectForm, partners: e.target.value })}
+                  className={`w-full px-4 py-2 border ${formErrors.partners ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
+                />
+                {formErrors.partners && <p className="text-red-500 text-xs mt-1">{formErrors.partners}</p>}
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Images (Multiple)</label>

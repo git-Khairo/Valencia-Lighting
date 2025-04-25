@@ -3,12 +3,13 @@ import { faEdit, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 // Card component for displaying individual items (products, categories, projects)
 const Card = ({ item, onEdit, onDelete }) => {
+  console.log(item);
   return (
     <div className="bg-white dark:bg-dark-secondary rounded-lg shadow-sm overflow-hidden flex flex-col h-full transition-all duration-200 hover:shadow-lg hover:scale-[1.02]">
       {/* Image Section */}
       <div className="h-40 sm:h-48 overflow-hidden">
         <img
-          src={item.image}
+          src={item.image || item.images}
           alt={item.name || item.title || item.categoryType}
           className="w-full h-full object-contain"
         />

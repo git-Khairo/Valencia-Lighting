@@ -10,6 +10,7 @@ class FullCategoryResource extends JsonResource
         return [
             'id' => $this->id,
             'type' => $this->type,
+            'location' => $this->location,
             'image' => $this->image,
             'products' => $this->products->map(function ($product) {
                 return [

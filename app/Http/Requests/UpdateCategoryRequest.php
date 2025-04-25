@@ -24,6 +24,7 @@ class UpdateCategoryRequest extends FormRequest
     {
         return [
             'type' => 'sometimes|required|string|max:15',
+            'location' => 'required|string|max:15',
             'image' => 'sometimes|file|image|max:2048', // Single image field
             'product_ids' => 'sometimes|array',
             'product_ids.*' => 'exists:products,id',
@@ -39,6 +40,10 @@ class UpdateCategoryRequest extends FormRequest
             'type.required' => 'The category type is required.',
             'type.string' => 'The category type must be a string.',
             'type.max' => 'The category type must not exceed 15 characters.',
+
+            'location.required' => 'The location type is required.',
+            'location.string' => 'The location type must be a string.',
+            'location.max' => 'The location type must not exceed 15 characters.',
 
             'image.file' => 'The image must be a valid file.',
             'image.image' => 'The image must be an image file (e.g., jpg, png).',

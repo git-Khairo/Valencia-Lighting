@@ -39,6 +39,51 @@ const FormValidation = ({ formData, addType, isEditing, setErrors }) => {
         newErrors.title = 'The title must not exceed 255 characters.';
       }
 
+      // Material: required, string, max:255
+      if (!formData.material && (!isEditing || formData.material !== undefined)) {
+        newErrors.material = 'The material is required.';
+      } else if (typeof formData.material !== 'string') {
+        newErrors.material = 'The material must be a string.';
+      } else if (formData.material.length > 255) {
+        newErrors.material = 'The material must not exceed 255 characters.';
+      }
+
+      // Product Number: required, string, max:255
+      if (!formData.productNumber && (!isEditing || formData.productNumber !== undefined)) {
+        newErrors.productNumber = 'The product Number is required.';
+      } else if (typeof formData.productNumber !== 'string') {
+        newErrors.productNumber = 'The product Number must be a string.';
+      } else if (formData.productNumber.length > 255) {
+        newErrors.productNumber = 'The product Number must not exceed 255 characters.';
+      }
+
+      // Length: required, string, max:255
+      if (!formData.length && (!isEditing || formData.length !== undefined)) {
+        newErrors.length = 'The length is required.';
+      } else if (typeof formData.length !== 'string') {
+        newErrors.length = 'The length must be a string.';
+      } else if (formData.length.length > 255) {
+        newErrors.length = 'The length must not exceed 255 characters.';
+      }
+
+      // Color: required, string, max:255
+      if (!formData.color && (!isEditing || formData.color !== undefined)) {
+        newErrors.color = 'The color is required.';
+      } else if (typeof formData.color !== 'string') {
+        newErrors.color = 'The color must be a string.';
+      } else if (formData.color.length > 255) {
+        newErrors.color = 'The color must not exceed 255 characters.';
+      }
+
+      // Accessories: required, string, max:255
+      if (!formData.accessories && (!isEditing || formData.accessories !== undefined)) {
+        newErrors.accessories = 'The accessories is required.';
+      } else if (typeof formData.accessories !== 'string') {
+        newErrors.accessories = 'The accessories must be a string.';
+      } else if (formData.accessories.length > 255) {
+        newErrors.accessories = 'The accessories must not exceed 255 characters.';
+      }
+
       // Description: required, string
       if (!formData.description && (!isEditing || formData.description !== undefined)) {
         newErrors.description = 'The description is required.';
@@ -108,6 +153,15 @@ const FormValidation = ({ formData, addType, isEditing, setErrors }) => {
         newErrors.type = 'The category type must not exceed 15 characters.';
       }
 
+      // Location: required, string, max:15
+      if (!formData.location && (!isEditing || formData.location !== undefined)) {
+        newErrors.location = 'The location is required.';
+      } else if (typeof formData.location !== 'string') {
+        newErrors.location = 'The location must be a string.';
+      } else if (formData.location.length > 15) {
+        newErrors.location = 'The location must not exceed 15 characters.';
+      }
+
       // Image: required (for add), file, image, max:2MB
       if (!isEditing && !formData.image) {
         newErrors.image = 'The image is required.';
@@ -129,6 +183,33 @@ const FormValidation = ({ formData, addType, isEditing, setErrors }) => {
         newErrors.title = 'The project title must be a string.';
       } else if (formData.title.length > 255) {
         newErrors.title = 'The project title must not exceed 255 characters.';
+      }
+
+      // Quote: required, string, max:255
+      if (!formData.quote && (!isEditing || formData.quote !== undefined)) {
+        newErrors.quote = 'The quote is required.';
+      } else if (typeof formData.quote !== 'string') {
+        newErrors.quote = 'The project quote must be a string.';
+      } else if (formData.quote.length > 255) {
+        newErrors.quote = 'The project quote must not exceed 255 characters.';
+      }
+
+      // Location: required, string, max:255
+      if (!formData.location && (!isEditing || formData.location !== undefined)) {
+        newErrors.location = 'The project location is required.';
+      } else if (typeof formData.location !== 'string') {
+        newErrors.location = 'The project location must be a string.';
+      } else if (formData.location.length > 255) {
+        newErrors.location = 'The project location must not exceed 255 characters.';
+      }
+
+      // Partners: required, string, max:255
+      if (!formData.partners && (!isEditing || formData.partners !== undefined)) {
+        newErrors.partners = 'The project partners is required.';
+      } else if (typeof formData.partners !== 'string') {
+        newErrors.partners = 'The project partners must be a string.';
+      } else if (formData.partners.length > 255) {
+        newErrors.partners = 'The project partners must not exceed 255 characters.';
       }
 
       // Images: required (for add), array of images, each max:2MB

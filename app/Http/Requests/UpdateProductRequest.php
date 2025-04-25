@@ -23,11 +23,15 @@ class UpdateProductRequest extends FormRequest
      */
     public function rules(): array
     {
-        $code = $this->route('code'); // Get the product code from the route parameter
 
         return [
             'name' => 'sometimes|required|string|max:15',
             'title' => 'sometimes|required|string|max:255',
+            'material' => 'required|string|max:255',
+            'productNumber' => 'required|string|max:255',
+            'length' => 'required|string|max:255',
+            'color' => 'required|string|max:255',
+            'accessories' => 'required|string|max:255',
             'description' => 'sometimes|required|string',
             'brand' => 'sometimes|required|string|max:255',
             'dateOfRelease' => 'sometimes|required|date',
@@ -51,6 +55,21 @@ class UpdateProductRequest extends FormRequest
             'title.required' => 'The title is required.',
             'title.string' => 'The title must be a string.',
             'title.max' => 'The title must not exceed 255 characters.',
+            'material.required' => 'The title is required.',
+            'material.string' => 'The title must be a string.',
+            'material.max' => 'The title must not exceed 255 characters.',
+            'productNumber.required' => 'The title is required.',
+            'productNumber.string' => 'The title must be a string.',
+            'productNumber.max' => 'The title must not exceed 255 characters.',
+            'length.required' => 'The title is required.',
+            'length.string' => 'The title must be a string.',
+            'length.max' => 'The title must not exceed 255 characters.',
+            'color.required' => 'The title is required.',
+            'color.string' => 'The title must be a string.',
+            'color.max' => 'The title must not exceed 255 characters.',
+            'accessories.required' => 'The title is required.',
+            'accessories.string' => 'The title must be a string.',
+            'accessories.max' => 'The title must not exceed 255 characters.',
             'description.required' => 'The description is required.',
             'description.string' => 'The description must be a string.',
             'brand.required' => 'The brand is required.',

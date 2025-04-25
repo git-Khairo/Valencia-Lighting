@@ -17,6 +17,7 @@ class CategoryCardResource extends JsonResource
         return [
             'id' => $this->id,
             'type' => $this->type,
+            'location' => $this->location,
             'image' => $this->image,
         ];
     }

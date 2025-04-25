@@ -3,7 +3,7 @@ namespace App\Repository;
 
 use App\Models\Project;
 use App\RepositoryInterface\ProjectRepositoryInterface;
-use App\Http\Resources\FullProjectResource;
+use App\Http\Resources\ProjectResource;
 
 class ProjectRepository implements ProjectRepositoryInterface
 {
@@ -51,6 +51,6 @@ class ProjectRepository implements ProjectRepositoryInterface
     public function findFull($id)
     {
         $project = Project::with('products')->findOrFail($id);
-        return new FullProjectResource($project);
+        return new ProjectResource($project);
     }
 }

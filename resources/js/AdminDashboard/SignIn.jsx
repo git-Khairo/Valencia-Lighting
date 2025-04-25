@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Authentication from "./Authentication";
 
 const SignIn = () => {
     const [credentials, setCredentials] = useState({ username: '', password: '' });
@@ -50,6 +51,8 @@ const SignIn = () => {
   };
 
     return ( 
+      <>
+      <Authentication />
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 pb-20 pt-32 lg:px-8 bg-light-background dark:bg-dark-background ">
            {errors && (
                 <p className="my-5 text-red-500 text-center">{errors}</p>
@@ -110,6 +113,7 @@ const SignIn = () => {
           </form>
         </div>
       </div>
+      </>
      );
 }
  

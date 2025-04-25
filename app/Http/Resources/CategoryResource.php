@@ -11,6 +11,7 @@ class CategoryResource extends JsonResource
         return [
             'id' => $this->id,
             'type' => $this->type,
+            'location' => $this->location,
             'image' => $this->image,
             'products' => ProductCardResource::collection($this->products),
         ];

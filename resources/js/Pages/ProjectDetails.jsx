@@ -76,8 +76,8 @@ const ProjectDetails = () => {
     <div className='mx-2 my-5 sm:mx-10'>
       <h1 className="text-3xl text-light-text dark:text-dark-text font-Montserrat md:text-5xl">{data.project.title}</h1>
       <div className="flex justify-between items-center py-5">
-        <div className="text-light-text dark:text-dark-text font-SulphurPoint text-base sm:text-xl">{data.project.description}</div>
-        <div className="text-light-text dark:text-dark-text font-SulphurPoint text-base sm:text-xl">Project Address</div>
+        <div className="text-light-text dark:text-dark-text font-SulphurPoint text-base sm:text-xl">{data.project.quote}</div>
+        <div className="text-light-text dark:text-dark-text font-SulphurPoint text-base sm:text-xl">{data.project.location}</div>
       </div>
     </div>
     <Slider {...ImageSliderSettings} className="w-screen max-h-fits">
@@ -103,9 +103,7 @@ const ProjectDetails = () => {
             <div className="flex flex-col justify-center mx-10">
                 <h2 className="text-xl sm:text-3xl font-Montserrat text-light-primary dark:text-dark-primary mb-4">Project Description</h2>
                 <p className="text-light-text dark:text-dark-text font-Jura text-base md:text-lg">
-                This project is an architectural masterpiece that integrates modern design principles with 
-                sustainability. The use of high-quality materials ensures durability and aesthetic appeal.
-                Located in the heart of New York, this project serves as a benchmark for future developments.
+                {data.project.description}
                 </p>
                 <div
                   className={`grid transition-all duration-500 ease-in-out ${
@@ -145,15 +143,15 @@ const ProjectDetails = () => {
                         </tr>
                         <tr className="border-b">
                             <td className="px-2 py-5 font-Montserrat text-light-text dark:text-dark-text">Location:</td>
-                            <td className="px-2 py-5 font-SulphurPoint text-light-text dark:text-dark-text">New York, USA</td>
+                            <td className="px-2 py-5 font-SulphurPoint text-light-text dark:text-dark-text">{data.project.location}</td>
                         </tr>
                         <tr className="border-b">
                             <td className="px-2 py-5 font-Montserrat text-light-text dark:text-dark-text">Products Used:</td>
-                            <td className="px-2 py-5 font-SulphurPoint text-light-text dark:text-dark-text">Concrete, Steel, Glass</td>
+                            <td className="px-2 py-5 font-SulphurPoint text-light-text dark:text-dark-text">{data.project.products.map((product) => product.name + ", ")}</td>
                         </tr>
                         <tr className="border-b">
                             <td className="px-2 py-5 font-Montserrat text-light-text dark:text-dark-text">Partners:</td>
-                            <td className="px-2 py-5 font-SulphurPoint text-light-text dark:text-dark-text">John Doe</td>
+                            <td className="px-2 py-5 font-SulphurPoint text-light-text dark:text-dark-text">{data.project.partners}</td>
                         </tr>
                     </tbody>
                 </table>
