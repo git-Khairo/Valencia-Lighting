@@ -386,32 +386,32 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh)] bg-gray-100 dark:bg-gray-900 transition-colors duration-200">
+    <div className="min-h-[calc(100vh)] bg-gray-100 transition-colors duration-200">
       <div className="flex relative">
         <main className="flex-1 p-4 sm:p-6 md:p-8">
-          <div className="w-full mb-6 md:mb-8 top-0 z-20 bg-gray-100 dark:bg-gray-900">
+          <div className="w-full mb-6 md:mb-8 top-0 z-20 bg-gray-100">
             <div className="relative flex items-center w-full">
               <input
                 type="text"
                 placeholder="Search products, categories, or projects..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-4 py-2 pl-10 pr-32 rounded-lg border-none bg-white shadow-sm text-sm text-gray-900 dark:text-gray-100 dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200 hover:shadow-md"
+                className="w-full px-4 py-2 pl-10 pr-32 rounded-lg border-none bg-white shadow-sm text-sm text-gray-900 focus:ring-blue-500 transition-all duration-200 hover:shadow-md"
               />
               <FontAwesomeIcon
                 icon={faSearch}
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400"
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"
               />
               <div className="absolute right-0 top-1/2 -translate-y-1/2 flex space-x-3">
                 <button
                   onClick={() => { setShowAddModal(true); setIsEditing(false); }}
-                  className="px-3 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 shadow-sm text-sm transition-all duration-200 flex items-center"
+                  className="px-3 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 shadow-sm text-sm transition-all duration-200 flex items-center"
                 >
                   <FontAwesomeIcon icon={faPlus} className="mr-1" />
                   Add
                 </button>
                 <button
-                  className="md:hidden p-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition-colors"
+                  className="md:hidden p-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition-colors"
                   onClick={() => setIsSidebarOpen(!isSidebarOpen)}
                 >
                   <FontAwesomeIcon icon={faBars} />
@@ -421,7 +421,7 @@ const Dashboard = () => {
           </div>
 
           {loading ? (
-            <div className="text-center py-4 text-gray-900 dark:text-gray-100"><Loading /></div>
+            <div className="text-center py-4 text-gray-900"><Loading /></div>
           ) : error ? (
             <div className="text-center py-4 text-red-500">{error}</div>
           ) : (
@@ -447,13 +447,13 @@ const Dashboard = () => {
         refProp={deleteModalRef}
         maxWidth="max-w-md"
       >
-        <p className="text-gray-600 dark:text-gray-400 mb-6">
+        <p className="text-gray-600 mb-6">
           Are you sure you want to delete "{itemToDelete?.name || itemToDelete?.title || itemToDelete?.categoryType}"? This action cannot be undone.
         </p>
         <div className="flex justify-end space-x-4">
           <button
             onClick={() => setShowDeleteModal(false)}
-            className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 rounded-lg transition-all duration-200"
+            className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-200 rounded-lg transition-all duration-200"
           >
             Cancel
           </button>
@@ -473,25 +473,25 @@ const Dashboard = () => {
       >
         {addPage === 1 && !isEditing && (
           <>
-            <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-gray-100">Add New Item</h3>
+            <h3 className="text-xl font-semibold mb-6 text-gray-900">Add New Item</h3>
             <div className="space-y-4">
               <button
                 onClick={() => handleAddNext('Product')}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-all duration-200 flex items-center justify-start"
+                className="w-full px-4 py-2 border border-gray-300 text-sm text-gray-900 bg-white hover:bg-gray-100 rounded-lg transition-all duration-200 flex items-center justify-start"
               >
                 <FontAwesomeIcon icon={faBox} className="mr-2" />
                 Product
               </button>
               <button
                 onClick={() => handleAddNext('Category')}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-all duration-200 flex items-center justify-start"
+                className="w-full px-4 py-2 border border-gray-300 text-sm text-gray-900 bg-white hover:bg-gray-100 rounded-lg transition-all duration-200 flex items-center justify-start"
               >
                 <FontAwesomeIcon icon={faFolder} className="mr-2" />
                 Category
               </button>
               <button
                 onClick={() => handleAddNext('Project')}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-all duration-200 flex items-center justify-start"
+                className="w-full px-4 py-2 border border-gray-300 text-sm text-gray-900 bg-white hover:bg-gray-100 rounded-lg transition-all duration-200 flex items-center justify-start"
               >
                 <FontAwesomeIcon icon={faProjectDiagram} className="mr-2" />
                 Project
@@ -500,7 +500,7 @@ const Dashboard = () => {
             <div className="flex justify-end mt-6">
               <button
                 onClick={() => setShowAddModal(false)}
-                className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 rounded-lg transition-all duration-200"
+                className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-200 rounded-lg transition-all duration-200"
               >
                 Cancel
               </button>
@@ -512,55 +512,55 @@ const Dashboard = () => {
           <>
             <div className="flex items-center mb-6">
               {isEditing ? (
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Edit Product</h3>
+                <h3 className="text-xl font-semibold text-gray-900">Edit Product</h3>
               ) : (
                 <>
                   <button
                     onClick={handleAddBack}
-                    className="mr-4 text-gray-900 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-200"
+                    className="mr-4 text-gray-900 hover:text-blue-600 transition-all duration-200"
                   >
                     <FontAwesomeIcon icon={faArrowLeft} />
                   </button>
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Add Product</h3>
+                  <h3 className="text-xl font-semibold text-gray-900">Add Product</h3>
                 </>
               )}
             </div>
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Name</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Name</label>
                 <input
                   type="text"
                   value={addProductForm.name}
                   onChange={(e) => setAddProductForm({ ...addProductForm, name: e.target.value })}
-                  className={`w-full px-4 py-2 border ${formErrors.name ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
+                  className={`w-full px-4 py-2 border ${formErrors.name ? 'border-red-500' : 'border-gray-300'} rounded-lg text-sm text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 transition-all duration-200`}
                 />
                 {formErrors.name && <p className="text-red-500 text-xs mt-1">{formErrors.name}</p>}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Title</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Title</label>
                 <input
                   type="text"
                   value={addProductForm.title}
                   onChange={(e) => setAddProductForm({ ...addProductForm, title: e.target.value })}
-                  className={`w-full px-4 py-2 border ${formErrors.title ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
+                  className={`w-full px-4 py-2 border ${formErrors.title ? 'border-red-500' : 'border-gray-300'} rounded-lg text-sm text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 transition-all duration-200`}
                 />
                 {formErrors.title && <p className="text-red-500 text-xs mt-1">{formErrors.title}</p>}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Description</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Description</label>
                 <textarea
                   value={addProductForm.description}
                   onChange={(e) => setAddProductForm({ ...addProductForm, description: e.target.value })}
-                  className={`w-full px-4 py-2 border ${formErrors.description ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200 min-h-[100px]`}
+                  className={`w-full px-4 py-2 border ${formErrors.description ? 'border-red-500' : 'border-gray-300'} rounded-lg text-sm text-gray-900 bg-white focus:ring-blue-500 transition-all duration-200 min-h-[100px]`}
                 />
                 {formErrors.description && <p className="text-red-500 text-xs mt-1">{formErrors.description}</p>}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Brand</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Brand</label>
                 <select
                   value={addProductForm.brand}
                   onChange={(e) => setAddProductForm({ ...addProductForm, brand: e.target.value })}
-                  className={`w-full px-4 py-2 border ${formErrors.brand ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
+                  className={`w-full px-4 py-2 border ${formErrors.brand ? 'border-red-500' : 'border-gray-300'} rounded-lg text-sm text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 transition-all duration-200`}
                 >
                   <option value="" disabled>Select a brand</option>
                   <option value="radial">Radial</option>
@@ -569,108 +569,108 @@ const Dashboard = () => {
                 {formErrors.brand && <p className="text-red-500 text-xs mt-1">{formErrors.brand}</p>}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Material</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Material</label>
                 <input
                   type="text"
                   value={addProductForm.material}
                   onChange={(e) => setAddProductForm({ ...addProductForm, material: e.target.value })}
-                  className={`w-full px-4 py-2 border ${formErrors.material ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
+                  className={`w-full px-4 py-2 border ${formErrors.material ? 'border-red-500' : 'border-gray-300'} rounded-lg text-sm text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 transition-all duration-200`}
                 />
                 {formErrors.material && <p className="text-red-500 text-xs mt-1">{formErrors.material}</p>}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Product Number</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Product Number</label>
                 <input
                   type="text"
                   value={addProductForm.productNumber}
                   onChange={(e) => setAddProductForm({ ...addProductForm, productNumber: e.target.value })}
-                  className={`w-full px-4 py-2 border ${formErrors.productNumber ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
+                  className={`w-full px-4 py-2 border ${formErrors.productNumber ? 'border-red-500' : 'border-gray-300'} rounded-lg text-sm text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 transition-all duration-200`}
                 />
                 {formErrors.productNumber && <p className="text-red-500 text-xs mt-1">{formErrors.productNumber}</p>}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Length </label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Length </label>
                 <input
                   type="text"
                   value={addProductForm.length}
                   onChange={(e) => setAddProductForm({ ...addProductForm, length: e.target.value })}
-                  className={`w-full px-4 py-2 border ${formErrors.length ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
+                  className={`w-full px-4 py-2 border ${formErrors.length ? 'border-red-500' : 'border-gray-300'} rounded-lg text-sm text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 transition-all duration-200`}
                 />
                 {formErrors.length && <p className="text-red-500 text-xs mt-1">{formErrors.length}</p>}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Color</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Color</label>
                 <input
                   type="text"
                   value={addProductForm.color}
                   onChange={(e) => setAddProductForm({ ...addProductForm, color: e.target.value })}
-                  className={`w-full px-4 py-2 border ${formErrors.color ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
+                  className={`w-full px-4 py-2 border ${formErrors.color ? 'border-red-500' : 'border-gray-300'} rounded-lg text-sm text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 transition-all duration-200`}
                 />
                 {formErrors.color && <p className="text-red-500 text-xs mt-1">{formErrors.color}</p>}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Accessories</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Accessories</label>
                 <input
                   type="text"
                   value={addProductForm.accessories}
                   onChange={(e) => setAddProductForm({ ...addProductForm, accessories: e.target.value })}
-                  className={`w-full px-4 py-2 border ${formErrors.accessories ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
+                  className={`w-full px-4 py-2 border ${formErrors.accessories ? 'border-red-500' : 'border-gray-300'} rounded-lg text-sm text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 transition-all duration-200`}
                 />
                 {formErrors.accessories && <p className="text-red-500 text-xs mt-1">{formErrors.accessories}</p>}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Image</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Image</label>
                 <div className="relative">
                   <input
                     type="file"
                     accept="image/*"
                     onChange={(e) => setAddProductForm({ ...addProductForm, image: e.target.files[0] })}
-                    className={`w-full px-4 py-2 border ${formErrors.image ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 file:mr-4 file:py-2 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 dark:file:bg-blue-500 dark:hover:file:bg-blue-600 transition-all duration-200`}
+                    className={`w-full px-4 py-2 border ${formErrors.image ? 'border-red-500' : 'border-gray-300'} rounded-lg text-sm text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 transition-all duration-200`}
                   />
-                  <FontAwesomeIcon icon={faUpload} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400" />
+                  <FontAwesomeIcon icon={faUpload} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500" />
                 </div>
                 {formErrors.image && <p className="text-red-500 text-xs mt-1">{formErrors.image}</p>}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Date of Release</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Date of Release</label>
                 <input
                   type="date"
                   value={addProductForm.dateOfRelease}
                   onChange={(e) => setAddProductForm({ ...addProductForm, dateOfRelease: e.target.value })}
-                  className={`w-full px-4 py-2 border ${formErrors.dateOfRelease ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
+                  className={`w-full px-4 py-2 border ${formErrors.dateOfRelease ? 'border-red-500' : 'border-gray-300'} rounded-lg text-sm text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 transition-all duration-200`}
                 />
                 {formErrors.dateOfRelease && <p className="text-red-500 text-xs mt-1">{formErrors.dateOfRelease}</p>}
               </div>
               {!isEditing && (
               <div>
-                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Code</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Code</label>
                 <input
                   type="text"
                   value={addProductForm.code}
                   onChange={(e) => setAddProductForm({ ...addProductForm, code: e.target.value })}
-                  className={`w-full px-4 py-2 border ${formErrors.code ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
+                  className={`w-full px-4 py-2 border ${formErrors.code ? 'border-red-500' : 'border-gray-300'} rounded-lg text-sm text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 transition-all duration-200`}
                 />
                 {formErrors.code && <p className="text-red-500 text-xs mt-1">{formErrors.code}</p>}
               </div>
               )}
               <div>
-                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Datasheet (PDF)</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Datasheet (PDF)</label>
                 <div className="relative">
                   <input
                     type="file"
                     accept=".pdf"
                     onChange={(e) => setAddProductForm({ ...addProductForm, datasheet: e.target.files[0] })}
-                    className={`w-full px-4 py-2 border ${formErrors.datasheet ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 file:mr-4 file:py-2 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 dark:file:bg-blue-500 dark:hover:file:bg-blue-600 transition-all duration-200`}
+                    className={`w-full px-4 py-2 border ${formErrors.datasheet ? 'border-red-500' : 'border-gray-300'} rounded-lg text-sm text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 transition-all duration-200`}
                   />
-                  <FontAwesomeIcon icon={faUpload} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400" />
+                  <FontAwesomeIcon icon={faUpload} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500" />
                 </div>
                 {formErrors.datasheet && <p className="text-red-500 text-xs mt-1">{formErrors.datasheet}</p>}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Projects</label>
+                <label className="block text-sm font-medium mb-2">Projects</label>
                 <button
                   onClick={() => handleAddSelect('selectedProjects')}
-                  className={`w-full px-4 py-2 border ${formErrors.selectedProjects ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-all duration-200 text-left`}
+                  className={`w-full px-4 py-2 border ${formErrors.selectedProjects ? 'border-red-500' : 'border-gray-300'} text-sm text-gray-900 bg-white hover:bg-gray-100 rounded-lg transition-all duration-200 text-left`}
                 >
                   {addProductForm.selectedProjects.length > 0
                     ? `${addProductForm.selectedProjects.length} selected`
@@ -679,10 +679,10 @@ const Dashboard = () => {
                 {formErrors.selectedProjects && <p className="text-red-500 text-xs mt-1">{formErrors.selectedProjects}</p>}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Categories</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Categories</label>
                 <button
                   onClick={() => handleAddSelect('selectedCategories')}
-                  className={`w-full px-4 py-2 border ${formErrors.selectedCategories ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-all duration-200 text-left`}
+                  className={`w-full px-4 py-2 border ${formErrors.selectedCategories ? 'border-red-500' : 'border-gray-300'} text-sm text-gray-900 bg-white hover:bg-gray-100 rounded-lg transition-all duration-200 text-left`}
                 >
                   {addProductForm.selectedCategories.length > 0
                     ? `${addProductForm.selectedCategories.length} selected`
@@ -694,13 +694,13 @@ const Dashboard = () => {
             <div className="flex justify-end space-x-4 mt-8">
               <button
                 onClick={() => setShowAddModal(false)}
-                className="px-4 py-2 text-sm font-medium text-gray-600 hover:text_gray-900 hover:bg-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 rounded-lg transition-all duration-200"
+                className="px-4 py-2 text-sm font-medium text-gray-600 hover:text_gray-900 hover:bg-gray-200 rounded-lg transition-all duration-200"
               >
                 Cancel
               </button>
               <button
                 onClick={confirmAdd}
-                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 rounded-lg transition-all duration-200"
+                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-all duration-200"
               >
                 {isEditing ? 'Save' : 'Add'}
               </button>
@@ -712,36 +712,36 @@ const Dashboard = () => {
           <>
             <div className="flex items-center mb-6">
               {isEditing ? (
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Edit Category</h3>
+                <h3 className="text-xl font-semibold text-gray-900">Edit Category</h3>
               ) : (
                 <>
                   <button
                     onClick={handleAddBack}
-                    className="mr-4 text-gray-900 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-200"
+                    className="mr-4 text-gray-900 hover:text-blue-600 transition-all duration-200"
                   >
                     <FontAwesomeIcon icon={faArrowLeft} />
                   </button>
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Add Category</h3>
+                  <h3 className="text-xl font-semibold text-gray-900">Add Category</h3>
                 </>
               )}
             </div>
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Type</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Type</label>
                 <input
                   type="text"
                   value={addCategoryForm.type}
                   onChange={(e) => setAddCategoryForm({ ...addCategoryForm, type: e.target.value })}
-                  className={`w-full px-4 py-2 border ${formErrors.type ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
+                  className={`w-full px-4 py-2 border ${formErrors.type ? 'border-red-500' : 'border-gray-300'} rounded-lg text-sm text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 transition-all duration-200`}
                 />
                 {formErrors.type && <p className="text-red-500 text-xs mt-1">{formErrors.type}</p>}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Location</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Location</label>
                 <select
                   value={addCategoryForm.location}
                   onChange={(e) => setAddCategoryForm({ ...addCategoryForm, location: e.target.value })}
-                  className={`w-full px-4 py-2 border ${formErrors.location ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
+                  className={`w-full px-4 py-2 border ${formErrors.location ? 'border-red-500' : 'border-gray-300'} rounded-lg text-sm text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 transition-all duration-200`}
                 >
                   <option value="" disabled>Select a Location</option>
                   <option value="Indoor">Indoor</option>
@@ -750,23 +750,23 @@ const Dashboard = () => {
                 {formErrors.location && <p className="text-red-500 text-xs mt-1">{formErrors.location}</p>}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Image</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Image</label>
                 <div className="relative">
                   <input
                     type="file"
                     accept="image/*"
                     onChange={(e) => setAddCategoryForm({ ...addCategoryForm, image: e.target.files[0] })}
-                    className={`w-full px-4 py-2 border ${formErrors.image ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 file:mr-4 file:py-2 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 dark:file:bg-blue-500 dark:hover:file:bg-blue-600 transition-all duration-200`}
+                    className={`w-full px-4 py-2 border ${formErrors.image ? 'border-red-500' : 'border-gray-300'} rounded-lg text-sm text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 transition-all duration-200`}
                   />
-                  <FontAwesomeIcon icon={faUpload} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400" />
+                  <FontAwesomeIcon icon={faUpload} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500" />
                 </div>
                 {formErrors.image && <p className="text-red-500 text-xs mt-1">{formErrors.image}</p>}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Products</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Products</label>
                 <button
                   onClick={() => handleAddSelect('selectedProducts')}
-                  className={`w-full px-4 py-2 border ${formErrors.selectedProducts ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-all duration-200 text-left`}
+                  className={`w-full px-4 py-2 border ${formErrors.selectedProducts ? 'border-red-500' : 'border-gray-300'} text-sm text-gray-900 bg-white hover:bg-gray-10 rounded-lg transition-all duration-200 text-left`}
                 >
                   {addCategoryForm.selectedProducts.length > 0
                     ? `${addCategoryForm.selectedProducts.length} selected`
@@ -778,13 +778,13 @@ const Dashboard = () => {
             <div className="flex justify-end space-x-4 mt-8">
               <button
                 onClick={() => setShowAddModal(false)}
-                className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 rounded-lg transition-all duration-200"
+                className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-200 rounded-lg transition-all duration-200"
               >
                 Cancel
               </button>
               <button
                 onClick={confirmAdd}
-                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 rounded-lg transition-all duration-200"
+                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-all duration-200"
               >
                 {isEditing ? 'Save' : 'Add'}
               </button>
@@ -796,71 +796,71 @@ const Dashboard = () => {
           <>
             <div className="flex items-center mb-6">
               {isEditing ? (
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Edit Project</h3>
+                <h3 className="text-xl font-semibold text-gray-900">Edit Project</h3>
               ) : (
                 <>
                   <button
                     onClick={handleAddBack}
-                    className="mr-4 text-gray-900 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-200"
+                    className="mr-4 text-gray-900 hover:text-blue-600 transition-all duration-200"
                   >
                     <FontAwesomeIcon icon={faArrowLeft} />
                   </button>
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Add Project</h3>
+                  <h3 className="text-xl font-semibold text-gray-900">Add Project</h3>
                 </>
               )}
             </div>
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Title</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Title</label>
                 <input
                   type="text"
                   value={addProjectForm.title}
                   onChange={(e) => setAddProjectForm({ ...addProjectForm, title: e.target.value })}
-                  className={`w-full px-4 py-2 border ${formErrors.title ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
+                  className={`w-full px-4 py-2 border ${formErrors.title ? 'border-red-500' : 'border-gray-300'} rounded-lg text-sm text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 transition-all duration-200`}
                 />
                 {formErrors.title && <p className="text-red-500 text-xs mt-1">{formErrors.title}</p>}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Quote</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Quote</label>
                 <input
                   type="text"
                   value={addProjectForm.quote}
                   onChange={(e) => setAddProjectForm({ ...addProjectForm, quote: e.target.value })}
-                  className={`w-full px-4 py-2 border ${formErrors.quote ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
+                  className={`w-full px-4 py-2 border ${formErrors.quote ? 'border-red-500' : 'border-gray-300'} rounded-lg text-sm text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 transition-all duration-200`}
                 />
                 {formErrors.quote && <p className="text-red-500 text-xs mt-1">{formErrors.quote}</p>}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Location</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Location</label>
                 <input
                   type="text"
                   value={addProjectForm.location}
                   onChange={(e) => setAddProjectForm({ ...addProjectForm, location: e.target.value })}
-                  className={`w-full px-4 py-2 border ${formErrors.location ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
+                  className={`w-full px-4 py-2 border ${formErrors.location ? 'border-red-500' : 'border-gray-300'} rounded-lg text-sm text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 transition-all duration-200`}
                 />
                 {formErrors.location && <p className="text-red-500 text-xs mt-1">{formErrors.location}</p>}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Partners</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Partners</label>
                 <input
                   type="text"
                   value={addProjectForm.partners}
                   onChange={(e) => setAddProjectForm({ ...addProjectForm, partners: e.target.value })}
-                  className={`w-full px-4 py-2 border ${formErrors.partners ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
+                  className={`w-full px-4 py-2 border ${formErrors.partners ? 'border-red-500' : 'border-gray-300'} rounded-lg text-sm text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 transition-all duration-200`}
                 />
                 {formErrors.partners && <p className="text-red-500 text-xs mt-1">{formErrors.partners}</p>}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Images (Multiple)</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Images (Multiple)</label>
                 <div className="relative">
                   <input
                     type="file"
                     accept="image/*"
                     multiple
                     onChange={(e) => setAddProjectForm({ ...addProjectForm, images: Array.from(e.target.files) })}
-                    className={`w-full px-4 py-2 border ${formErrors.images ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 file:mr-4 file:py-2 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 dark:file:bg-blue-500 dark:hover:file:bg-blue-600 transition-all duration-200`}
+                    className={`w-full px-4 py-2 border ${formErrors.images ? 'border-red-500' : 'border-gray-300'} rounded-lg text-sm text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 transition-all duration-200`}
                   />
-                  <FontAwesomeIcon icon={faUpload} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400" />
+                  <FontAwesomeIcon icon={faUpload} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500" />
                 </div>
                 {formErrors.images && <p className="text-red-500 text-xs mt-1">{formErrors.images}</p>}
                 {Object.keys(formErrors).map((key) => (
@@ -869,35 +869,35 @@ const Dashboard = () => {
                 {addProjectForm.images.length > 0 && (
                   <ul className="mt-3 space-y-1">
                     {addProjectForm.images.map((file, index) => (
-                      <li key={index} className="text-sm text-gray-900 dark:text-gray-100 truncate">{file.name}</li>
+                      <li key={index} className="text-sm text-gray-900 truncate">{file.name}</li>
                     ))}
                   </ul>
                 )}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Description</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Description</label>
                 <textarea
                   value={addProjectForm.description}
                   onChange={(e) => setAddProjectForm({ ...addProjectForm, description: e.target.value })}
-                  className={`w-full px-4 py-2 border ${formErrors.description ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200 min-h-[100px]`}
+                  className={`w-full px-4 py-2 border ${formErrors.description ? 'border-red-500' : 'border-gray-300'} rounded-lg text-sm text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 transition-all duration-200 min-h-[100px]`}
                 />
                 {formErrors.description && <p className="text-red-500 text-xs mt-1">{formErrors.description}</p>}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Date of Project</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Date of Project</label>
                 <input
                   type="date"
                   value={addProjectForm.dateOfProject}
                   onChange={(e) => setAddProjectForm({ ...addProjectForm, dateOfProject: e.target.value })}
-                  className={`w-full px-4 py-2 border ${formErrors.dateOfProject ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} rounded-lg text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-all duration-200`}
+                  className={`w-full px-4 py-2 border ${formErrors.dateOfProject ? 'border-red-500' : 'border-gray-300'} rounded-lg text-sm text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 transition-all duration-200`}
                 />
                 {formErrors.dateOfProject && <p className="text-red-500 text-xs mt-1">{formErrors.dateOfProject}</p>}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Products</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">Products</label>
                 <button
                   onClick={() => handleAddSelect('selectedProducts')}
-                  className={`w-full px-4 py-2 border ${formErrors.selectedProducts ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-all duration-200 text-left`}
+                  className={`w-full px-4 py-2 border ${formErrors.selectedProducts ? 'border-red-500' : 'border-gray-300'} text-sm text-gray-900 bg-white hover:bg-gray-100 rounded-lg transition-all duration-200 text-left`}
                 >
                   {addProjectForm.selectedProducts.length > 0
                     ? `${addProjectForm.selectedProducts.length} selected`
@@ -909,13 +909,13 @@ const Dashboard = () => {
             <div className="flex justify-end space-x-4 mt-8">
               <button
                 onClick={() => setShowAddModal(false)}
-                className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 rounded-lg transition-all duration-200"
+                className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-200 rounded-lg transition-all duration-200"
               >
                 Cancel
               </button>
               <button
                 onClick={confirmAdd}
-                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 rounded-lg transition-all duration-200"
+                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-all duration-200"
               >
                 {isEditing ? 'Save' : 'Add'}
               </button>
@@ -940,11 +940,11 @@ const Dashboard = () => {
         title="Success"
         maxWidth="max-w-md"
       >
-        <p className="text-gray-600 dark:text-gray-400 mb-6">{confirmationMessage}</p>
+        <p className="text-gray-600 mb-6">{confirmationMessage}</p>
         <div className="flex justify-end">
           <button
             onClick={() => setShowConfirmation(false)}
-            className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 rounded-lg transition-all duration-200"
+            className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-all duration-200"
           >
             OK
           </button>

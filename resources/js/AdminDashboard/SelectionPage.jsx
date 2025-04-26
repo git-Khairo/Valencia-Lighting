@@ -43,7 +43,7 @@ const SelectionPage = ({ selectionType, formData, setFormData, onBack, addType }
         data.products?.map(product => ({
           value: `product_${product.id}`,
           label: product.name,
-          rawId: Number(product.id),
+          rawId: product.code,
           type: 'product',
         })) || [];
     }
@@ -64,7 +64,6 @@ const SelectionPage = ({ selectionType, formData, setFormData, onBack, addType }
       const rawId = option.rawId;
       let newSelected;
 
-      console.log('Before Toggle - Current Selected:', current, 'Option:', option); // Debug log
       if (selectionType === 'selectedProjects' && option.type === 'project') {
         newSelected = current.includes(rawId)
           ? current.filter(id => id !== rawId)
@@ -80,24 +79,23 @@ const SelectionPage = ({ selectionType, formData, setFormData, onBack, addType }
       } else {
         newSelected = current;
       }
+      console.log(newSelected);
 
-      console.log('After Toggle - New Selected:', newSelected); // Debug log
       return { ...prev, [selectionType]: newSelected };
     });
   };
 
-  console.log('Rendering SelectionPage - Selected:', selected); // Debug log
 
   return (
     <>
       <div className="flex items-center mb-6">
         <button
           onClick={onBack}
-          className="mr-4 text-light-text dark:text-dark-text hover:text-light-primary dark:hover:text-dark-primary transition-all duration-200"
+          className="mr-4 text-light-text hover:text-light-primary transition-all duration-200"
         >
           <FontAwesomeIcon icon={faArrowLeft} />
         </button>
-        <h3 className="text-xl font-semibold text-light-text dark:text-dark-text">
+        <h3 className="text-xl font-semibold text-light-text">
           Select {displayType.charAt(0).toUpperCase() + displayType.slice(1)}
         </h3>
       </div>
@@ -107,26 +105,26 @@ const SelectionPage = ({ selectionType, formData, setFormData, onBack, addType }
           placeholder={`Search ${displayType}...`}
           value={selectionSearch}
           onChange={e => setSelectionSearch(e.target.value)}
-          className="w-full px-4 py-2 border border-light-secondary dark:border-dark-secondary rounded-lg text-sm text-light-text dark:text-dark-text bg-light-background dark:bg-dark-background focus:ring-2 focus:ring-light-primary dark:focus:ring-dark-primary transition-all duration-200"
+          className="w-full px-4 py-2 border border-light-secondary rounded-lg text-sm text-light-text bg-light-background focus:ring-2 focus:ring-light-primary transition-all duration-200"
         />
         <div className="max-h-60 overflow-y-auto">
           {loading ? (
-            <p className="text-sm text-light-secondary dark:text-dark-secondary px-3 py-2">Loading...</p>
+            <p className="text-sm text-light-secondary px-3 py-2">Loading...</p>
           ) : error ? (
             <p className="text-sm text-red-500 px-3 py-2">{error}</p>
           ) : !type ? (
-            <p className="text-sm text-light-secondary dark:text-dark-secondary px-3 py-2">
+            <p className="text-sm text-light-secondary px-3 py-2">
               Invalid selection type. Please go back and try again.
             </p>
           ) : filteredOptions.length === 0 ? (
-            <p className="text-sm text-light-secondary dark:text-dark-secondary px-3 py-2">
+            <p className="text-sm text-light-secondary px-3 py-2">
               No {displayType} found.
             </p>
           ) : (
             filteredOptions.map(option => (
               <div
                 key={option.value}
-                className="flex items-center px-3 py-2 text-sm text-light-text dark:text-dark-text hover:bg-light-secondary dark:hover:bg-dark-accent transition-all duration-200"
+                className="flex items-center px-3 py-2 text-sm text-light-text hover:bg-light-secondary transition-all duration-200"
               >
                 <input
                   type="checkbox"
@@ -143,7 +141,7 @@ const SelectionPage = ({ selectionType, formData, setFormData, onBack, addType }
       <div className="flex justify-end mt-6">
         <button
           onClick={onBack}
-          className="px-4 py-2 text-sm font-medium text-light-primary hover:bg-light-accent dark:text-dark-primary dark:hover:bg-dark-accent rounded-lg transition-all duration-200 hover:shadow-sm"
+          className="px-4 py-2 text-sm font-medium text-light-primary hover:bg-light-accent rounded-lg transition-all duration-200 hover:shadow-sm"
         >
           Done
         </button>

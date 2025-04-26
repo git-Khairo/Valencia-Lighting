@@ -27,7 +27,7 @@ const SearchResults = ({ searchQuery, itemsPerPage, onEdit, onDelete, searchResu
   return (
     <div>
       {allItems.length === 0 ? (
-        <div className="text-center py-4 text-light-secondary dark:text-dark-secondary">
+        <div className="text-center py-4 text-light-secondary">
           No items found.{' '}
           <button
             onClick={() => document.querySelector('.add-button')?.click()} // Trigger add button if available
@@ -49,7 +49,7 @@ const SearchResults = ({ searchQuery, itemsPerPage, onEdit, onDelete, searchResu
               <button
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
-                className="px-3 py-1 rounded-lg bg-light-secondary text-light-text dark:bg-dark-secondary dark:text-dark-text disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover:bg-light-accent dark:hover:bg-dark-accent"
+                className="px-3 py-1 rounded-lg bg-light-secondary text-light-text disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover:bg-light-accent"
               >
                 <FontAwesomeIcon icon={faAngleLeft} />
               </button>
@@ -59,8 +59,8 @@ const SearchResults = ({ searchQuery, itemsPerPage, onEdit, onDelete, searchResu
                   onClick={() => handlePageChange(page)}
                   className={`px-3 py-1 rounded-lg transition-all duration-200 ${
                     currentPage === page
-                      ? 'bg-light-primary text-white dark:bg-dark-primary'
-                      : 'bg-light-secondary text-light-text dark:bg-dark-secondary dark:text-dark-text hover:bg-light-accent dark:hover:bg-dark-accent'
+                      ? 'bg-light-primary text-white'
+                      : 'bg-light-secondary text-light-text hover:bg-light-accent'
                   }`}
                 >
                   {page}
@@ -69,7 +69,7 @@ const SearchResults = ({ searchQuery, itemsPerPage, onEdit, onDelete, searchResu
               <button
                 onClick={() => handlePageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                className="px-3 py-1 rounded-lg bg-light-secondary text-light-text dark:bg-dark-secondary dark:text-dark-text disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover:bg-light-accent dark:hover:bg-dark-accent"
+                className="px-3 py-1 rounded-lg bg-light-secondary text-light-text disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover:bg-light-accent"
               >
                 <FontAwesomeIcon icon={faAngleRight} />
               </button>
