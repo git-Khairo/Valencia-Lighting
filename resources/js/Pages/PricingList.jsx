@@ -289,7 +289,7 @@ const PricingList = () => {
           <input
             type="text"
             name="firstName"
-            value={formData.lastName}
+            value={formData.firstName}
             onChange={handleInputChange}
             className={`mt-1 block w-full border rounded-md px-3 py-2 text-light-text dark:text-dark-text bg-light-background dark:bg-dark-background ${formErrors.firstName ? 'border-red-500' : 'border-gray-300 dark:border-transparent focus:dark:border-dark-secondary'} focus:outline-none focus:ring-light-primary focus:border-dark-accent`}
             placeholder="John"

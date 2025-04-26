@@ -170,7 +170,7 @@ const OrderDetails = () => {
           title={modal.title}
           onClose={() => setModal({ ...modal, isOpen: false })}
         >
-          <p className="text-gray-800 dark:text-gray-200 mb-4">{modal.message}</p>
+          <p className="text-gray-800 mb-4">{modal.message}</p>
 
           {modal.type === 'confirm' && (
             <div className="flex justify-end gap-4">

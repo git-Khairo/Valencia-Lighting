@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
 use App\Http\Resources\ProjectCardResource;
 use App\Http\Resources\ProjectResource;
+use App\Models\Product;
 use App\Repository\ProjectRepository;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class ProjectController extends Controller
@@ -70,7 +69,7 @@ class ProjectController extends Controller
         try {
             $project = Project::findOrFail($id);
             $validated = $request->validated();
-    
+            
             if ($request->hasFile('images')) {
                 $paths = [];
                 if ($project->images) {
@@ -88,16 +87,25 @@ class ProjectController extends Controller
             } elseif ($request->has('existing_images')) {
                 $validated['images'] = $request->input('existing_images');
             }
-    
+            
             $project->update($validated);
-    
+            
             // Handle product_ids
-            $productIds = $request->input('product_ids');
-            if (is_string($productIds)) {
-                $productIds = json_decode($productIds, true) ?? [];
+            $productCodes = $request->input('product_ids');
+            if (is_string($productCodes)) {
+                $productCodes = json_decode($productCodes, true) ?? [];
             } else {
-                $productIds = $productIds ?? [];
+                $productCodes = $productCodes ?? [];
             }
+            
+            // Convert product codes to IDs
+            $productIds = [];
+            if (!empty($productCodes)) {
+                $productIds = Product::whereIn('code', array_unique($productCodes))
+                    ->pluck('id')
+                    ->toArray();
+            }
+
             $project->products()->sync(array_unique($productIds));
     
             return response()->json([

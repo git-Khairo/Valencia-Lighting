@@ -129,62 +129,62 @@ const Layout = () => {
                 : "bg-light-background dark:bg-dark-background"
             }`}
           >
-            <div className="w-full px-4 sm:px-6 lg:px-8">
-              <div className="flex justify-between h-16 items-center">
-                {/* Left Section - Logo & Mobile Menu Button */}
-                <div className="flex items-center">
-                  <button
-                    className="md:hidden text-light-secondary2 dark:text-gray-200 mr-4 hover:text-light-primary hover:dark:text-dark-primary transition-colors duration-500"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setShowSidebar(true);
-                    }}
-                  >
-                    <FaBars size={22} />
-                  </button>
-                  <div className="flex justify-center items-center space-x-2 text-2xl text-light-text dark:text-dark-text">
-                    <img src="/storage/logo/vallencia logo.png" alt="" className="h-10" />
-                    <a href="/" className="font-Montserrat">Vallencia Lighting</a>
-                  </div>
-                </div>
-
-                {/* Desktop Navigation */}
-                <div className="hidden md:flex space-x-8 ml-10 items-center">
-                  {["Products","Categories", "Projects", "About Us"].map((item) => (
-                    <a
-                      key={item}
-                      href={`/${item}`}
-                      className="relative font-Montserrat text-light-text dark:text-dark-text hover:text-light-primary dark:hover:text-dark-primary font-medium transition-colors duration-500 after:content-[''] after:absolute after:bottom-[-6px] after:left-1/2 after:w-0 after:h-[2.5px] after:bg-light-primary dark:after:bg-dark-primary after:rounded-full after:transition-all after:duration-500 hover:after:w-[120%] hover:after:left-[-10%]"
-                    >
-                      {item}
-                    </a>
-                  ))}
-                </div>
-
-                {/* Right Section - Search & Dark Mode */}
-                <div className="flex items-center space-x-10 relative">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setShowSearch(!showSearch);
-                    }}
-                    className="text-light-secondary2 dark:text-dark-secondary2 hover:text-light-primary dark:hover:text-dark-primary transition-colors duration-700 z-20"
-                  >
-                    {showSearch ? <FaTimes size={20} /> : <FaSearch size={20} />}
-                  </button>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setDarkMode((prev) => !prev); // Explicit toggle
-                    }}
-                    className="text-light-secondary2 dark:text-dark-secondary2 hover:text-light-primary dark:hover:text-dark-primary transition-colors duration-700 z-20"
-                  >
-                    {darkMode ? <FaSun size={20} /> : <FaMoon size={20} />}
-                  </button>
-                    <ReceiptIcon />
+          <div className="w-full px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center h-16">
+              {/* Left Section - Logo & Mobile Menu Button */}
+              <div className="flex items-center">
+                <button
+                  className="md:hidden text-light-secondary2 dark:text-gray-200 mr-4 hover:text-light-primary hover:dark:text-dark-primary transition-colors duration-500"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowSidebar(true);
+                  }}
+                >
+                  <FaBars size={22} />
+                </button>
+                <div className="flex justify-center items-center space-x-2 text-2xl text-light-text dark:text-dark-text">
+                  <img src="/storage/logo/vallencia logo.png" alt="" className="h-10" />
+                  <a href="/" className="font-Montserrat">Vallencia Lighting</a>
                 </div>
               </div>
+
+              {/* Desktop Navigation - Centered */}
+              <div className="hidden md:flex flex-1 justify-center items-center space-x-8">
+                {["Products", "Categories", "Projects", "About Us"].map((item) => (
+                  <a
+                    key={item}
+                    href={`/${item}`}
+                    className="relative font-Montserrat text-light-text dark:text-dark-text hover:text-light-primary dark:hover:text-dark-primary font-medium transition-colors duration-500 after:content-[''] after:absolute after:bottom-[-6px] after:left-1/2 after:w-0 after:h-[2.5px] after:bg-light-primary dark:after:bg-dark-primary after:rounded-full after:transition-all after:duration-500 hover:after:w-[120%] hover:after:left-[-10%]"
+                  >
+                    {item}
+                  </a>
+                ))}
+              </div>
+
+              {/* Right Section - Search & Dark Mode */}
+              <div className="flex items-center space-x-10 relative">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowSearch(!showSearch);
+                  }}
+                  className="text-light-secondary2 dark:text-dark-secondary2 hover:text-light-primary dark:hover:text-dark-primary transition-colors duration-700 z-20"
+                >
+                  {showSearch ? <FaTimes size={20} /> : <FaSearch size={20} />}
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setDarkMode((prev) => !prev);
+                  }}
+                  className="text-light-secondary2 dark:text-dark-secondary2 hover:text-light-primary dark:hover:text-dark-primary transition-colors duration-700 z-20"
+                >
+                  {darkMode ? <FaSun size={20} /> : <FaMoon size={20} />}
+                </button>
+                <ReceiptIcon />
+              </div>
             </div>
+          </div>
           </nav>
 
           {/* Search Dropdown (Mega Dropdown) */}
@@ -462,24 +462,33 @@ const Layout = () => {
               <p className="font-SulphurPoint">Phone: +971 (055) 663-6640</p>
             </div>
           </div>
-          <div className="flex flex-col md:flex-row justify-between items-center border-t border-gray-300 dark:border-gray-700 pt-6">
-            <div className="flex justify-center items-center space-x-2 mb-6 md:mb-0">
-              <img src="/storage/logo/vallencia logo.png" alt="" className="h-12" />
-              <h2 className="text-2xl font-Montserrat text-light-primary dark:text-dark-primary">Vallencia Lighting</h2>
-            </div>
-              <div className="flex space-x-6">
-                <a href="https://www.instagram.com/vallencia_lighting?igsh=MWJjbmViMXlraHpmNA==" target="blank_" className="text-3xl hover:scale-105 transition-transform hover:text-light-primary dark:hover:text-dark-primary">
-                  <FaInstagram />
-                </a>
-                <a href="https://maps.app.goo.gl/vjxwGkRjhwjRYMAq7" target="blank_" className="text-3xl text-light-text dark:text-dark-text hover:text-light-primary dark:hover:text-dark-primary transition-all duration-200">
-                  <FaMapMarkerAlt />
-                </a>
-              </div>
-            <div className="flex space-x-4 mt-6 md:mt-0">
-              <a href="https://www.sila-eu.com/" target="blank_"><img src="/storage/logo/sila logo.png" alt="Sponsor 1" className="h-12 opacity-80 hover:opacity-100 transition-opacity duration-200" /></a>
-              <a href="https://www.radial-eu.com/" target="blank_"><img src="/storage/logo/radial logo.png" alt="Sponsor 2" className="h-12 opacity-80 hover:opacity-100 transition-opacity duration-200" /></a>
-            </div>
+          <div className="flex flex-col md:flex-row items-center border-t border-gray-300 dark:border-gray-700 pt-6">
+          {/* Left Section - Logo & Name */}
+          <div className="flex justify-center items-center space-x-2 mb-6 md:mb-0">
+            <img src="/storage/logo/vallencia logo.png" alt="" className="h-12" />
+            <h2 className="text-2xl font-Montserrat text-light-primary dark:text-dark-primary">Vallencia Lighting</h2>
           </div>
+
+          {/* Center Section - Social Media Icons */}
+          <div className="flex flex-1 justify-center items-center space-x-6 mb-6 md:mr-20 md:mb-0">
+            <a href="https://www.instagram.com/vallencia_lighting?igsh=MWJjbmViMXlraHpmNA==" target="_blank" className="text-3xl hover:scale-105 transition-transform hover:text-light-primary dark:hover:text-dark-primary">
+              <FaInstagram />
+            </a>
+            <a href="https://maps.app.goo.gl/vjxwGkRjhwjRYMAq7" target="_blank" className="text-3xl text-light-text dark:text-dark-text hover:text-light-primary dark:hover:text-dark-primary transition-all duration-200">
+              <FaMapMarkerAlt />
+            </a>
+          </div>
+
+          {/* Right Section - Sponsor Logos */}
+          <div className="flex space-x-4 mt-6 md:mt-0">
+            <a href="https://www.sila-eu.com/" target="_blank">
+              <img src="/storage/logo/sila logo.png" alt="Sponsor 1" className="h-12 opacity-80 hover:opacity-100 transition-opacity duration-200" />
+            </a>
+            <a href="https://www.radial-eu.com/" target="_blank">
+              <img src="/storage/logo/radial logo.png" alt="Sponsor 2" className="h-12 opacity-80 hover:opacity-100 transition-opacity duration-200" />
+            </a>
+          </div>
+        </div>
           <div className="flex justify-center font-Montserrat text-sm mt-8 text-light-secondary dark:text-dark-secondary">
             © {new Date().getFullYear()} Valencia Lighting. All rights reserved.
           </div>

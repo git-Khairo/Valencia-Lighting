@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
 class UpdateProjectRequest extends FormRequest
@@ -32,7 +31,7 @@ class UpdateProjectRequest extends FormRequest
         'description' => 'sometimes|required|string',
         'dateOfProject' => 'sometimes|required|date',
         'product_ids' => 'sometimes|array',
-        'product_ids.*' => 'exists:products,id',
+        'product_ids.*' => 'exists:products,code',
     ];
 }
 

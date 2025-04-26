@@ -116,7 +116,7 @@ function Timeline() {
                                 <span className="font-SulphurPoint" style={{ color: event.color }}>{event.year}</span>
                             </div>
 
-                            <div className="p-6 rounded-lg shadow-md w-auto border-2 bg-light-secondary dark:bg-light-background2" style={{ borderColor: event.color }}>
+                            <div className="p-6 rounded-lg shadow-md w-auto border-2 bg-light-background dark:bg-dark-background" style={{ borderColor: event.color }}>
                                 <h3 className="text-base font-SulphurPoint" style={{ color: event.color }}>{event.title}</h3>
                             </div>
                         </motion.div>
