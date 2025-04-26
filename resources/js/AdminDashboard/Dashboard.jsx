@@ -32,6 +32,9 @@ const Dashboard = () => {
   const [searchResults, setSearchResults] = useState({ products: [], categories: [], projects: [] });
   const [currentPage, setCurrentPage] = useState(1);
   const [formErrors, setFormErrors] = useState({});
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [confirmationMessage, setConfirmationMessage] = useState('');
+  const [refetchTrigger, setRefetchTrigger] = useState(0);
   const deleteModalRef = useRef(null);
   const addModalRef = useRef(null);
   const navigate = useNavigate();
@@ -70,7 +73,7 @@ const Dashboard = () => {
   const url = searchQuery.length > 0
     ? `/api/search?query=${searchQuery}`
     : '/api/defaultSearch';
-  const { data, loading, error } = useFetch(url);
+  const { data, loading, error } = useFetch(url, refetchTrigger);
 
   const { validateForm } = FormValidation({
     formData: addType === 'Product' ? addProductForm : addType === 'Category' ? addCategoryForm : addProjectForm,
@@ -222,45 +225,10 @@ const Dashboard = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      let updatedResults;
-      switch (itemToDelete.type) {
-        case 'product':
-          updatedResults = {
-            ...searchResults,
-            products: searchResults.products.filter(item => item.id !== itemToDelete.id),
-          };
-          break;
-        case 'category':
-          updatedResults = {
-            ...searchResults,
-            categories: searchResults.categories.filter(item => item.id !== itemToDelete.id),
-          };
-          break;
-        case 'project':
-          updatedResults = {
-            ...searchResults,
-            projects: searchResults.projects.filter(item => item.id !== itemToDelete.id),
-          };
-          break;
-        default:
-          updatedResults = { ...searchResults };
-      }
-
-      const allItems = [
-        ...updatedResults.products,
-        ...updatedResults.categories,
-        ...updatedResults.projects,
-      ];
-      const totalPages = Math.ceil(allItems.length / itemsPerPage);
-
-      if (currentPage > totalPages && totalPages > 0) {
-        setCurrentPage(totalPages);
-      } else if (allItems.length === 0) {
-        setCurrentPage(1);
-      }
-
-      setSearchResults(updatedResults);
       setShowDeleteModal(false);
+      setConfirmationMessage(`${itemToDelete.type.charAt(0).toUpperCase() + itemToDelete.type.slice(1)} deleted successfully!`);
+      setShowConfirmation(true);
+      setRefetchTrigger(prev => prev + 1);
       setItemToDelete(null);
     } catch (error) {
       console.error('Error deleting item:', error);
@@ -273,21 +241,21 @@ const Dashboard = () => {
     setAddType(type);
     setAddPage(2);
     setAddProductForm({
-    name: '',
-    title: '',
-    description: '',
-    brand: '',
-    material: '',
-    productNumber: '',
-    length: '',
-    color: '',
-    accessories: '',
-    image: null,
-    dateOfRelease: '',
-    code: '',
-    datasheet: null,
-    selectedProjects: [],
-    selectedCategories: [],
+      name: '',
+      title: '',
+      description: '',
+      brand: '',
+      material: '',
+      productNumber: '',
+      length: '',
+      color: '',
+      accessories: '',
+      image: null,
+      dateOfRelease: '',
+      code: '',
+      datasheet: null,
+      selectedProjects: [],
+      selectedCategories: [],
     });
     setAddCategoryForm({ type: '', image: null, location: '', selectedProducts: [] });
     setAddProjectForm({ 
@@ -299,7 +267,7 @@ const Dashboard = () => {
       partners: '',
       dateOfProject: '',
       selectedProducts: []
-     });
+    });
     setFormErrors({});
   };
 
@@ -384,15 +352,18 @@ const Dashboard = () => {
         throw new Error(result.message || 'Failed to save data');
       }
   
-      console.log(`${isEditing ? 'Edited' : 'Added'} ${addType}:`, result.data);
       setShowAddModal(false);
       setAddPage(1);
       setAddType(null);
       setAddSelectionType(null);
       setIsEditing(false);
       setFormErrors({});
+      setConfirmationMessage(isEditing 
+        ? `${addType} updated successfully!`
+        : `${addType} added successfully!`);
+      setShowConfirmation(true);
+      setRefetchTrigger(prev => prev + 1);
     } catch (error) {
-      console.error(`Error ${isEditing ? 'updating' : 'adding'} ${addType}:`, error);
       alert(`Error: ${error.message}`);
     }
   };
@@ -723,7 +694,7 @@ const Dashboard = () => {
             <div className="flex justify-end space-x-4 mt-8">
               <button
                 onClick={() => setShowAddModal(false)}
-                className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 rounded-lg transition-all duration-200"
+                className="px-4 py-2 text-sm font-medium text-gray-600 hover:text_gray-900 hover:bg-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 rounded-lg transition-all duration-200"
               >
                 Cancel
               </button>
@@ -795,7 +766,7 @@ const Dashboard = () => {
                 <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">Products</label>
                 <button
                   onClick={() => handleAddSelect('selectedProducts')}
-                  className={`w-full px-4 py-2 border ${formErrors.selectedProducts ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} text-sm text seres-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-all duration-200 text-left`}
+                  className={`w-full px-4 py-2 border ${formErrors.selectedProducts ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-all duration-200 text-left`}
                 >
                   {addCategoryForm.selectedProducts.length > 0
                     ? `${addCategoryForm.selectedProducts.length} selected`
@@ -961,6 +932,23 @@ const Dashboard = () => {
             addType={addType}
           />
         )}
+      </Modal>
+
+      <Modal
+        isOpen={showConfirmation}
+        onClose={() => setShowConfirmation(false)}
+        title="Success"
+        maxWidth="max-w-md"
+      >
+        <p className="text-gray-600 dark:text-gray-400 mb-6">{confirmationMessage}</p>
+        <div className="flex justify-end">
+          <button
+            onClick={() => setShowConfirmation(false)}
+            className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 rounded-lg transition-all duration-200"
+          >
+            OK
+          </button>
+        </div>
       </Modal>
     </div>
   );
