@@ -12,7 +12,8 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->json('images');
-            $table->string('description');
+            $table->longText('description');
+            $table->json('paragraph');
             $table->string('quote');
             $table->string('location');
             $table->string('partners');

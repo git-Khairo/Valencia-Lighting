@@ -21,6 +21,7 @@ class Project extends Model
         'partners',
         'images',
         'description',
+        'paragraph',
         'dateOfProject',
     ];
     protected $casts = ['images' => 'array']; // Cast JSON to array

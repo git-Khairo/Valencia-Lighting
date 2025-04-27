@@ -56,9 +56,23 @@ class ProjectController extends Controller
 
         // Create the project and associate products
         $project = Project::create($validated);
-        if ($request->has('product_ids')) {
-            $project->products()->sync($request->product_ids);
+        // Handle product_ids
+        $productCodes = $request->input('product_ids');
+        if (is_string($productCodes)) {
+            $productCodes = json_decode($productCodes, true) ?? [];
+        } else {
+            $productCodes = $productCodes ?? [];
         }
+        
+        // Convert product codes to IDs
+        $productIds = [];
+        if (!empty($productCodes)) {
+            $productIds = Product::whereIn('code', array_unique($productCodes))
+                ->pluck('id')
+                ->toArray();
+        }
+
+        $project->products()->sync(array_unique($productIds));
 
         return response()->json(['project' => $project], 201);
     }

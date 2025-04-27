@@ -13,6 +13,7 @@ class ProjectResource extends JsonResource
             'title' => $this->title,
             'images' => json_decode($this->images),
             'description' => $this->description,
+            'paragraph' => json_decode($this->paragraph),
             'quote' => $this->quote,
             'location' => $this->location,
             'partners' => $this->partners,

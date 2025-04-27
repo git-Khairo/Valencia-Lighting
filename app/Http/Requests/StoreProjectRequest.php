@@ -25,13 +25,14 @@ class StoreProjectRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'images' => 'required|array', // Max 2MB
+            'paragraph' => 'required',
             'description' => 'required|string',
             'quote' => 'required|string|max:255',
             'location' => 'required|string|max:255',
             'partners' => 'required|string|max:255',
             'dateOfProject' => 'required|date',
             'product_ids' => 'sometimes|array',
-            'product_ids.*' => 'exists:products,id',
+            'product_ids.*' => 'exists:products,code',
         ];
     }
 
@@ -57,6 +58,7 @@ class StoreProjectRequest extends FormRequest
             'image.file' => 'The image must be a valid file.',
             'image.image' => 'The image must be an image file (e.g., jpg, png).',
             'image.max' => 'The image must not exceed 2MB.',
+            'paragraph.required' => 'The image is required.',
             'description.required' => 'The description is required.',
             'description.string' => 'The description must be a string.',
             'dateOfProject.required' => 'The date of project is required.',

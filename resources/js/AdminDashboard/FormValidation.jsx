@@ -236,6 +236,34 @@ const FormValidation = ({ formData, addType, isEditing, setErrors }) => {
         newErrors.description = 'The description must be a string.';
       }
 
+      
+      // Description: required, string
+      if (!formData.paragraph[0].title && (!isEditing || formData.paragraph[0].title !== undefined)) {
+        newErrors.paragraph[0].title = 'The title is required.';
+      } else if (typeof formData.paragraph[0].title !== 'string') {
+        newErrors.paragraph[0].title = 'The title must be a string.';
+      }
+      
+      // Description: required, string
+      if (!formData.paragraph[0].paragraph && (!isEditing || formData.paragraph[0].paragraph !== undefined)) {
+        newErrors.paragraph[0].paragraph = 'The description is required.';
+      } else if (typeof formData.paragraph[0].paragraph !== 'string') {
+        newErrors.paragraph[0].paragraph = 'The description must be a string.';
+      }
+      
+      // Description: required, string
+      if (!formData.paragraph[1].title && (!isEditing || formData.paragraph[1].title !== undefined)) {
+        newErrors.paragraph[1].title = 'The title is required.';
+      } else if (typeof formData.paragraph[1].title !== 'string') {
+        newErrors.paragraph[1].title = 'The title must be a string.';
+      }
+      
+      // Description: required, string
+      if (!formData.paragraph[1].paragraph && (!isEditing || formData.paragraph[1].paragraph !== undefined)) {
+       newErrors.paragraph[1].paragraph = 'The description is required.';
+     } else if (typeof formData.paragraph[1].paragraph !== 'string') {
+       newErrors.paragraph[1].paragraph = 'The description must be a string.';
+     }
       // Date of Project: required, date
       if (!formData.dateOfProject && (!isEditing || formData.dateOfProject !== undefined)) {
         newErrors.dateOfProject = 'The date of project is required.';

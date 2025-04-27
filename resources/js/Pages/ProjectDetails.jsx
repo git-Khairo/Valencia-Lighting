@@ -165,20 +165,9 @@ viewport={{ once: true }}
 className="flex flex-col md:flex-row items-center justify-between mx-auto bg-light-background dark:bg-dark-background">
       {/* Left Content */}
       <div className="md:w-1/2 text-center md:text-left px-10 pt-5 sm:pt-0">
-        <h2 className="text-2xl lg:text-4xl text-light-primary dark:text-dark-primary font-Montserrat border-b pb-3 border-light-primary dark:border-dark-primary">Your Title Here</h2>
+        <h2 className="text-2xl lg:text-4xl text-light-primary dark:text-dark-primary font-Montserrat border-b pb-3 border-light-primary dark:border-dark-primary">{data.project.paragraph[0].title}</h2>
         <p className="mt-2 text-light-text dark:text-dark-text sm:text-lg font-Jura">
-          This is a description of the section. It provides some brief
-          information about the content displayed in this section.
-          This is a description of the section. It provides some brief
-          information about the content displayed in this section.
-          This is a description of the section. It provides some brief
-          information about the content displayed in this section.
-          This is a description of the section. It provides some brief
-          information about the content displayed in this section.
-          This is a description of the section. It provides some brief
-          information about the content displayed in this section.
-          This is a description of the section. It provides some brief
-          information about the content displayed in this section.
+        {data.project.paragraph[0].paragraph}
         </p>
       </div>
 
@@ -224,16 +213,9 @@ className="flex flex-col md:flex-row items-center justify-between mx-auto bg-lig
       </div>
       {/* Left Content */}
       <div className="md:w-1/2 text-center md:text-left px-10">
-        <h2 className="text-2xl sm:text-3xl md:text:3xl text-center text-light-primary dark:text-dark-primary font-Montserrat border-b pb-3 border-light-primary dark:border-dark-primary">Your Title Here</h2>
+        <h2 className="text-2xl sm:text-3xl md:text:3xl text-center text-light-primary dark:text-dark-primary font-Montserrat border-b pb-3 border-light-primary dark:border-dark-primary">{data.project.paragraph[1].title}</h2>
         <p className="mt-4 mb-10 text-light-text dark:text-dark-text font-Jura text-sm sm:text-base md:text-xl">
-          This is a description of the section. It provides some brief
-          information about the content displayed in this section.
-          This is a description of the section. It provides some brief
-          information about the content displayed in this section.
-          This is a description of the section. It provides some brief
-          information about the content displayed in this section.
-          This is a description of the section. It provides some brief
-          information about the content displayed in this section.
+        {data.project.paragraph[1].paragraph}
         </p>
       </div>
     </motion.section>

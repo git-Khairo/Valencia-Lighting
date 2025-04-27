@@ -61,6 +61,7 @@ const Dashboard = () => {
     title: '',
     images: [],
     description: '',
+    paragraph: [{title: '', paragraph: ''},{title: '', paragraph: ''}],
     quote: '',
     location: '',
     partners: '',
@@ -177,6 +178,7 @@ const Dashboard = () => {
           location: data.location || '',
           partners: data.partners || '',
           images: [],
+          paragraph: [{title: '', paragraph: ''},{title: '', paragraph: ''}],
           description: data.description || '',
           dateOfProject: data.dateOfProject || '',
           selectedProducts: data.products ? data.products.map(p => p.id) : [],
@@ -262,6 +264,7 @@ const Dashboard = () => {
       title: '',
       images: [],
       description: '',
+      paragraph: [{title: '', paragraph: ''},{title: '', paragraph: ''}],
       quote: '',
       location: '',
       partners: '',
@@ -331,13 +334,16 @@ const Dashboard = () => {
             formData.append(`images[${index}]`, image);
           });
         }
+        formData.append('paragraph', JSON.stringify(addProjectForm.paragraph) || '');
         formData.append('description', addProjectForm.description || '');
         formData.append('dateOfProject', addProjectForm.dateOfProject || '');
         addProjectForm.selectedProducts.forEach((id, index) => {
           formData.append(`product_ids[${index}]`, id);
         });
       }
-  
+
+      console.log(addProjectForm);
+
       const response = await fetch(url, {
         method: method,
         headers: {
@@ -345,7 +351,7 @@ const Dashboard = () => {
         },
         body: formData,
       });
-  
+
       const result = await response.json();
   
       if (!response.ok) {
@@ -883,6 +889,96 @@ const Dashboard = () => {
                 />
                 {formErrors.description && <p className="text-red-500 text-xs mt-1">{formErrors.description}</p>}
               </div>
+              <div>
+              <label className="block text-sm font-medium text-gray-900 mb-2">First Title</label>
+              <input
+                type="text"
+                value={addProjectForm.paragraph[0]?.title || ''} // Fallback to empty string if undefined
+                onChange={(e) =>
+                  setAddProjectForm({
+                    ...addProjectForm,
+                    paragraph: [
+                      { ...addProjectForm.paragraph[0], title: e.target.value }, // Update first object's title
+                      ...addProjectForm.paragraph.slice(1), // Keep other objects unchanged
+                    ],
+                  })
+                }
+                className={`w-full px-4 py-2 border ${
+                  formErrors.paragraph?.[0]?.title ? 'border-red-500' : 'border-gray-300'
+                } rounded-lg text-sm text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 transition-all duration-200`}
+              />
+              {formErrors.paragraph?.[0]?.title && (
+                <p className="text-red-500 text-xs mt-1">{formErrors.paragraph[0].title}</p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-900 mb-2">First Paragraph</label>
+              <textarea
+                value={addProjectForm.paragraph[0]?.paragraph || ''} // Fallback to empty string if undefined
+                onChange={(e) =>
+                  setAddProjectForm({
+                    ...addProjectForm,
+                    paragraph: [
+                      { ...addProjectForm.paragraph[0], paragraph: e.target.value }, // Update first object's paragraph
+                      ...addProjectForm.paragraph.slice(1), // Keep other objects unchanged
+                    ],
+                  })
+                }
+                className={`w-full px-4 py-2 border ${
+                  formErrors.paragraph?.[0]?.paragraph ? 'border-red-500' : 'border-gray-300'
+                } rounded-lg text-sm text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 transition-all duration-200`}
+              />
+              {formErrors.paragraph?.[0]?.paragraph && (
+                <p className="text-red-500 text-xs mt-1">{formErrors.paragraph[0].paragraph}</p>
+              )}
+            </div>
+
+            {/* Repeat for the second object (index 1) */}
+            <div>
+              <label className="block text-sm font-medium text-gray-900 mb-2">Second Title</label>
+              <input
+                type="text"
+                value={addProjectForm.paragraph[1]?.title || ''}
+                onChange={(e) =>
+                  setAddProjectForm({
+                    ...addProjectForm,
+                    paragraph: [
+                      addProjectForm.paragraph[0], // Keep first object unchanged
+                      { ...addProjectForm.paragraph[1], title: e.target.value }, // Update second object's title
+                    ],
+                  })
+                }
+                className={`w-full px-4 py-2 border ${
+                  formErrors.paragraph?.[1]?.title ? 'border-red-500' : 'border-gray-300'
+                } rounded-lg text-sm text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 transition-all duration-200`}
+              />
+              {formErrors.paragraph?.[1]?.title && (
+                <p className="text-red-500 text-xs mt-1">{formErrors.paragraph[1].title}</p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-900 mb-2">Second Paragraph</label>
+              <textarea
+                value={addProjectForm.paragraph[1]?.paragraph || ''}
+                onChange={(e) =>
+                  setAddProjectForm({
+                    ...addProjectForm,
+                    paragraph: [
+                      addProjectForm.paragraph[0], // Keep first object unchanged
+                      { ...addProjectForm.paragraph[1], paragraph: e.target.value }, // Update second object's paragraph
+                    ],
+                  })
+                }
+                className={`w-full px-4 py-2 border ${
+                  formErrors.paragraph?.[1]?.paragraph ? 'border-red-500' : 'border-gray-300'
+                } rounded-lg text-sm text-gray-900 bg-white focus:ring-2 focus:ring-blue-500 transition-all duration-200`}
+              />
+              {formErrors.paragraph?.[1]?.paragraph && (
+                <p className="text-red-500 text-xs mt-1">{formErrors.paragraph[1].paragraph}</p>
+              )}
+            </div>
               <div>
                 <label className="block text-sm font-medium text-gray-900 mb-2">Date of Project</label>
                 <input
