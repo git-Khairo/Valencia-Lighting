@@ -24,7 +24,8 @@ class StoreProjectRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
-            'images' => 'required|array', // Max 2MB
+            'images' => 'required|array|min:2',
+            'images.*' => 'file|mimes:jpeg,png,jpg|max:2048',
             'paragraph' => 'required',
             'description' => 'required|string',
             'quote' => 'required|string|max:255',
@@ -54,10 +55,10 @@ class StoreProjectRequest extends FormRequest
             'partners.required' => 'The project partners is required.',
             'partners.string' => 'The project partners must be a string.',
             'partners.max' => 'The project partners must not exceed 255 characters.',
-            'image.required' => 'The image is required.',
-            'image.file' => 'The image must be a valid file.',
-            'image.image' => 'The image must be an image file (e.g., jpg, png).',
-            'image.max' => 'The image must not exceed 2MB.',
+            'images.array' => 'The images must be an array.',
+            'images.*.file' => 'Each image must be a valid file.',
+            'images.*.image' => 'Each image must be an image file (e.g., jpg, png).',
+            'images.*.max' => 'Each image must not exceed 2MB.',
             'paragraph.required' => 'The image is required.',
             'description.required' => 'The description is required.',
             'description.string' => 'The description must be a string.',

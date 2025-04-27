@@ -27,6 +27,7 @@ class UpdateProductRequest extends FormRequest
         return [
             'name' => 'sometimes|required|string|max:15',
             'title' => 'sometimes|required|string|max:255',
+            'image' => 'required|file|mimes:png,jpg,jpeg|max:2048',
             'material' => 'required|string|max:255',
             'productNumber' => 'required|string|max:255',
             'length' => 'required|string|max:255',
@@ -35,7 +36,7 @@ class UpdateProductRequest extends FormRequest
             'description' => 'sometimes|required|string',
             'brand' => 'sometimes|required|string|max:255',
             'dateOfRelease' => 'sometimes|required|date',
-            'datasheet' => 'sometimes|file|mimes:pdf|max:10240', // Max 10MB
+            'datasheet' => 'sometimes|file|mimes:pdf|max:10240',
             'category_ids' => 'sometimes|array',
             'category_ids.*' => 'exists:categories,id',
             'project_ids' => 'sometimes|array',
