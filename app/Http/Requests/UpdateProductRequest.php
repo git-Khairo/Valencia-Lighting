@@ -27,7 +27,7 @@ class UpdateProductRequest extends FormRequest
         return [
             'name' => 'sometimes|required|string|max:15',
             'title' => 'sometimes|required|string|max:255',
-            'image' => 'required|file|mimes:png,jpg,jpeg|max:2048',
+            'image' => 'file|mimes:png,jpg,jpeg|max:2048',
             'material' => 'required|string|max:255',
             'productNumber' => 'required|string|max:255',
             'length' => 'required|string|max:255',

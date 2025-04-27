@@ -27,7 +27,7 @@ class UpdateProjectRequest extends FormRequest
         'location' => 'required|string|max:255',
         'partners' => 'required|string|max:255',
         'paragraph' => 'required',
-        'images' => 'required|array|min:2',
+        'images' => 'array|min:2',
         'images.*' => 'file|mimes:jpeg,png,jpg|max:2048',
         'description' => 'sometimes|required|string',
         'dateOfProject' => 'sometimes|required|date',

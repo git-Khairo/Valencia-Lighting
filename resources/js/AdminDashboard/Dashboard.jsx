@@ -32,6 +32,7 @@ const Dashboard = () => {
   const [searchResults, setSearchResults] = useState({ products: [], categories: [], projects: [] });
   const [currentPage, setCurrentPage] = useState(1);
   const [formErrors, setFormErrors] = useState({});
+  const [formLoading, setFormLoading] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [confirmationMessage, setConfirmationMessage] = useState('');
   const [refetchTrigger, setRefetchTrigger] = useState(0);
@@ -283,6 +284,7 @@ const Dashboard = () => {
     try {
       const token = sessionStorage.getItem('token');
       if (!token) throw new Error('No authentication token found');
+      setFormLoading(true);
   
       const formData = new FormData();
       let url = '';
@@ -342,8 +344,6 @@ const Dashboard = () => {
         });
       }
 
-      console.log(addProjectForm);
-
       const response = await fetch(url, {
         method: method,
         headers: {
@@ -353,6 +353,10 @@ const Dashboard = () => {
       });
 
       const result = await response.json();
+
+      if(result){
+        setFormLoading(false);
+      }
   
       if (!response.ok) {
         throw new Error(result.message || 'Failed to save data');
@@ -706,8 +710,10 @@ const Dashboard = () => {
               </button>
               <button
                 onClick={confirmAdd}
-                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-all duration-200"
+                disabled={formLoading}
+                className="flex justify-center items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-all duration-200"
               >
+                {formLoading ? <div className="inline-block w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin mr-1.5"></div> : <></>}
                 {isEditing ? 'Save' : 'Add'}
               </button>
             </div>
@@ -790,8 +796,10 @@ const Dashboard = () => {
               </button>
               <button
                 onClick={confirmAdd}
-                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-all duration-200"
+                disabled={formLoading}
+                className="flex justify-center items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-all duration-200"
               >
+                {formLoading ? <div className="inline-block w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin mr-1.5"></div> : <></>}
                 {isEditing ? 'Save' : 'Add'}
               </button>
             </div>
@@ -1011,8 +1019,10 @@ const Dashboard = () => {
               </button>
               <button
                 onClick={confirmAdd}
-                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-all duration-200"
+                disabled={formLoading}
+                className="flex justify-center items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-all duration-200"
               >
+                {formLoading ? <div className="inline-block w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin mr-1.5"></div> : <></>}
                 {isEditing ? 'Save' : 'Add'}
               </button>
             </div>
