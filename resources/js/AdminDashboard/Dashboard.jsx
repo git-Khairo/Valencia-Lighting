@@ -178,7 +178,7 @@ const Dashboard = () => {
           location: data.location || '',
           partners: data.partners || '',
           images: [],
-          paragraph: [{title: '', paragraph: ''},{title: '', paragraph: ''}],
+          paragraph: data.paragraph || '',
           description: data.description || '',
           dateOfProject: data.dateOfProject || '',
           selectedProducts: data.products ? data.products.map(p => p.id) : [],

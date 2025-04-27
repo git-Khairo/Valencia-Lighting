@@ -74,7 +74,7 @@ class ProjectController extends Controller
 
         $project->products()->sync(array_unique($productIds));
 
-        return response()->json(['project' => $project], 201);
+        return response()->json(['project' => new ProjectResource($project)], 201);
     }
 
     // Update an existing project
@@ -124,7 +124,7 @@ class ProjectController extends Controller
     
             return response()->json([
                 'success' => true,
-                'data' => $project,
+                'data' => new ProjectResource($project),
                 'message' => 'Project updated successfully'
             ], 200);
         } catch (\Exception $e) {

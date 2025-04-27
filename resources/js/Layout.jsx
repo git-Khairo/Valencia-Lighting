@@ -143,7 +143,7 @@ const Layout = () => {
                   <FaBars size={22} />
                 </button>
                 <div className="flex justify-center items-center space-x-2 text-2xl text-light-text dark:text-dark-text">
-                  <img src="/storage/logo/vallencia logo.png" alt="" className="h-10" />
+                  <img src={darkMode ? "/storage/logo/vallencia logo.png" : "/storage/logo/vallencia logo 2.png"} alt="" className="h-10" />
                   <a href="/" className="font-Montserrat">Vallencia Lighting</a>
                 </div>
               </div>
@@ -465,7 +465,7 @@ const Layout = () => {
           <div className="flex flex-col md:flex-row items-center border-t border-gray-300 dark:border-gray-700 pt-6">
           {/* Left Section - Logo & Name */}
           <div className="flex justify-center items-center space-x-2 mb-6 md:mb-0">
-            <img src="/storage/logo/vallencia logo.png" alt="" className="h-12" />
+            <img src={darkMode ? "/storage/logo/vallencia logo.png" : "/storage/logo/vallencia logo 2.png"} alt="" className="h-12" />
             <h2 className="text-2xl font-Montserrat text-light-primary dark:text-dark-primary">Vallencia Lighting</h2>
           </div>
 
@@ -480,9 +480,9 @@ const Layout = () => {
           </div>
 
           {/* Right Section - Sponsor Logos */}
-          <div className="flex space-x-4 mt-6 md:mt-0">
+          <div className="flex justify-center items-center space-x-4 mt-6 md:mt-0">
             <a href="https://www.sila-eu.com/" target="_blank">
-              <img src="/storage/logo/sila logo.png" alt="Sponsor 1" className="h-12 opacity-80 hover:opacity-100 transition-opacity duration-200" />
+              <img src="/storage/logo/sila logo.png" alt="Sponsor 1" className="h-20 opacity-80 hover:opacity-100 transition-opacity duration-200" />
             </a>
             <a href="https://www.radial-eu.com/" target="_blank">
               <img src="/storage/logo/radial logo.png" alt="Sponsor 2" className="h-12 opacity-80 hover:opacity-100 transition-opacity duration-200" />
