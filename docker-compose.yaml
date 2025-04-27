@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     container_name: vallencia
     ports:
-      - "9000:9000"  # Expose PHP-FPM port for NGINX
+      - "0.0.0.0:9000:80" 
     volumes:
       - .:/var/www/html/Valencia-Lighting
     env_file:
