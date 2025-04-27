@@ -1,5 +1,5 @@
 # Use official PHP image with PHP 8.2
-FROM php:8.2-apache
+FROM php:8.2-fpm
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -10,7 +10,6 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     zip \
     unzip \
-    supervisor \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -20,7 +19,6 @@ RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-COPY deployment-files/services.conf /etc/supervisor/conf.d/services.conf
 
 # Install Node.js and npm
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
@@ -47,6 +45,6 @@ RUN chown -R www-data:www-data /var/www/html/Valencia-Lighting \
     && chmod -R 755 /var/www/html/Valencia-Lighting/bootstrap/cache
 
 # Expose port 9000 for PHP-FPM
-EXPOSE 80
+EXPOSE 9000
 
-CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/supervisord.conf"]
+CMD ["php-fpm"]
