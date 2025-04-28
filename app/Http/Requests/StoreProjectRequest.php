@@ -25,7 +25,7 @@ class StoreProjectRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'images' => 'required|array|min:2',
-            'images.*' => 'file|mimes:jpeg,png,jpg|max:2048',
+            'images.*' => 'file|mimes:jpeg,png,jpg,webp|max:2048',
             'paragraph' => 'required',
             'description' => 'required|string',
             'quote' => 'required|string|max:255',
