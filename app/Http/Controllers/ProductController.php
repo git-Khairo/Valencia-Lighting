@@ -15,6 +15,8 @@ use App\Http\Resources\ProductResource;
 use Illuminate\Support\Facades\Storage;
 use Exception;
 
+use function PHPUnit\Framework\isEmpty;
+
 class ProductController extends Controller
 {
     protected $ProductRepository;
@@ -174,6 +176,7 @@ class ProductController extends Controller
     public function getSections()
     {
         $categoryIds = Category::all()->pluck('id')->toArray();
+        $section = [];
 
         foreach ($categoryIds as $categoryId) {
             $products = $this->ProductRepository->byCategory([$categoryId])->inRandomOrder()->take(7)->get();
@@ -185,6 +188,10 @@ class ProductController extends Controller
                     'products' => ProductCardResource::collection($products),
                 ];
             }
+        }
+
+        if(isEmpty($section)){
+            return response()->json(['message' => 'the sections are empty'], 200);
         }
         return response()->json(['message' => 'Sections', 'Sections' => $section], 200);
     }

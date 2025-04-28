@@ -12,7 +12,7 @@ const Sections = () => {
   // Extract sections data
   const allSections = data?.Sections || [];
 
-  console.log(allSections);
+  console.log(data);
 
   // Pagination logic
   const lastPostIndex = currentPage * postsPerPage;
@@ -53,7 +53,7 @@ const Sections = () => {
           </div>
         </>
       ) : (
-        <div className="text-center text-gray-500">No sections available</div>
+        <div className="text-center text-light-secondary dark:text-dark-secondary">No sections available</div>
       )}
     </div>
   );

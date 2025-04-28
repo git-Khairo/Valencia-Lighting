@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaLightbulb, FaMinus, FaPlus, FaRegLightbulb } from "react-icons/fa";
 
-const Filter = ({ updateFilter, categories, brand, setBrand, setCategories }) => {
+const Filter = ({ updateFilter, categories, brand, setBrand, setCategories, IndoorCategories, OutdoorCategories }) => {
   const [dropDownFilterIndoor, setDropDownFilterIndoor] = useState(false);
   const [dropDownFilterOutdoor, setDropDownFilterOutdoor] = useState(false);
 
@@ -49,12 +49,12 @@ const Filter = ({ updateFilter, categories, brand, setBrand, setCategories }) =>
             {dropDownFilterIndoor ? <FaMinus /> : <FaPlus />}
             </div>
             <div className={`overflow-hidden transition-all duration-700 ease-in-out space-y-2 ${
-                    dropDownFilterIndoor ? 'max-h-44 opacity-100 translate-y-0' : 'max-h-0 opacity-0 -translate-y-2'
+                    dropDownFilterIndoor ? 'opacity-100 translate-y-0' : 'max-h-0 opacity-0 -translate-y-2'
                   }`}>
-             {dropDownFilterIndoor && Array.from({ length: 5 }, (_, i) => (
-               <label key={i} className="flex items-center space-x-2 text-light-text dark:text-dark-text font-EncodeSansCondensed">
-                 <input type="checkbox" className="form-checkbox h-4 w-4 accent-black" onChange={() => updateFilter(i + 1)} checked={categories.includes(i + 1)} />
-                 <span>Category {i + 1}</span>
+             {dropDownFilterIndoor && IndoorCategories.map((IndoorCategory) => (
+               <label key={IndoorCategory.id} className="flex items-center space-x-2 text-light-text dark:text-dark-text font-EncodeSansCondensed">
+                 <input type="checkbox" className="form-checkbox h-4 w-4 accent-black" onChange={() => updateFilter(IndoorCategory.id)} checked={categories.includes(IndoorCategory.id)} />
+                 <span>{IndoorCategory.type}</span>
                </label>
              ))}
              </div>
@@ -63,12 +63,12 @@ const Filter = ({ updateFilter, categories, brand, setBrand, setCategories }) =>
             {dropDownFilterOutdoor ? <FaMinus /> : <FaPlus/>}
             </div>
             <div className={`overflow-hidden transition-all duration-700 ease-in-out space-y-2 ${
-                    dropDownFilterOutdoor ? 'max-h-44 opacity-100 translate-y-0' : 'max-h-0 opacity-0 -translate-y-2'
+                    dropDownFilterOutdoor ? 'opacity-100 translate-y-0' : 'max-h-0 opacity-0 -translate-y-2'
                   }`}>
-             {dropDownFilterOutdoor && Array.from({ length: 5 }, (_, i) => (
-               <label key={i} className="flex items-center space-x-2 text-light-text dark:text-dark-text font-EncodeSansCondensed">
-                 <input type="checkbox" className="form-checkbox h-4 w-4 accent-black" onChange={() => updateFilter(i + 6)} checked={categories.includes(i + 6)} />
-                 <span>Category {i + 6}</span>
+             {dropDownFilterOutdoor && OutdoorCategories.map((OutdoorCategory) => (
+               <label key={OutdoorCategory.id} className="flex items-center space-x-2 text-light-text dark:text-dark-text font-EncodeSansCondensed">
+                 <input type="checkbox" className="form-checkbox h-4 w-4 accent-black" onChange={() => updateFilter(OutdoorCategory.id)} checked={categories.includes(OutdoorCategory.id)} />
+                 <span>{OutdoorCategory.type}</span>
                </label>
              ))}
              </div>

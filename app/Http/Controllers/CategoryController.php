@@ -8,8 +8,6 @@ use App\Http\Resources\CategoryCardResource;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use App\Repository\CategoryRepository;
-use App\Repository\CategoryRepositoryInterface;
-use Illuminate\Http\Request;
 
 
 class CategoryController extends Controller
@@ -26,7 +24,7 @@ class CategoryController extends Controller
     {
         $categories = $this->CategoryRepository->allCategories();
 
-        return response()->json(['message' => 'Categories', 'Categories' => $categories], 200);
+        return response()->json(['message' => 'Categories', 'Categories' => CategoryCardResource::collection($categories)], 200);
     }
 
 

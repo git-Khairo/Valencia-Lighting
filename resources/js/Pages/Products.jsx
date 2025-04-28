@@ -8,6 +8,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Filter from "../Components/Filter";
 import { useParams } from "react-router-dom";
 import Loading from '../Components/Loading';
+import useFetch from '../useFetch';
 
 const productsSlider = [
   { id: 1, image: "https://picsum.photos/200", "title": "Winter Sale", "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit." },
@@ -33,6 +34,30 @@ const Products = () => {
   const [brand, setBrand] = useState("");
   const [dropDownFilterIndoor, setDropDownFilterIndoor] = useState(false);
   const [dropDownFilterOutdoor, setDropDownFilterOutdoor] = useState(false);
+  
+  const { data: categoryNames,loading: categoryLoading, error: categoryError } = useFetch('/api/categories');
+  let IndoorCategories = [];
+  let OutdoorCategories = [];
+
+  if(categoryError){
+    return (
+      <div className="text-center text-red-500 py-20">
+        <p>Error loading Project: {error.message || 'Something went wrong'}</p>
+        <button
+          className="mt-4 px-5 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          onClick={() => window.location.reload()}
+        >
+          Retry
+        </button>
+      </div>
+    )
+  }
+
+  if(!categoryLoading){
+    IndoorCategories = categoryNames.Categories.filter((category) => category.location === 'Indoor');
+    OutdoorCategories = categoryNames.Categories.filter((category) => category.location === 'Outdoor');
+  }
+
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -184,7 +209,7 @@ const Products = () => {
       <div className="max-w-[1440px] mx-auto px-3 py-12">
         <div className="flex gap-8">
         { showFilters &&
-        <Filter updateFilter={updateFilter} brand={brand} categories={categories} setBrand={setBrand} setCategories={setCategories}/>
+        <Filter updateFilter={updateFilter} brand={brand} categories={categories} setBrand={setBrand} setCategories={setCategories} IndoorCategories={IndoorCategories} OutdoorCategories={OutdoorCategories} />
         }
         {/* Products Section */}
         <div className={`${showFilters ? "w-4/5" : "w-full"} w-full`}>
@@ -266,7 +291,7 @@ const Products = () => {
               </div>
             </>
           ) : (
-            <div className="text-center text-gray-500">No products available</div>
+            <div className="text-center text-light-secondary dark:text-dark-secondary">No products available</div>
           )}
         </div>
       </div>
@@ -335,12 +360,12 @@ const Products = () => {
                 {dropDownFilterIndoor ? <FaMinus /> : <FaPlus />}
                 </div>
                 <div className={`overflow-hidden transition-all duration-700 ease-in-out space-y-2 ${
-                        dropDownFilterIndoor ? 'max-h-44 opacity-100 translate-y-0' : 'max-h-0 opacity-0 -translate-y-2'
+                        dropDownFilterIndoor ? 'opacity-100 translate-y-0' : 'max-h-0 opacity-0 -translate-y-2'
                       }`}>
-                  {dropDownFilterIndoor && Array.from({ length: 5 }, (_, i) => (
-                    <label key={i} className="flex items-center space-x-2 text-light-text dark:text-dark-text font-EncodeSansCondensed">
-                      <input type="checkbox" className="form-checkbox h-4 w-4 accent-black" onChange={() => updateFilter(i + 1)} checked={categories.includes(i + 1)} />
-                      <span>Category {i + 1}</span>
+                  {dropDownFilterIndoor && IndoorCategories.map((IndoorCategory) => (
+                    <label key={IndoorCategory.id} className="flex items-center space-x-2 text-light-text dark:text-dark-text font-EncodeSansCondensed">
+                      <input type="checkbox" className="form-checkbox h-4 w-4 accent-black" onChange={() => updateFilter(IndoorCategory.id)} checked={categories.includes(IndoorCategory.id)} />
+                      <span>{IndoorCategory.type}</span>
                     </label>
                   ))}
                   </div>
@@ -349,12 +374,12 @@ const Products = () => {
                 {dropDownFilterOutdoor ? <FaMinus /> : <FaPlus/>}
                 </div>
                 <div className={`overflow-hidden transition-all duration-700 ease-in-out space-y-2 ${
-                        dropDownFilterOutdoor ? 'max-h-44 opacity-100 translate-y-0' : 'max-h-0 opacity-0 -translate-y-2'
+                        dropDownFilterOutdoor ? 'opacity-100 translate-y-0' : 'max-h-0 opacity-0 -translate-y-2'
                       }`}>
-                  {dropDownFilterOutdoor && Array.from({ length: 5 }, (_, i) => (
-                    <label key={i} className="flex items-center space-x-2 text-light-text dark:text-dark-text font-EncodeSansCondensed">
-                      <input type="checkbox" className="form-checkbox h-4 w-4 accent-black" onChange={() => updateFilter(i + 6)} checked={categories.includes(i + 6)} />
-                      <span>Category {i + 6}</span>
+                  {dropDownFilterOutdoor && OutdoorCategories.map((OutdoorCategory) => (
+                    <label key={OutdoorCategory.id} className="flex items-center space-x-2 text-light-text dark:text-dark-text font-EncodeSansCondensed">
+                      <input type="checkbox" className="form-checkbox h-4 w-4 accent-black" onChange={() => updateFilter(OutdoorCategory.id)} checked={categories.includes(OutdoorCategory.id)} />
+                      <span>{OutdoorCategory.type}</span>
                     </label>
                   ))}
                   </div>
