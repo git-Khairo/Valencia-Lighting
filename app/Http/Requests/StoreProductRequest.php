@@ -23,7 +23,7 @@ class StoreProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:15',
+            'name' => 'required|string',
             'title' => 'required|string|max:255',
             'material' => 'required|string|max:255',
             'productNumber' => 'required|string|max:255',
@@ -56,7 +56,6 @@ class StoreProductRequest extends FormRequest
         return [
             'name.required' => 'The product name is required.',
             'name.string' => 'The product name must be a string.',
-            'name.max' => 'The product name must not exceed 15 characters.',
             'title.required' => 'The title is required.',
             'title.string' => 'The title must be a string.',
             'title.max' => 'The title must not exceed 255 characters.',

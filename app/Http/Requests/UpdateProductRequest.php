@@ -25,7 +25,7 @@ class UpdateProductRequest extends FormRequest
     {
 
         return [
-            'name' => 'sometimes|required|string|max:15',
+            'name' => 'sometimes|required|string',
             'title' => 'sometimes|required|string|max:255',
             'image' => 'file|mimes:png,jpg,jpeg|max:2048',
             'material' => 'required|string|max:255',
@@ -52,7 +52,6 @@ class UpdateProductRequest extends FormRequest
         return [
             'name.required' => 'The product name is required.',
             'name.string' => 'The product name must be a string.',
-            'name.max' => 'The product name must not exceed 15 characters.',
             'title.required' => 'The title is required.',
             'title.string' => 'The title must be a string.',
             'title.max' => 'The title must not exceed 255 characters.',
