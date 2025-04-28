@@ -26,6 +26,8 @@ const FormValidation = ({ formData, addType, isEditing, setErrors }) => {
         newErrors.name = 'The product name is required.';
       } else if (typeof formData.name !== 'string') {
         newErrors.name = 'The product name must be a string.';
+      } else if (formData.name.length > 30) {
+        newErrors.name = 'The name must not exceed 30 characters.';
       }
 
       // Title: required, string, max:255
@@ -33,8 +35,8 @@ const FormValidation = ({ formData, addType, isEditing, setErrors }) => {
         newErrors.title = 'The title is required.';
       } else if (typeof formData.title !== 'string') {
         newErrors.title = 'The title must be a string.';
-      } else if (formData.title.length > 255) {
-        newErrors.title = 'The title must not exceed 255 characters.';
+      } else if (formData.title.length > 50) {
+        newErrors.title = 'The title must not exceed 50 characters.';
       }
 
       // Material: required, string, max:255
@@ -147,8 +149,8 @@ const FormValidation = ({ formData, addType, isEditing, setErrors }) => {
         newErrors.type = 'The category type is required.';
       } else if (typeof formData.type !== 'string') {
         newErrors.type = 'The category type must be a string.';
-      } else if (formData.type.length > 15) {
-        newErrors.type = 'The category type must not exceed 15 characters.';
+      } else if (formData.type.length > 30) {
+        newErrors.type = 'The category type must not exceed 30 characters.';
       }
 
       // Location: required, string, max:15
