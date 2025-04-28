@@ -220,7 +220,7 @@ const FormValidation = ({ formData, addType, isEditing, setErrors }) => {
           newErrors.images = 'The images must be an array.';
         } else {
           formData.images.forEach((image, index) => {
-            if (!validateFileType(image, 'jpg,jpeg,png,gif')) {
+            if (!validateFileType(image, 'jpg,jpeg,png,gif,webp')) {
               newErrors[`images[${index}]`] = `Image ${index + 1} must be an image file (e.g., jpg, png).`;
             } else if (!validateFileSize(image, 2)) {
               newErrors[`images[${index}]`] = `Image ${index + 1} must not exceed 2MB.`;
