@@ -23,7 +23,7 @@ class UpdateCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type' => 'sometimes|required|string|max:15',
+            'type' => 'sometimes|required|string',
             'location' => 'required|string|max:15',
             'image' => 'sometimes|file|image|max:2048', // Single image field
             'product_ids' => 'sometimes|array',
