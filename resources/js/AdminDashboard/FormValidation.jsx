@@ -26,8 +26,6 @@ const FormValidation = ({ formData, addType, isEditing, setErrors }) => {
         newErrors.name = 'The product name is required.';
       } else if (typeof formData.name !== 'string') {
         newErrors.name = 'The product name must be a string.';
-      } else if (formData.name.length > 15) {
-        newErrors.name = 'The product name must not exceed 15 characters.';
       }
 
       // Title: required, string, max:255
