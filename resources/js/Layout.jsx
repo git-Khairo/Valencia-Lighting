@@ -130,7 +130,7 @@ const Layout = () => {
             }`}
           >
           <div className="w-full px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center h-16">
+            <div className="flex justify-between items-center h-16">
               {/* Left Section - Logo & Mobile Menu Button */}
               <div className="flex items-center">
                 <button
@@ -142,9 +142,9 @@ const Layout = () => {
                 >
                   <FaBars size={22} />
                 </button>
-                <div className="flex justify-center items-center space-x-2 text-2xl text-light-text dark:text-dark-text">
+                <div className="flex justify-center items-center space-x-2 text-light-text dark:text-dark-text">
                   <img src={darkMode ? "/storage/logo/vallencia logo.png" : "/storage/logo/vallencia logo 2.png"} alt="" className="h-10" />
-                  <a href="/" className="font-Montserrat">Vallencia Lighting</a>
+                  <a href="/" className="font-Montserrat text-2xl">Vallencia Lighting</a>
                 </div>
               </div>
 

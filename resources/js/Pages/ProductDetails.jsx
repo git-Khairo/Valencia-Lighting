@@ -147,11 +147,11 @@ function App() {
             <div className="flex flex-col lg:flex-row gap-8">
               {/* Left Column - Product Image */}
               <div className="lg:w-1/2">
-                <div className="bg-light-background dark:bg-dark-lighterbackground rounded-lg overflow-hidden shadow-lg flex items-center justify-center p-4">
+                <div className="bg-light-background dark:bg-dark-lighterbackground rounded-lg overflow-hidden shadow-lg flex items-center justify-center p-1">
                   <img
                     src={product.image}
                     alt={product.id}
-                    className="object-contain w-full h-full object-top"
+                    className="object-contain w-full h-full object-top rounded-lg"
                   />
                 </div>
               </div>
