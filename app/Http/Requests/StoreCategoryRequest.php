@@ -27,7 +27,7 @@ class StoreCategoryRequest extends FormRequest
             'location' => 'required|string',
             'image' => 'required|file|image|max:2048', // Max 2MB
             'product_ids' => 'sometimes|array',
-            'product_ids.*' => 'exists:products,id',
+            'product_ids.*' => 'exists:products,code',
         ];
     }
 

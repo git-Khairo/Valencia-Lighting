@@ -27,7 +27,7 @@ class UpdateCategoryRequest extends FormRequest
             'location' => 'required|string|max:15',
             'image' => 'sometimes|file|image|max:2048', // Single image field
             'product_ids' => 'sometimes|array',
-            'product_ids.*' => 'exists:products,id',
+            'product_ids.*' => 'exists:products,code',
         ];
     }
 

@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\CategoryCardResource;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use App\Models\Product;
 use App\Repository\CategoryRepository;
 
 
@@ -56,8 +57,23 @@ class CategoryController extends Controller
 
             $category = $this->CategoryRepository->create($validated);
 
-            if (isset($validated['product_ids'])) {
-                $category->products()->sync($validated['product_ids']);
+            $productCodes = $request->input('product_ids');
+            if (is_string($productCodes)) {
+                $productCodes = json_decode($productCodes, true) ?? [];
+            } else {
+                $productCodes = $productCodes ?? [];
+            }
+            
+            // Convert product codes to IDs
+            $productIds = [];
+            if (!empty($productCodes)) {
+                $productIds = Product::whereIn('code', array_unique($productCodes))
+                    ->pluck('id')
+                    ->toArray();
+            }
+
+            if (isset($productIds)) {
+                $category->products()->sync($productIds);
             }
 
             return response()->json([
@@ -118,11 +134,19 @@ class CategoryController extends Controller
         }
 
         // Handle product_ids (including empty arrays)
-        $productIds = $request->input('product_ids');
-        if (is_string($productIds)) {
-            $productIds = json_decode($productIds, true) ?? [];
+        $productCodes = $request->input('product_ids');
+        if (is_string($productCodes)) {
+            $productCodes = json_decode($productCodes, true) ?? [];
         } else {
-            $productIds = $productIds ?? [];
+            $productCodes = $productCodes ?? [];
+        }
+        
+        // Convert product codes to IDs
+        $productIds = [];
+        if (!empty($productCodes)) {
+            $productIds = Product::whereIn('code', array_unique($productCodes))
+                ->pluck('id')
+                ->toArray();
         }
         $category->products()->sync($productIds);
 
