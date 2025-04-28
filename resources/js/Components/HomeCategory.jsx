@@ -29,7 +29,7 @@ const HomeCategory = ({ category }) => {
                         return (
                             <Link
                                 key={cat.id}
-                                to={`/category/${cat.id}`}
+                                to={`/products/${cat.id}`}
                                 className={`relative rounded-lg overflow-hidden transform transition-transform duration-500 hover:scale-[1.03] ${layout[i] || ""}`}
                             >
                                 <img

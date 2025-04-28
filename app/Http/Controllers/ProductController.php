@@ -190,7 +190,7 @@ class ProductController extends Controller
             }
         }
 
-        if(isEmpty($section)){
+        if(empty($section)){
             return response()->json(['message' => 'the sections are empty'], 200);
         }
         return response()->json(['message' => 'Sections', 'Sections' => $section], 200);
