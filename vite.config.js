@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import laravel from 'laravel-vite-plugin';
 
 export default defineConfig({
+  base: '/build/',
   plugins: [
     laravel({
       input: ['resources/js/App.jsx', 'resources/css/app.css',],
