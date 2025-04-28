@@ -39,7 +39,6 @@ class UpdateCategoryRequest extends FormRequest
         return [
             'type.required' => 'The category type is required.',
             'type.string' => 'The category type must be a string.',
-            'type.max' => 'The category type must not exceed 15 characters.',
 
             'location.required' => 'The location type is required.',
             'location.string' => 'The location type must be a string.',

@@ -23,8 +23,8 @@ class StoreCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type' => 'required|string|max:15',
-            'location' => 'required|string|max:15',
+            'type' => 'required|string',
+            'location' => 'required|string',
             'image' => 'required|file|image|max:2048', // Max 2MB
             'product_ids' => 'sometimes|array',
             'product_ids.*' => 'exists:products,id',
@@ -39,10 +39,8 @@ class StoreCategoryRequest extends FormRequest
         return [
             'type.required' => 'The category type is required.',
             'type.string' => 'The category type must be a string.',
-            'type.max' => 'The category type must not exceed 15 characters.',
             'location.required' => 'The location type is required.',
             'location.string' => 'The location type must be a string.',
-            'location.max' => 'The location type must not exceed 15 characters.',
             'image.required' => 'The image is required.',
             'image.file' => 'The image must be a valid file.',
             'image.image' => 'The image must be an image file (e.g., jpg, png).',
