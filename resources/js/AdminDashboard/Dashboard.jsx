@@ -431,7 +431,7 @@ const Dashboard = () => {
           </div>
 
           {loading ? (
-            <div className="text-center py-4 text-gray-900"><Loading /></div>
+            <div className="text-center py-4 text-gray-900"></div>
           ) : error ? (
             <div className="text-center py-4 text-red-500">{error}</div>
           ) : (

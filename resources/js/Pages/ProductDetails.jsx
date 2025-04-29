@@ -11,6 +11,7 @@ import Loading from '../Components/Loading';
 function App() {
   const { code } = useParams();
   const { data, loading, error } = useFetch(`/api/products/${code}`);
+  const [downloadLoading, setDownloadLoading] = useState(false);
   const product = data && data.product && data.product.product;
   const relatedProducts = data && data.product && data.product.relatedProducts;
   const navigate = useNavigate();
@@ -77,6 +78,7 @@ function App() {
 
   const downloadDatasheet = async (productId) => {
     try {
+      setDownloadLoading(true);
       const response = await fetch('/api/download', {
         method: 'POST',
         headers: {
@@ -98,6 +100,7 @@ function App() {
       a.download = `${product.name || 'datasheet'}.pdf`; // Fallback name if productName is undefined
       document.body.appendChild(a);
       a.click();
+      setDownloadLoading(false);
   
       // Clean up
       a.remove();
@@ -125,6 +128,8 @@ function App() {
     ],
   };
 
+  console.log(product);
+
   return (
     <>
       {loading ? (
@@ -147,7 +152,7 @@ function App() {
             <div className="flex flex-col lg:flex-row gap-8">
               {/* Left Column - Product Image */}
               <div className="lg:w-1/2">
-                <div className="bg-light-background dark:bg-dark-lighterbackground rounded-lg overflow-hidden shadow-lg flex items-center justify-center p-1">
+                <div className="bg-light-background dark:bg-dark-background rounded-lg overflow-hidden shadow-lg flex items-center justify-center p-1">
                   <img
                     src={product.image}
                     alt={product.id}
@@ -159,9 +164,9 @@ function App() {
               {/* Right Column - Product Details */}
               <div className="lg:w-1/2 px-4">
                 <h1 className="text-3xl font-Montserrat text-light-text dark:text-dark-text mb-2">{product.name}</h1>
-                <p className="text-light-text dark:text-dark-text text-lg mb-3 font-SulphurPoint">By <span className='text-light-primary dark:text-dark-primary font-bold font-SulphurPoint'>{product.brand}</span></p>
+                <p className="text-light-text dark:text-dark-text text-lg mb-3 font-SulphurPoint">By <span className='text-light-primary dark:text-dark-primary font-bold font-SulphurPoint'>{product.brand.charAt(0).toUpperCase() + product.brand.slice(1)}</span></p>
                 <div className="flex flex-wrap gap-2 mb-4">
-                  {product.categories.map((category) => (
+                  {product.categories && product.categories.map((category) => (
                     <span key={category} className="dark:bg-dark-primary bg-light-accent text-light-text dark:text-dark-text text-sm font-SulphurPoint px-3 py-1 rounded-full cursor-pointer">{category}</span>
                   ))}
                 </div>
@@ -204,19 +209,19 @@ function App() {
                           <tbody className="bg-light-[#f5f5f5] divide-y divide-gray-200 dark:divide-dark-background dark:bg-dark-background2">
                             <tr>
                               <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm font-Montserrat text-gray-900 dark:text-dark-text">Dimensions</td>
-                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-base md:text-sm text-dark-secondary dark:text-light-secondary font-SulphurPoint">3.5 × 2.2 × 0.8 inches</td>
+                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-base md:text-sm text-dark-secondary dark:text-light-secondary font-SulphurPoint">{product.length}</td>
                             </tr>
                             <tr>
-                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm font-Montserrat text-gray-900 dark:text-dark-text">Weight</td>
-                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-sm md:text-sm text-dark-secondary dark:text-light-secondary font-SulphurPoint">75g</td>
+                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm font-Montserrat text-gray-900 dark:text-dark-text">Color</td>
+                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-sm md:text-sm text-dark-secondary dark:text-light-secondary font-SulphurPoint">{product.color}</td>
                             </tr>
                             <tr>
-                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm font-Montserrat text-gray-900 dark:text-dark-text">Battery Life</td>
-                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-sm md:text-sm text-dark-secondary dark:text-light-secondary font-SulphurPoint">Up to 24 months</td>
+                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm font-Montserrat text-gray-900 dark:text-dark-text">Material</td>
+                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-sm md:text-sm text-dark-secondary dark:text-light-secondary font-SulphurPoint">{product.material}</td>
                             </tr>
                             <tr>
-                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm font-Montserrat text-gray-900 dark:text-dark-text">Water Resistance</td>
-                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-sm md:text-sm text-dark-secondary dark:text-light-secondary font-SulphurPoint">IP67 rated</td>
+                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm font-Montserrat text-gray-900 dark:text-dark-text">Accessories</td>
+                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-sm md:text-sm text-dark-secondary dark:text-light-secondary font-SulphurPoint">{product.accessories}</td>
                             </tr>
                           </tbody>
                         </table>
@@ -261,6 +266,7 @@ function App() {
                   </div>
                   <div className="flex justify-center items-center mt-10">
                     <button className="border border-gray-300 dark:border-none bg-light-primary dark:bg-dark-primary hover:bg-[#00437ae3] dark:hover:bg-[#96c2e3d4] text-white py-2 px-6 rounded-md flex items-center justify-center cursor-pointer !rounded-button whitespace-nowrap font-Jura" onClick={() => downloadDatasheet(product.id)}>
+                    {downloadLoading ? <div className="inline-block w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin mr-1.5"></div> : <></>}
                       <FaFileDownload className="mr-2" />
                       Download Datasheet
                     </button>

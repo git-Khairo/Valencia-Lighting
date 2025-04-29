@@ -143,7 +143,7 @@ const Layout = () => {
                   <FaBars size={22} />
                 </button>
                 <div className="flex justify-center items-center space-x-2 text-light-text dark:text-dark-text">
-                  <img src={darkMode ? "/storage/logo/vallencia logo.png" : "/storage/logo/vallencia logo 2.png"} alt="" className=" h-8 md:h-10" />
+                  <img src={darkMode ? "/storage/logo/vallencia logo.png" : "/storage/logo/vallencia logo 2.png"} alt="" className=" h-8 md:h-11" />
                   <a href="/" className="font-Montserrat hidden lg:inline text-xl">Vallencia Lighting</a>
                 </div>
               </div>

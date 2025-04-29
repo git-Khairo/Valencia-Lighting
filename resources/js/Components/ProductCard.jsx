@@ -68,8 +68,8 @@ const ProductCard = ({ variant = "hover", product }) => {
         >
           {/* Name & Code */}
           <div className="flex flex-col sm:flex-row justify-between w-full items-center">
-            <h3 className="xl:text-2xl text-sm font-SulphurPoint dark:text-dark-text">{product.name}</h3>
-            <p className="md:text-base text-[10px] text-gray-500 font-SulphurPoint dark:text-dark-secondary2">#{product.id}</p>
+            <h3 className="xl:text-xl text-base font-SulphurPoint dark:text-dark-text">{product.name}</h3>
+            <p className="text-sm md:text-base text-[10px] text-gray-500 font-SulphurPoint dark:text-dark-secondary2">#{product.id}</p>
           </div>
 
           {/* Extra Details */}
@@ -83,10 +83,10 @@ const ProductCard = ({ variant = "hover", product }) => {
             }`}
           >
             <div className="flex xxs:flex-col sm:flex-row justify-between items-center">
-              <h3 className="xxs:text-xs text-sm font-SulphurPoint text-light-text dark:text-dark-text">{truncateText(product.title)}</h3>
+              <h3 className="xxs:text-xs text-sm font-SulphurPoint text-light-text dark:text-dark-text"></h3>
             </div>
             <div className="flex justify-between items-center">
-              <p className="text-sm text-light-secondary2 font-SulphurPoint dark:text-dark-secondary2 xxs:opacity-0 sm:opacity-100">Lorem ipsum sit amet. Lorem ipsum sit amet.</p>
+              <p className="text-sm text-light-secondary2 font-SulphurPoint dark:text-dark-secondary2 xxs:opacity-0 sm:opacity-100">{truncateText(product.title)}</p>
             </div>
           </div>
         </div>
