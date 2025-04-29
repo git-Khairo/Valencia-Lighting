@@ -12,13 +12,7 @@ class FullCategoryResource extends JsonResource
             'type' => $this->type,
             'location' => $this->location,
             'image' => $this->image,
-            'products' => $this->products->map(function ($product) {
-                return [
-                    'id' => $product->id,
-                    'name' => $product->name,
-                    'code' => $product->code
-                ];
-            }),
+            'products' => ProductCardResource::collection($this->products),
         ];
     }
 }
