@@ -96,7 +96,7 @@ const Layout = () => {
           if (data.message === "Default Search") {
             setSearchResults({
               products: data.products || [],
-              categories: data.products || [],
+              categories: data.categories || [],
               projects: data.projects || [],
             });
           }
@@ -112,6 +112,8 @@ const Layout = () => {
   if(error){
     <h1>An Error occured</h1>
   }
+
+  console.log(limitedCategories);
 
   return (
     <>
@@ -246,7 +248,7 @@ const Layout = () => {
                             <div className="relative 2xl:h-36 2xl:w-32 lg:h-32 lg:w-28 md:h-28 md:w-24 sm:w-24 sm:h-28 w-32 h-40 xs:w-24 xs:h-28 rounded-lg overflow-hidden shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 ease-in-out">
                               <div className="absolute inset-0 rounded-xl bg-gradient-to-tr from-light-background via-light-background via-40% to-light-secondary dark:from-dark-secondary dark:via-dark-secondary dark:via-10% dark:to-dark-background"></div>
                               <img
-                                src="/build/assets/new.png"
+                                src={product.image}
                                 alt={product.name}
                                 className="absolute inset-0 w-full h-full object-cover"
                               />
@@ -265,7 +267,7 @@ const Layout = () => {
                       <div className="grid xs:grid-cols-4 grid-cols-2 sm:grid-cols-3 2.5xl:grid-cols-4 gap-4 mb-5 justify-items-center">
                         {limitedCategories.map((category, index) => (
                           <Link
-                            to={`/category/${category.id}`}
+                            to={`/products/${category.id}`}
                             key={index}
                             className="flex flex-col items-center"
                             onClick={() => setShowSearch(!showSearch)}
@@ -273,7 +275,7 @@ const Layout = () => {
                             <div className="relative 2xl:h-36 2xl:w-32 lg:h-32 lg:w-28 md:h-28 md:w-24 sm:w-24 sm:h-28 w-20 h-24 xs:w-28 xs:h-32 rounded-lg overflow-hidden shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 ease-in-out">
                               <div
                                 className="absolute inset-0 bg-cover bg-center"
-                                style={{ backgroundImage: `url('/build/assets/new.png')` }}
+                                style={{ backgroundImage: `url('${category.image}')` }}
                               ></div>
                             </div>
                             <p className="mt-2 text-sm text-center font-SulphurPoint text-light-text dark:text-dark-text">
@@ -297,7 +299,7 @@ const Layout = () => {
                           >
                             <div className="relative lg:h-64 md:h-44 sm:h-32 h-28 w-full rounded-lg overflow-hidden shadow-md hover:shadow-lg hover:scale-[101%] transition-all duration-300 ease-in-out">
                               <img
-                                src={project.imageUrl}
+                                src={project.images}
                                 alt="Project"
                                 className="absolute inset-0 w-full h-full object-cover"
                               />
@@ -330,7 +332,7 @@ const Layout = () => {
           }`}
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="flex justify-between items-center p-4">
+          <div className="flex justify-between items-center p-4 border-b-2 border-light-secondary dark:border-dark-secondary">
             <h2 className="text-xl font-Montserrat text-light-text dark:text-dark-text">Menu</h2>
             <button
               onClick={() => setShowSidebar(false)}

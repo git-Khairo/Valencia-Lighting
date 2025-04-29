@@ -265,7 +265,7 @@ function App() {
                     </div>
                   </div>
                   <div className="flex justify-center items-center mt-10">
-                    <button className="border border-gray-300 dark:border-none bg-light-primary dark:bg-dark-primary hover:bg-[#00437ae3] dark:hover:bg-[#96c2e3d4] text-white py-2 px-6 rounded-md flex items-center justify-center cursor-pointer !rounded-button whitespace-nowrap font-Jura" onClick={() => downloadDatasheet(product.id)}>
+                    <button disabled={downloadLoading} className="border border-gray-300 dark:border-none bg-light-primary dark:bg-dark-primary hover:bg-[#00437ae3] dark:hover:bg-[#96c2e3d4] text-white py-2 px-6 rounded-md flex items-center justify-center cursor-pointer !rounded-button whitespace-nowrap font-Jura" onClick={() => downloadDatasheet(product.id)}>
                     {downloadLoading ? <div className="inline-block w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin mr-1.5"></div> : <></>}
                       <FaFileDownload className="mr-2" />
                       Download Datasheet
