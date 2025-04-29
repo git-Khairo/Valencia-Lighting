@@ -103,7 +103,7 @@ const FormValidation = ({ formData, addType, isEditing, setErrors }) => {
       // Image: required (for add), file, image, max:2MB
       if (!isEditing && !formData.image) {
         newErrors.image = 'The image is required.';
-      } else if (formData.image && !validateFileType(formData.image, 'jpg,jpeg,png,gif')) {
+      } else if (formData.image && !validateFileType(formData.image, 'jpg,jpeg,png,gif,webp')) {
         newErrors.image = 'The image must be an image file (e.g., jpg, png).';
       } else if (!validateFileSize(formData.image, 2)) {
         newErrors.image = 'The image must not exceed 2MB.';
@@ -165,7 +165,7 @@ const FormValidation = ({ formData, addType, isEditing, setErrors }) => {
       // Image: required (for add), file, image, max:2MB
       if (!isEditing && !formData.image) {
         newErrors.image = 'The image is required.';
-      } else if (formData.image && !validateFileType(formData.image, 'jpg,jpeg,png,gif')) {
+      } else if (formData.image && !validateFileType(formData.image, 'jpg,jpeg,png,gif,webp')) {
         newErrors.image = 'The image must be an image file (e.g., jpg, png).';
       } else if (!validateFileSize(formData.image, 2)) {
         newErrors.image = 'The image must not exceed 2MB.';
