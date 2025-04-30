@@ -145,7 +145,7 @@ const Layout = () => {
                   <FaBars size={22} />
                 </button>
                 <div className="flex justify-center items-center space-x-2 text-light-text dark:text-dark-text">
-                  <img src={darkMode ? "/storage/logo/vallencia logo.png" : "/storage/logo/vallencia logo 2.png"} alt="" className=" h-8 md:h-11" />
+                  <img src={darkMode ? "/storage/logo/vallencia logo.png" : "/storage/logo/vallencia logo 2.png"} alt="" className={`${darkMode ? 'h-10 md:h-10' : 'h-12 md:h-14'}`} />
                   <a href="/" className="font-Montserrat hidden lg:inline text-xl">Vallencia Lighting</a>
                 </div>
               </div>
@@ -363,7 +363,7 @@ const Layout = () => {
       </main>
 
       {/* Footer */}
-      <footer className="shadow-2xl shadow-slate-700 bg-light-background text-light-text dark:bg-dark-background dark:text-dark-text py-16 transition-all duration-300">
+      <footer className="shadow-2xl shadow-light-text bg-light-background text-light-text dark:bg-dark-background dark:text-dark-text py-16 transition-all duration-300">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-10">
             <h2 className="text-2xl md:text-3xl font-SulphurPoint text-light-primary dark:text-dark-primary">
@@ -467,7 +467,7 @@ const Layout = () => {
           <div className="flex flex-col md:flex-row items-center border-t border-gray-300 dark:border-gray-700 pt-6">
           {/* Left Section - Logo & Name */}
           <div className="flex justify-center items-center space-x-2 mb-6 md:mb-0">
-            <img src={darkMode ? "/storage/logo/vallencia logo.png" : "/storage/logo/vallencia logo 2.png"} alt="" className="h-12" />
+            <img src={darkMode ? "/storage/logo/vallencia logo.png" : "/storage/logo/vallencia logo 2.png"} alt="" className={`${darkMode ? 'h-10 md:h-12' : 'h-12 md:h-16'}`} />
             <h2 className="text-2xl font-Montserrat text-light-primary dark:text-dark-primary">Vallencia Lighting</h2>
           </div>
 

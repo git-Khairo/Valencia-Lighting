@@ -67,9 +67,9 @@ const ProductCard = ({ variant = "hover", product }) => {
           }`}
         >
           {/* Name & Code */}
-          <div className="flex flex-col sm:flex-row justify-between w-full items-center">
-            <h3 className="xl:text-xl text-base font-SulphurPoint dark:text-dark-text">{truncateText(product.name)}</h3>
-            <p className="text-sm md:text-base text-[10px] text-gray-500 font-SulphurPoint dark:text-dark-secondary2">#{product.id}</p>
+          <div className="flex flex-col sm:flex-row justify-between  w-full items-center">
+            <h3 className="xl:text-xl text-base font-SulphurPoint text-light-text dark:text-dark-text text-nowrap">{truncateText(product.name, 10)}</h3>
+            <p className="text-sm md:text-base text-gray-500 font-SulphurPoint dark:text-dark-secondary2">#{product.id}</p>
           </div>
 
           {/* Extra Details */}
@@ -86,7 +86,7 @@ const ProductCard = ({ variant = "hover", product }) => {
               <h3 className="xxs:text-xs text-sm font-SulphurPoint text-light-text dark:text-dark-text">By {product.brand.charAt(0).toUpperCase() + product.brand.slice(1)}</h3>
             </div>
             <div className="flex justify-between items-center">
-              <p className="text-sm text-light-secondary2 font-SulphurPoint dark:text-dark-secondary2 xxs:opacity-0 sm:opacity-100">{truncateText(product.title)}</p>
+              <p className="text-sm text-light-secondary2 font-SulphurPoint dark:text-dark-secondary2 xxs:opacity-0 sm:opacity-100">{truncateText(product.title, 35)}</p>
             </div>
           </div>
         </div>

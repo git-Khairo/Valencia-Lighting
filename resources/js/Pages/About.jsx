@@ -5,22 +5,22 @@ import { GiStreetLight, GiPartyFlags } from "react-icons/gi";
 
 function ContentSection16() {
     return (
-        <section className="px-8 pt-20 font-AverageSans bg-light-background dark:bg-dark-background ">
+        <section className="px-8 pt-20 bg-light-background dark:bg-dark-background ">
             <div className="mx-auto">
-                <div className="flex flex-col md:flex-row gap-8 lg:gap-12 ">
+                <div className="flex flex-col md:flex-row gap-8 lg:gap-12">
                     <div className="flex flex-col gap-6 md:w-1/2">
-                        <h2 className="my-4 ml-6 border-b pb-4 border-light-primary dark:border-dark-primary font-Montserrat text-3xl md:text-4xl lg:text-5xl 3xl:text-8xl text-left leading-snug text-light-primary dark:text-dark-primary ">
+                        <h2 className="my-2 ml-6 border-b pb-2 border-light-primary dark:border-dark-primary font-Montserrat text-3xl md:text-4xl lg:text-5xl 3xl:text-8xl text-left leading-snug text-light-primary dark:text-dark-primary ">
                             ABOUT US
                         </h2>
                         <div className="font-Jura ml-6">
-                            <p className="text-sm md:text-lg lg:text-xl xl:text-2xl 3xl:text-4xl text-light-text dark:text-dark-text">
+                            <p className="text-sm md:text-base lg:text-lg xl:text-xl 3xl:text-3xl text-light-text dark:text-dark-text">
                                 As a leading international specialist for architectural lighting, our tools represent quality, innovation,
                                 design, efficiency, and reliability. We think and work holistically, ensuring that the products and services
                                 required by our internal customers are available from sourcing and serial supply to the end of life cycle.
                             </p>
                             <div className="grid transition-all duration-500 ease-in-out md:hidden grid-rows-[1fr] opacity-100 scale-100">
                                 <div className="overflow-hidden">
-                                    <p className="text-sm md:text-lg lg:text-xl xl:text-2xl  3xl:text-4xl text-light-text dark:text-dark-text">
+                                    <p className="text-sm md:text-base lg:text-lg xl:text-xl  3xl:text-3xl text-light-text dark:text-dark-text">
                                         Being successful together means setting out on a path and working together to achieve the objectives we
                                         set ourselves. This is why we think not only from our perspective with every project but also from the
                                         perspective of the supplier. We do everything possible to maintain a business relationship based on
@@ -29,7 +29,7 @@ function ContentSection16() {
                                 </div>
                             </div>
                             <div className="hidden md:block">
-                                <p className="text-sm md:text-lg lg:text-xl xl:text-2xl 3xl:text-4xl text-light-text dark:text-dark-text">
+                                <p className="text-sm md:text-base lg:text-lg xl:text-xl 3xl:text-3xl text-light-text dark:text-dark-text">
                                     Being successful together means setting out on a path and working together to achieve the objectives we
                                     set ourselves. This is why we think not only from our perspective with every project but also from the
                                     perspective of the supplier. We do everything possible to maintain a business relationship based on
@@ -38,7 +38,7 @@ function ContentSection16() {
                             </div>
                         </div>
                     </div>
-                    <div className="w-full h-64 md:h-auto md:w-1/2 shadow-lg rounded-lg overflow-hidden">
+                    <div className="w-full mx-auto h-64 md:h-[500px] md:w-1/2 shadow-lg rounded-lg overflow-hidden">
                         <img src="https://picsum.photos/200" alt="About Us" className="w-full h-full object-cover rounded-lg" />
                     </div>
                 </div>
@@ -64,7 +64,7 @@ function TestimonialSection16() {
                     We simplify complex lighting projects through <strong>exceptional customer experiences</strong> driven by <strong>innovation, design, and sustainability</strong>.
                 </h5>
                 <div className="flex flex-col md:flex-row items-center gap-12 ml-6">
-                    <div className="w-full md:w-1/2 shadow-lg rounded-lg overflow-hidden">
+                    <div className="w-full h-64 md:h-[500px] md:w-1/2 shadow-lg rounded-lg overflow-hidden">
                         <img src="https://picsum.photos/200" alt="Lighting Innovation" className="w-full h-full rounded-lg" />
                     </div>
                     <div className="flex flex-col gap-6 md:w-1/2">
@@ -209,7 +209,7 @@ const Services = () => {
                 <h2 className="font-Montserrat text-3xl md:text-4xl lg:text-5xl 3xl:text-7x text-light-primary dark:text-dark-primary mb-8">
                     Our Services
                 </h2>
-                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6 md:mb-12">
                     {services.slice(0, 4).map(({ icon: Icon, title }, index) => (
                         <div
                             key={index}
@@ -227,7 +227,7 @@ const Services = () => {
                         <div
                             key={index}
                             className={`flex flex-col items-center p-6 border-2 border-light-primary dark:border-dark-primary bg-light-background dark:bg-dark-background rounded-lg shadow-md transition-transform transform hover:scale-105 duration-300 ${
-                                index === 2 ? "lg:col-span-1 col-span-3 w-full" : ""
+                                index === 2 ? "lg:col-span-1 col-span-2" : "col-span-1"
                             }`}
                         >
                             <Icon className="text-5xl text-light-primary dark:text-dark-primary mb-3 border-2 border-light-primary dark:border-dark-primary p-3 rounded-full" />

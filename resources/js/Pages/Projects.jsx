@@ -11,6 +11,7 @@ const Row3 = (data) => {
         key={project.id}
         className="relative overflow-hidden rounded-lg bg-white"
         >
+          <div className="absolute inset-0 bg-black/50"></div>
         <div className="w-full">
             <img
                 src={project.images}
@@ -38,6 +39,7 @@ const Row2 = (data) => {
                     key={project.id}
                     className="relative overflow-hidden rounded-lg bg-white"
                 >
+                  <div className="absolute inset-0 bg-black/50"></div>
                     <div className="w-full">
                         <img
                         src={project.images}
@@ -65,6 +67,7 @@ const Row1 = (data) => {
             key={project.id}
             className="relative overflow-hidden rounded-lg bg-white"
             >
+              <div className="absolute inset-0 bg-black/50"></div>
             <div className="w-full">
                 <img
                     src={project.images}
@@ -92,6 +95,7 @@ const Row3Style = ({projects, pointer}) => {
             key={project.id}
             className={`relative overflow-hidden rounded-lg bg-white ${pointer === index ? "lg:col-span-3 sm:col-span-1" : "lg:col-span-2 sm:col-span-1"}`}
             >
+              <div className="absolute inset-0 bg-black/50"></div>
             <div className="w-full">
                 <img
                     src={project.images}

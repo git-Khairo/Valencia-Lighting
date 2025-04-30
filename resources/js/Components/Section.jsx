@@ -41,7 +41,7 @@ const Section = ({ category, products }) => {
           alt="Category background"
           className="w-full h-full object-cover"
         />
-        <h2 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-lg md:text-2xl font-semibold text-light-background bg-light-text bg-opacity-50 p-2 rounded-lg font-Montserrat">
+        <h2 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-sm md:text-2xl font-semibold text-light-background bg-light-text bg-opacity-50 p-1 md:p-2 rounded-lg font-Montserrat">
           {category?.type}
         </h2>
       </div>

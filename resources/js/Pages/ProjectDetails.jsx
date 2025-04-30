@@ -85,7 +85,7 @@ const ProjectDetails = () => {
         <div key={index}>
           <img
             src={image}
-            className="w-screen h-svh object-cover"
+            className="w-screen h-[500px] object-cover"
             alt={`Slide ${index + 1}`}
           />
         </div>
