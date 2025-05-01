@@ -248,7 +248,7 @@ const PricingList = () => {
                         <div className="flex flex-col">
                           <h3 className="text-lg font-SulphurPoint text-light-text dark:text-dark-text">{product.name}</h3>
                           <p className="text-sm text-light-text dark:text-dark-text">{product.description}</p>
-                          <div className="mt-2 flex items-center border rounded-md">
+                          <div className="mt-2 flex items-center border rounded-md w-fit">
                             <button onClick={() => handleQuantityChange(product.id, product.quantity - 1)} className="px-2 py-1 dark:bg-dark-secondary2">
                               <FontAwesomeIcon icon={faMinus} />
                             </button>
