@@ -46,7 +46,7 @@ const ProductCard = ({ variant = "hover", product }) => {
           <img
             src={product.image}// Use image from product
             alt={product.title} // Use title as alt text
-            className={`w-full h-[90%] md:h-[95%] object-cover rounded-lg transition-all duration-150 ease-linear ${
+            className={`w-full h-[90%] md:h-[95%] object-contain rounded-lg transition-all duration-150 ease-linear ${
               responsiveVariant === "hover"
                 ? "group-hover:h-[90%]"
                 : responsiveVariant === "static"
