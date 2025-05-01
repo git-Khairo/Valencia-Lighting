@@ -74,12 +74,12 @@ const ProductCard = ({ variant = "hover", product }) => {
 
           {/* Extra Details */}
           <div
-            className={`transition-all duration-300 ease-linear flex flex-col md:hidden ${
+            className={`transition-all duration-300 ease-linear flex flex-col ${
               responsiveVariant === "hover"
                 ? "h-[10%] overflow-hidden opacity-0 group-hover:opacity-100"
                 : responsiveVariant === "static"
                 ? "h-[40%] opacity-100"
-                : ''
+                : 'hidden'
             }`}
           >
             <div className="flex xxs:flex-col sm:flex-row justify-between items-center">

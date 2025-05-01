@@ -288,7 +288,7 @@ function App() {
               </Slider>
             </div>
                ) : (
-                <div className='w-fit mx-auto md:flex gap-4'>
+                <div className='w-fit mx-auto md:flex space-y-4 md:space-y-0'>
                   {relatedProducts.map((product) => (
                   <ProductCard variant="no-hover" product={product} key={product.id}/>
                   ))}
