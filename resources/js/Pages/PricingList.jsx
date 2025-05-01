@@ -220,8 +220,8 @@ const PricingList = () => {
   return (
     <div className="min-h-screen bg-light-background dark:bg-dark-background py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-      <h1 className="my-4 font-Montserrat text-3xl md:text-4xl lg:text-5xl 3xl:text-7xl text-left leading-snug text-light-primary dark:text-dark-primary ">
-                    Your Cart
+      <h1 className="my-4 font-Montserrat text-2xl md:text-3xl lg:text-4xl 3xl:text-5xl text-left leading-snug text-light-primary dark:text-dark-primary ">
+                    Your Pricing List
                 </h1>
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Cart Section */}

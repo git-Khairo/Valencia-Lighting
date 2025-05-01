@@ -394,64 +394,69 @@ const Layout = () => {
                     Projects
                   </Link>
                 </li>
+                <li>
+                  <Link to={'/About Us'} className="font-SulphurPoint hover:text-light-secondary dark:hover:text-light-secondary transition-all duration-200">
+                    About Us
+                  </Link>
+                </li>
               </ul>
             </div>
             <div>
-              <h3 className="text-xl font-Montserrat mb-4 text-light-primary dark:text-dark-primary">Outdoor</h3>
+              <h3 className="text-xl font-Montserrat mb-4 text-light-primary dark:text-dark-primary">Indoor</h3>
               <ul className="space-y-2">
                 <li>
-                  <Link to={`/products/1`} className="font-SulphurPoint hover:text-light-secondary dark:hover:text-light-secondary transition-all duration-200">
-                    Residential Lighting
+                  <Link to={`/products/12`} className="font-SulphurPoint hover:text-light-secondary dark:hover:text-light-secondary transition-all duration-200">
+                    DownLight
                   </Link>
                 </li>
                 <li>
-                  <Link to={`/products/2`} className="font-SulphurPoint hover:text-light-secondary dark:hover:text-light-secondary transition-all duration-200">
-                    Commercial Solutions
+                  <Link to={`/products/13`} className="font-SulphurPoint hover:text-light-secondary dark:hover:text-light-secondary transition-all duration-200">
+                    Frames
                   </Link>
                 </li>
                 <li>
-                  <Link to={`/products/3`} className="font-SulphurPoint hover:text-light-secondary dark:hover:text-light-secondary transition-all duration-200">
-                    Energy Efficient Systems
+                  <Link to={`/products/17`} className="font-SulphurPoint hover:text-light-secondary dark:hover:text-light-secondary transition-all duration-200">
+                    Panel Light
                   </Link>
                 </li>
                 <li>
-                  <Link to={`/products/4`} className="font-SulphurPoint hover:text-light-secondary dark:hover:text-light-secondary transition-all duration-200">
-                    Smart Lighting
+                  <Link to={`/products/18`} className="font-SulphurPoint hover:text-light-secondary dark:hover:text-light-secondary transition-all duration-200">
+                    Spot Light
                   </Link>
                 </li>
                 <li>
-                  <Link to={`/products/5`} className="font-SulphurPoint hover:text-light-secondary dark:hover:text-light-secondary transition-all duration-200">
-                    Smart Lighting
+                  <Link to={`/products/20`} className="font-SulphurPoint hover:text-light-secondary dark:hover:text-light-secondary transition-all duration-200">
+                    Surface
                   </Link>
                 </li>
               </ul>
             </div>
             <div>
-            <h3 className="text-xl font-Montserrat mb-4 text-light-primary dark:text-dark-primary">Indoor</h3>
+            <h3 className="text-xl font-Montserrat mb-4 text-light-primary dark:text-dark-primary">Outdoor</h3>
             <ul className="space-y-2">
                 <li>
-                  <Link to={`/products/1`} className="font-SulphurPoint hover:text-light-secondary dark:hover:text-light-secondary transition-all duration-200">
-                    Residential Lighting
+                  <Link to={`/products/24`} className="font-SulphurPoint hover:text-light-secondary dark:hover:text-light-secondary transition-all duration-200">
+                    Driveway
                   </Link>
                 </li>
                 <li>
-                  <Link to={`/products/2`} className="font-SulphurPoint hover:text-light-secondary dark:hover:text-light-secondary transition-all duration-200">
-                    Commercial Solutions
+                  <Link to={`/products/27`} className="font-SulphurPoint hover:text-light-secondary dark:hover:text-light-secondary transition-all duration-200">
+                    Spike
                   </Link>
                 </li>
                 <li>
-                  <Link to={`/products/3`} className="font-SulphurPoint hover:text-light-secondary dark:hover:text-light-secondary transition-all duration-200">
-                    Energy Efficient Systems
+                  <Link to={`/products/29`} className="font-SulphurPoint hover:text-light-secondary dark:hover:text-light-secondary transition-all duration-200">
+                    Step Light
                   </Link>
                 </li>
                 <li>
-                  <Link to={`/products/4`} className="font-SulphurPoint hover:text-light-secondary dark:hover:text-light-secondary transition-all duration-200">
-                    Smart Lighting
+                  <Link to={`/products/32`} className="font-SulphurPoint hover:text-light-secondary dark:hover:text-light-secondary transition-all duration-200">
+                    Up Light
                   </Link>
                 </li>
                 <li>
-                  <Link to={`/products/5`} className="font-SulphurPoint hover:text-light-secondary dark:hover:text-light-secondary transition-all duration-200">
-                    Smart Lighting
+                  <Link to={`/products/33`} className="font-SulphurPoint hover:text-light-secondary dark:hover:text-light-secondary transition-all duration-200">
+                    Wall Light
                   </Link>
                 </li>
               </ul>

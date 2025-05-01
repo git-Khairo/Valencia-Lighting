@@ -31,9 +31,9 @@ const HomeProduct = ({ products }) => {
     className="mx-auto px-10 py-20 flex flex-col md:flex-row items-center gap-6 bg-light-background dark:bg-dark-background dark:text-dark-text">
       {/* Left Static Description */}
       <div className="md:w-1/3 text-center md:text-left">
-        <h2 className="text-4xl border-b border-light-primary dark:border-dark-primary text-light-text dark:text-dark-text font-Montserrat md:text-5xl pb-4">Latest Products</h2>
+        <h2 className="text-4xl border-b border-light-primary dark:border-dark-primary text-light-text dark:text-dark-text font-Montserrat md:text-5xl pb-4">New Arrivals</h2>
         <p className="mt-4 text-light-secondary2 dark:text-dark-secondary2 text-xs sm:text-xl font-Jura">
-          These are the products used in the project. Scroll through to see them all.
+        Step into the Future of Illumination: Discover Our Latest Lighting Innovations Designed to Transform Your Space!
         </p>
       </div>
 

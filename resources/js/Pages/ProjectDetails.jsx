@@ -188,12 +188,7 @@ className="flex flex-col md:flex-row items-center justify-between mx-auto bg-lig
     className='flex flex-col justify-center items-center w-full px-10 pt-14 text-center md:pb-5'>
     
     <p className='font-SulphurPoint text-light-text dark:text-dark-text text-base sm:text-lg md:text-xl mb-6'>
-        This is a description of the section. It provides some brief
-        information about the content displayed in this section.
-        This is a description of the section. It provides some brief
-        information about the content displayed in this section.
-        This is a description of the section. It provides some brief
-        information about the content displayed in this section.
+      This project highlights our premium lighting solutions, blending innovation and elegance to transform any space. Our high-performance products deliver style and efficiency, illuminating every detail with precision. Explore the lighting behind this vision and see how we bring brilliance to every project.
     </p>
 </motion.section>
     <motion.section 
@@ -227,9 +222,9 @@ className="flex flex-col md:flex-row items-center justify-between mx-auto bg-lig
     className="mx-auto px-10 py-20 flex flex-col md:flex-row items-center gap-6">
       {/* Left Static Description */}
       <div className="md:w-1/3 text-center md:text-left">
-        <h2 className="text-3xl text-light-primary dark:text-dark-primary font-Montserrat md:text-4xl">Project Products</h2>
+        <h2 className="text-3xl text-light-primary dark:text-dark-primary font-Montserrat md:text-4xl">Products Behind This Project’s Glow</h2>
         <p className="mt-4 text-light-text dark:text-dark-text font-Jura text-xs sm:text-lg md:xl">
-          These are the products used in the project. Scroll through to see them all.
+        See the Brilliance in Action: Discover the Premium Lighting Products Powering This Project’s Stunning Design!
         </p>
       </div>
 

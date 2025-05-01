@@ -11,10 +11,10 @@ import Loading from '../Components/Loading';
 import useFetch from '../useFetch';
 
 const productsSlider = [
-  { id: 1, image: "https://picsum.photos/200", "title": "Winter Sale", "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit." },
-  { id: 2, image: "https://picsum.photos/200", "title": "Spring Sale", "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit." },
-  { id: 3, image: "https://picsum.photos/200", "title": "Autumn Sale", "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit." },
-  { id: 4, image: "https://picsum.photos/200", "title": "Summer Sale", "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit." },
+  { id: 1, image: "https://picsum.photos/200", "title": "Everything is designed. Few things are designed well", "description": "- Brian Reed -" },
+  { id: 2, image: "https://picsum.photos/200", "title": "Design adds value faster than it adds costs.", "description": "- Joel Spolsky -" },
+  { id: 3, image: "https://picsum.photos/200", "title": "Lighting is the lifeblood of a design", "description": "- Gregory Kay -" },
+  { id: 4, image: "https://picsum.photos/200", "title": "NOT ANYONE CAN BE A DESIGNER", "description": "- Joelle -" },
   
 ];
 

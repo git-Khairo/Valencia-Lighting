@@ -14,26 +14,11 @@ function ContentSection16() {
                         </h2>
                         <div className="font-Jura ml-6">
                             <p className="text-sm md:text-base lg:text-lg xl:text-xl 3xl:text-3xl text-light-text dark:text-dark-text">
-                                As a leading international specialist for architectural lighting, our tools represent quality, innovation,
-                                design, efficiency, and reliability. We think and work holistically, ensuring that the products and services
-                                required by our internal customers are available from sourcing and serial supply to the end of life cycle.
+                                At Vallencia Lighting, we are an international specialist in architectural lighting solutions, committed to delivering excellence in quality, design, and energy efficiency. With a holistic approach to every project, we combine innovation and technical precision to provide lighting systems that are not only functional but also elevate the visual experience of spaces. Our comprehensive services range from customized lighting design and consultation to seamless project delivery and post-installation support.
                             </p>
-                            <div className="grid transition-all duration-500 ease-in-out md:hidden grid-rows-[1fr] opacity-100 scale-100">
-                                <div className="overflow-hidden">
-                                    <p className="text-sm md:text-base lg:text-lg xl:text-xl  3xl:text-3xl text-light-text dark:text-dark-text">
-                                        Being successful together means setting out on a path and working together to achieve the objectives we
-                                        set ourselves. This is why we think not only from our perspective with every project but also from the
-                                        perspective of the supplier. We do everything possible to maintain a business relationship based on
-                                        partnership that offers both sides sustainable and value-adding perspectives.
-                                    </p>
-                                </div>
-                            </div>
-                            <div className="hidden md:block">
+                            <div className="block">
                                 <p className="text-sm md:text-base lg:text-lg xl:text-xl 3xl:text-3xl text-light-text dark:text-dark-text">
-                                    Being successful together means setting out on a path and working together to achieve the objectives we
-                                    set ourselves. This is why we think not only from our perspective with every project but also from the
-                                    perspective of the supplier. We do everything possible to maintain a business relationship based on
-                                    partnership that offers both sides sustainable and value-adding perspectives.
+                                    We value long-term partnerships built on trust, transparency, and mutual growth. By thinking from the perspective of both client and supplier, we ensure sustainable, value-driven outcomes that stand the test of time. Whether it’s a private villa, hospital, office, or iconic commercial space, we tailor our solutions to meet the unique demands of each environment—enhancing beauty, safety, and comfort through light.
                                 </p>
                             </div>
                         </div>
@@ -58,10 +43,10 @@ function TestimonialSection16() {
         <section className="p-8 font-AverageSans bg-light-background dark:bg-dark-background ">
             <div className="mx-auto">
                 <h2 className="my-4 ml-6 font-Montserrat text-3xl md:text-4xl lg:text-5xl 3xl:text-7x text-left leading-snug text-light-primary dark:text-dark-primary ">
-                    Mission
+                    Our Mission
                 </h2>
                 <h5 className="mb-6 ml-6 font-SulphurPoint text-sm md:text-lg lg:text-xl xl:text-xl 3xl:text-2xl text-light-text dark:text-dark-text">
-                    We simplify complex lighting projects through <strong>exceptional customer experiences</strong> driven by <strong>innovation, design, and sustainability</strong>.
+                We simplify complex lighting projects by delivering outstanding design, reliable service, and innovative products that create safe, efficient, and inspiring environments.
                 </h5>
                 <div className="flex flex-col md:flex-row items-center gap-12 ml-6">
                     <div className="w-full h-64 md:h-[500px] md:w-1/2 shadow-lg rounded-lg overflow-hidden">
@@ -86,7 +71,7 @@ function TestimonialSection16() {
 
 function Timeline() {
     const events = [
-        { year: "2015", title: "Founded", description: "Started as a lighting solutions provider.", color: "#2d587a" },
+        { year: "2006", title: "Founded", description: "Started as a lighting solutions provider.", color: "#2d587a" },
         { year: "2017", title: "Expansion", description: "Expanded into commercial lighting.", color: "#4f7b9c" },
         { year: "2019", title: "Innovations", description: "Introduced smart lighting tech.", color: "#729ebf" },
         { year: "2021", title: "Global Reach", description: "Became an international brand.", color: "#85a0b3" },
