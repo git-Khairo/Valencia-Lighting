@@ -175,7 +175,7 @@ class ProductController extends Controller
 
     public function getSections()
     {
-        $categoryIds = Category::all()->pluck('id')->toArray();
+        $categoryIds = Category::latest()->pluck('id')->toArray();
         $section = [];
 
         foreach ($categoryIds as $categoryId) {
@@ -203,6 +203,7 @@ class ProductController extends Controller
 
         if (!empty($categoriesId)) {
             $products = $this->ProductRepository->byCategories($categoriesId);
+            $products = $products->sortByDesc('created_at');
         } else $products = $this->ProductRepository->allProducts();
 
         if ($brand !== null) {

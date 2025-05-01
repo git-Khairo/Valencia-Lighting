@@ -35,7 +35,7 @@ const Section = ({ category, products }) => {
       
       {/* Category Box */}
       <Link to={`/products/${category.id}`} className="w-full">
-      <div className="relative w-full h-full rounded-lg shadow-md overflow-hidden">
+      <div className="relative w-full h-[200px] sm:h-[300px] lg:h-[310px] xl:h-[356px] 2xl:h-[400px] rounded-lg shadow-md overflow-hidden">
         <img
           src={category.image}
           alt="Category background"

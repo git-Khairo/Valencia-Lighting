@@ -279,6 +279,7 @@ function App() {
           {/* People Also Like Section */}
           <section className="container mx-auto px-4 py-12">
             <h2 className="text-3xl font-Montserrat text-light-primary dark:text-dark-primary border-b pb-3 border-light-primary dark:border-dark-primary mb-6">People Also Like</h2>
+            {relatedProducts.length > 1 ? (
             <div className="w-full">
               <Slider {...RelatedProductsSlider}>
                 {relatedProducts.map((product) => (
@@ -286,6 +287,11 @@ function App() {
                 ))}
               </Slider>
             </div>
+               ) : (
+                <div className='w-fit mx-auto'>
+                  <ProductCard variant="no-hover" product={relatedProducts[0]} />
+                </div>
+              )}
           </section>
         </div>
       ) : (

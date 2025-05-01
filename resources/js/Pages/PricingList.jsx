@@ -418,13 +418,17 @@ const PricingList = () => {
         ) : RelatedProducts ? (
           <div className="my-10 bg-light-background dark:bg-dark-background rounded-lg shadow-sm p-6">
             <h2 className="my-4 font-Montserrat text-lg md:text-xl lg:text-3xl 3xl:text-5xl text-left leading-snug text-light-primary dark:text-dark-primary ">
-                    More Products
-                </h2>
+                More Products
+            </h2>
+            {RelatedProducts.data.length > 1 ? (
             <Slider {...RelatedProductsSlider}>
               {RelatedProducts.data.map(product => (
                 <ProductCard key={product.id} product={product} variant="no-hover" />
               ))}
             </Slider>
+            ) : (
+              <ProductCard variant="no-hover" product={data.project.products[0]} />
+            )}
           </div>
         ) : null}
       </div>

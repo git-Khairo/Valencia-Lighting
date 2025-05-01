@@ -34,19 +34,19 @@ const ProductCard = ({ variant = "hover", product }) => {
   return (
     <Link to={`/product/${product.id}`} className="block">
       <div
-        className=" min-h-36 xxs:h-[200px] sm:h-[300px] lg:h-[310px] xl:h-[356px] 2xl:h-[400px] 
+        className="h-60 sm:h-[300px] lg:h-[310px] xl:h-[356px] 2xl:h-[400px] 
         group relative rounded-lg overflow-hidden mx-1 shadow-md border border-light-secondary bg-white transition-all duration-300 ease-linear dark:bg-dark-background dark:border-dark-secondary"
       >
         {/* Picture */}
         <div
-          className={`w-full sm:h-[90%] xxs:h-[80%] p-3 transition-all duration-300 ease-linear ${
+          className={`w-full sm:h-[90%] h-[80%] p-3 transition-all duration-300 ease-linear ${
             responsiveVariant === "hover" ? "group-hover:pb-6" : "pb-1 sm:pb-6"
           }`}
         >
           <img
             src={product.image}// Use image from product
             alt={product.title} // Use title as alt text
-            className={`w-full xxs:h-[90%] md:h-[95%] object-contain rounded-lg transition-all duration-150 ease-linear ${
+            className={`w-full h-[90%] md:h-[95%] object-cover rounded-lg transition-all duration-150 ease-linear ${
               responsiveVariant === "hover"
                 ? "group-hover:h-[90%]"
                 : responsiveVariant === "static"
@@ -74,12 +74,12 @@ const ProductCard = ({ variant = "hover", product }) => {
 
           {/* Extra Details */}
           <div
-            className={`transition-all duration-300 ease-linear flex flex-col ${
+            className={`transition-all duration-300 ease-linear flex flex-col md:hidden ${
               responsiveVariant === "hover"
                 ? "h-[10%] overflow-hidden opacity-0 group-hover:opacity-100"
                 : responsiveVariant === "static"
                 ? "h-[40%] opacity-100"
-                : "hidden"
+                : ''
             }`}
           >
             <div className="flex xxs:flex-col sm:flex-row justify-between items-center">

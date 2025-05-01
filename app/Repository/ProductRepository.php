@@ -18,7 +18,7 @@ class ProductRepository implements ProductRepositoryInterface
     }
     public function allProducts()
     {
-        return Product::all();
+        return Product::latest()->get();
     }
 
     public function byCode($code) {
@@ -57,7 +57,7 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function byBrand($products, $brand)
     {
-        return $products->where('brand', $brand);
+        return $products->where('brand', $brand)->sortByDesc('created_at');
     }
 
 
