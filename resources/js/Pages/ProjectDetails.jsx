@@ -238,12 +238,12 @@ className="flex flex-col md:flex-row items-center justify-between mx-auto bg-lig
       <div className="md:w-2/3 w-full">
         <Slider {...ProductSliderSettings}>
           {data.project.products.map((product) => (
-            <ProductCard key={product.id} variant="no-hover" product={product} />
+            <ProductCard key={product?.id} variant="no-hover" product={product} />
           ))}
         </Slider>
       </div>
         ) : (
-          <ProductCard variant="no-hover" product={data.project.products[0]} />
+          <ProductCard variant="no-hover" product={data.project?.products[0]} />
         )}
     </motion.section>
 </div>
