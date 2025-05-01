@@ -234,7 +234,7 @@ className="flex flex-col md:flex-row items-center justify-between mx-auto bg-lig
       </div>
 
       {/* Right Side Slider */}
-      {data.project.products.length > 1 ? (
+      {data.project.products.length > 2 ? (
       <div className="md:w-2/3 w-full">
         <Slider {...ProductSliderSettings}>
           {data.project.products.map((product) => (
@@ -243,7 +243,11 @@ className="flex flex-col md:flex-row items-center justify-between mx-auto bg-lig
         </Slider>
       </div>
         ) : data.project.products.length > 0 ? (
-          <ProductCard variant="no-hover" product={data.project.products[0]} />
+        <>
+          {data.project.products.map((product) => (
+            <ProductCard key={product.id} variant="no-hover" product={product} />
+          ))}
+        </>
         ) : <></>}
     </motion.section>
 </div>
