@@ -11,10 +11,10 @@ import Loading from '../Components/Loading';
 import useFetch from '../useFetch';
 
 const productsSlider = [
-  { id: 1, image: "https://picsum.photos/200", "title": "Everything is designed. Few things are designed well", "description": "- Brian Reed -" },
-  { id: 2, image: "https://picsum.photos/200", "title": "Design adds value faster than it adds costs.", "description": "- Joel Spolsky -" },
-  { id: 3, image: "https://picsum.photos/200", "title": "Lighting is the lifeblood of a design", "description": "- Gregory Kay -" },
-  { id: 4, image: "https://picsum.photos/200", "title": "NOT ANYONE CAN BE A DESIGNER", "description": "- Joelle -" },
+  { id: 1, image: "/storage/ProductSlider/image1.jpg", "title": "Everything is designed. Few things are designed well", "description": "- Brian Reed -" },
+  { id: 2, image: "/storage/ProductSlider/image2.webp", "title": "Design adds value faster than it adds costs.", "description": "- Joel Spolsky -" },
+  { id: 3, image: "/storage/ProductSlider/image3.jpeg", "title": "Lighting is the lifeblood of a design", "description": "- Gregory Kay -" },
+  { id: 4, image: "/storage/ProductSlider/image4.jpg", "title": "NOT ANYONE CAN BE A DESIGNER", "description": "- Joelle -" },
   
 ];
 
@@ -190,6 +190,7 @@ const Products = () => {
         <Slider {...ProductSliderSettings}>
           {productsSlider.map((product, index) => (
             <div key={product.id || index} className="relative">
+              <div className="absolute inset-0 bg-black/30"></div>
               <img
                 src={product.image}
                 alt={`Product ${index + 1}`}

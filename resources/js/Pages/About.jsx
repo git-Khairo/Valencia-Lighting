@@ -24,7 +24,7 @@ function ContentSection16() {
                         </div>
                     </div>
                     <div className="w-full mx-auto h-64 md:h-[500px] md:w-1/2 shadow-lg rounded-lg overflow-hidden">
-                        <img src="https://picsum.photos/200" alt="About Us" className="w-full h-full object-cover rounded-lg" />
+                        <img src="/storage/aboutUs/image1.jpg" alt="About Us" className="w-full h-full object-cover rounded-lg" />
                     </div>
                 </div>
             </div>
@@ -50,7 +50,7 @@ function TestimonialSection16() {
                 </h5>
                 <div className="flex flex-col md:flex-row items-center gap-12 ml-6">
                     <div className="w-full h-64 md:h-[500px] md:w-1/2 shadow-lg rounded-lg overflow-hidden">
-                        <img src="https://picsum.photos/200" alt="Lighting Innovation" className="w-full h-full rounded-lg" />
+                        <img src="storage/aboutUs/image2.jpg" alt="Lighting Innovation" className="w-full h-full rounded-lg" />
                     </div>
                     <div className="flex flex-col gap-6 md:w-1/2">
                         {items.map((item, index) => (

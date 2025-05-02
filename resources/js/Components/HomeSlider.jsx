@@ -26,6 +26,7 @@ const HomeSlider = ({ images }) => {
       <Slider {...imageSliderSettings}>
         {images.map((image, index) => (
           <div key={index} className="relative">
+            <div className="absolute inset-0 bg-black/25"></div>
             <img
               src={image.src}
               className="w-full h-[400px] md:h-[600px] object-cover"

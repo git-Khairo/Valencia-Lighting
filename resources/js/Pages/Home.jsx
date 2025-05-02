@@ -11,11 +11,11 @@ export default function HomePage() {
   const { data, error, loading } = useFetch('/api/home');
   
   const images = [
-    { src: "https://picsum.photos/200", title: 'To love beauty is to see light' },
-    { src: "https://picsum.photos/200", title: 'There are two kinds of light - the glow that illumines, and the glare that obscures' },
-    { src: "https://picsum.photos/200", title: 'In the right light, at the right time, everything is extraordinary.' },
-    { src: "https://picsum.photos/200", title: 'Design is not just what it looks like and feels like . Design is how it works.' },
-    { src: "https://picsum.photos/200", title: 'There are three responses to a design - YES., NO. & WOW! WE ONLY AIM FOR WOW!' },
+    { src: "/storage/HomeSlider/image1.jpg", title: 'To love beauty is to see light' },
+    { src: "/storage/HomeSlider/image2.webp", title: 'There are two kinds of light - the glow that illumines, and the glare that obscures' },
+    { src: "/storage/HomeSlider/image3.jpg", title: 'In the right light, at the right time, everything is extraordinary.' },
+    { src: "/storage/HomeSlider/image4.jpg", title: 'Design is not just what it looks like and feels like . Design is how it works.' },
+    { src: "/storage/HomeSlider/image5.jpg", title: 'There are three responses to a design - YES., NO. & WOW! WE ONLY AIM FOR WOW!' },
   ];
 
   return (
