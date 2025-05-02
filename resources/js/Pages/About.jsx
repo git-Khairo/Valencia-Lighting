@@ -50,7 +50,7 @@ function TestimonialSection16() {
                 </h5>
                 <div className="flex flex-col md:flex-row items-center gap-12 ml-6">
                     <div className="w-full h-64 md:h-[500px] md:w-1/2 shadow-lg rounded-lg overflow-hidden">
-                        <img src="storage/aboutUs/image2.jpg" alt="Lighting Innovation" className="w-full h-full rounded-lg" />
+                        <img src="storage/HomeSlider/image4.jpg" alt="Lighting Innovation" className="w-full h-full rounded-lg" />
                     </div>
                     <div className="flex flex-col gap-6 md:w-1/2">
                         {items.map((item, index) => (
