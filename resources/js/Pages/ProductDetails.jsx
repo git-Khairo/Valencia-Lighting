@@ -198,8 +198,7 @@ function App() {
                       </div>
                     )}
                     {activeTab === 'specifications' && (
-                      <div className="overflow-x-visible">
-                        <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-500">
+                        <table className="w-full divide-y divide-gray-200 dark:divide-gray-500">
                           <thead className="bg-light-background dark:bg-dark-background">
                             <tr>
                               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Specification</th>
@@ -209,23 +208,22 @@ function App() {
                           <tbody className="bg-light-[#f5f5f5] divide-y divide-gray-200 dark:divide-dark-background dark:bg-dark-background2">
                             <tr>
                               <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm font-Montserrat text-gray-900 dark:text-dark-text">Dimensions</td>
-                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-base md:text-sm text-dark-secondary dark:text-light-secondary font-SulphurPoint">{product.length}</td>
+                              <td className="text-wrap px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-base md:text-sm text-dark-secondary dark:text-light-secondary font-SulphurPoint">{product.length}</td>
                             </tr>
                             <tr>
                               <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm font-Montserrat text-gray-900 dark:text-dark-text">Color</td>
-                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-sm md:text-sm text-dark-secondary dark:text-light-secondary font-SulphurPoint">{product.color}</td>
+                              <td className="text-wrap px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-sm md:text-sm text-dark-secondary dark:text-light-secondary font-SulphurPoint">{product.color}</td>
                             </tr>
                             <tr>
                               <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm font-Montserrat text-gray-900 dark:text-dark-text">Material</td>
-                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-sm md:text-sm text-dark-secondary dark:text-light-secondary font-SulphurPoint">{product.material}</td>
+                              <td className="text-wrap px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-sm md:text-sm text-dark-secondary dark:text-light-secondary font-SulphurPoint">{product.material}</td>
                             </tr>
                             <tr>
                               <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-xs md:text-sm font-Montserrat text-gray-900 dark:text-dark-text">Accessories</td>
-                              <td className="px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-sm md:text-sm text-dark-secondary dark:text-light-secondary font-SulphurPoint">{product.accessories}</td>
+                              <td className="text-wrap px-2 py-2 md:px-6 md:py-4 whitespace-nowrap text-sm md:text-sm text-dark-secondary dark:text-light-secondary font-SulphurPoint">{product.accessories}</td>
                             </tr>
                           </tbody>
                         </table>
-                      </div>
                     )}
                   </div>
                 </div>

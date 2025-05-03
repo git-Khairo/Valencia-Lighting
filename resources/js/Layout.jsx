@@ -113,8 +113,6 @@ const Layout = () => {
     <h1>An Error occured</h1>
   }
 
-  console.log(limitedCategories);
-
   return (
     <>
     <ScrollToTop />
@@ -144,10 +142,10 @@ const Layout = () => {
                 >
                   <FaBars size={22} />
                 </button>
-                <div className="flex justify-center items-center space-x-2 text-light-text dark:text-dark-text">
+                <Link to={'/'} className="flex justify-center items-center space-x-2 text-light-text dark:text-dark-text">
                   <img src={darkMode ? "/storage/logo/vallencia logo.png" : "/storage/logo/vallencia logo 2.png"} alt="" className={`${darkMode ? 'h-10 md:h-10' : 'h-12 md:h-14'}`} />
-                  <a href="/" className="font-Montserrat hidden lg:inline text-xl">Vallencia Lighting</a>
-                </div>
+                  <h1 className="font-Montserrat hidden lg:inline text-xl">Vallencia Lighting</h1>
+                </Link>
               </div>
 
               {/* Desktop Navigation - Centered */}
@@ -342,6 +340,15 @@ const Layout = () => {
             </button>
           </div>
           <ul className="mt-4 space-y-4 px-4">
+            <li>
+                <a
+                  href={`/`}
+                  className="block py-2 px-4 font-Montserrat text-light-text dark:text-dark-text hover:bg-light-secondary dark:hover:bg-dark-secondary rounded-md transition-colors"
+                  onClick={() => setShowSidebar(false)}
+                >
+                  Home
+                </a>
+              </li>
             {["Products", "Projects", "Categories", "About Us"].map((item) => (
               <li key={item}>
                 <a

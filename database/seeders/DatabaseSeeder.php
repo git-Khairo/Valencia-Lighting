@@ -12,9 +12,9 @@ class DatabaseSeeder extends Seeder
     {
         // Call individual seeders here
         $this->call([
-            CategorySeeder::class,
-            ProjectSeeder::class,
-            ProductSeeder::class,
+            // CategorySeeder::class,
+            // ProjectSeeder::class,
+            // ProductSeeder::class,
             UserSeeder::class
         ]);
 

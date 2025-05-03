@@ -39,12 +39,13 @@ const App = () => {
                     <Route path="/products" element={<Products />} />
                     <Route path="/project/:id" element={<ProjectDetails />} />
                     <Route path="/product/:code" element={<ProductDatails />} />
+                    <Route path="/:code" element={<ProductDatails />} />
                     <Route path="/about us" element={<About />} />
                     <Route path="/categories" element={<Sections/>}/>
                     <Route path="/category/:id" element={<Products/>}/>
                     <Route path="/pricingList" element={<PricingList/>}/>
                     <Route path="/products/:categoryNum" element={<Products/>} />
-                    <Route path="/admin/:code" element={
+                    <Route path="ilovelight/admin/:code" element={
                         <ProtectedRoute>
                             <SignIn />
                         </ProtectedRoute>

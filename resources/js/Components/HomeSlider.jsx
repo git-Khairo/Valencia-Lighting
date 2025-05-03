@@ -26,15 +26,14 @@ const HomeSlider = ({ images }) => {
       <Slider {...imageSliderSettings}>
         {images.map((image, index) => (
           <div key={index} className="relative">
-            <div className="absolute inset-0 bg-black/25"></div>
+            <div className="absolute inset-0 bg-black/30"></div>
             <img
               src={image.src}
               className="w-full h-[400px] md:h-[600px] object-cover"
               alt={image.title}
             />
-            <div className="absolute inset-0 bg-black opacity-10"></div>
             <div className="absolute inset-0 flex justify-center items-center">
-              <h2 className="text-white font-SulphurPoint text-3xl">{image.title}</h2>
+              <h2 className="text-white text-center font-SulphurPoint text-sm md:text-lg lg:text-3xl">{image.title}</h2>
             </div>
           </div>
         ))}
