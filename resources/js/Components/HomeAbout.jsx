@@ -14,7 +14,7 @@ function AboutPreview() {
         className="absolute inset-0 w-full h-full"
       >
         <img
-          src="/storage/ProductSlider/image4.jpg"
+          src="https://picsum.photos/200"
           alt="About Us"
           className="w-full h-full object-cover"
         />
