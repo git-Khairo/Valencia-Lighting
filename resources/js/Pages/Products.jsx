@@ -9,6 +9,7 @@ import Filter from "../Components/Filter";
 import { useParams } from "react-router-dom";
 import Loading from '../Components/Loading';
 import useFetch from '../useFetch';
+import { Helmet } from "react-helmet";
 
 const productsSlider = [
   { id: 1, image: "/storage/ProductSlider/image1.jpg", "title": "Everything is designed. Few things are designed well", "description": "- Brian Reed -" },
@@ -170,6 +171,26 @@ const Products = () => {
  
   return (
     <>
+    <Helmet>
+    <title>Vallencia Lighting | Products</title>
+    <meta name="description" content="{{ config('app.description', env('APP_DESCRIPTION', 'Discover modern lighting solutions at Vallencia. Shop LED lights, chandeliers, and more for your home or business. Illuminate your space today!')) }}" />
+    <link rel="canonical" href="https://www.vallencialighting.com/products" />
+    <meta property="og:title" content="Vallencia Lighting" />
+        <meta property="og:description" content="Best lighting products and custom lighting services." />
+        <meta property="og:image" content="https://wwwvallencialighting.com/storage/logo/vallencia%20logo.png" />
+        <meta property="og:url" content="https://www.vallencialighting.com/" />
+
+        {/* Schema JSON-LD */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Vallencia Lighting",
+            "url": "https://www.vallencialighting.com",
+            "logo": "https://wwwvallencialighting.com/storage/logo/vallencia%20logo.png"
+          })}
+        </script>
+    </Helmet>
     {loading ? (
       <Loading />
     ) : error ? (

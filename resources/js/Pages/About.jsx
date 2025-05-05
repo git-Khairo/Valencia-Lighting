@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { FaLightbulb, FaBuilding, FaExclamationTriangle } from "react-icons/fa";
 import { MdDesignServices, MdTune } from "react-icons/md";
 import { GiStreetLight, GiPartyFlags } from "react-icons/gi";
+import { Helmet } from "react-helmet";
 
 function ContentSection16() {
     return (
@@ -230,6 +231,27 @@ const Services = () => {
 const About = () => {
     return (
         <div>
+            <Helmet>
+            <title>Vallencia Lighting | About Us</title>
+            <meta name="description" content="{{ config('app.description', env('APP_DESCRIPTION', 'Discover modern lighting solutions at Vallencia. Shop LED lights, chandeliers, and more for your home or business. Illuminate your space today!')) }}" />
+            <link rel="canonical" href="https://www.vallencialighting.com/About%20Us" />
+
+            <meta property="og:title" content="Vallencia Lighting" />
+            <meta property="og:description" content="Best lighting products and custom lighting services." />
+            <meta property="og:image" content="https://wwwvallencialighting.com/storage/logo/vallencia%20logo.png" />
+            <meta property="og:url" content="https://www.vallencialighting.com/" />
+
+            {/* Schema JSON-LD */}
+            <script type="application/ld+json">
+            {JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Organization",
+                "name": "Vallencia Lighting",
+                "url": "https://www.vallencialighting.com",
+                "logo": "https://wwwvallencialighting.com/storage/logo/vallencia%20logo.png"
+            })}
+            </script>
+            </Helmet>
             <ContentSection16 />
             <TestimonialSection16 />
             <Timeline />
