@@ -5,6 +5,7 @@ import HomeProduct from '../Components/HomeProduct';
 import HomeCategory from '../Components/HomeCategory';
 import useFetch from '../useFetch';
 import Loading from '../Components/Loading';
+import { Helmet } from "react-helmet";
 
 
 export default function HomePage() {
@@ -33,6 +34,27 @@ export default function HomePage() {
           </button>
         </div>
       ) : data ? (
+        <>
+        <Helmet>
+        <title>Vallencia Lighting</title>
+        <meta name="description" content="{{ config('app.description', env('APP_DESCRIPTION', 'Discover modern lighting solutions at Vallencia. Shop LED lights, chandeliers, and more for your home or business. Illuminate your space today!')) }}" />
+        <link rel="canonical" href="https://www.vallencialighting.com/" />
+        <meta property="og:title" content="Vallencia Lighting" />
+        <meta property="og:description" content="Best lighting products and custom lighting services." />
+        <meta property="og:image" content="https://wwwvallencialighting.com/storage/logo/vallencia%20logo.png" />
+        <meta property="og:url" content="https://www.vallencialighting.com/" />
+
+        {/* Schema JSON-LD */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Vallencia Lighting",
+            "url": "https://www.vallencialighting.com",
+            "logo": "https://wwwvallencialighting.com/storage/logo/vallencia%20logo.png"
+          })}
+        </script>
+        </Helmet>
       <div className="w-full overflow-x-hidden dark:bg-dark-background2">
         <HomeSlider images={images} />
         <HomeProduct products={data.products} />
@@ -40,6 +62,7 @@ export default function HomePage() {
         <HomeProject projects={data.projects} />
         <AboutPreview />
       </div>
+      </>
       ) : (
         <></>
       )}

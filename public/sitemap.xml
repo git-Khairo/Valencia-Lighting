@@ -2,44 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>{{ config('app.url', env('APP_URL', 'https://vallencialighting.com')) }}</loc>
-        <lastmod>{{ date('Y-m-d') }}</lastmod>
-        <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>{{ config('app.url', env('APP_URL', 'https://vallencialighting.com')) }}/about/team</loc>
-        <lastmod>{{ date('Y-m-d') }}</lastmod>
-        <changefreq>weekly</changefreq>
+        <loc>{{ config('app.url', env('APP_URL', 'https://vallencialighting.com')) }}/products</loc>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>{{ config('app.url', env('APP_URL', 'https://vallencialighting.com')) }}/about/mission</loc>
-        <lastmod>{{ date('Y-m-d') }}</lastmod>
-        <changefreq>weekly</changefreq>
+        <loc>{{ config('app.url', env('APP_URL', 'https://vallencialighting.com')) }}/projects</loc>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>{{ config('app.url', env('APP_URL', 'https://vallencialighting.com')) }}/services/consulting</loc>
-        <lastmod>{{ date('Y-m-d') }}</lastmod>
-        <changefreq>weekly</changefreq>
+        <loc>{{ config('app.url', env('APP_URL', 'https://vallencialighting.com')) }}/categories</loc>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>{{ config('app.url', env('APP_URL', 'https://vallencialighting.com')) }}/services/support</loc>
-        <lastmod>{{ date('Y-m-d') }}</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>{{ config('app.url', env('APP_URL', 'https://vallencialighting.com')) }}/contact/email</loc>
-        <lastmod>{{ date('Y-m-d') }}</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
-        <loc>{{ config('app.url', env('APP_URL', 'https://vallencialighting.com')) }}/contact/call</loc>
-        <lastmod>{{ date('Y-m-d') }}</lastmod>
-        <changefreq>weekly</changefreq>
+        <loc>{{ config('app.url', env('APP_URL', 'https://vallencialighting.com')) }}/About Us</loc>
         <priority>0.8</priority>
     </url>
 </urlset>
