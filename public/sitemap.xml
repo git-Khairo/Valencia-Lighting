@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>{{ config('app.url', env('APP_URL', 'https://vallencialighting.com')) }}</loc>
+        <loc>https://vallencialighting.com</loc>
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>{{ config('app.url', env('APP_URL', 'https://vallencialighting.com')) }}/products</loc>
+        <loc>https://vallencialighting.com/products</loc>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>{{ config('app.url', env('APP_URL', 'https://vallencialighting.com')) }}/projects</loc>
+        <loc>https://vallencialighting.com/projects</loc>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>{{ config('app.url', env('APP_URL', 'https://vallencialighting.com')) }}/categories</loc>
+        <loc>https://vallencialighting.com/categories</loc>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>{{ config('app.url', env('APP_URL', 'https://vallencialighting.com')) }}/About Us</loc>
+        <loc>'https://vallencialighting.com/About%20Us</loc>
         <priority>0.8</priority>
     </url>
 </urlset>
