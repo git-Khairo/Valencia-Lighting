@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="jFV_OZ2goHuBlUMbkyC74b_bT3gQJF9i7Grs4lWVyH0" />
     <!-- SEO Meta Tags -->
     <title>Vallencia Lighting</title>
     <meta name="description" content="Discover modern lighting solutions at Vallencia. Shop LED lights, chandeliers, and more for your home or business. Illuminate your space today!">
