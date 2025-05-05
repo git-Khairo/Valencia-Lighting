@@ -10,15 +10,30 @@
     <meta name="robots" content="index, follow">
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Modern Lighting Solutions | {{ config('app.name', env('APP_NAME', 'Vallencia Lighting')) }}">
-    <meta property="og:description" content="Explore Vallencia’s range of modern lighting, including LED lights and chandeliers for homes and businesses. Shop now!">
-    <meta property="og:image" content="{{ asset(config('app.logo', env('APP_LOGO', '/storage/logo/vallencia-logo.png'))) }}">
+    <meta property="og:description" content="{{ config('app.description', env('APP_DESCRIPTION', 'Explore Vallencia’s range of modern lighting, including LED lights and chandeliers for homes and businesses. Shop now!')) }}">
+    <meta property="og:image" content="{{ asset(config('app.logo', env('APP_LOGO', '/storage/logo/vallencia logo.png'))) }}">
     <meta property="og:url" content="{{ config('app.url', env('APP_URL', 'https://vallencialighting.com')) }}">
     <meta property="og:type" content="website">
+    <!-- Structured Data for Organization -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "{{ config('app.name', env('APP_NAME', 'Vallencia Lighting')) }}",
+        "url": "{{ config('app.url', env('APP_URL', 'https://vallencialighting.com')) }}",
+        "logo": "{{ asset(config('app.logo', env('APP_LOGO', '/storage/logo/vallencia logo.png'))) }}",
+        "sameAs": [
+            "https://www.instagram.com/vallencia_lighting"
+        ]
+    }
+    </script>
+    <!-- Sitemap Reference -->
+    <link rel="sitemap" type="application/xml" href="{{ asset('sitemap.xml') }}" />
     <!-- Fonts and Favicon -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Agdasima:wght@400;700&family=Alumni+Sans+Pinstripe:ital@0;1&family=Amaranth:ital,wght@0,400;0,700;1,400;1,700&family=Anaheim:wght@400..800&family=Average+Sans&family=Encode+Sans+Condensed:wght@100;200;300;400;500;600;700;800;900&family=Gruppo&family=Jura:wght@300..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Slabo+13px&family=Sulphur+Point:wght@300;400;700&family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="{{ asset(config('app.logo', env('APP_LOGO', '/storage/logo/vallencia-logo.png'))) }}" />
+    <link rel="icon" type="image/png" href="{{ asset(config('app.logo', env('APP_LOGO', '/storage/logo/vallencia logo.png'))) }}" />
 </head>
 <body>
     <div id="app"></div>
