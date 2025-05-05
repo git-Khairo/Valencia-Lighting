@@ -504,7 +504,7 @@ const Layout = () => {
           </div>
         </div>
           <div className="flex justify-center font-Montserrat text-sm mt-8 text-light-secondary dark:text-dark-secondary">
-            © {new Date().getFullYear()} Valencia Lighting. All rights reserved.
+            © {new Date().getFullYear()} Vallencia Lighting. All rights reserved.
           </div>
         </div>
       </footer>
