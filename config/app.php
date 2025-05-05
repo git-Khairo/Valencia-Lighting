@@ -13,7 +13,10 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Vallencia Lighting'),
+    'description' => env('APP_DESCRIPTION', 'Discover modern lighting solutions at Vallencia. Shop LED lights, chandeliers, and more for your home or business. Illuminate your space today!'),
+    'url' => env('APP_URL', 'https://vallencialighting.com'),
+    'logo' => env('APP_LOGO', '/storage/logo/vallencia logo.png'),
 
     /*
     |--------------------------------------------------------------------------
