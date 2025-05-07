@@ -16,8 +16,4 @@
         <loc>https://vallencialighting.com/categories</loc>
         <priority>0.8</priority>
     </url>
-    <url>
-        <loc>'https://vallencialighting.com/About Us</loc>
-        <priority>0.8</priority>
-    </url>
 </urlset>
