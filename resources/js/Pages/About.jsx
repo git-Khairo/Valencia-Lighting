@@ -72,10 +72,10 @@ function TestimonialSection16() {
 
 function Timeline() {
     const events = [
-        { year: "2006", title: "Founded", description: "Started as a lighting solutions provider.", color: "#2d587a" },
-        { year: "2017", title: "Expansion", description: "Expanded into commercial lighting.", color: "#4f7b9c" },
-        { year: "2019", title: "Innovations", description: "Introduced smart lighting tech.", color: "#729ebf" },
-        { year: "2021", title: "Global Reach", description: "Became an international brand.", color: "#85a0b3" },
+        { year: "2003", title: "Founded", description: "Started as a lighting solutions provider.", color: "#2d587a" },
+        { year: "2008", title: "Expansion", description: "Expanded into commercial lighting.", color: "#4f7b9c" },
+        { year: "2012", title: "Innovations", description: "Introduced smart lighting tech.", color: "#729ebf" },
+        { year: "2017", title: "Global Reach", description: "Became an international brand.", color: "#85a0b3" },
         { year: "2023", title: "Sustainability", description: "Focused on eco-friendly lighting.", color: "#9aa2a9" },
     ];
 

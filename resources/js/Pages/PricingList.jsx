@@ -221,7 +221,7 @@ const PricingList = () => {
     <div className="min-h-screen bg-light-background dark:bg-dark-background py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
       <h1 className="my-4 font-Montserrat text-2xl md:text-3xl lg:text-4xl 3xl:text-5xl text-left leading-snug text-light-primary dark:text-dark-primary ">
-                    Your Pricing List
+                    Sent Inquiry
                 </h1>
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Cart Section */}
