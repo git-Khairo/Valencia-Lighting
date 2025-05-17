@@ -109,6 +109,24 @@ const Layout = () => {
   const limitedCategories = searchResults.categories.slice(0, isSmallScreen ? 4 : 6);
   const limitedProjects = searchResults.projects.slice(0, isSmallScreen ? 2 : 3);
 
+  const handleBrandCatalogDownload = (name) => {
+    let url = '';
+    if(name === 'sila'){
+      url = '/storage/brandCatalog/silaCatalog.pdf';
+    }else if(name === 'radial'){
+      url = '/storage/brandCatalog/radialCatalog.pdf';
+    }else{
+      return;
+    }
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = '';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
   if(error){
     <h1>An Error occured</h1>
   }
@@ -495,12 +513,12 @@ const Layout = () => {
 
           {/* Right Section - Sponsor Logos */}
           <div className="flex justify-center items-center space-x-4 mt-6 md:mt-0">
-            <a href="https://www.sila-eu.com/" target="_blank">
-              <img src="/storage/logo/sila logo.png" alt="Sponsor 1" className="h-20 opacity-80 hover:opacity-100 transition-opacity duration-200" />
-            </a>
-            <a href="https://www.radial-eu.com/" target="_blank">
-              <img src="/storage/logo/radial logo.png" alt="Sponsor 2" className="h-12 opacity-80 hover:opacity-100 transition-opacity duration-200" />
-            </a>
+            <button onClick={() => handleBrandCatalogDownload('sila')}>
+              <img src="/storage/logo/sila logo.png" alt="Sponser 1" className="h-20 opacity-80 hover:opacity-100 transition-opacity duration-200" />
+            </button>
+            <button onClick={() => handleBrandCatalogDownload('radial')}>
+              <img src="/storage/logo/radial logo.png" alt="Sponser 2" className="h-12 opacity-80 hover:opacity-100 transition-opacity duration-200" />
+            </button>
           </div>
         </div>
           <div className="flex justify-center font-Montserrat text-sm mt-8 text-light-secondary dark:text-dark-secondary">
