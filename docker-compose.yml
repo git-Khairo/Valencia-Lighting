@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vallencia
+    ports:
+      - "9000:9000" 
+    volumes:
+      - .:/var/www/html/Valencia-Lighting
+    env_file:
+      - .env
+    networks:
+      - valencia-network
+
+networks:
+  valencia-network:
+    driver: bridge
