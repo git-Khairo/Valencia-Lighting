@@ -205,12 +205,12 @@ class ProductController extends Controller
             $products = $this->ProductRepository->byCategories($categoriesId);
             $products = $products->sortByDesc('created_at');
         } else $products = $this->ProductRepository->allProducts();
-
+        print_r($products);
+        
         if ($brand !== null) {
             $products = $this->ProductRepository->byBrand($products, $brand);
         }
 
-        print_r($products);
         return response()->json([
             'message' => 'Filtered Products',
             'products' => ProductCardResource::collection($products)
