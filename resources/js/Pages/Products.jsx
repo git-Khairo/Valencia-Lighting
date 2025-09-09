@@ -197,7 +197,7 @@ const Products = () => {
             </Helmet>
     {loading ? (
       <Loading />
-    ) : error ? (
+    ) : error.message ? (
       <div className="text-center text-red-500 py-20">
         <p>Error loading products: {error.message || "Something went wrong"}</p>
         <button
