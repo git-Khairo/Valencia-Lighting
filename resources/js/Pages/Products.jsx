@@ -157,7 +157,7 @@ const Products = () => {
    // **Pagination logic**
    const lastPostIndex = currentPage * postsPerPage;
    const firstPostIndex = lastPostIndex - postsPerPage;
-   const currentPosts = data && products.slice(firstPostIndex, lastPostIndex);
+   const currentPosts = products?.slice(firstPostIndex, lastPostIndex);
 
 
    const ProductSliderSettings = {
@@ -197,7 +197,7 @@ const Products = () => {
             </Helmet>
     {loading ? (
       <Loading />
-    ) : error?.message ? (
+    ) : error ? (
       <div className="text-center text-red-500 py-20">
         <p>Error loading products: {error.message || "Something went wrong"}</p>
         <button
@@ -289,7 +289,7 @@ const Products = () => {
                 </div>
               </div>
             </div>
-          {data?.products ? (
+          {products && products.length > 0 ? (
             <>
               <div
                 className="grid 
@@ -309,7 +309,7 @@ const Products = () => {
               {/* **Pagination outside the grid** */}
               <div className="my-10 flex justify-center">
                 <Pagination
-                  totalPosts={data.length}
+                  totalPosts={products?.length ?? 0}
                   postsPerPage={postsPerPage}
                   currentPage={currentPage}
                   setCurrentPage={setCurrentPage}
