@@ -117,6 +117,7 @@ const Products = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Accept': 'application/json',
       },
       body: JSON.stringify({
         "categories": categories,
