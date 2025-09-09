@@ -23,7 +23,7 @@ Route::get('/suggested', [LayoutController::class, 'suggested']);
 
 
 Route::prefix('products')->group(function () {
-    Route::post('/', [ProductController::class, 'filter']);
+    Route::post('/', function (\Illuminate\Http\Request $r){ return response()->json(['ok' => true]); });
     Route::get('/{code}', [ProductController::class, 'byCode']);
 });
 Route::prefix('projects')->group(function () {
