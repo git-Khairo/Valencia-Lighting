@@ -31,7 +31,7 @@ const Products = () => {
   const [products, setProducts] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState(() => categoryNum ? [parseInt(categoryNum)] : []);
   const [brand, setBrand] = useState("");
   const [dropDownFilterIndoor, setDropDownFilterIndoor] = useState(false);
   const [dropDownFilterOutdoor, setDropDownFilterOutdoor] = useState(false);
@@ -43,7 +43,7 @@ const Products = () => {
   if(categoryError){
     return (
       <div className="text-center text-red-500 py-20">
-        <p>Error loading Project: {error.message || 'Something went wrong'}</p>
+        <p>Error loading categories: {categoryError.message || 'Something went wrong'}</p>
         <button
           className="mt-4 px-5 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           onClick={() => window.location.reload()}
@@ -103,13 +103,16 @@ const Products = () => {
   };
 
   useEffect(() => {
-    setCategories([]);
-    if(categoryNum){
-      updateFilter(parseInt(categoryNum));
+    if (categoryNum) {
+      setCategories([parseInt(categoryNum)]);
+    } else {
+      setCategories([]);
     }
-  }, [categoryNum])
+  }, [categoryNum]);
 
   useEffect(() => {
+    setLoading(true);
+    setError(null);
     fetch('/api/products', {
       method: 'POST',
       headers: {
@@ -196,7 +199,7 @@ const Products = () => {
       <Loading />
     ) : error ? (
       <div className="text-center text-red-500 py-20">
-        <p>Error loading products: {error.message || "Something went wrong"}</p>
+        <p>Error loading products: {error || "Something went wrong"}</p>
         <button
           className="mt-4 px-5 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           onClick={() => window.location.reload()}
