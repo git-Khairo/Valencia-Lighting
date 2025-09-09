@@ -210,10 +210,7 @@ class ProductController extends Controller
             $products = $this->ProductRepository->byBrand($products, $brand);
         }
 
-        return response()->json([
-            'message' => 'Filtered Products',
-            'products' => ProductCardResource::collection($products)
-        ], 200);
+        return response()->json(['message' => 'Filtered Products','products' => ProductCardResource::collection($products)], 200);
     }
 
     public function download(Request $request)
