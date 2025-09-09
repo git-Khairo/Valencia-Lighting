@@ -199,15 +199,14 @@ class ProductController extends Controller
     public function filter(Request $request)
     {
         $categoriesId = $request->input('categories', []);
-        $brand = $request->input('brand', []);
+        $brand = $request->input('brand');
 
         if (!empty($categoriesId)) {
             $products = $this->ProductRepository->byCategories($categoriesId);
             $products = $products->sortByDesc('created_at');
         } else $products = $this->ProductRepository->allProducts();
-        print_r($products);
         
-        if ($brand !== null) {
+        if (!empty($brand)) {
             $products = $this->ProductRepository->byBrand($products, $brand);
         }
 
