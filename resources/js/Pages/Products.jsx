@@ -16,7 +16,6 @@ const productsSlider = [
   { id: 2, image: "/storage/ProductSlider/image2.webp", "title": "Design adds value faster than it adds costs.", "description": "- Joel Spolsky -" },
   { id: 3, image: "/storage/ProductSlider/image3.jpeg", "title": "Lighting is the lifeblood of a design", "description": "- Gregory Kay -" },
   { id: 4, image: "/storage/ProductSlider/image4.jpg", "title": "NOT ANYONE CAN BE A DESIGNER", "description": "- Joelle -" },
-  
 ];
 
 const Products = () => {
@@ -36,11 +35,12 @@ const Products = () => {
   const [dropDownFilterIndoor, setDropDownFilterIndoor] = useState(false);
   const [dropDownFilterOutdoor, setDropDownFilterOutdoor] = useState(false);
   
-  const { data: categoryNames,loading: categoryLoading, error: categoryError } = useFetch('/api/categories');
+  const { data: categoryNames, loading: categoryLoading, error: categoryError } = useFetch('/api/categories');
   let IndoorCategories = [];
   let OutdoorCategories = [];
 
   if(categoryError){
+    console.log('Category fetch error:', categoryError);
     return (
       <div className="text-center text-red-500 py-20">
         <p>Error loading categories: {categoryError.message || 'Something went wrong'}</p>
@@ -57,8 +57,8 @@ const Products = () => {
   if(!categoryLoading){
     IndoorCategories = categoryNames.Categories.filter((category) => category.location === 'Indoor');
     OutdoorCategories = categoryNames.Categories.filter((category) => category.location === 'Outdoor');
+    console.log('Categories loaded:', { IndoorCategories, OutdoorCategories });
   }
-
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -85,15 +85,18 @@ const Products = () => {
   const handleSortAtoZ = () => {
     const sortedData = [...products].sort((a, b) => a.name.localeCompare(b.name));
     setProducts(sortedData); // Update state with the sorted array
+    console.log('Sorted A to Z:', sortedData);
   };
 
   const handleSortZtoA = () => {
     const sortedData = [...products].sort((a, b) => b.name.localeCompare(a.name));
     setProducts(sortedData); // Update state with the sorted array
+    console.log('Sorted Z to A:', sortedData);
   };
 
   const handleSortLatest = () => {
     setProducts([...data]);
+    console.log('Sorted Latest:', data);
   };
 
   const sortFunctions = {
@@ -108,9 +111,11 @@ const Products = () => {
     } else {
       setCategories([]);
     }
+    console.log('Categories updated from params:', { categoryNum, categories });
   }, [categoryNum]);
 
   useEffect(() => {
+    console.log('Fetching products with:', { categories, brand });
     setLoading(true);
     setError(null);
     fetch('/api/products', {
@@ -124,43 +129,47 @@ const Products = () => {
       })
     })
       .then(response => {
+        console.log('Fetch response status:', response.status);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         return response.json();
       })
       .then(data => {
+        console.log('Fetch success, received data:', data);
         setProducts(data.products);
         setData(data.products);
         setLoading(false);
+        console.log('State updated:', { data: data.products, products: data.products });
       })
       .catch(err => {
+        console.log('Fetch error:', err.message);
         setError(err.message);
         setLoading(false);
+        console.log('State after error:', { error: err.message, loading: false });
       });
   }, [brand, categories]);
 
-
   useEffect(() => {
     if(data){
-    sortFunctions[sortOption]();
+      sortFunctions[sortOption]();
+      console.log('Sort applied:', { sortOption, products });
     }
-  }, [data])
+  }, [data]);
 
-  
   // **Reset to page 1 when data changes to avoid empty pages**
   useEffect(() => {
     setCurrentPage(1);
+    console.log('Page reset to 1, data changed:', { data });
   }, [data]);
-  
 
-   // **Pagination logic**
-   const lastPostIndex = currentPage * postsPerPage;
-   const firstPostIndex = lastPostIndex - postsPerPage;
-   const currentPosts = data && products.slice(firstPostIndex, lastPostIndex);
+  // **Pagination logic**
+  const lastPostIndex = currentPage * postsPerPage;
+  const firstPostIndex = lastPostIndex - postsPerPage;
+  const currentPosts = data && products.slice(firstPostIndex, lastPostIndex);
+  console.log('Pagination:', { currentPage, firstPostIndex, lastPostIndex, currentPosts });
 
-
-   const ProductSliderSettings = {
+  const ProductSliderSettings = {
     dots: false,
     arrows: false,
     infinite: true,
@@ -321,7 +330,6 @@ const Products = () => {
           )}
         </div>
       </div>
-
 
       {/* Sidebar */} 
       <div
