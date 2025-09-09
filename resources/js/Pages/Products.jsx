@@ -289,7 +289,7 @@ const Products = () => {
                 </div>
               </div>
             </div>
-          {data && products.length > 0 ? (
+          {data?.products ? (
             <>
               <div
                 className="grid 
